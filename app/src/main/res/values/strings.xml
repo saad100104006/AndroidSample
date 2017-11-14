@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">TransferX</string>
+    <string name="welcome">welcome</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="lets_start">Lets Get Started!</string>
+    <string name="terms">"By signing up, you are agreeing to our
+<u>Terms &amp; Conditions</u> and <u>Privacy Policy.</u>"</string>
 </resources>
