@@ -11,13 +11,14 @@ import javax.inject.Inject;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
-import uk.co.transferx.app.welcom.presenter.WelcomePresenter;
+import uk.co.transferx.app.signup.SignUpActivity;
+import uk.co.transferx.app.welcom.presenter.WelcomeFragmentPresenter;
 
 /**
  * Created by smilevkiy on 13.11.17.
  */
 
-public class WelcomeFragment extends BaseFragment implements WelcomePresenter.WelcomeUI {
+public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPresenter.WelcomeUI {
 
 
     public final static String TAG = WelcomeFragment.class.getSimpleName();
@@ -26,7 +27,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomePresenter.We
     }
 
     @Inject
-    WelcomePresenter presenter;
+    WelcomeFragmentPresenter presenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomePresenter.We
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.on_boarding_fragment_layout, container, false);
+        view.findViewById(R.id.sign_up).setOnClickListener(v -> SignUpActivity.startSignUp(getActivity()));
         return view;
     }
 }

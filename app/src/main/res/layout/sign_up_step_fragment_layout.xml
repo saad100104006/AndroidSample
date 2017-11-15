@@ -25,7 +25,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="30dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:gravity="center"
@@ -33,24 +33,55 @@
                 android:textColor="@color/background"
                 android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/sign_up"
-                style="@style/ButtonTheme"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/email_layout"
                 android:layout_width="match_parent"
-                android:layout_height="58dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:theme="@style/TextInputLayoutLabel"
+                app:errorEnabled="false">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/email_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:textColor="@color/text_not_active" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/password_txt_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
-                android:text="@string/sign_up" />
+                android:theme="@style/TextInputLayoutLabel"
+                app:errorEnabled="false">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/password_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="@string/password"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:textColor="@color/text_not_active" />
+            </android.support.design.widget.TextInputLayout>
+
 
             <Button
-                android:id="@+id/sign_in"
                 style="@style/ButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
-                android:text="@string/sign_in" />
+                android:text="@string/next" />
 
 
             <android.support.v4.widget.Space
@@ -64,7 +95,9 @@
                 android:layout_marginBottom="25dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
-                android:text="@string/terms"
+                android:gravity="center_horizontal"
+                android:text="@string/forgot_password"
+                android:textAllCaps="true"
                 android:textColor="@color/background"
                 android:textSize="12sp" />
 
