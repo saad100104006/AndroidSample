@@ -23,6 +23,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
@@ -30,7 +31,7 @@
                 android:layout_marginRight="32dp"
                 android:gravity="center"
                 android:text="@string/lets_start"
-                android:textColor="@color/background"
+                android:textColor="@color/text_not_active"
                 android:textSize="16sp" />
 
             <android.support.design.widget.TextInputLayout
@@ -40,6 +41,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
+                android:textColorHint="@color/text_not_active"
                 android:theme="@style/TextInputLayoutLabel"
                 app:errorEnabled="false">
 
@@ -49,7 +51,7 @@
                     android:layout_height="40dp"
                     android:inputType="textNoSuggestions"
                     android:maxLines="1"
-                    android:textColor="@color/text_not_active" />
+                    android:textColor="@color/white" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -60,6 +62,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
+                android:textColorHint="@color/text_not_active"
                 android:theme="@style/TextInputLayoutLabel"
                 app:errorEnabled="false">
 
@@ -67,9 +70,10 @@
                     android:id="@+id/second_input"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:textColorHint="@color/text_not_active"
                     android:inputType="textNoSuggestions"
                     android:maxLines="1"
-                    android:textColor="@color/text_not_active" />
+                    android:textColor="@color/white" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -95,8 +99,7 @@
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:gravity="center_horizontal"
-                android:text="@string/forgot_password"
-                android:textAllCaps="true"
+                android:text="@string/terms"
                 android:textColor="@color/background"
                 android:textSize="12sp" />
 

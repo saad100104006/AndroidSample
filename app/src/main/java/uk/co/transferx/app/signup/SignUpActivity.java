@@ -8,6 +8,9 @@ import android.support.transition.Slide;
 import android.support.v4.app.FragmentTransaction;
 import android.util.SparseArray;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.rd.PageIndicatorView;
 
@@ -31,21 +34,26 @@ public class SignUpActivity extends BaseActivity {
     }
 
     private PageIndicatorView pageIndicatorView;
-    private static int currentFragment = -1;
+    private TextView steps;
+    private ImageView arrowBack;
+    private static int currentFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_activity_layout);
         pageIndicatorView = findViewById(R.id.page_indicator);
+        steps = findViewById(R.id.steps);
+        arrowBack = findViewById(R.id.arrow_back);
+        arrowBack.setOnClickListener(view -> onBackPressed());
+        steps.setText(getString(R.string.steps, currentFragment + 1));
         sparseArray.put(0, new SignUpStepOneFragment());
         sparseArray.put(1, new SignUpStepTwoFragment());
         sparseArray.put(2, new SignUpStepTreeFragment());
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, sparseArray.get(0), sparseArray.get(0).getTag());
+        ft.replace(R.id.container, sparseArray.get(currentFragment), sparseArray.get(currentFragment).getTag());
         ft.commit();
-        currentFragment = 0;
-        pageIndicatorView.setSelection(0);
+        pageIndicatorView.setSelection(currentFragment);
     }
 
 
@@ -59,6 +67,8 @@ public class SignUpActivity extends BaseActivity {
         ft.commit();
         currentFragment = nextView;
         pageIndicatorView.setSelection(nextView);
+        steps.setText(getString(R.string.steps, currentFragment + 1));
+        arrowBack.setVisibility(currentFragment > 0 ? View.VISIBLE : View.GONE);
     }
 
 

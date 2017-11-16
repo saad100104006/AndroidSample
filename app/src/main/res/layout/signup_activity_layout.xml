@@ -12,23 +12,46 @@
         android:orientation="vertical"
         tools:context="uk.co.transferx.app.signup.SignUpActivity">
 
-
-        <TextView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:gravity="center_horizontal|bottom"
-            android:text="@string/sign_up"
-            android:textAllCaps="true"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:animateLayoutChanges="true">
+
+
+            <ImageView
+                android:id="@+id/arrow_back"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:clickable="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:paddingBottom="3dp"
+                android:scaleType="center"
+                android:src="@drawable/abc_ic_ab_back_material"
+                android:tint="@color/colorPrimary"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="center_horizontal|bottom"
+                android:text="@string/sign_up"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
 
         <TextView
+            android:id="@+id/steps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:gravity="center_horizontal|bottom"
-            android:text="@string/step_one"
+            android:text="@string/steps"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp" />
 
@@ -37,9 +60,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            attrs:piv_animationDuration="500"
             attrs:piv_animationType="slide"
             attrs:piv_count="3"
-            attrs:piv_animationDuration="500"
             attrs:piv_selectedColor="@color/colorPrimary"
             attrs:piv_unselectedColor="@color/color_unselected" />
 

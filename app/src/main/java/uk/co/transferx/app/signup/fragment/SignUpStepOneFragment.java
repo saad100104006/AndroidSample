@@ -7,6 +7,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
@@ -34,10 +35,10 @@ public class SignUpStepOneFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.sign_up_step_fragment_layout, container, false);
         firstInputLayout = view.findViewById(R.id.first_layout);
         secondInputLayout = view.findViewById(R.id.second_layout);
-
-        firstInputLayout.getEditText().setHint(R.string.first_name);
+        ((TextView) view.findViewById(R.id.title)).setText(getString(R.string.title_one));
+        firstInputLayout.setHint(getString(R.string.first_name));
         firstInputLayout.getEditText().setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        secondInputLayout.getEditText().setHint(R.string.last_name);
+        secondInputLayout.setHint(getString(R.string.last_name));
         secondInputLayout.getEditText().setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
         view.findViewById(R.id.next_step).setOnClickListener(v -> ((SignUpActivity) getActivity()).showNextOrPriviosFragment(1));

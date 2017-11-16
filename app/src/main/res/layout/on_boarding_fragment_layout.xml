@@ -30,7 +30,7 @@
                 android:layout_marginRight="32dp"
                 android:gravity="center"
                 android:text="@string/lets_start"
-                android:textColor="@color/background"
+                android:textColor="@color/text_not_active"
                 android:textSize="16sp" />
 
             <Button

@@ -4,7 +4,7 @@
     <string name="sign_in">SIGN IN</string>
     <string name="sign_up">SIGN UP</string>
     <string name="next">NEXT</string>
-    <string name="step_one">Step 1</string>
+    <string name="steps">Step %d</string>
     <string name="lets_start">Lets Get Started!</string>
     <string name="terms">"By signing up, you are agreeing to our
 <u>Terms &amp; Conditions</u> and <u>Privacy Policy.</u>"</string>
@@ -15,4 +15,8 @@
     <string name="last_name">Last Name</string>
     <string name="pin">Pin</string>
     <string name="confirm_pin">Confirm pin</string>
+    <string name="title_one">Lets Start With You</string>
+    <string name="title_two">Now Your Login Details</string>
+    <string name="title_three">And Finally Set A PIN</string>
+    <string name="sign_me_up">SIGN ME UP</string>
 </resources>
