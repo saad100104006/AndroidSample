@@ -21,7 +21,10 @@ import uk.co.transferx.app.welcom.presenter.WelcomeFragmentPresenter;
 public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPresenter.WelcomeUI {
 
 
-    public final static String TAG = WelcomeFragment.class.getSimpleName();
+    @Override
+    public String tagName() {
+        return WelcomeFragment.class.getSimpleName();
+    }
 
     public WelcomeFragment() {
     }

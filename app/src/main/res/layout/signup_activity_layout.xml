@@ -33,18 +33,21 @@
             android:textSize="14sp" />
 
         <com.rd.PageIndicatorView
-            android:id="@+id/page_indicator_view"
+            android:id="@+id/page_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             attrs:piv_animationType="slide"
             attrs:piv_count="3"
+            attrs:piv_animationDuration="500"
             attrs:piv_selectedColor="@color/colorPrimary"
             attrs:piv_unselectedColor="@color/color_unselected" />
 
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></FrameLayout>
+            android:layout_height="match_parent">
+
+        </FrameLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
