@@ -15,7 +15,7 @@
             android:value="7c701a587dab135a65c991b03f12146453d44b9c" />
 
         <activity
-            android:name=".welcom.WelcomeActivity"
+            android:name=".splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -24,10 +24,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".welcom.WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".signup.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".signin.SignInActivity" />
     </application>
 
 </manifest>
