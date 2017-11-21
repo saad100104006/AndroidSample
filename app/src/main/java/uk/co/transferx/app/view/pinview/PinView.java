@@ -1,4 +1,4 @@
-package uk.co.transferx.app.view;
+package uk.co.transferx.app.view.pinview;
 
 import android.content.Context;
 import android.os.Handler;
@@ -79,10 +79,10 @@ public class PinView extends SingleCharEditTextView {
     }
 
     public void resetColors() {
-        resetColors(R.color.white, R.color.colorAccent);
+        resetColors(R.color.white);
     }
 
-    public void resetColors(@ColorRes int textColor, @ColorRes int underlineColor) {
+    public void resetColors(@ColorRes int textColor) {
         setTextColor(textColor);
     }
 

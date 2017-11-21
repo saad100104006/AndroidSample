@@ -1,8 +1,9 @@
-package uk.co.transferx.app.view;
+package uk.co.transferx.app.view.pinview;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,7 @@ public class CharView extends FrameLayout {
 
     private TextView pinCharTextView;
     private FrameLayout secretCharBackground;
-    private int secretColorRes = -1;
+    private int secretColorRes = R.color.white;
 
     public CharView(Context context) {
         super(context);

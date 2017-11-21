@@ -37,9 +37,9 @@ public class SignUpStepOneFragment extends BaseFragment {
         secondInputLayout = view.findViewById(R.id.second_layout);
         ((TextView) view.findViewById(R.id.title)).setText(getString(R.string.title_one));
         firstInputLayout.setHint(getString(R.string.first_name));
-        firstInputLayout.getEditText().setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        firstInputLayout.getEditText().setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         secondInputLayout.setHint(getString(R.string.last_name));
-        secondInputLayout.getEditText().setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        secondInputLayout.getEditText().setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
         view.findViewById(R.id.next_step).setOnClickListener(v -> ((SignUpActivity) getActivity()).showNextOrPriviosFragment(1));
         return view;

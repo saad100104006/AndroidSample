@@ -1,4 +1,4 @@
-package uk.co.transferx.app.view;
+package uk.co.transferx.app.view.pinview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import uk.co.transferx.app.R;
+import uk.co.transferx.app.view.pinview.CharView;
 
 /**
  * Created by sergey on 19.11.17.
@@ -29,8 +30,8 @@ public class SingleCharEditTextView extends FrameLayout {
         void onFilled(char[] text);
     }
 
-    public final static int MIN_LENGTH = 1;
-    public final static int MAX_LENGTH = 11;
+    public final static int MIN_LENGTH = 4;
+    public final static int MAX_LENGTH = 8;
 
 
     protected LinearLayout charHolderView;

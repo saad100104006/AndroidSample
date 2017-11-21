@@ -1,4 +1,4 @@
-package uk.co.transferx.app.view;
+package uk.co.transferx.app.view.pinview;
 
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
