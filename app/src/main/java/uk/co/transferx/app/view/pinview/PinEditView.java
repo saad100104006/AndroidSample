@@ -6,9 +6,11 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.content.res.AppCompatResources;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -29,35 +31,19 @@ import uk.co.transferx.app.R;
  * Created by smilevkiy on 21.11.17.
  */
 
-public class PinEditView extends FrameLayout {
+public class PinEditView extends FrameLayout implements TextWatcher{
 
     public final static int PIN_MIN_LENGTH = 4;
     public final static int PIN_MAX_LENGTH = 8;
     private final static int HIDE_DELAY = 1000;
-    private EditText currentText;
+    private SingleCharView currentText;
 
     Handler mHideHandler = new Handler();
     Runnable mHideRunnable = this::hideChar;
 
 
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-         //   mHideHandler.postDelayed(mHideRunnable, HIDE_DELAY);
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-
-        }
-    };
-
-    private List<EditText> listOfChars = new ArrayList<>(8);
+    private List<SingleCharView> listOfChars = new ArrayList<>(8);
     private LinearLayout containerPin;
 
     public PinEditView(Context context) {
@@ -84,7 +70,8 @@ public class PinEditView extends FrameLayout {
 
     public void hideChar() {
         currentText.setVisibility(View.INVISIBLE);
-        currentText.setBackground(new SecretCharDrawable(getContext().getResources().getColor(R.color.black)));
+        currentText.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.circle));
+
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -100,23 +87,30 @@ public class PinEditView extends FrameLayout {
         lp.setMargins((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, getResources().getDisplayMetrics()), 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, getResources().getDisplayMetrics()), 0);
         containerPin.removeAllViews();
         for (int i = 0; i < PIN_MIN_LENGTH; i++) {
-            EditText secreteChar = new EditText(getContext());
+            SingleCharView secreteChar = new SingleCharView(getContext());
             secreteChar.setTag(i);
-            secreteChar.addTextChangedListener(textWatcher);
-            secreteChar.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
-            secreteChar.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
-            secreteChar.setMaxLines(1);
-            secreteChar.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-            InputFilter[] filterArray = new InputFilter[1];
-            filterArray[0] = new InputFilter.LengthFilter(1);
-            secreteChar.setFilters(filterArray);
-            secreteChar.setInputType(InputType.TYPE_CLASS_NUMBER |
-                    InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-            secreteChar.setGravity(Gravity.CENTER);
+            secreteChar.addTextChangedListener(this);
             listOfChars.add(secreteChar);
             containerPin.addView(secreteChar, lp);
         }
 
     }
 
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        if(!listOfChars.isEmpty() && !TextUtils.isEmpty(charSequence)) {
+            this.currentText = listOfChars.get(0);
+            mHideHandler.postDelayed(mHideRunnable, HIDE_DELAY);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+    }
 }
