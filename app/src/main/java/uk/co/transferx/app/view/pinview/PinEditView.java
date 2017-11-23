@@ -85,7 +85,7 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
         containerPin = findViewById(R.id.pin_container);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.weight = 1;
-        lp.setMargins((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, getResources().getDisplayMetrics()), 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, getResources().getDisplayMetrics()), 0);
+        lp.setMargins((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0.5f, getResources().getDisplayMetrics()), 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0.5f, getResources().getDisplayMetrics()), 0);
         containerPin.removeAllViews();
         for (int i = 0; i < PIN_MIN_LENGTH; i++) {
             SingleCharView secreteChar = new SingleCharView(getContext());

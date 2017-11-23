@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
+import uk.co.transferx.app.recoverpass.RecoverPasswordActivity;
 import uk.co.transferx.app.signup.SignUpActivity;
 
 /**
@@ -45,8 +46,9 @@ public class SignInEmailFragment extends BaseFragment {
         Button buttonSignIn = view.findViewById(R.id.next_step);
         buttonSignIn.setText(R.string.sign_in);
         TextView forgotPass = view.findViewById(R.id.terms);
-        forgotPass.setText(getString(R.string.forgot_password).toUpperCase());
-        forgotPass.setOnClickListener(v -> Toast.makeText(getContext(), "Not implemented yet", Toast.LENGTH_SHORT).show());
+        String forgotPassword = getString(R.string.forgot_password) + "?";
+        forgotPass.setText(forgotPassword.toUpperCase());
+        forgotPass.setOnClickListener(v -> RecoverPasswordActivity.starRecoverPasswordActivity(getActivity()));
         buttonSignIn.setOnClickListener(v -> Toast.makeText(getContext(), "Not implemented yet", Toast.LENGTH_SHORT).show());
         return view;
     }

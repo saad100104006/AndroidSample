@@ -8,7 +8,7 @@
     <string name="lets_start">Lets Get Started!</string>
     <string name="terms">"By signing up, you are agreeing to our
 <u>Terms &amp; Conditions</u> and <u>Privacy Policy.</u>"</string>
-    <string name="forgot_password">Forgot password?</string>
+    <string name="forgot_password">Forgot password</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="first_name">First Name</string>
@@ -21,4 +21,7 @@
     <string name="sign_me_up">SIGN ME UP</string>
     <string name="money_logo">money that cares</string>
     <string name="one_step_away">One Step Away</string>
+    <string name="send">SEND</string>
+    <string name="recover_title">Use Registration Email</string>
+    <string name="recover_desc">We will send  you an email with the a link to change your password</string>
 </resources>

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uk.co.transferx.app">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="uk.co.transferx.app.TransferXApplication"
         android:allowBackup="true"
@@ -35,6 +37,10 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".signin.SignInActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".recoverpass.RecoverPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
