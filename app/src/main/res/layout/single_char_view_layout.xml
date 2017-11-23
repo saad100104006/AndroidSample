@@ -8,7 +8,7 @@
     android:animateLayoutChanges="true"
     android:background="@android:color/white">
 
-    <EditText
+    <uk.co.transferx.app.view.pinview.CustomEditPinText
         android:id="@+id/pin_char"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,6 +22,7 @@
 
     <ImageView
         android:id="@+id/circle"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="center"

@@ -48,7 +48,7 @@ public class SignUpStepTreeFragment extends BaseFragment {
         setPinSettings(secondInputLayout.getEditText());
         Button nextButton = view.findViewById(R.id.next_step);
         nextButton.setText(R.string.sign_me_up);
-        nextButton.setOnClickListener(view1 -> SignInActivity.starSignInActivity(getActivity(), SignInType.PIN));
+        nextButton.setOnClickListener(v -> SignInActivity.starSignInActivity(getActivity(), SignInType.PIN));
         return view;
     }
 

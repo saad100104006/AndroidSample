@@ -9,10 +9,10 @@ import android.support.annotation.Nullable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import uk.co.transferx.app.R;
 
@@ -22,9 +22,10 @@ import uk.co.transferx.app.R;
 
 public class SingleCharView extends FrameLayout {
 
-    private EditText charView;
+    private CustomEditPinText charView;
     private FrameLayout container;
     private ImageView circle;
+
     public SingleCharView(@NonNull Context context) {
         super(context);
         init(context);
@@ -39,6 +40,7 @@ public class SingleCharView extends FrameLayout {
         super(context, attrs, defStyleAttr);
         init(context);
     }
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public SingleCharView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
@@ -46,16 +48,42 @@ public class SingleCharView extends FrameLayout {
     }
 
 
-    private void init(Context context){
+    private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.single_char_view_layout, this);
         charView = findViewById(R.id.pin_char);
         container = findViewById(R.id.pin_secret);
         circle = findViewById(R.id.circle);
-        container.setMinimumWidth(charView.getWidth());
-        container.setMinimumHeight(charView.getHeight());
-        circle.setMinimumHeight(charView.getHeight());
-        circle.setMinimumWidth(charView.getWidth());
+        int width = charView.getWidth();
+        int height = charView.getHeight();
 
+    }
+
+    @Override
+    public void setTag(Object tag) {
+        charView.setTag(tag);
+    }
+
+    @Override
+    public Object getTag() {
+        return charView.getTag();
+    }
+
+    @Override
+    public void setOnFocusChangeListener(OnFocusChangeListener l) {
+        charView.setOnFocusChangeListener(l);
+    }
+
+
+    public EditText getEditChar() {
+        return charView;
+    }
+
+    public void setOnEditorActionListener(TextView.OnEditorActionListener onEditorActionListener) {
+        charView.setOnEditorActionListener(onEditorActionListener);
+    }
+
+    public void setOnKeyCodEventListener(CustomEditPinText.OnKeyKodEventListener onKeyCodEventListener){
+        charView.setKeyKodEventListener(onKeyCodEventListener);
     }
 
     @Override
@@ -64,11 +92,24 @@ public class SingleCharView extends FrameLayout {
     }
 
     @Override
-    public void setBackground(Drawable background) {
-       circle.setImageDrawable(background);
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        circle.setOnClickListener(l);
     }
 
-    public void addTextChangedListener(TextWatcher textWatcher){
+    public void disableSecurity() {
+        circle.setImageDrawable(null);
+    }
+
+    @Override
+    public void setBackground(Drawable background) {
+        circle.setImageDrawable(background);
+    }
+
+    public void setText(CharSequence charSequence) {
+        charView.setText(charSequence);
+    }
+
+    public void addTextChangedListener(TextWatcher textWatcher) {
         charView.addTextChangedListener(textWatcher);
     }
 }

@@ -27,6 +27,10 @@ public class SignInPinFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.signin_pin_fragment, container, false);
+        ((TextView) view.findViewById(R.id.title)).setText(getString(R.string.one_step_away));
+        TextView forgotPass = view.findViewById(R.id.terms);
+        forgotPass.setText(getString(R.string.forgot_password).toUpperCase());
+        forgotPass.setOnClickListener(v -> Toast.makeText(getContext(), "Not implemented yet", Toast.LENGTH_SHORT).show());
         view.findViewById(R.id.next_step).setOnClickListener(v -> Toast.makeText(getContext(), "Not implemented yet", Toast.LENGTH_SHORT).show());
         return view;
     }
