@@ -48,8 +48,9 @@ public class CustomEditPinText extends AppCompatEditText {
 
         @Override
         public boolean sendKeyEvent(KeyEvent event) {
-            if (listener != null) {
-                Log.d("Sergey", "ivent");
+            Log.d("sergey", "event " + event);
+            if (listener != null && event.getAction() == KeyEvent.ACTION_DOWN
+                    && event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
                 listener.onBackSpaceEvent();
             }
             return super.sendKeyEvent(event);

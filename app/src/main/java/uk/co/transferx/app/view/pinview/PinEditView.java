@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +94,14 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
 
     private void savePin(int index, short number) {
         pinArray[index] = number;
+        checkPinAndHideKeyboard();
     }
+
+    private void checkPinAndHideKeyboard(){
+        for(short p : pinArray){
+            }
+        }
+
 
     private void removePin(int index) {
         pinArray[index] = -1;
