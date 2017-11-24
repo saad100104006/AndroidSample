@@ -23,7 +23,6 @@
             android:clickable="true"
             android:paddingBottom="3dp"
             android:scaleType="center"
-            android:src="@drawable/abc_ic_ab_back_material"
             android:tint="@color/colorPrimary"
             android:visibility="gone"
             tools:visibility="visible" />

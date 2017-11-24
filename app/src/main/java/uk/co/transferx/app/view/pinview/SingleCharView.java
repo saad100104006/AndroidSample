@@ -8,11 +8,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import uk.co.transferx.app.R;
 
@@ -53,8 +53,6 @@ public class SingleCharView extends FrameLayout {
         charView = findViewById(R.id.pin_char);
         container = findViewById(R.id.pin_secret);
         circle = findViewById(R.id.circle);
-        int width = charView.getWidth();
-        int height = charView.getHeight();
 
     }
 
@@ -78,12 +76,8 @@ public class SingleCharView extends FrameLayout {
         return charView;
     }
 
-    public void setOnEditorActionListener(TextView.OnEditorActionListener onEditorActionListener) {
-        charView.setOnEditorActionListener(onEditorActionListener);
-    }
-
-    public void setOnKeyCodEventListener(CustomEditPinText.OnKeyKodEventListener onKeyCodEventListener){
-        charView.setKeyKodEventListener(onKeyCodEventListener);
+    public void setOnKeyBackSpaceListener(CustomEditPinText.OnKeyBackSpaceListener onKeyCodEventListener) {
+        charView.setKeyBackSpaceListener(onKeyCodEventListener);
     }
 
     @Override
@@ -96,12 +90,11 @@ public class SingleCharView extends FrameLayout {
         circle.setOnClickListener(l);
     }
 
-    public void disableSecurity() {
+    public void disableSecurityCircle() {
         circle.setImageDrawable(null);
     }
 
-    @Override
-    public void setBackground(Drawable background) {
+    public void setSecureCircle(Drawable background) {
         circle.setImageDrawable(background);
     }
 

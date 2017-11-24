@@ -36,17 +36,16 @@
 
             <uk.co.transferx.app.view.pinview.PinEditView
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
-                android:layout_height="wrap_content">
+                android:layout_marginRight="32dp">
 
             </uk.co.transferx.app.view.pinview.PinEditView>
 
             <android.support.v4.widget.Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
-
+                android:layout_weight="1" />
 
 
             <Button

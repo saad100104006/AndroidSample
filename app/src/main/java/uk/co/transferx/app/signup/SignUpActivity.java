@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.transition.Slide;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.content.res.AppCompatResources;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
@@ -45,6 +46,7 @@ public class SignUpActivity extends BaseActivity {
         pageIndicatorView = findViewById(R.id.page_indicator);
         steps = findViewById(R.id.steps);
         arrowBack = findViewById(R.id.arrow_back);
+        arrowBack.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.abc_ic_ab_back_material));
         arrowBack.setOnClickListener(view -> onBackPressed());
         steps.setText(getString(R.string.steps, currentFragment + 1));
         sparseArray.put(0, new SignUpStepOneFragment());

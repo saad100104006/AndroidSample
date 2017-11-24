@@ -16,7 +16,7 @@ import android.view.inputmethod.InputConnectionWrapper;
 public class CustomEditPinText extends AppCompatEditText {
 
 
-    private OnKeyKodEventListener listener;
+    private OnKeyBackSpaceListener listener;
 
     public CustomEditPinText(Context context) {
         super(context);
@@ -30,8 +30,8 @@ public class CustomEditPinText extends AppCompatEditText {
         super(context, attrs, defStyleAttr);
     }
 
-    public interface OnKeyKodEventListener {
-        void onKeyKodEvent(int keyCode, KeyEvent event);
+    public interface OnKeyBackSpaceListener {
+        void onBackSpaceEvent();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class CustomEditPinText extends AppCompatEditText {
         public boolean sendKeyEvent(KeyEvent event) {
             if (listener != null) {
                 Log.d("Sergey", "ivent");
-                listener.onKeyKodEvent(event.getKeyCode(), event);
+                listener.onBackSpaceEvent();
             }
             return super.sendKeyEvent(event);
         }
@@ -69,7 +69,7 @@ public class CustomEditPinText extends AppCompatEditText {
 
     }
 
-    public void setKeyKodEventListener(OnKeyKodEventListener keyKodEventListener) {
-        listener = keyKodEventListener;
+    public void setKeyBackSpaceListener(OnKeyBackSpaceListener onKeyBackSpaceListener) {
+        listener = onKeyBackSpaceListener;
     }
 }

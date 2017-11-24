@@ -28,19 +28,19 @@ import uk.co.transferx.app.R;
  * Created by smilevkiy on 21.11.17.
  */
 
-public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocusChangeListener, View.OnClickListener, CustomEditPinText.OnKeyKodEventListener {
+public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocusChangeListener, View.OnClickListener, CustomEditPinText.OnKeyBackSpaceListener {
 
     public final static int PIN_MIN_LENGTH = 4;
     public final static int PIN_MAX_LENGTH = 8;
-    private final static int HIDE_DELAY = 400;
+    private final static int HIDE_DELAY = 200;
     private SingleCharView currentText;
 
-    Handler mHideHandler = new Handler();
+    Handler handler = new Handler();
     Runnable mHideRunnable = this::hideChar;
 
     private List<SingleCharView> listOfChars = new ArrayList<>(8);
-    private LinearLayout containerPin;
-    private boolean isShoulHandled = true;
+    private boolean isShouldHandled = true;
+    private short[] pinArray;
 
     public PinEditView(Context context) {
         super(context);
@@ -64,17 +64,6 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
     }
 
 
-    public void hideChar() {
-        currentText.setVisibility(View.INVISIBLE);
-        currentText.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.circle));
-        if ((int) currentText.getTag() == (listOfChars.size() - 1)) {
-            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(currentText.getEditChar().getWindowToken(), 0);
-        }
-        isShoulHandled = true;
-
-    }
-
     private void init(Context context, AttributeSet attrs) {
 
         LayoutInflater.from(context).inflate(R.layout.pin_view_layout, this);
@@ -82,10 +71,10 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
 
         }
 
-        containerPin = findViewById(R.id.pin_container);
+        LinearLayout containerPin = findViewById(R.id.pin_container);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.weight = 1;
-        lp.setMargins((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0.5f, getResources().getDisplayMetrics()), 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0.5f, getResources().getDisplayMetrics()), 0);
+        lp.setMargins((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 0.1f, getResources().getDisplayMetrics()), 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 0.1f, getResources().getDisplayMetrics()), 0);
         containerPin.removeAllViews();
         for (int i = 0; i < PIN_MIN_LENGTH; i++) {
             SingleCharView secreteChar = new SingleCharView(getContext());
@@ -93,32 +82,55 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
             secreteChar.addTextChangedListener(this);
             secreteChar.setOnFocusChangeListener(this);
             secreteChar.setOnClickListener(this);
-            secreteChar.setOnKeyCodEventListener(this);
+            secreteChar.setOnKeyBackSpaceListener(this);
             listOfChars.add(secreteChar);
             containerPin.addView(secreteChar, lp);
         }
 
+        pinArray = new short[PIN_MIN_LENGTH];
+        for (int i = 0; i < pinArray.length; i++) {
+            pinArray[i] = -1;
+        }
+    }
+
+    private void savePin(int index, short number) {
+        pinArray[index] = number;
+    }
+
+    private void removePin(int index) {
+        pinArray[index] = -1;
+    }
+
+    public void hideChar() {
+        savePin(((int) currentText.getTag()), Short.valueOf(currentText.getEditChar().getText().toString()));
+        currentText.setVisibility(View.INVISIBLE);
+        currentText.setSecureCircle(AppCompatResources.getDrawable(getContext(), R.drawable.circle));
+        if ((int) currentText.getTag() == (listOfChars.size() - 1)) {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(currentText.getEditChar().getWindowToken(), 0);
+        }
+        isShouldHandled = true;
     }
 
     @Override
-    public void onKeyKodEvent(int keyCode, KeyEvent event) {
+    public void onBackSpaceEvent() {
         int current = (int) currentText.getTag();
         if (current > 0) {
-            new Handler().post(() -> currentText.getEditChar().clearFocus());
+            handler.post(() -> currentText.getEditChar().clearFocus());
             currentText = listOfChars.get(current - 1);
-            new Handler().post(() -> currentText.getEditChar().requestFocus());
+            handler.post(() -> currentText.getEditChar().requestFocus());
             disableSecurity();
+        } else {
+            handler.post(() -> currentText.getEditChar().requestFocus());
         }
     }
 
     @Override
     public void onClick(View view) {
-        if (isNotLast() && isShoulHandled) {
-            disableSecurity();
+        if (isNotLast() && isShouldHandled) {
             showKeyboard();
         }
-        if (isLastAndEmpty() && isShoulHandled) {
-            disableSecurity();
+        if (isLastAndEmpty() && isShouldHandled) {
             showKeyboard();
         }
     }
@@ -132,7 +144,8 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
     }
 
     private void disableSecurity() {
-        currentText.disableSecurity();
+        removePin((int) currentText.getTag());
+        currentText.disableSecurityCircle();
         currentText.setVisibility(VISIBLE);
 
     }
@@ -145,7 +158,7 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
     @Override
     public void onFocusChange(View view, boolean b) {
         if (b) {
-            mHideHandler.postDelayed(() -> currentText = listOfChars.get((int) view.getTag()), HIDE_DELAY);
+            handler.postDelayed(() -> currentText = listOfChars.get((int) view.getTag()), HIDE_DELAY);
 
         }
     }
@@ -157,10 +170,9 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         if (currentText != null && !TextUtils.isEmpty(charSequence)) {
-            isShoulHandled = false;
-            mHideHandler.postDelayed(mHideRunnable, HIDE_DELAY);
+            isShouldHandled = false;
+            handler.postDelayed(mHideRunnable, HIDE_DELAY);
         }
-
     }
 
     @Override

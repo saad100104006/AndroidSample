@@ -6,14 +6,15 @@
     android:layout_height="match_parent"
     android:layout_margin="5dp"
     android:animateLayoutChanges="true"
-    android:background="@android:color/white">
+    android:background="@color/white">
 
     <uk.co.transferx.app.view.pinview.CustomEditPinText
         android:id="@+id/pin_char"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@android:color/white"
         android:gravity="center"
+        android:layout_gravity="center"
         android:inputType="number"
         android:maxLength="1"
         android:maxLines="1"
@@ -22,11 +23,11 @@
 
     <ImageView
         android:id="@+id/circle"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
         android:scaleType="center"
-        tools:src="@drawable/circle"
-        android:background="@android:color/transparent"/>
+        tools:src="@drawable/circle" />
 
 </FrameLayout>
