@@ -3,8 +3,10 @@ package uk.co.transferx.app.signup;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.transition.Slide;
+import android.support.transition.Transition;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.SparseArray;
@@ -28,12 +30,12 @@ import uk.co.transferx.app.signup.fragment.SignUpStepTwoFragment;
 
 public class SignUpActivity extends BaseActivity {
 
-    private final SparseArray<BaseFragment> sparseArray = new SparseArray<>(3);
-
     public static void startSignUp(Activity activity) {
         activity.startActivity(new Intent(activity, SignUpActivity.class));
     }
 
+    private static final int DURATION = 500;
+    private final SparseArray<BaseFragment> sparseArray = new SparseArray<>(3);
     private PageIndicatorView pageIndicatorView;
     private TextView steps;
     private ImageView arrowBack;
@@ -59,9 +61,35 @@ public class SignUpActivity extends BaseActivity {
     }
 
 
-    public void showNextOrPriviosFragment(int nextView) {
+    public void showNextOrPreviousFragment(int nextView) {
         Slide slideTransition = new Slide(nextView > currentFragment ? Gravity.END : Gravity.START);
-        slideTransition.setDuration(500);
+        slideTransition.setDuration(DURATION);
+        slideTransition.addListener(new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(@NonNull Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionEnd(@NonNull Transition transition) {
+                arrowBack.setVisibility(currentFragment > 0 ? View.VISIBLE : View.GONE);
+            }
+
+            @Override
+            public void onTransitionCancel(@NonNull Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionPause(@NonNull Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionResume(@NonNull Transition transition) {
+
+            }
+        });
         BaseFragment fragment = sparseArray.get(nextView);
         fragment.setEnterTransition(slideTransition);
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -70,7 +98,6 @@ public class SignUpActivity extends BaseActivity {
         currentFragment = nextView;
         pageIndicatorView.setSelection(nextView);
         steps.setText(getString(R.string.steps, currentFragment + 1));
-        arrowBack.setVisibility(currentFragment > 0 ? View.VISIBLE : View.GONE);
     }
 
 
@@ -81,10 +108,10 @@ public class SignUpActivity extends BaseActivity {
                 super.onBackPressed();
                 break;
             case 1:
-                showNextOrPriviosFragment(0);
+                showNextOrPreviousFragment(0);
                 break;
             case 2:
-                showNextOrPriviosFragment(1);
+                showNextOrPreviousFragment(1);
                 break;
             default:
                 super.onBackPressed();
