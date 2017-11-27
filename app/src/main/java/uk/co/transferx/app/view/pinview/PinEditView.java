@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,11 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
     public final static int PIN_MAX_LENGTH = 8;
     private final static int HIDE_DELAY = 200;
     private SingleCharView currentText;
+    private PinViewListener pinViewListener;
+
+    public interface PinViewListener {
+        void pinEntered(short[] pin);
+    }
 
     Handler handler = new Handler();
     Runnable mHideRunnable = this::hideChar;
@@ -97,10 +103,22 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
         checkPinAndHideKeyboard();
     }
 
-    private void checkPinAndHideKeyboard(){
-        for(short p : pinArray){
+    public void setPinViewListener(PinViewListener pinViewListener) {
+        this.pinViewListener = pinViewListener;
+    }
+
+    private void checkPinAndHideKeyboard() {
+        for (short p : pinArray) {
+            if (p == -1) {
+                return;
             }
         }
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(currentText.getEditChar().getWindowToken(), 0);
+        if (pinViewListener != null) {
+            pinViewListener.pinEntered(pinArray);
+        }
+    }
 
 
     private void removePin(int index) {
@@ -108,7 +126,7 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
     }
 
     public void hideChar() {
-        savePin(((int) currentText.getTag()), Short.valueOf(currentText.getEditChar().getText().toString()));
+        savePin(((int) currentText.getTag()), Short.valueOf(currentText.getEditChar().getText().toString().replaceAll("\\s+","")));
         currentText.setVisibility(View.INVISIBLE);
         currentText.setSecureCircle(AppCompatResources.getDrawable(getContext(), R.drawable.circle));
         if ((int) currentText.getTag() == (listOfChars.size() - 1)) {
@@ -175,7 +193,7 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        if (currentText != null && !TextUtils.isEmpty(charSequence)) {
+        if (currentText != null && !TextUtils.isEmpty(charSequence.toString().replaceAll("\\s+",""))) {
             isShouldHandled = false;
             handler.postDelayed(mHideRunnable, HIDE_DELAY);
         }

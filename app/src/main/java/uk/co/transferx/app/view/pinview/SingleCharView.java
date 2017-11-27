@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -53,6 +52,10 @@ public class SingleCharView extends FrameLayout {
         charView = findViewById(R.id.pin_char);
         container = findViewById(R.id.pin_secret);
         circle = findViewById(R.id.circle);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) { //workaround for KitKat :(
+            charView.setText(" ");
+            charView.setSelection(1);
+        }
 
     }
 
