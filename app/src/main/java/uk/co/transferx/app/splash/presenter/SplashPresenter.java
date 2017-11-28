@@ -30,7 +30,7 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
         super.attachUI(ui);
         dis = Observable.just(new Object())
                 .delay(DELAY, TimeUnit.MILLISECONDS)
-                .subscribe(obj -> ui.goToSignUp());
+                .subscribe(obj -> ui.goToWelcomeScreen());
     }
 
 
@@ -42,9 +42,9 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
 
     public interface SplashUI extends UI {
 
-        void goToSignUp();
+        void goToWelcomeScreen();
 
-        void goToSignIn();
+
 
     }
 }

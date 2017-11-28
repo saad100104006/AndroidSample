@@ -9,9 +9,8 @@ import javax.inject.Inject;
 import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
-import uk.co.transferx.app.signin.SignInActivity;
-import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.splash.presenter.SplashPresenter;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 /**
  * Created by sergey on 19.11.17.
@@ -44,15 +43,9 @@ public class SplashActivity extends BaseActivity implements SplashPresenter.Spla
     }
 
     @Override
-    public void goToSignUp() {
-        startActivity(new Intent(this, SignUpActivity.class));
+    public void goToWelcomeScreen() {
+        startActivity(new Intent(this, WelcomeActivity.class));
         finish();
     }
 
-    @Override
-    public void goToSignIn() {
-
-        startActivity(new Intent(this, SignInActivity.class));
-        finish();
-    }
 }

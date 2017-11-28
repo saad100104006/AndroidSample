@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
+import uk.co.transferx.app.signin.SignInActivity;
+import uk.co.transferx.app.signin.SignInType;
 import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.welcom.presenter.WelcomeFragmentPresenter;
 
@@ -57,6 +59,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.on_boarding_fragment_layout, container, false);
         view.findViewById(R.id.sign_up).setOnClickListener(v -> SignUpActivity.startSignUp(getActivity()));
+        view.findViewById(R.id.sign_in).setOnClickListener(v -> SignInActivity.starSignInActivity(getActivity(), SignInType.EMAIL));
         return view;
     }
 }
