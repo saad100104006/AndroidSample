@@ -14,16 +14,12 @@ import android.widget.Toast;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.recoverpass.RecoverPasswordActivity;
-import uk.co.transferx.app.signup.SignUpActivity;
 
 /**
  * Created by sergey on 19.11.17.
  */
 
 public class SignInEmailFragment extends BaseFragment {
-
-    private TextInputLayout firstInputLayout;
-    private TextInputLayout secondInputLayout;
 
 
     @Override
@@ -36,8 +32,8 @@ public class SignInEmailFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.sign_up_step_fragment_layout, container, false);
-        firstInputLayout = view.findViewById(R.id.first_layout);
-        secondInputLayout = view.findViewById(R.id.second_layout);
+        TextInputLayout firstInputLayout = view.findViewById(R.id.first_layout);
+        TextInputLayout secondInputLayout = view.findViewById(R.id.second_layout);
         ((TextView) view.findViewById(R.id.title)).setText(getString(R.string.one_step_away));
         firstInputLayout.setHint(getString(R.string.email));
         firstInputLayout.getEditText().setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
@@ -52,7 +48,6 @@ public class SignInEmailFragment extends BaseFragment {
         buttonSignIn.setOnClickListener(v -> Toast.makeText(getContext(), "Not implemented yet", Toast.LENGTH_SHORT).show());
         return view;
     }
-
 
 
 }

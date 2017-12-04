@@ -31,7 +31,7 @@ public class SignUpStepTwoFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.sign_up_step_fragment_layout, container, false);
+        View view = inflater.inflate(R.layout.sign_up_step_two_fragment_layout, container, false);
         firstInputLayout = view.findViewById(R.id.first_layout);
         secondInputLayout = view.findViewById(R.id.second_layout);
         ((TextView) view.findViewById(R.id.title)).setText(getString(R.string.title_two));
