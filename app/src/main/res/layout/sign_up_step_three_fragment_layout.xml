@@ -30,7 +30,8 @@
             android:textSize="16sp" />
 
         <uk.co.transferx.app.view.pinview.PinEditView
-            android:id="@+id/pin_input"
+            android:id="@+id/pin_first"
+            android:focusable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
@@ -52,7 +53,7 @@
 
 
         <uk.co.transferx.app.view.pinview.PinEditView
-            android:id="@+id/pin_input_confirm"
+            android:id="@+id/pin_second"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"

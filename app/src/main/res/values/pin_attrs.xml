@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="pin_attrs">
+        <attr name="is_should_hide_keyboard" format="boolean" />
+    </declare-styleable>
+</resources>

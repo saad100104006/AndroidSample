@@ -21,7 +21,7 @@ import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.signup.fragment.SignUpStepOneFragment;
-import uk.co.transferx.app.signup.fragment.SignUpStepTreeFragment;
+import uk.co.transferx.app.signup.fragment.SignUpStepThreeFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepTwoFragment;
 
 /**
@@ -53,7 +53,7 @@ public class SignUpActivity extends BaseActivity {
         steps.setText(getString(R.string.steps, currentFragment + 1));
         sparseArray.put(0, new SignUpStepOneFragment());
         sparseArray.put(1, new SignUpStepTwoFragment());
-        sparseArray.put(2, new SignUpStepTreeFragment());
+        sparseArray.put(2, new SignUpStepThreeFragment());
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, sparseArray.get(currentFragment), sparseArray.get(currentFragment).getTag());
         ft.commit();

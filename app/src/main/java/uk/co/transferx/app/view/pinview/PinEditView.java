@@ -2,15 +2,15 @@ package uk.co.transferx.app.view.pinview;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v7.content.res.AppCompatResources;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +32,14 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
 
     public final static int PIN_MIN_LENGTH = 4;
     public final static int PIN_MAX_LENGTH = 8;
-    private final static int HIDE_DELAY = 200;
+    private final static int HIDE_DELAY = 150;
     private SingleCharView currentText;
     private PinViewListener pinViewListener;
+    private LinearLayout containerPin;
+    boolean isShouldHideKeyboard;
 
     public interface PinViewListener {
-        void pinEntered(short[] pin);
+        void pinEntered(int[] pin);
     }
 
     Handler handler = new Handler();
@@ -45,7 +47,7 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
 
     private List<SingleCharView> listOfChars = new ArrayList<>(8);
     private boolean isShouldHandled = true;
-    private short[] pinArray;
+    private int[] pinArray;
 
     public PinEditView(Context context) {
         super(context);
@@ -71,18 +73,28 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
 
     private void init(Context context, AttributeSet attrs) {
 
-        LayoutInflater.from(context).inflate(R.layout.pin_view_layout, this);
         if (attrs != null) {
-
+            TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.pin_attrs);
+            isShouldHideKeyboard = typedArray.getBoolean(R.styleable.pin_attrs_is_should_hide_keyboard, false);
+            typedArray.recycle();
         }
 
-        LinearLayout containerPin = findViewById(R.id.pin_container);
+        setSaveEnabled(true);
+
+        ViewGroup view = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.pin_view_layout, this);
+        containerPin = new LinearLayout(context);
+        containerPin.setId(View.generateViewId());
+        view.addView(containerPin);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.weight = 1;
-        lp.setMargins((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 0.1f, getResources().getDisplayMetrics()), 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 0.1f, getResources().getDisplayMetrics()), 0);
+        lp.setMargins((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, getResources().getDisplayMetrics()), 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, getResources().getDisplayMetrics()), 0);
         containerPin.removeAllViews();
         for (int i = 0; i < PIN_MIN_LENGTH; i++) {
-            SingleCharView secreteChar = new SingleCharView(getContext());
+            final SingleCharView secreteChar = new SingleCharView(getContext());
+            if (isFocusable() && i == 0) {
+                handler.post(() -> secreteChar.getEditChar().requestFocus());
+            }
+            secreteChar.setId(View.generateViewId());
             secreteChar.setTag(i);
             secreteChar.addTextChangedListener(this);
             secreteChar.setOnFocusChangeListener(this);
@@ -92,7 +104,7 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
             containerPin.addView(secreteChar, lp);
         }
 
-        pinArray = new short[PIN_MIN_LENGTH];
+        pinArray = new int[PIN_MIN_LENGTH];
         for (int i = 0; i < pinArray.length; i++) {
             pinArray[i] = -1;
         }
@@ -108,30 +120,64 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
     }
 
     private void checkPinAndHideKeyboard() {
-        for (short p : pinArray) {
+        for (int p : pinArray) {
             if (p == -1) {
                 return;
             }
         }
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(currentText.getEditChar().getWindowToken(), 0);
+        if (isShouldHideKeyboard) {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(currentText.getEditChar().getWindowToken(), 0);
+        }
         if (pinViewListener != null) {
             pinViewListener.pinEntered(pinArray);
         }
     }
 
+    @Nullable
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        PinEditSaveState pess = new PinEditSaveState(superState);
+        pess.pinValues = pinArray;
+        return pess;
+    }
 
-    private void removePin(int index) {
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        PinEditSaveState scvs = (PinEditSaveState) state;
+        super.onRestoreInstanceState(scvs.getSuperState());
+        pinArray = scvs.pinValues;
+        for (int i = 0; i < PIN_MIN_LENGTH; i++) {
+            int v = pinArray[i];
+            final SingleCharView singleCharView = (SingleCharView) containerPin.getChildAt(i);
+            if (v != -1) {
+                singleCharView.setVisibility(INVISIBLE);
+                singleCharView.setSecureBlackCircle();
+                currentText = singleCharView;
+            } else {
+                singleCharView.setVisibility(VISIBLE);
+                singleCharView.disableSecurityCircle();
+
+
+            }
+        }
+
+    }
+
+    private void removePinValue(int index) {
         pinArray[index] = -1;
     }
 
     public void hideChar() {
-        savePin(((int) currentText.getTag()), Short.valueOf(currentText.getEditChar().getText().toString().replaceAll("\\s+","")));
+        savePin(((int) currentText.getTag()), Short.valueOf(currentText.getEditChar().getText().toString().replaceAll("\\s+", "")));
         currentText.setVisibility(View.INVISIBLE);
-        currentText.setSecureCircle(AppCompatResources.getDrawable(getContext(), R.drawable.circle));
-        if ((int) currentText.getTag() == (listOfChars.size() - 1)) {
+        currentText.setSecureBlackCircle();
+        if ((int) currentText.getTag() == (listOfChars.size() - 1) && isShouldHideKeyboard) {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(currentText.getEditChar().getWindowToken(), 0);
+
         }
         isShouldHandled = true;
     }
@@ -149,6 +195,30 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
         }
     }
 
+    private void shouldReInput() {
+        int current = (int) currentText.getTag();
+        handler.post(() -> currentText.getEditChar().requestFocus());
+        currentText.getEditChar().getText().clear();
+        removePinValue(current);
+        disableSecurity();
+        resetError();
+        showKeyboard();
+    }
+
+    public void setError() {
+        for (SingleCharView singleCharView : listOfChars) {
+            singleCharView.setError();
+        }
+        handler.postDelayed(() -> listOfChars.get(listOfChars.size() - 1).setError(), HIDE_DELAY);
+    }
+
+
+    public void resetError() {
+        for (int i = 0; i < listOfChars.size() - 1; i++) {
+            listOfChars.get(i).setSecureBlackCircle();
+        }
+    }
+
     @Override
     public void onClick(View view) {
         if (isNotLast() && isShouldHandled) {
@@ -157,6 +227,21 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
         if (isLastAndEmpty() && isShouldHandled) {
             showKeyboard();
         }
+        if (isShouldBeReInputted() && isShouldHandled) {
+            shouldReInput();
+        }
+
+    }
+
+
+    private boolean isShouldBeReInputted() {
+        boolean result = true;
+        for (int pin : pinArray) {
+            if (pin == -1) {
+                result = false;
+            }
+        }
+        return result;
     }
 
     private boolean isNotLast() {
@@ -168,7 +253,7 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
     }
 
     private void disableSecurity() {
-        removePin((int) currentText.getTag());
+        removePinValue((int) currentText.getTag());
         currentText.disableSecurityCircle();
         currentText.setVisibility(VISIBLE);
 
@@ -193,7 +278,7 @@ public class PinEditView extends FrameLayout implements TextWatcher, View.OnFocu
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        if (currentText != null && !TextUtils.isEmpty(charSequence.toString().replaceAll("\\s+",""))) {
+        if (currentText != null && !TextUtils.isEmpty(charSequence.toString().replaceAll("\\s+", ""))) {
             isShouldHandled = false;
             handler.postDelayed(mHideRunnable, HIDE_DELAY);
         }
