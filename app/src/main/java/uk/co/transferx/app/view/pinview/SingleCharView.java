@@ -123,20 +123,22 @@ public class SingleCharView extends FrameLayout {
     }
 
     @Override
-    public void setVisibility(int visibility) {
-        charView.setVisibility(visibility);
-    }
-
-    @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         circle.setOnClickListener(l);
     }
 
-    public void disableSecurityCircle() {
+    public void disableSecurity() {
         circle.setImageDrawable(null);
+        charView.setVisibility(VISIBLE);
+        charView.getText().clear();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {//workaround for KitKat :(
+            charView.setText(" ");
+            charView.setSelection(1);
+        }
     }
 
-    public void setSecureBlackCircle() {
+    public void setSecurity() {
+        charView.setVisibility(INVISIBLE);
         circle.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.circle));
     }
 

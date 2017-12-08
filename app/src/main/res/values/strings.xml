@@ -24,4 +24,6 @@
     <string name="send">SEND</string>
     <string name="recover_title">Use Registration Email</string>
     <string name="recover_desc">We will send  you an email with the a link to change your password</string>
+    <string name="password_error">Password should be at least 8 characters and contain one uppercase character and one number.</string>
+    <string name="email_error">Email is not valid.</string>
 </resources>

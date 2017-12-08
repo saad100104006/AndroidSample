@@ -25,7 +25,9 @@ public class SignInActivity extends BaseActivity {
 
         Intent intent = new Intent(activity, SignInActivity.class);
         intent.putExtra(TYPE_SIGNIN, signInType.ordinal());
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
+        activity.finish();
 
     }
 

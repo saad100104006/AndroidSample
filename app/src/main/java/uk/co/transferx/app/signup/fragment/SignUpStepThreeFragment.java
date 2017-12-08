@@ -2,11 +2,11 @@ package uk.co.transferx.app.signup.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -45,7 +45,6 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.sign_up_step_three_fragment_layout, container, false);
         Button nextButton = view.findViewById(R.id.next_step);
         firstPinEditView = view.findViewById(R.id.pin_first);
@@ -64,15 +63,9 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
 
     @Override
     public void nextStep(int[] validPin) {
-        StringBuilder sb = new StringBuilder();
-        for (int p : validPin) {
-            sb.append(" ");
-            sb.append(p);
-            sb.append(" ");
-        }
+        Toast.makeText(getContext(), "Pin is valid", Toast.LENGTH_SHORT).show();
+        getActivity().finish();
 
-        Log.d("Sergey", "pin [" + sb.toString() + "]");
-        SignInActivity.starSignInActivity(getActivity(), SignInType.EMAIL);
     }
 
     @Override

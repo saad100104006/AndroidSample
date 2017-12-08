@@ -60,6 +60,11 @@ public class SignUpActivity extends BaseActivity {
         pageIndicatorView.setSelection(currentFragment);
     }
 
+    @Override
+    protected void onDestroy() {
+        currentFragment = 0;
+        super.onDestroy();
+    }
 
     public void showNextOrPreviousFragment(int nextView) {
         Slide slideTransition = new Slide(nextView > currentFragment ? Gravity.END : Gravity.START);
