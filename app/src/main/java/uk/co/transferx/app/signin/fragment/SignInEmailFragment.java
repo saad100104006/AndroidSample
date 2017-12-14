@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
+import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.recoverpass.RecoverPasswordActivity;
 
 /**
@@ -45,7 +45,7 @@ public class SignInEmailFragment extends BaseFragment {
         String forgotPassword = getString(R.string.forgot_password) + "?";
         forgotPass.setText(forgotPassword.toUpperCase());
         forgotPass.setOnClickListener(v -> RecoverPasswordActivity.starRecoverPasswordActivity(getActivity()));
-        buttonSignIn.setOnClickListener(v -> Toast.makeText(getContext(), "Not implemented yet", Toast.LENGTH_SHORT).show());
+        buttonSignIn.setOnClickListener(v -> MainActivity.startMainActivity(getActivity()));
         return view;
     }
 
