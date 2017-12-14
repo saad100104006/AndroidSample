@@ -1,6 +1,6 @@
 package uk.co.transferx.app;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -13,7 +13,7 @@ import uk.co.transferx.app.dagger.module.AppModule;
  * Created by smilevkiy on 13.11.17.
  */
 
-public class TransferXApplication extends Application {
+public class TransferXApplication extends MultiDexApplication {
 
     private AppComponent appComponent;
 

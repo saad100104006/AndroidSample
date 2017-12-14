@@ -3,7 +3,27 @@
     <string name="welcome">welcome</string>
     <string name="sign_in">SIGN IN</string>
     <string name="sign_up">SIGN UP</string>
+    <string name="next">NEXT</string>
+    <string name="steps">Step %d</string>
     <string name="lets_start">Lets Get Started!</string>
     <string name="terms">"By signing up, you are agreeing to our
 <u>Terms &amp; Conditions</u> and <u>Privacy Policy.</u>"</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="pin">Pin</string>
+    <string name="confirm_pin">Confirm pin</string>
+    <string name="title_one">Lets Start With You</string>
+    <string name="title_two">Now Your Login Details</string>
+    <string name="title_three">And Finally Set A PIN</string>
+    <string name="sign_me_up">SIGN ME UP</string>
+    <string name="money_logo">money that cares</string>
+    <string name="one_step_away">One Step Away</string>
+    <string name="send">SEND</string>
+    <string name="recover_title">Use Registration Email</string>
+    <string name="recover_desc">We will send  you an email with the a link to change your password</string>
+    <string name="password_error">Password should be at least 8 characters and contain one uppercase character and one number.</string>
+    <string name="email_error">Email is not valid.</string>
 </resources>

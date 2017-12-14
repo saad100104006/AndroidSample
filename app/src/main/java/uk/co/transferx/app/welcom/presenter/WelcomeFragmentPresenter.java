@@ -9,10 +9,10 @@ import uk.co.transferx.app.UI;
  * Created by smilevkiy on 14.11.17.
  */
 
-public class WelcomePresenter extends BasePresenter<WelcomePresenter.WelcomeUI> {
+public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPresenter.WelcomeUI> {
 
     @Inject
-    public WelcomePresenter() {
+    public WelcomeFragmentPresenter() {
     }
 
     public interface WelcomeUI extends UI {
