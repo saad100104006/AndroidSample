@@ -22,7 +22,7 @@
                 android:id="@+id/label"
                 android:layout_width="wrap_content"
                 android:layout_height="?attr/actionBarSize"
-                android:src="@drawable/ic_action_bar_logo" />
+                android:src="@drawable/logo_v" />
 
         </android.support.v7.widget.Toolbar>
 
