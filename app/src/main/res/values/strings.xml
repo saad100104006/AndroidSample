@@ -26,9 +26,21 @@
     <string name="recover_desc">We will send  you an email with the a link to change your password</string>
     <string name="password_error">Password should be at least 8 characters and contain one uppercase character and one number.</string>
     <string name="email_error">Email is not valid.</string>
+    <string name="recipient_label">Recipient</string>
+    <string name="delivery_label">Delivery Method</string>
+    <string name="amount">Amount</string>
+    <string name="send_money">Send Money</string>
+    <string name="today_rate_label">Today Rate:</string>
+    <string name="select_currency_title">Select Currency</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>
         <item>Recipients</item>
     </string-array>
+
+    <string-array name="delivery_method">
+        <item>Mobile Money</item>
+    </string-array>
+
+
 </resources>
