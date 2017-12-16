@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mynameismidori.currencypicker.CurrencyPicker;
+import com.mynameismidori.currencypicker.ExtendedCurrency;
 
 import javax.inject.Inject;
 
@@ -27,7 +28,6 @@ import uk.co.transferx.app.mainscreen.presenters.SendFragmentPresenter;
 public class SendFragment extends BaseFragment implements SendFragmentPresenter.SendFragmentUI {
 
     private static final String CURRENCY_PICKER = "currency_picker";
-    private TextView currencyFrom, currencyTo;
 
     @Inject
     SendFragmentPresenter sendFragmentPresenter;
@@ -54,15 +54,23 @@ public class SendFragment extends BaseFragment implements SendFragmentPresenter.
         AppCompatSpinner chooseDelivery = view.findViewById(R.id.delivery_method);
         final ImageView countryFlagFirst = view.findViewById(R.id.country_flag_first);
         final ImageView countryFlagSecond = view.findViewById(R.id.country_flag_second);
-        currencyFrom = view.findViewById(R.id.first_currency);
-        currencyTo = view.findViewById(R.id.second_currency);
-        currencyFrom.setOnClickListener(v -> showCurrencyPicker((TextView) v, countryFlagFirst));
-        currencyTo.setOnClickListener(v -> showCurrencyPicker((TextView) v, countryFlagSecond));
+        final TextView currencyCodeFirst = view.findViewById(R.id.first_currency);
+        final TextView currencyCodeSecond = view.findViewById(R.id.second_currency);
+        setUpInitialValue(currencyCodeFirst, countryFlagFirst, "EUR");
+        setUpInitialValue(currencyCodeSecond, countryFlagSecond, "PLN");
+        currencyCodeFirst.setOnClickListener(v -> showCurrencyPicker((TextView) v, countryFlagFirst));
+        currencyCodeSecond.setOnClickListener(v -> showCurrencyPicker((TextView) v, countryFlagSecond));
         ArrayAdapter<String> deliveryMethodAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item, getResources().getStringArray(R.array.delivery_method));
         deliveryMethodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chooseDelivery.setAdapter(deliveryMethodAdapter);
         return view;
 
+    }
+
+    private void setUpInitialValue(final TextView codeText, final ImageView flag, String currencyName) {
+        ExtendedCurrency currency = ExtendedCurrency.getCurrencyByISO(currencyName);
+        codeText.setText(currency.getCode());
+        flag.setImageDrawable(ContextCompat.getDrawable(flag.getContext(), currency.getFlag()));
     }
 
     private void showCurrencyPicker(final TextView textView, final ImageView imageView) {
