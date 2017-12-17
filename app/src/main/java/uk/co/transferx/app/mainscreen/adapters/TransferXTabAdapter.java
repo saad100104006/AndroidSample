@@ -1,4 +1,4 @@
-package uk.co.transferx.app.mainscreen.adapter;
+package uk.co.transferx.app.mainscreen.adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import uk.co.transferx.app.R;
+import uk.co.transferx.app.mainscreen.fragments.ActivityFragment;
+import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
 import uk.co.transferx.app.mainscreen.fragments.SendFragment;
 
 /**
@@ -38,9 +40,9 @@ public class TransferXTabAdapter extends FragmentPagerAdapter {
             case 0:
                 return new SendFragment();
             case 1:
-                return new SendFragment();
+                return new ActivityFragment();
             case 2:
-                return new SendFragment();
+                return new RecipientsFragment();
             default:
                 return null;
         }

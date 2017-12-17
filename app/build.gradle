@@ -88,6 +88,11 @@ dependencies {
     //currency picker
     implementation 'com.github.midorikocak:currency-picker-android:1.2.1'
 
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.3.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.3.1"
+
     //crashlytics
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true

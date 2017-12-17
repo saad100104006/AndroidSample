@@ -32,6 +32,9 @@
     <string name="send_money">Send Money</string>
     <string name="today_rate_label">Today Rate:</string>
     <string name="select_currency_title">Select Currency</string>
+    <string name="favourite_recipients">Favourite Recipients</string>
+    <string name="add_new">Add New</string>
+    <string name="recent_transfers">Recent Transfers</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>
@@ -40,6 +43,7 @@
 
     <string-array name="delivery_method">
         <item>Mobile Money</item>
+        <item>Web Money</item>
     </string-array>
 
 

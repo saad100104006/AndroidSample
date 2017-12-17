@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import uk.co.transferx.app.R;
-import uk.co.transferx.app.mainscreen.adapter.TransferXTabAdapter;
+import uk.co.transferx.app.mainscreen.adapters.TransferXTabAdapter;
 
 /**
  * Created by sergey on 14.12.17.

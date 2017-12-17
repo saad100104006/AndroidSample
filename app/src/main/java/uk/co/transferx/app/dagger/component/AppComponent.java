@@ -2,6 +2,8 @@ package uk.co.transferx.app.dagger.component;
 
 import dagger.Component;
 import uk.co.transferx.app.dagger.module.AppModule;
+import uk.co.transferx.app.mainscreen.fragments.ActivityFragment;
+import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
 import uk.co.transferx.app.mainscreen.fragments.SendFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepThreeFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepTwoFragment;
@@ -23,4 +25,8 @@ public interface AppComponent {
     void inject(SignUpStepTwoFragment signUpStepTwoFragment);
 
     void inject(SendFragment sendFragment);
+
+    void inject(RecipientsFragment recipientsFragment);
+
+    void inject(ActivityFragment activityFragment);
 }
