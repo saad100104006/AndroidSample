@@ -28,6 +28,7 @@ import uk.co.transferx.app.mainscreen.presenters.SendFragmentPresenter;
 public class SendFragment extends BaseFragment implements SendFragmentPresenter.SendFragmentUI {
 
     private static final String CURRENCY_PICKER = "currency_picker";
+    private View view;
 
     @Inject
     SendFragmentPresenter sendFragmentPresenter;
@@ -49,20 +50,21 @@ public class SendFragment extends BaseFragment implements SendFragmentPresenter.
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.send_fragment_layout, container, false);
-        AppCompatSpinner chooseDelivery = view.findViewById(R.id.delivery_method);
-        final ImageView countryFlagFirst = view.findViewById(R.id.country_flag_first);
-        final ImageView countryFlagSecond = view.findViewById(R.id.country_flag_second);
-        final TextView currencyCodeFirst = view.findViewById(R.id.first_currency);
-        final TextView currencyCodeSecond = view.findViewById(R.id.second_currency);
-        setUpInitialValue(currencyCodeFirst, countryFlagFirst, "EUR");
-        setUpInitialValue(currencyCodeSecond, countryFlagSecond, "PLN");
-        currencyCodeFirst.setOnClickListener(v -> showCurrencyPicker((TextView) v, countryFlagFirst));
-        currencyCodeSecond.setOnClickListener(v -> showCurrencyPicker((TextView) v, countryFlagSecond));
-        ArrayAdapter<String> deliveryMethodAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item, getResources().getStringArray(R.array.delivery_method));
-        deliveryMethodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        chooseDelivery.setAdapter(deliveryMethodAdapter);
+        if (view == null) {
+            view = inflater.inflate(R.layout.send_fragment_layout, container, false);
+            AppCompatSpinner chooseDelivery = view.findViewById(R.id.delivery_method);
+            final ImageView countryFlagFirst = view.findViewById(R.id.country_flag_first);
+            final ImageView countryFlagSecond = view.findViewById(R.id.country_flag_second);
+            final TextView currencyCodeFirst = view.findViewById(R.id.first_currency);
+            final TextView currencyCodeSecond = view.findViewById(R.id.second_currency);
+            setUpInitialValue(currencyCodeFirst, countryFlagFirst, "EUR");
+            setUpInitialValue(currencyCodeSecond, countryFlagSecond, "PLN");
+            currencyCodeFirst.setOnClickListener(v -> showCurrencyPicker((TextView) v, countryFlagFirst));
+            currencyCodeSecond.setOnClickListener(v -> showCurrencyPicker((TextView) v, countryFlagSecond));
+            ArrayAdapter<String> deliveryMethodAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item, getResources().getStringArray(R.array.delivery_method));
+            deliveryMethodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            chooseDelivery.setAdapter(deliveryMethodAdapter);
+        }
         return view;
 
     }
