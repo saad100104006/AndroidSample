@@ -38,8 +38,8 @@
 
                 <ImageView
                     android:id="@+id/photo"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/size_of_photo"
+                    android:layout_height="@dimen/size_of_photo"
                     android:layout_margin="4dp"
                     android:src="@drawable/placeholder" />
 
@@ -154,9 +154,9 @@
                     android:background="@null"
                     android:ellipsize="end"
                     android:gravity="end"
+                    android:hint="@string/zero_value"
                     android:inputType="numberDecimal"
                     android:maxLines="1"
-                    android:text="100"
                     android:textColor="@color/colorAccent"
                     android:textSize="18sp" />
 
@@ -203,10 +203,10 @@
                     android:background="@null"
                     android:ellipsize="end"
                     android:gravity="end"
+                    android:hint="@string/zero_value"
                     android:inputType="numberDecimal"
                     android:maxLines="1"
                     android:paddingTop="18dp"
-                    android:text="100"
                     android:textColor="@color/colorAccent"
                     android:textSize="18sp" />
 

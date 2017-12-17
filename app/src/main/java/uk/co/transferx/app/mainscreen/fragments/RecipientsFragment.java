@@ -7,11 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
+import uk.co.transferx.app.dto.RecipientDto;
+import uk.co.transferx.app.mainscreen.adapters.RecipientHorizontalRecyclerAdapter;
+import uk.co.transferx.app.mainscreen.adapters.RecipientVerticalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
 
 /**
@@ -21,7 +26,8 @@ import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
 public class RecipientsFragment extends BaseFragment implements RecipientsFragmentPresenter.RecipientsFragmentUI {
 
     private View view;
-    private RecyclerView horizontalRecipientRecyclerView, verticalRecipientRecyclerView;
+    private RecipientHorizontalRecyclerAdapter horizontalRecyclerAdapter;
+    private RecipientVerticalRecyclerAdapter verticalRecyclerAdapter;
 
     @Inject
     RecipientsFragmentPresenter presenter;
@@ -45,13 +51,22 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.recipients_fragment_layout, container, false);
-            horizontalRecipientRecyclerView = view.findViewById(R.id.horizontal_recycler_view);
-            verticalRecipientRecyclerView = view.findViewById(R.id.vertical_recycler_view);
+            RecyclerView horizontalRecipientRecyclerView = view.findViewById(R.id.horizontal_recycler_view);
+            RecyclerView verticalRecipientRecyclerView = view.findViewById(R.id.vertical_recycler_view);
+            horizontalRecyclerAdapter = new RecipientHorizontalRecyclerAdapter(getContext());
+            verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(getContext());
+            horizontalRecipientRecyclerView.setAdapter(horizontalRecyclerAdapter);
+            verticalRecipientRecyclerView.setAdapter(verticalRecyclerAdapter);
         }
         return view;
 
     }
 
+    @Override
+    public void setFavoriteRecipients(List<RecipientDto> recipientDtos) {
+        horizontalRecyclerAdapter.setRecipients(recipientDtos);
+        verticalRecyclerAdapter.setRecipients(recipientDtos);
+    }
 
     @Override
     public void onResume() {

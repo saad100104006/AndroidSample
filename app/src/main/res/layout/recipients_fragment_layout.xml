@@ -1,70 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:fillViewport="true">
+    android:background="@color/background">
 
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/recipient_title"
+        style="@style/TextMainStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:text="@string/favourite_recipients" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/horizontal_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recipient_title"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+    <Button
+        android:id="@+id/add_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-7dp"
+        android:layout_marginEnd="-5dp"
+        android:layout_marginStart="-5dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:minHeight="60dp"
+        android:text="@string/add_new"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        android:theme="@style/ButtonSend" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/vertical_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/add_button"
+        android:layout_below="@id/horizontal_recycler_view"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:listitem="@android:layout/simple_gallery_item">
 
-        <TextView
-            android:id="@+id/recipient_title"
-            style="@style/TextMainStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/left_right_main_screen"
-            android:layout_marginRight="@dimen/left_right_main_screen"
-            android:text="@string/favourite_recipients" />
+    </android.support.v7.widget.RecyclerView>
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/horizontal_recycler_view"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:layout_margin="20dp"
-            android:orientation="horizontal"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager">
-
-        </android.support.v7.widget.RecyclerView>
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/vertical_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="vertical"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager">
-
-        </android.support.v7.widget.RecyclerView>
-
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-7dp"
-            android:layout_marginEnd="-5dp"
-            android:layout_marginStart="-5dp"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:minHeight="60dp"
-            android:text="@string/add_new"
-            android:textAllCaps="false"
-            android:textSize="24sp"
-            android:theme="@style/ButtonSend" />
-
-    </LinearLayout>
-
-</android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

@@ -35,6 +35,7 @@
     <string name="favourite_recipients">Favourite Recipients</string>
     <string name="add_new">Add New</string>
     <string name="recent_transfers">Recent Transfers</string>
+    <string name="zero_value">0</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>

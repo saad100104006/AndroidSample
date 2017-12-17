@@ -17,7 +17,7 @@ import uk.co.transferx.app.dto.RecipientDto;
  * Created by sergey on 17.12.17.
  */
 
-public class RecipientHorizontalRecyclerAdapter extends RecyclerView.Adapter {
+public class RecipientHorizontalRecyclerAdapter extends RecyclerView.Adapter<RecipientHorizontalRecyclerAdapter.RecipientHorizontalHolder> {
 
 
     private List<RecipientDto> recipientDtoList;
@@ -33,18 +33,32 @@ public class RecipientHorizontalRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecipientHorizontalHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new RecipientHorizontalHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recipient_favourite_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecipientHorizontalHolder holder, int position) {
+        final RecipientDto recipientDto = recipientDtoList.get(position);
+        holder.recipientName.setText(recipientDto.getFavoriteName());
+       /* GlideApp.with(context)
+                .load(recipientDto.getImgUrl())
+                .transform(new CircleCrop())
+                .into(holder.recipientPhoto); */
+
 
     }
 
     @Override
     public int getItemCount() {
         return recipientDtoList == null ? 0 : recipientDtoList.size();
+    }
+
+
+    public void setRecipients(List<RecipientDto> recipients) {
+        this.recipientDtoList = recipients;
+        notifyDataSetChanged();
+
     }
 
 
