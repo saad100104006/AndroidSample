@@ -66,7 +66,7 @@ public class SignUpActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    public void showNextOrPreviousFragment(int nextView) {
+    public void showNextOrPreviousFragment(int nextView, Bundle bundle) {
         Slide slideTransition = new Slide(nextView > currentFragment ? Gravity.END : Gravity.START);
         slideTransition.setDuration(DURATION);
         slideTransition.addListener(new Transition.TransitionListener() {
@@ -97,6 +97,9 @@ public class SignUpActivity extends BaseActivity {
         });
         BaseFragment fragment = sparseArray.get(nextView);
         fragment.setEnterTransition(slideTransition);
+        if (bundle != null) {
+            fragment.setArguments(bundle);
+        }
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, fragment, fragment.getTag());
         ft.commit();
@@ -113,10 +116,10 @@ public class SignUpActivity extends BaseActivity {
                 super.onBackPressed();
                 break;
             case 1:
-                showNextOrPreviousFragment(0);
+                showNextOrPreviousFragment(0, null);
                 break;
             case 2:
-                showNextOrPreviousFragment(1);
+                showNextOrPreviousFragment(1, null);
                 break;
             default:
                 super.onBackPressed();

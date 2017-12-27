@@ -17,4 +17,8 @@ public final class Util {
     public static boolean validatePassword(String password) {
         return password.matches(VALIDATE_PATTERN_PASSWORD);
     }
+
+    public static boolean isNullorEmpty(String text){
+        return text == null || text.isEmpty();
+    }
 }

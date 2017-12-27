@@ -8,6 +8,7 @@ import io.fabric.sdk.android.Fabric;
 import uk.co.transferx.app.dagger.component.AppComponent;
 import uk.co.transferx.app.dagger.component.DaggerAppComponent;
 import uk.co.transferx.app.dagger.module.AppModule;
+import uk.co.transferx.app.dagger.module.NetworkModule;
 
 /**
  * Created by smilevkiy on 13.11.17.
@@ -22,6 +23,7 @@ public class TransferXApplication extends MultiDexApplication {
         super.onCreate();
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule())
+                .networkModule(new NetworkModule("http://api.transferx.co.uk"))
                 .build();
 
         if (!BuildConfig.DEBUG) {

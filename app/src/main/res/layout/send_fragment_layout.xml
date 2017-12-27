@@ -9,6 +9,7 @@
 
 
     <LinearLayout
+        android:id="@+id/send_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -24,10 +25,13 @@
             android:text="@string/recipient_label" />
 
         <android.support.v7.widget.CardView
+            android:id="@+id/recipient_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/left_right_main_screen"
             android:layout_marginRight="@dimen/left_right_main_screen"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="@color/white"
             app:cardElevation="2dp">
 
@@ -40,8 +44,7 @@
                     android:id="@+id/photo"
                     android:layout_width="@dimen/size_of_photo"
                     android:layout_height="@dimen/size_of_photo"
-                    android:layout_margin="4dp"
-                    android:src="@drawable/placeholder" />
+                    android:layout_margin="4dp" />
 
                 <TextView
                     android:id="@+id/name"
@@ -49,7 +52,6 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:paddingLeft="26dp"
-                    android:text="Sergey Milewski"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
 
@@ -59,7 +61,6 @@
                     android:layout_height="match_parent"
                     android:gravity="right|center_vertical"
                     android:paddingRight="16dp"
-                    android:text="PL"
                     android:textColor="@color/colorAccent"
                     android:textSize="14sp" />
 
@@ -85,15 +86,16 @@
             app:cardBackgroundColor="@color/white"
             app:cardElevation="2dp">
 
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/delivery_method"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:gravity="center"
-                android:padding="15dp">
+            <!--  <android.support.v7.widget.AppCompatSpinner
+                  android:id="@+id/delivery_method"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="@android:color/transparent"
+                  android:gravity="center"
+                  android:padding="15dp">
 
-            </android.support.v7.widget.AppCompatSpinner>
+              </android.support.v7.widget.AppCompatSpinner> -->
+            <include layout="@layout/spinner_item" />
 
         </android.support.v7.widget.CardView>
 
@@ -135,7 +137,6 @@
                     android:layout_marginEnd="30dp"
                     android:layout_toRightOf="@id/country_flag_first"
                     android:clickable="true"
-                    android:drawableEnd="@drawable/triangle"
                     android:drawablePadding="10dp"
                     android:maxLines="1"
                     android:minWidth="70dp"
@@ -146,11 +147,11 @@
 
 
                 <EditText
+                    android:id="@+id/amount_sender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@id/first_currency"
                     android:background="@null"
                     android:ellipsize="end"
                     android:gravity="end"
@@ -185,7 +186,6 @@
                     android:layout_marginTop="18dp"
                     android:layout_toRightOf="@id/country_flag_second"
                     android:clickable="true"
-                    android:drawableEnd="@drawable/triangle"
                     android:drawablePadding="10dp"
                     android:maxLines="1"
                     android:minWidth="70dp"
@@ -195,9 +195,11 @@
                     tools:text="EUR" />
 
                 <EditText
+                    android:id="@+id/amount_recipient"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:enabled="false"
                     android:layout_below="@id/divider"
                     android:layout_toRightOf="@id/second_currency"
                     android:background="@null"

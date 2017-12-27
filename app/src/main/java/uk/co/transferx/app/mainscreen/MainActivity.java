@@ -13,6 +13,8 @@ import android.view.MenuItem;
 
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.mainscreen.adapters.TransferXTabAdapter;
+import uk.co.transferx.app.signin.SignInActivity;
+import uk.co.transferx.app.signin.SignInType;
 
 /**
  * Created by sergey on 14.12.17.
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.pager_tabs);
         TabLayout tabLayout = findViewById(R.id.tabs);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setOnMenuItemClickListener(item -> false);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         transferXTabAdapter = new TransferXTabAdapter(getSupportFragmentManager(), this);
@@ -72,11 +75,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.one){
-            // do something
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(false) {
+            SignInActivity.starSignInActivity(this, SignInType.PIN);
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
 }

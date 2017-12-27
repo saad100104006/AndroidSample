@@ -36,6 +36,8 @@
     <string name="add_new">Add New</string>
     <string name="recent_transfers">Recent Transfers</string>
     <string name="zero_value">0</string>
+    <string name="mobile_money">Mobile Money</string>
+    <string name="settings">Settings</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>
@@ -43,7 +45,7 @@
     </string-array>
 
     <string-array name="delivery_method">
-        <item>Mobile Money</item>
+        <item>@string/mobile_money</item>
         <item>Web Money</item>
     </string-array>
 

@@ -8,7 +8,7 @@
     android:gravity="center"
     android:textColor="@color/colorAccent"
     android:textSize="18sp"
+    android:padding="5dp"
     android:textStyle="bold"
-    android:drawableEnd="@drawable/triangle"
     android:drawablePadding="8dp"
-    tools:text="Mobile Money" />
+    android:text="@string/mobile_money"/>
