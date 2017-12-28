@@ -1,5 +1,6 @@
 package uk.co.transferx.app.signup.fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -21,6 +22,8 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.signup.presenters.SignUpStepOnePresenter;
 
+import static uk.co.transferx.app.splash.SplashActivity.INITIAL_TOKEN;
+
 /**
  * Created by smilevkiy on 15.11.17.
  */
@@ -31,11 +34,13 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
     @Inject
     SignUpStepOnePresenter presenter;
 
+    @Inject
+    SharedPreferences sharedPreferences;
+
     private TextInputLayout firstInputLayout;
     private TextInputLayout secondInputLayout;
-    public static final String FIRST_NAME = "first_name";
-    public static final String LAST_NAME = "last_name";
-    public static final String TOKEN = "token";
+    public static final String U_NAME = "first_name";
+
 
 
     @Override
@@ -117,11 +122,15 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
     }
 
     @Override
-    public void goToNextStep(String firstName, String lastName, String token) {
+    public void goToNextStep(String uname) {
+        String token = sharedPreferences.getString(INITIAL_TOKEN, null);
+        if(token == null){
+            showError();
+            return;
+        }
         Bundle bundle = new Bundle();
-        bundle.putString(FIRST_NAME, firstName);
-        bundle.putString(LAST_NAME, lastName);
-        bundle.putString(TOKEN, token);
+        bundle.putString(U_NAME, uname);
+        bundle.putString(INITIAL_TOKEN, token);
         ((SignUpActivity) getActivity()).showNextOrPreviousFragment(1, bundle);
     }
 
@@ -132,11 +141,11 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
 
     @Override
     public void showNameError() {
-        firstInputLayout.setError("error");
+        firstInputLayout.setError(getString(R.string.first_name_error));
     }
 
     @Override
     public void showLastNameError() {
-        secondInputLayout.setError("error");
+        secondInputLayout.setError(getString(R.string.last_name_error));
     }
 }

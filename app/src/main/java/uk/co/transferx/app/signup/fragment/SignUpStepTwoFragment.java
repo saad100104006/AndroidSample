@@ -20,9 +20,8 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.signup.presenters.SignUpStepTwoPresenter;
 
-import static uk.co.transferx.app.signup.fragment.SignUpStepOneFragment.FIRST_NAME;
-import static uk.co.transferx.app.signup.fragment.SignUpStepOneFragment.LAST_NAME;
-import static uk.co.transferx.app.signup.fragment.SignUpStepOneFragment.TOKEN;
+import static uk.co.transferx.app.signup.fragment.SignUpStepOneFragment.U_NAME;
+import static uk.co.transferx.app.splash.SplashActivity.INITIAL_TOKEN;
 
 /**
  * Created by smilevkiy on 15.11.17.
@@ -47,7 +46,7 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            presenter.setNamesAndToken(bundle.getString(FIRST_NAME), bundle.getString(LAST_NAME), bundle.getString(TOKEN));
+            presenter.setNamesAndToken(bundle.getString(U_NAME), bundle.getString(INITIAL_TOKEN));
         }
     }
 

@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.SignUpApi;
-import uk.co.transferx.app.pojo.RegisterUserRequest;
+import uk.co.transferx.app.pojo.UserRequest;
 import uk.co.transferx.app.util.Util;
 
 /**
@@ -21,11 +21,11 @@ import uk.co.transferx.app.util.Util;
 public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter.SignUpStepTwoUI> {
 
 
-    private String firstName;
-    private String lastName;
+    private String uname;
     private String token;
     private final SignUpApi signUpApi;
     private Disposable disposable;
+    private final static String EMAIL = "Email";
 
     @Inject
     public SignUpStepTwoPresenter(SignUpApi signUpApi) {
@@ -45,11 +45,10 @@ public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter
 
     }
 
-    public void setNamesAndToken(String firstName, String lastName, String token) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public void setNamesAndToken(String uname, String token) {
+        this.uname = uname;
         this.token = token;
-        Log.d("Sergey", firstName + " " + lastName);
+        Log.d("Sergey", uname);
         Log.d("Sergey", "token " + token);
 
     }
@@ -68,9 +67,9 @@ public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter
     }
 
     private void sendInfoToBackend(String email, String password) {
-        RegisterUserRequest.Builder request = new RegisterUserRequest.Builder();
+        UserRequest.Builder request = new UserRequest.Builder();
 
-        disposable = signUpApi.registerUser(token, request.email(email).upass(password).build())
+        disposable = signUpApi.registerUser(token, request.uname(uname).email(email).upass(password).upassConfirmation(password).build())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
@@ -80,7 +79,7 @@ public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter
                     }
                     if (resp.code() == HttpsURLConnection.HTTP_BAD_REQUEST && ui != null) {
                         String message = resp.errorBody().string();
-                        if (message != null && message.contains("Email")) {
+                        if (message != null && message.contains(EMAIL)) {
                             ui.showErrorEmail(message);
                         }
                     }

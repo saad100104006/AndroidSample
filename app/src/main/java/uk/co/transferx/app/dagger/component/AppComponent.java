@@ -8,6 +8,7 @@ import uk.co.transferx.app.dagger.module.NetworkModule;
 import uk.co.transferx.app.mainscreen.fragments.ActivityFragment;
 import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
 import uk.co.transferx.app.mainscreen.fragments.SendFragment;
+import uk.co.transferx.app.signin.fragment.SignInEmailFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepOneFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepThreeFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepTwoFragment;
@@ -35,4 +36,6 @@ public interface AppComponent {
     void inject(ActivityFragment activityFragment);
 
     void inject(SignUpStepOneFragment signUpStepOneFragment);
+
+    void inject(SignInEmailFragment signInEmailFragment);
 }

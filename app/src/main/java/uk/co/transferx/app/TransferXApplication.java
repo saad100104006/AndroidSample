@@ -22,7 +22,7 @@ public class TransferXApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule())
+                .appModule(new AppModule(this))
                 .networkModule(new NetworkModule("http://api.transferx.co.uk"))
                 .build();
 

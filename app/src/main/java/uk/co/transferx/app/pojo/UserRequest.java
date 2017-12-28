@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by sergey on 27/12/2017.
  */
 
-public class RegisterUserRequest {
+public class UserRequest {
 
 
     @SerializedName("uname")
@@ -23,9 +23,7 @@ public class RegisterUserRequest {
     @Expose
     private String upassConfirmation;
 
-
-
-    private RegisterUserRequest(Builder builder) {
+    private UserRequest(Builder builder) {
         uname = builder.uname;
         email = builder.email;
         upass = builder.upass;
@@ -54,12 +52,16 @@ public class RegisterUserRequest {
 
         public Builder upass(String val) {
             upass = val;
+            return this;
+        }
+
+        public Builder upassConfirmation(String val) {
             upassConfirmation = val;
             return this;
         }
 
-        public RegisterUserRequest build() {
-            return new RegisterUserRequest(this);
+        public UserRequest build() {
+            return new UserRequest(this);
         }
     }
 }

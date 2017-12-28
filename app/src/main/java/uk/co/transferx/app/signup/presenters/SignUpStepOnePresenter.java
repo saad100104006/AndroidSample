@@ -17,43 +17,15 @@ import uk.co.transferx.app.util.Util;
 
 public class SignUpStepOnePresenter extends BasePresenter<SignUpStepOnePresenter.SignUpStepOneUI> {
 
-    private final SignUpApi signUpApi;
-    private String initialToken;
+    private final char UNDERSCORE = '_';
 
-    private Disposable disposable;
 
     @Inject
-    public SignUpStepOnePresenter(SignUpApi signUpApi) {
-        this.signUpApi = signUpApi;
-    }
-
-
-    @Override
-    public void attachUI(SignUpStepOneUI ui) {
-        super.attachUI(ui);
-        if (initialToken == null) {
-            disposable = signUpApi.getInitialToken()
-                    .map(Response::body)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(bod -> initialToken = bod.string());
-        }
-    }
-
-    @Override
-    public void detachUI() {
-        super.detachUI();
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
-        }
+    public SignUpStepOnePresenter() {
     }
 
 
     public void validateAndGoNext(String firstName, String lastName) {
-        if (initialToken == null) {
-            ui.showError();
-            return;
-        }
         if (Util.isNullorEmpty(firstName)) {
             ui.showNameError();
             return;
@@ -62,12 +34,13 @@ public class SignUpStepOnePresenter extends BasePresenter<SignUpStepOnePresenter
             ui.showLastNameError();
             return;
         }
-        ui.goToNextStep(firstName, lastName, initialToken);
+        String sb = firstName + UNDERSCORE +lastName;
+        ui.goToNextStep(sb);
 
     }
 
     public interface SignUpStepOneUI extends UI {
-        void goToNextStep(String firstName, String lastName, String token);
+        void goToNextStep(String uname);
 
         void showError();
 
