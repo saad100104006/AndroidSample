@@ -56,7 +56,7 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
 
     private void signIn(String email, String password, String token) {
         UserRequest.Builder request = new UserRequest.Builder();
-        disposable = signInApi.signIn(token, request.email(email).upass(password).build())
+        disposable = signInApi.signIn(token, request.uname(email).upass(password).build())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
