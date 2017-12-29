@@ -22,15 +22,14 @@
         </android.support.v7.widget.Toolbar>
 
 
-        <fragment
-            android:name="uk.co.transferx.app.settings.fragment.SettingsFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/settings_fragment_layout"
-
-            >
-        </fragment>
-
     </android.support.design.widget.AppBarLayout>
+
+    <fragment
+        android:name="uk.co.transferx.app.settings.fragment.SettingsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/settings_fragment_layout">
+
+    </fragment>
 
 </LinearLayout>
