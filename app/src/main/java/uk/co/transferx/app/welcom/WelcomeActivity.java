@@ -1,9 +1,14 @@
 package uk.co.transferx.app.welcom;
 
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+
+import javax.inject.Inject;
 
 import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.R;
@@ -14,6 +19,14 @@ import uk.co.transferx.app.welcom.fragment.WelcomeFragment;
  */
 
 public class WelcomeActivity extends BaseActivity {
+
+
+
+    public static void startWelcomeActivity(Activity activity) {
+        Intent intent = new Intent(activity, WelcomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        activity.startActivity(intent);
+    }
 
 
     @Override

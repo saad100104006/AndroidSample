@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.mainscreen.adapters.TransferXTabAdapter;
+import uk.co.transferx.app.settings.SettingsActivity;
 import uk.co.transferx.app.signin.SignInActivity;
 import uk.co.transferx.app.signin.SignInType;
 
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        SettingsActivity.startSettings(this);
         return super.onOptionsItemSelected(item);
     }
 
