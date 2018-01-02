@@ -42,7 +42,12 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
                     if (res.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         ui.goToWelcomeScreen(res.body().string());
                     }
-                });
+                }, this::handleError);
+    }
+
+
+    private void handleError(Throwable throwable) {
+        ui.goToWelcomeScreen(null);
     }
 
 

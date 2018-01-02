@@ -1,6 +1,5 @@
 package uk.co.transferx.app.splash;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -50,8 +49,9 @@ public class SplashActivity extends BaseActivity implements SplashPresenter.Spla
     @Override
     public void goToWelcomeScreen(String token) {
         sharedPreferences.edit().putString(INITIAL_TOKEN, token).apply();
-        startActivity(new Intent(this, WelcomeActivity.class));
+        WelcomeActivity.startWelcomeActivity(this);
         finish();
     }
+
 
 }
