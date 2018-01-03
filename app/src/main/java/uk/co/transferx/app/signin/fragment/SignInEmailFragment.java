@@ -121,7 +121,8 @@ public class SignInEmailFragment extends BaseFragment implements SignInEmailPres
 
 
     @Override
-    public void goToMainScreen() {
+    public void goToMainScreen(String token) {
+        sharedPreferences.edit().putString(INITIAL_TOKEN, token).apply();
         Activity activity = getActivity();
         if (activity != null) {
             MainActivity.startMainActivity(getActivity());

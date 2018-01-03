@@ -46,6 +46,12 @@
     <string name="support">Support</string>
     <string name="about_us">About Us</string>
     <string name="logout">Logout</string>
+    <string name="add_recipients">Add Recipient</string>
+    <string name="recipient_details">Recipient Details</string>
+    <string name="country">Country</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="save">Save</string>
+    <string name="empty_list">Empty list</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>

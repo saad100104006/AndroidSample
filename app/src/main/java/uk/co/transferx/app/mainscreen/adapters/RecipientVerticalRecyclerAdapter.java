@@ -52,6 +52,9 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
 
     public void setRecipients(List<RecipientDto> recipients) {
         this.recipientDtoList = recipients;
+        if (recipients.isEmpty()) {
+            return;
+        }
         notifyDataSetChanged();
 
     }

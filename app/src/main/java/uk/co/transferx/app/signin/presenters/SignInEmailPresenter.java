@@ -61,7 +61,7 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        ui.goToMainScreen();
+                        ui.goToMainScreen(resp.body().string());
                         return;
                     }
                     if (ui != null) {
@@ -81,7 +81,7 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
 
     public interface SignInEmailUI extends UI {
 
-        void goToMainScreen();
+        void goToMainScreen(String token);
 
         void showError();
 
