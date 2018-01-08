@@ -12,11 +12,15 @@ import uk.co.transferx.app.pojo.UserRequest;
  * Created by sergey on 28/12/2017.
  */
 
-public interface SignInApi {
+public interface SignInOutApi {
 
 
     @POST("/v1/auth/user/login")
     Observable<Response<ResponseBody>> signIn(@Header("Authorization") String token, @Body UserRequest request);
+
+
+    @POST("/v1/auth/user/logout")
+    Observable<Response<ResponseBody>> logOut(@Header("Authorization") String token);
 
 
 }

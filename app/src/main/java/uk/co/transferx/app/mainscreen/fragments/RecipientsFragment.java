@@ -1,9 +1,10 @@
 package uk.co.transferx.app.mainscreen.fragments;
 
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
@@ -22,7 +24,7 @@ import uk.co.transferx.app.mainscreen.adapters.RecipientVerticalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
 import uk.co.transferx.app.recipients.addrecipients.AddRecipientsActivity;
 
-import static uk.co.transferx.app.splash.SplashActivity.INITIAL_TOKEN;
+import static uk.co.transferx.app.recipients.addrecipients.AddRecipientsActivity.ADD_RECIPIENT;
 
 /**
  * Created by sergey on 17.12.17.
@@ -33,13 +35,11 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     private View view;
     private RecipientHorizontalRecyclerAdapter horizontalRecyclerAdapter;
     private RecipientVerticalRecyclerAdapter verticalRecyclerAdapter;
-    private TextView emptyList;
+    private TextView emptyListVertical, emptyListHorizontal;
+    public static final String IS_SHOULD_REFRESH = "is_should_refresh";
 
     @Inject
     RecipientsFragmentPresenter presenter;
-
-    @Inject
-    SharedPreferences sharedPreferences;
 
 
     @Override
@@ -52,7 +52,6 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     public void onCreate(@Nullable Bundle savedInstanceState) {
         ((TransferXApplication) getActivity().getApplication()).getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
-        presenter.setToken(sharedPreferences.getString(INITIAL_TOKEN, null));
     }
 
 
@@ -65,9 +64,12 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
             RecyclerView verticalRecipientRecyclerView = view.findViewById(R.id.vertical_recycler_view);
             horizontalRecyclerAdapter = new RecipientHorizontalRecyclerAdapter(getContext());
             verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(getContext());
-            emptyList = view.findViewById(R.id.empty_list);
+            emptyListVertical = view.findViewById(R.id.empty_list);
+            emptyListHorizontal = view.findViewById(R.id.empty_list_horizontal);
             horizontalRecipientRecyclerView.setAdapter(horizontalRecyclerAdapter);
             verticalRecipientRecyclerView.setAdapter(verticalRecyclerAdapter);
+            horizontalRecipientRecyclerView.setHasFixedSize(true);
+            verticalRecipientRecyclerView.setHasFixedSize(true);
             view.findViewById(R.id.add_button).setOnClickListener(v -> AddRecipientsActivity.startAddRecipientActivity(getActivity()));
         }
         return view;
@@ -76,7 +78,13 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Override
     public void setFavoriteRecipients(List<RecipientDto> recipientDtos) {
-        emptyList.setVisibility(recipientDtos.isEmpty() ? View.VISIBLE : View.GONE);
+        emptyListHorizontal.setVisibility(recipientDtos.isEmpty() ? View.VISIBLE : View.GONE);
+        horizontalRecyclerAdapter.setRecipients(recipientDtos);
+    }
+
+    @Override
+    public void setRecipients(List<RecipientDto> recipientDtos) {
+        emptyListVertical.setVisibility(recipientDtos.isEmpty() ? View.VISIBLE : View.GONE);
         verticalRecyclerAdapter.setRecipients(recipientDtos);
     }
 
@@ -95,5 +103,15 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     @Override
     public void showError() {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Timber.d("Should update " + requestCode);
+        if (requestCode == ADD_RECIPIENT) {
+            Timber.d("Should update");
+            presenter.setShouldRefresh(data.getBooleanExtra(IS_SHOULD_REFRESH, false));
+        }
     }
 }

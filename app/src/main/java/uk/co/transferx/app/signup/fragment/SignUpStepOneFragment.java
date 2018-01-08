@@ -22,8 +22,6 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.signup.presenters.SignUpStepOnePresenter;
 
-import static uk.co.transferx.app.splash.SplashActivity.INITIAL_TOKEN;
-
 /**
  * Created by smilevkiy on 15.11.17.
  */
@@ -34,13 +32,10 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
     @Inject
     SignUpStepOnePresenter presenter;
 
-    @Inject
-    SharedPreferences sharedPreferences;
 
     private TextInputLayout firstInputLayout;
     private TextInputLayout secondInputLayout;
     public static final String U_NAME = "first_name";
-
 
 
     @Override
@@ -123,14 +118,9 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
 
     @Override
     public void goToNextStep(String uname) {
-        String token = sharedPreferences.getString(INITIAL_TOKEN, null);
-        if(token == null){
-            showError();
-            return;
-        }
+
         Bundle bundle = new Bundle();
         bundle.putString(U_NAME, uname);
-        bundle.putString(INITIAL_TOKEN, token);
         ((SignUpActivity) getActivity()).showNextOrPreviousFragment(1, bundle);
     }
 

@@ -71,8 +71,8 @@ dependencies {
 
 
     //dagger 2
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
-    implementation 'com.google.dagger:dagger:2.11'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
+    implementation 'com.google.dagger:dagger:2.13'
 
 
     //RxJava2
@@ -83,10 +83,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
-    //stream
-    implementation 'com.annimon:stream:1.1.9'
 
     //pageindicator
     implementation 'com.romandanylyk:pageindicatorview:0.2.0'
@@ -95,8 +93,8 @@ dependencies {
     implementation 'com.github.midorikocak:currency-picker-android:1.2.1'
 
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.3.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
     implementation "com.github.bumptech.glide:okhttp3-integration:4.3.1"
 
     //crashlytics
@@ -106,6 +104,23 @@ dependencies {
 
     //branch
     implementation 'io.branch.sdk.android:library:2.+'
+
+    //braintree
+    implementation 'com.braintreepayments.api:drop-in:3.+'
+
+
+    //Timber
+    implementation 'com.jakewharton.timber:timber:4.6.0'
+
+    // Room
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+
+    //support java8 for arch
+    implementation "android.arch.lifecycle:common-java8:1.0.0"
+
+    // RxJava support for Room
+    implementation "android.arch.persistence.room:rxjava2:1.0.0"
 
     //tests
     testImplementation 'junit:junit:4.12'

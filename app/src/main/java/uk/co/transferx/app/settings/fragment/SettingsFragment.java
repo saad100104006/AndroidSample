@@ -1,6 +1,5 @@
 package uk.co.transferx.app.settings.fragment;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,8 +14,6 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.settings.presenter.SettingsFragmentPresenter;
 import uk.co.transferx.app.welcom.WelcomeActivity;
 
-import static uk.co.transferx.app.splash.SplashActivity.INITIAL_TOKEN;
-
 /**
  * Created by sergey on 22/12/2017.
  */
@@ -26,8 +23,6 @@ public class SettingsFragment extends BaseFragment implements SettingsFragmentPr
 
     private View view;
 
-    @Inject
-    SharedPreferences sharedPreferences;
 
     @Inject
     SettingsFragmentPresenter presenter;
@@ -71,7 +66,6 @@ public class SettingsFragment extends BaseFragment implements SettingsFragmentPr
 
     @Override
     public void goToWelcome() {
-        sharedPreferences.edit().remove(INITIAL_TOKEN).apply();
         WelcomeActivity.startWelcomeActivity(getActivity());
     }
 }

@@ -25,8 +25,6 @@ import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.recoverpass.RecoverPasswordActivity;
 import uk.co.transferx.app.signin.presenters.SignInEmailPresenter;
 
-import static uk.co.transferx.app.splash.SplashActivity.INITIAL_TOKEN;
-
 /**
  * Created by sergey on 19.11.17.
  */
@@ -108,21 +106,13 @@ public class SignInEmailFragment extends BaseFragment implements SignInEmailPres
         String forgotPassword = getString(R.string.forgot_password) + "?";
         forgotPass.setText(forgotPassword.toUpperCase());
         forgotPass.setOnClickListener(v -> RecoverPasswordActivity.starRecoverPasswordActivity(getActivity()));
-        buttonSignIn.setOnClickListener(v -> {
-            String token = sharedPreferences.getString(INITIAL_TOKEN, null);
-            if (token != null) {
-                presenter.validateInput(email.getText().toString(), password.getText().toString(), token);
-                return;
-            }
-            showError();
-        });
+        buttonSignIn.setOnClickListener(v -> presenter.validateInput(email.getText().toString(), password.getText().toString()));
         return view;
     }
 
 
     @Override
-    public void goToMainScreen(String token) {
-        sharedPreferences.edit().putString(INITIAL_TOKEN, token).apply();
+    public void goToMainScreen() {
         Activity activity = getActivity();
         if (activity != null) {
             MainActivity.startMainActivity(getActivity());

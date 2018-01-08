@@ -9,6 +9,7 @@ import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.SignUpApi;
+import uk.co.transferx.app.tokenmanager.TokenManager;
 
 /**
  * Created by smilevkiy on 14.11.17.
@@ -16,25 +17,16 @@ import uk.co.transferx.app.api.SignUpApi;
 
 public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPresenter.WelcomeUI> {
 
-    private boolean isChecked;
-    private boolean isTokenPresent;
     private final SignUpApi signUpApi;
     private Disposable disposable;
+    private final TokenManager tokenManager;
 
     @Inject
-    public WelcomeFragmentPresenter(final SignUpApi signUpApi) {
+    public WelcomeFragmentPresenter(final SignUpApi signUpApi, final TokenManager tokenManager) {
         this.signUpApi = signUpApi;
+        this.tokenManager = tokenManager;
     }
 
-    @Override
-    public void attachUI(WelcomeUI ui) {
-        super.attachUI(ui);
-        if (!isChecked) {
-            ui.checkToken();
-            isChecked = true;
-        }
-
-    }
 
     @Override
     public void detachUI() {
@@ -44,12 +36,9 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
         }
     }
 
-    public void setTokenStatus(boolean isPresent) {
-        this.isTokenPresent = isPresent;
-    }
 
     public void signInClicked() {
-        if (isTokenPresent) {
+        if (tokenManager.isInitialTokenExist()) {
             ui.goToSignIn();
             return;
         }
@@ -57,7 +46,7 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
     }
 
     public void signUpClicked() {
-        if (isTokenPresent) {
+        if (tokenManager.isInitialTokenExist()) {
             ui.goToSignUp();
             return;
         }
@@ -70,8 +59,7 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        ui.upDateToken(resp.body().string());
-                        setTokenStatus(true);
+                        tokenManager.setInitialToken(resp.body().string());
                         return;
                     }
                     ui.noTokenError();
@@ -84,15 +72,12 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
 
 
     public interface WelcomeUI extends UI {
-        void checkToken();
 
         void goToSignUp();
 
         void goToSignIn();
 
         void noTokenError();
-
-        void upDateToken(String token);
 
     }
 }

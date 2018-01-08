@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.mainscreen.fragments.ActivityFragment;
 import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
@@ -26,6 +27,7 @@ public class TransferXTabAdapter extends FragmentPagerAdapter {
 //    private final Bundle bundle;
 
     private final SparseArray<View> tabAdapterItems = new SparseArray<>();
+    private final SparseArray<BaseFragment> fragments = new SparseArray<>();
 
     public TransferXTabAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -38,11 +40,26 @@ public class TransferXTabAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new SendFragment();
+                SendFragment sendFragment = (SendFragment) fragments.get(0);
+                if (sendFragment == null) {
+                    sendFragment = new SendFragment();
+                    fragments.put(0, sendFragment);
+                }
+                return sendFragment;
             case 1:
-                return new ActivityFragment();
+                ActivityFragment activityFragment = (ActivityFragment) fragments.get(1);
+                if (activityFragment == null) {
+                    activityFragment = new ActivityFragment();
+                    fragments.put(1, activityFragment);
+                }
+                return activityFragment;
             case 2:
-                return new RecipientsFragment();
+                RecipientsFragment recipientsFragment = (RecipientsFragment) fragments.get(2);
+                if (recipientsFragment == null) {
+                    recipientsFragment = new RecipientsFragment();
+                    fragments.put(2, recipientsFragment);
+                }
+                return recipientsFragment;
             default:
                 return null;
         }

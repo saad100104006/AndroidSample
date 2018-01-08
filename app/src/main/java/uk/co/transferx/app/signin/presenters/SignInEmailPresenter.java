@@ -8,8 +8,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
-import uk.co.transferx.app.api.SignInApi;
+import uk.co.transferx.app.api.SignInOutApi;
 import uk.co.transferx.app.pojo.UserRequest;
+import uk.co.transferx.app.tokenmanager.TokenManager;
 import uk.co.transferx.app.util.Util;
 
 /**
@@ -18,8 +19,9 @@ import uk.co.transferx.app.util.Util;
 
 public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.SignInEmailUI> {
 
-    private final SignInApi signInApi;
+    private final SignInOutApi signInOutApi;
     private Disposable disposable;
+    private final TokenManager tokenManager;
 
 
     @Override
@@ -36,12 +38,18 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
     }
 
     @Inject
-    public SignInEmailPresenter(SignInApi signInApi) {
-        this.signInApi = signInApi;
+    public SignInEmailPresenter(final SignInOutApi signInOutApi, final TokenManager tokenManager) {
+        this.signInOutApi = signInOutApi;
+        this.tokenManager = tokenManager;
     }
 
 
-    public void validateInput(String email, String password, String token) {
+    public void validateInput(String email, String password) {
+
+        if (!tokenManager.isInitialTokenExist()) {
+            ui.showError();
+            return;
+        }
         if (!Util.validateEmail(email)) {
             ui.showValidationErrorEmail();
             return;
@@ -51,17 +59,18 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
             return;
         }
 
-        signIn(email, password, token);
+        signIn(email, password, tokenManager.getInitialToken());
     }
 
     private void signIn(String email, String password, String token) {
         UserRequest.Builder request = new UserRequest.Builder();
-        disposable = signInApi.signIn(token, request.uname(email).upass(password).build())
+        disposable = signInOutApi.signIn(token, request.uname(email).upass(password).build())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        ui.goToMainScreen(resp.body().string());
+                        tokenManager.setToken(resp.body().string());
+                        ui.goToMainScreen();
                         return;
                     }
                     if (ui != null) {
@@ -81,7 +90,7 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
 
     public interface SignInEmailUI extends UI {
 
-        void goToMainScreen(String token);
+        void goToMainScreen();
 
         void showError();
 

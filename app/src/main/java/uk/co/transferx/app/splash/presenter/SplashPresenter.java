@@ -11,6 +11,7 @@ import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.SignUpApi;
+import uk.co.transferx.app.tokenmanager.TokenManager;
 
 /**
  * Created by sergey on 19.11.17.
@@ -24,10 +25,12 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
     private Disposable dis;
 
     private final SignUpApi signUpApi;
+    private final TokenManager tokenManager;
 
     @Inject
-    public SplashPresenter(final SignUpApi signUpApi) {
+    public SplashPresenter(final SignUpApi signUpApi, final TokenManager tokenManager) {
         this.signUpApi = signUpApi;
+        this.tokenManager = tokenManager;
     }
 
 
@@ -40,14 +43,16 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(res -> {
                     if (res.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        ui.goToWelcomeScreen(res.body().string());
+                        tokenManager.setInitialToken(res.body().string());
+                        ui.goToWelcomeScreen();
+
                     }
                 }, this::handleError);
     }
 
 
     private void handleError(Throwable throwable) {
-        ui.goToWelcomeScreen(null);
+        ui.goToWelcomeScreen();
     }
 
 
@@ -61,7 +66,7 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
 
     public interface SplashUI extends UI {
 
-        void goToWelcomeScreen(String token);
+        void goToWelcomeScreen();
 
     }
 }

@@ -1,6 +1,5 @@
 package uk.co.transferx.app.welcom.fragment;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -19,8 +18,6 @@ import uk.co.transferx.app.signin.SignInType;
 import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.welcom.presenter.WelcomeFragmentPresenter;
 
-import static uk.co.transferx.app.splash.SplashActivity.INITIAL_TOKEN;
-
 /**
  * Created by smilevkiy on 13.11.17.
  */
@@ -38,9 +35,6 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
 
     @Inject
     WelcomeFragmentPresenter presenter;
-
-    @Inject
-    SharedPreferences sharedPreferences;
 
     private CoordinatorLayout coordinatorLayout;
 
@@ -77,11 +71,6 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
     }
 
     @Override
-    public void checkToken() {
-        presenter.setTokenStatus(sharedPreferences.getString(INITIAL_TOKEN, null) != null);
-    }
-
-    @Override
     public void goToSignUp() {
         SignUpActivity.startSignUp(getActivity());
     }
@@ -102,8 +91,4 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
         snackbar.show();
     }
 
-    @Override
-    public void upDateToken(String token) {
-        sharedPreferences.edit().putString(INITIAL_TOKEN, token).apply();
-    }
 }

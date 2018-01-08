@@ -1,5 +1,6 @@
 package uk.co.transferx.app.recipients.addrecipients;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +19,11 @@ import uk.co.transferx.app.recipients.addrecipients.fragments.AddRecipientsFragm
 
 public class AddRecipientsActivity extends BaseActivity {
 
-    public static void startAddRecipientActivity(final Context context) {
-        context.startActivity(new Intent(context, AddRecipientsActivity.class));
+    public static final int ADD_RECIPIENT = 333;
+
+    public static void startAddRecipientActivity(final Activity activity) {
+        activity.startActivityForResult(new Intent(activity, AddRecipientsActivity.class), ADD_RECIPIENT);
+
     }
 
 

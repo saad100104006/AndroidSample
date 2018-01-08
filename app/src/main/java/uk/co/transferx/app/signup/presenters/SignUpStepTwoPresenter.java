@@ -12,6 +12,7 @@ import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.SignUpApi;
 import uk.co.transferx.app.pojo.UserRequest;
+import uk.co.transferx.app.tokenmanager.TokenManager;
 import uk.co.transferx.app.util.Util;
 
 /**
@@ -22,14 +23,15 @@ public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter
 
 
     private String uname;
-    private String token;
     private final SignUpApi signUpApi;
     private Disposable disposable;
     private final static String EMAIL = "Email";
+    private final TokenManager tokenManager;
 
     @Inject
-    public SignUpStepTwoPresenter(SignUpApi signUpApi) {
+    public SignUpStepTwoPresenter(final SignUpApi signUpApi,final TokenManager tokenManager) {
         this.signUpApi = signUpApi;
+        this.tokenManager = tokenManager;
     }
 
     public void validateInput(String password, String email) {
@@ -45,18 +47,12 @@ public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter
 
     }
 
-    public void setNamesAndToken(String uname, String token) {
+    public void setName(String uname) {
         this.uname = uname;
-        this.token = token;
         Log.d("Sergey", uname);
-        Log.d("Sergey", "token " + token);
 
     }
 
-    @Override
-    public void attachUI(SignUpStepTwoUI ui) {
-        super.attachUI(ui);
-    }
 
     @Override
     public void detachUI() {
@@ -67,13 +63,15 @@ public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter
     }
 
     private void sendInfoToBackend(String email, String password) {
-        UserRequest.Builder request = new UserRequest.Builder();
 
-        disposable = signUpApi.registerUser(token, request.uname(uname).email(email).upass(password).upassConfirmation(password).build())
+        UserRequest.Builder request = new UserRequest.Builder();
+        disposable = signUpApi.registerUser(tokenManager.getInitialToken(), request.uname(uname).email(email).upass(password).upassConfirmation(password).build())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
+                        tokenManager.setToken(resp.body().string());
+                        tokenManager.clerInitToken();
                         ui.goToNextView();
                         return;
                     }
