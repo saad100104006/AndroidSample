@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
@@ -24,7 +22,7 @@ import uk.co.transferx.app.mainscreen.adapters.RecipientVerticalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
 import uk.co.transferx.app.recipients.addrecipients.AddRecipientsActivity;
 
-import static uk.co.transferx.app.recipients.addrecipients.AddRecipientsActivity.ADD_RECIPIENT;
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by sergey on 17.12.17.
@@ -37,6 +35,8 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     private RecipientVerticalRecyclerAdapter verticalRecyclerAdapter;
     private TextView emptyListVertical, emptyListHorizontal;
     public static final String IS_SHOULD_REFRESH = "is_should_refresh";
+    public static final int ADD_RECIPIENT = 333;
+
 
     @Inject
     RecipientsFragmentPresenter presenter;
@@ -70,7 +70,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
             verticalRecipientRecyclerView.setAdapter(verticalRecyclerAdapter);
             horizontalRecipientRecyclerView.setHasFixedSize(true);
             verticalRecipientRecyclerView.setHasFixedSize(true);
-            view.findViewById(R.id.add_button).setOnClickListener(v -> AddRecipientsActivity.startAddRecipientActivity(getActivity()));
+            view.findViewById(R.id.add_button).setOnClickListener(v -> startActivityForResult(new Intent(getContext(), AddRecipientsActivity.class), ADD_RECIPIENT));
         }
         return view;
 
@@ -108,10 +108,9 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Timber.d("Should update " + requestCode);
-        if (requestCode == ADD_RECIPIENT) {
-            Timber.d("Should update");
+        if (requestCode == ADD_RECIPIENT && resultCode == RESULT_OK) {
             presenter.setShouldRefresh(data.getBooleanExtra(IS_SHOULD_REFRESH, false));
+            presenter.attachUI(this);
         }
     }
 }

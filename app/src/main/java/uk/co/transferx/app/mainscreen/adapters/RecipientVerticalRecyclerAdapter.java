@@ -59,8 +59,7 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
 
     }
 
-
-    static class RecipientVerticalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class RecipientVerticalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView recipientPhoto;
         TextView recipientName, recipientCountry;
         RecipientDto recipientDto;

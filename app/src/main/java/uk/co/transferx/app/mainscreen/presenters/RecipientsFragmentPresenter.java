@@ -28,7 +28,6 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
     private List<RecipientDto> recipientDtos;
 
 
-
     @Inject
     public RecipientsFragmentPresenter(final RecipientsApi recipientsApi, TokenManager tokenManager) {
         this.recipientsApi = recipientsApi;
@@ -36,10 +35,9 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
     }
 
 
-    public void setShouldRefresh(boolean isShouldRefresh){
+    public void setShouldRefresh(boolean isShouldRefresh) {
         this.isShoulRefresh = isShouldRefresh;
     }
-
 
 
     @Override
@@ -55,11 +53,16 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
                     .subscribe(result -> {
                         if (ui != null) {
                             ui.setRecipients(result);
+                            this.recipientDtos = result;
                         }
                     }, this::handleError);
             isInitialized = true;
             isShoulRefresh = false;
         }
+    }
+
+    public List<RecipientDto> getRecipients() {
+        return recipientDtos;
     }
 
     private void handleError(Throwable throwable) {

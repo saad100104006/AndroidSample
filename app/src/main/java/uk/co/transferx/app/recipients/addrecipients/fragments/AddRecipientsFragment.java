@@ -1,5 +1,6 @@
 package uk.co.transferx.app.recipients.addrecipients.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,7 +21,6 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.recipients.addrecipients.presenters.AddRecipientsPresenter;
 
 import static uk.co.transferx.app.mainscreen.fragments.RecipientsFragment.IS_SHOULD_REFRESH;
-import static uk.co.transferx.app.recipients.addrecipients.AddRecipientsActivity.ADD_RECIPIENT;
 
 /**
  * Created by sergey on 03/01/2018.
@@ -47,10 +47,10 @@ public class AddRecipientsFragment extends BaseFragment implements AddRecipients
             lastName.setError(null);
             country.setError(null);
             phone.setError(null);
-            firstName.getEditText().setTextColor(ContextCompat.getColor(getContext(),R.color.white));
-            lastName.getEditText().setTextColor(ContextCompat.getColor(getContext(),R.color.white));
-            country.getEditText().setTextColor(ContextCompat.getColor(getContext(),R.color.white));
-            phone.getEditText().setTextColor(ContextCompat.getColor(getContext(),R.color.white));
+            firstName.getEditText().setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+            lastName.getEditText().setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+            country.getEditText().setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+            phone.getEditText().setTextColor(ContextCompat.getColor(getContext(), R.color.white));
 
         }
 
@@ -109,7 +109,7 @@ public class AddRecipientsFragment extends BaseFragment implements AddRecipients
     public void userWasAdded() {
         final Intent intent = new Intent();
         intent.putExtra(IS_SHOULD_REFRESH, true);
-        getActivity().setResult(ADD_RECIPIENT, intent);
+        getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().finish();
     }
 
