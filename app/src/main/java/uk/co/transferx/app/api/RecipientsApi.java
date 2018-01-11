@@ -34,7 +34,7 @@ public interface RecipientsApi {
     Observable<Response<ResponseBody>> deleteRecipient(@Header("Authorization") String token, @Path("id") String id);
 
     @PUT("/v1/recipients/{id}")
-    Observable<Response<ResponseBody>> updateRecipient(@Header("Authorization") String token, @Path("id") String id);
+    Observable<Response<ResponseBody>> updateRecipient(@Header("Authorization") String token, @Path("id") String id, @Body Recipient recipient);
 
 
 }

@@ -11,6 +11,7 @@ import uk.co.transferx.app.pojo.Recipient;
 
 public class RecipientDto implements Parcelable {
     private final static String EMPTY = "";
+    private final static String SPACE = " ";
     private final String id;
     private final String name;
     private final String imgUrl;
@@ -27,7 +28,7 @@ public class RecipientDto implements Parcelable {
 
     public String getFavoriteName() {
         StringBuilder stringBuilder = new StringBuilder();
-        String firstName = name.replaceAll(" .*", " ");
+        String firstName = name.replaceAll(" .*", SPACE);
         char LastNameLetter = name.charAt(firstName.length());
         stringBuilder.append(firstName);
         stringBuilder.append(LastNameLetter);
@@ -44,11 +45,11 @@ public class RecipientDto implements Parcelable {
     }
 
     public String getFirstName() {
-        return name.split(" ")[0];
+        return name.split(SPACE)[0];
     }
 
     public String getLastName() {
-        return name.split(" ")[1];
+        return name.split(SPACE)[1];
     }
 
     public String getImgUrl() {
@@ -83,7 +84,7 @@ public class RecipientDto implements Parcelable {
     private String getName(String firstName, String lastName) {
         StringBuilder sb = new StringBuilder();
         sb.append(firstName != null ? firstName : EMPTY);
-        sb.append(firstName != null ? " " : EMPTY);
+        sb.append(firstName != null ? SPACE : EMPTY);
         sb.append(lastName != null ? lastName : EMPTY);
         return sb.toString();
     }

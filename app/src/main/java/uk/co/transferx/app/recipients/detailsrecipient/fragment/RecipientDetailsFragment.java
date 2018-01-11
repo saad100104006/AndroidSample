@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,8 @@ public class RecipientDetailsFragment extends BaseRecipientFragment implements R
         view.findViewById(R.id.edit_cont).setVisibility(View.VISIBLE);
         ((TextView) view.findViewById(R.id.recipient_sub_title)).setText(R.string.edit_recipient);
         view.findViewById(R.id.delete_recipient).setOnClickListener(v -> presenter.deleteRecipient());
+        view.findViewById(R.id.save_recipient).setOnClickListener(v -> presenter.validateInput(firstName.getEditText().getText().toString(),
+                lastName.getEditText().getText().toString(), country.getEditText().getText().toString(), phone.getEditText().getText().toString()));
         return view;
 
     }
@@ -66,7 +69,7 @@ public class RecipientDetailsFragment extends BaseRecipientFragment implements R
     }
 
     @Override
-    public void goBackToList() {
+    public void goBackToListWithRefresh() {
         Activity activity = getActivity();
         activity.setResult(Activity.RESULT_OK);
         activity.finish();
@@ -87,7 +90,7 @@ public class RecipientDetailsFragment extends BaseRecipientFragment implements R
     }
 
     @Override
-    public void showError() {
+    public void showErrorDelete() {
         Toast.makeText(getContext(), "Something went wrong, user wasn't deleted", Toast.LENGTH_SHORT).show();
     }
 
@@ -103,5 +106,46 @@ public class RecipientDetailsFragment extends BaseRecipientFragment implements R
         hideKeyboard();
         presenter.detachUI();
         super.onPause();
+    }
+
+    @Override
+    public void nameError() {
+        firstName.setError(" ");
+        firstName.getEditText().setTextColor(ContextCompat.getColor(getContext(), R.color.red));
+        Toast.makeText(getContext(), getString(R.string.first_name_error), Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void lastNameError() {
+        lastName.setError(" ");
+        lastName.getEditText().setTextColor(ContextCompat.getColor(getContext(), R.color.red));
+        Toast.makeText(getContext(), getString(R.string.last_name_error), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void countryError() {
+        country.setError(" ");
+        country.getEditText().setTextColor(ContextCompat.getColor(getContext(), R.color.red));
+        Toast.makeText(getContext(), getString(R.string.country_error), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void phoneError() {
+        phone.setError(" ");
+        phone.getEditText().setTextColor(ContextCompat.getColor(getContext(), R.color.red));
+        Toast.makeText(getContext(), getString(R.string.phone_error), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showErrorSave() {
+        Toast.makeText(getContext(), "Something went wrong, user wasn't updated", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void goBackToList() {
+        Activity activity = getActivity();
+        activity.setResult(Activity.RESULT_CANCELED);
+        activity.finish();
     }
 }

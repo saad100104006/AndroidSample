@@ -150,7 +150,7 @@
                 android:visibility="gone">
 
                 <Button
-                    android:id="@+id/edit_recipient"
+                    android:id="@+id/save_recipient"
                     style="@style/ButtonTheme"
                     android:layout_width="0dp"
                     android:layout_height="58dp"
