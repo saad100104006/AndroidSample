@@ -9,6 +9,7 @@ import uk.co.transferx.app.mainscreen.fragments.ActivityFragment;
 import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
 import uk.co.transferx.app.mainscreen.fragments.SendFragment;
 import uk.co.transferx.app.recipients.addrecipients.fragments.AddRecipientsFragment;
+import uk.co.transferx.app.recipients.detailsrecipient.fragment.RecipientDetailsFragment;
 import uk.co.transferx.app.settings.fragment.SettingsFragment;
 import uk.co.transferx.app.signin.fragment.SignInEmailFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepOneFragment;
@@ -44,4 +45,6 @@ public interface AppComponent {
     void inject(SettingsFragment settingsFragment);
 
     void inject(AddRecipientsFragment addRecipientsFragment);
+
+    void inject(RecipientDetailsFragment recipientDetailsFragment);
 }

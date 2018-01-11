@@ -71,7 +71,7 @@ public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         tokenManager.setToken(resp.body().string());
-                        tokenManager.clerInitToken();
+                        tokenManager.clearInitToken();
                         ui.goToNextView();
                         return;
                     }

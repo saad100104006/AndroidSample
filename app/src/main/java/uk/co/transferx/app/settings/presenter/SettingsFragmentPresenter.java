@@ -36,7 +36,7 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentPre
 
     public void logOut() {
         if (ui != null && !tokenManager.isTokenExist()) {
-            tokenManager.clerInitToken();
+            tokenManager.clearInitToken();
             ui.goToWelcome();
             return;
         }
@@ -46,7 +46,7 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentPre
                 .subscribe(res -> {
                     if (ui != null) {
                         tokenManager.clearToken();
-                        tokenManager.clerInitToken();
+                        tokenManager.clearInitToken();
                         ui.goToWelcome();
                     }
                 });

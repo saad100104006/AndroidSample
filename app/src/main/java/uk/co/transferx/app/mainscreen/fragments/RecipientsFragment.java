@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     private RecipientHorizontalRecyclerAdapter horizontalRecyclerAdapter;
     private RecipientVerticalRecyclerAdapter verticalRecyclerAdapter;
     private TextView emptyListVertical, emptyListHorizontal;
-    public static final String IS_SHOULD_REFRESH = "is_should_refresh";
-    public static final int ADD_RECIPIENT = 333;
+    public static final int ADD_CHANGE_RECIPIENT = 333;
 
 
     @Inject
@@ -63,14 +63,14 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
             RecyclerView horizontalRecipientRecyclerView = view.findViewById(R.id.horizontal_recycler_view);
             RecyclerView verticalRecipientRecyclerView = view.findViewById(R.id.vertical_recycler_view);
             horizontalRecyclerAdapter = new RecipientHorizontalRecyclerAdapter(getContext());
-            verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(getContext());
+            verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(this);
             emptyListVertical = view.findViewById(R.id.empty_list);
             emptyListHorizontal = view.findViewById(R.id.empty_list_horizontal);
             horizontalRecipientRecyclerView.setAdapter(horizontalRecyclerAdapter);
             verticalRecipientRecyclerView.setAdapter(verticalRecyclerAdapter);
             horizontalRecipientRecyclerView.setHasFixedSize(true);
             verticalRecipientRecyclerView.setHasFixedSize(true);
-            view.findViewById(R.id.add_button).setOnClickListener(v -> startActivityForResult(new Intent(getContext(), AddRecipientsActivity.class), ADD_RECIPIENT));
+            view.findViewById(R.id.add_button).setOnClickListener(v -> startActivityForResult(new Intent(getContext(), AddRecipientsActivity.class), ADD_CHANGE_RECIPIENT));
         }
         return view;
 
@@ -108,8 +108,9 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_RECIPIENT && resultCode == RESULT_OK) {
-            presenter.setShouldRefresh(data.getBooleanExtra(IS_SHOULD_REFRESH, false));
+        Log.d("Sergey", "request code " + requestCode + " result_code " + (resultCode == RESULT_OK));
+        if (requestCode == ADD_CHANGE_RECIPIENT && resultCode == RESULT_OK) {
+            presenter.setShouldRefresh(true);
             presenter.attachUI(this);
         }
     }

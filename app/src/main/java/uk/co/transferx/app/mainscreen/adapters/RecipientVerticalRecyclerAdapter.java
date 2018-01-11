@@ -1,6 +1,7 @@
 package uk.co.transferx.app.mainscreen.adapters;
 
-import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,10 @@ import java.util.List;
 
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.dto.RecipientDto;
+import uk.co.transferx.app.recipients.detailsrecipient.RecipientDetailsActivity;
+
+import static uk.co.transferx.app.mainscreen.fragments.RecipientsFragment.ADD_CHANGE_RECIPIENT;
+import static uk.co.transferx.app.recipients.detailsrecipient.RecipientDetailsActivity.RECIPIENT;
 
 /**
  * Created by sergey on 17.12.17.
@@ -20,15 +25,15 @@ import uk.co.transferx.app.dto.RecipientDto;
 public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<RecipientVerticalRecyclerAdapter.RecipientVerticalHolder> {
 
     private List<RecipientDto> recipientDtoList;
-    private final Context context;
+    private final Fragment fragment;
 
     private interface ItemClickListener {
 
-        void onClickItem(RecipientDto recipientDto);
+        void onClickItem(final RecipientDto recipientDto);
     }
 
-    public RecipientVerticalRecyclerAdapter(Context context) {
-        this.context = context;
+    public RecipientVerticalRecyclerAdapter(Fragment fragment) {
+        this.fragment = fragment;
     }
 
 
@@ -42,6 +47,11 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
         RecipientDto recipientDto = recipientDtoList.get(position);
         holder.recipientName.setText(recipientDto.getName());
         holder.recipientCountry.setText(recipientDto.getCountry());
+        holder.itemClickListener = recip -> {
+            Intent intent = new Intent(fragment.getActivity(), RecipientDetailsActivity.class);
+            intent.putExtra(RECIPIENT, recip);
+            fragment.startActivityForResult(intent, ADD_CHANGE_RECIPIENT);
+        };
 
     }
 
@@ -62,7 +72,6 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
     public class RecipientVerticalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView recipientPhoto;
         TextView recipientName, recipientCountry;
-        RecipientDto recipientDto;
         ItemClickListener itemClickListener;
 
         RecipientVerticalHolder(View itemView) {
@@ -76,7 +85,7 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
         @Override
         public void onClick(View view) {
             if (itemClickListener != null) {
-                itemClickListener.onClickItem(recipientDto);
+                itemClickListener.onClickItem(recipientDtoList.get(getAdapterPosition()));
             }
         }
 

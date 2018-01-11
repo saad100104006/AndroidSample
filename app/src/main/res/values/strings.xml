@@ -53,7 +53,10 @@
     <string name="country">Country</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="save">Save</string>
+    <string name="delete">Delete</string>
     <string name="empty_list">Empty list</string>
+    <string name="edit_recipient">Edit recipient info.</string>
+    <string name="view_recipient">View Recipient</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>

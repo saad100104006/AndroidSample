@@ -43,6 +43,14 @@ public class RecipientDto implements Parcelable {
         return name;
     }
 
+    public String getFirstName() {
+        return name.split(" ")[0];
+    }
+
+    public String getLastName() {
+        return name.split(" ")[1];
+    }
+
     public String getImgUrl() {
         return imgUrl;
     }
@@ -63,7 +71,7 @@ public class RecipientDto implements Parcelable {
         phone = in.readString();
     }
 
-    public RecipientDto(Recipient recipient){
+    public RecipientDto(Recipient recipient) {
         id = recipient.getId() == null ? EMPTY : recipient.getId();
         name = getName(recipient.getFirstname(), recipient.getLastname());
         imgUrl = EMPTY;
@@ -72,7 +80,7 @@ public class RecipientDto implements Parcelable {
     }
 
 
-    private String getName(String firstName, String lastName){
+    private String getName(String firstName, String lastName) {
         StringBuilder sb = new StringBuilder();
         sb.append(firstName != null ? firstName : EMPTY);
         sb.append(firstName != null ? " " : EMPTY);
