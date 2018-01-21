@@ -61,6 +61,7 @@ public class AddRecipientsFragment extends BaseRecipientFragment implements AddR
 
     @Override
     public void onPause() {
+        hideKeyboard();
         presenter.detachUI();
         super.onPause();
     }

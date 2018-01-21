@@ -18,6 +18,7 @@ import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
+import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.mainscreen.adapters.RecipientHorizontalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.adapters.RecipientVerticalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;

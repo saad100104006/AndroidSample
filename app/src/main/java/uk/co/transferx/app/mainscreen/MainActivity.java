@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.mainscreen.adapters.TransferXTabAdapter;
@@ -22,6 +24,9 @@ import uk.co.transferx.app.signin.SignInType;
  */
 
 public class MainActivity extends AppCompatActivity {
+
+    private View progressView;
+    private ProgressBar progressBar;
 
 
     public static void startMainActivity(Activity activity) {
@@ -40,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.pager_tabs);
         TabLayout tabLayout = findViewById(R.id.tabs);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        progressView = findViewById(R.id.alpha_view);
+        progressBar = findViewById(R.id.progress_bar);
         toolbar.setOnMenuItemClickListener(item -> false);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -81,6 +88,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void setProrges(boolean visible) {
+        progressView.setVisibility(visible ? View.VISIBLE : View.GONE);
+        progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         SettingsActivity.startSettings(this);
@@ -90,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(false) {
+        if (false) {
             SignInActivity.starSignInActivity(this, SignInType.PIN);
         }
 

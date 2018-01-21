@@ -79,9 +79,11 @@ public class TokenManager {
 
     public void clearInitToken() {
         initialToken = null;
+        sharedPreferences.edit().remove(INITIAL_TOKEN).apply();
     }
 
     public void clearToken() {
         token = null;
+        sharedPreferences.edit().remove(TOKEN).apply();
     }
 }

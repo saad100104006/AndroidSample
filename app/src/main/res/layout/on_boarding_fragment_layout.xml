@@ -67,6 +67,7 @@
                     android:layout_marginBottom="25dp"
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="32dp"
+                    android:gravity="center"
                     android:text="@string/terms"
                     android:textColor="@color/background"
                     android:textSize="12sp" />

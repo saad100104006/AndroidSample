@@ -76,11 +76,6 @@ public class RecipientDetailsFragment extends BaseRecipientFragment implements R
 
     }
 
-    private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
     @Override
     public void setData(RecipientDto recipientDto) {
         firstName.getEditText().setText(recipientDto.getFirstName());

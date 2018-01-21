@@ -3,7 +3,7 @@ package uk.co.transferx.app.mainscreen.adapters;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -20,7 +20,7 @@ import uk.co.transferx.app.mainscreen.fragments.SendFragment;
  * Created by sergey on 14.12.17.
  */
 
-public class TransferXTabAdapter extends FragmentPagerAdapter {
+public class TransferXTabAdapter extends FragmentStatePagerAdapter {
 
     private final String[] tabTitles;
     private final Context context;

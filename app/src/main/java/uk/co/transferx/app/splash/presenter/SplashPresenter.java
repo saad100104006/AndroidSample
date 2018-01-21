@@ -31,6 +31,8 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
     public SplashPresenter(final SignUpApi signUpApi, final TokenManager tokenManager) {
         this.signUpApi = signUpApi;
         this.tokenManager = tokenManager;
+        this.tokenManager.clearToken();
+        this.tokenManager.clearInitToken();
     }
 
 
@@ -45,7 +47,10 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
                     if (res.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         tokenManager.setInitialToken(res.body().string());
                         ui.goToWelcomeScreen();
-
+                        return;
+                    }
+                    if (ui != null) {
+                        ui.goToWelcomeScreen();
                     }
                 }, this::handleError);
     }

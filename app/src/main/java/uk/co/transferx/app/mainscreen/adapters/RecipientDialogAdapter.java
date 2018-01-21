@@ -1,8 +1,10 @@
 package uk.co.transferx.app.mainscreen.adapters;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +15,15 @@ import java.util.List;
 
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.dto.RecipientDto;
-import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
-import uk.co.transferx.app.recipients.detailsrecipient.RecipientDetailsActivity;
 
-import static uk.co.transferx.app.mainscreen.fragments.RecipientsFragment.ADD_CHANGE_RECIPIENT;
-import static uk.co.transferx.app.recipients.detailsrecipient.RecipientDetailsActivity.RECIPIENT;
+import static uk.co.transferx.app.mainscreen.fragments.SendFragment.RECIPIENT;
+import static uk.co.transferx.app.mainscreen.fragments.SendFragment.REQUEST_RECIPIENT;
 
 /**
- * Created by sergey on 17.12.17.
+ * Created by sergey on 15/01/2018.
  */
 
-public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<RecipientVerticalRecyclerAdapter.RecipientVerticalHolder> {
+public class RecipientDialogAdapter extends RecyclerView.Adapter<RecipientDialogAdapter.RecipientDialogHolder> {
 
     private List<RecipientDto> recipientDtoList;
     private final Fragment fragment;
@@ -33,29 +33,38 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
         void onClickItem(final RecipientDto recipientDto);
     }
 
-    public RecipientVerticalRecyclerAdapter(Fragment fragment) {
+
+    public RecipientDialogAdapter(Fragment fragment) {
         this.fragment = fragment;
     }
 
-
     @Override
-    public RecipientVerticalHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new RecipientVerticalHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recipient_item, parent, false));
+    public RecipientDialogHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new RecipientDialogAdapter.RecipientDialogHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recipient_item, parent, false));
+
     }
 
     @Override
-    public void onBindViewHolder(RecipientVerticalHolder holder, int position) {
+    public void onBindViewHolder(RecipientDialogHolder holder, int position) {
         RecipientDto recipientDto = recipientDtoList.get(position);
         holder.recipientName.setText(recipientDto.getName());
         holder.recipientCountry.setText(recipientDto.getCountry());
         holder.itemClickListener = recip -> {
-            if(fragment instanceof RecipientsFragment) {
-                Intent intent = new Intent(fragment.getActivity(), RecipientDetailsActivity.class);
-                intent.putExtra(RECIPIENT, recip);
-                fragment.startActivityForResult(intent, ADD_CHANGE_RECIPIENT);
-            }
+            Intent data = new Intent();
+            data.putExtra(RECIPIENT, recip);
+            fragment.getTargetFragment().onActivityResult(REQUEST_RECIPIENT, Activity.RESULT_OK, data);
         };
 
+    }
+
+
+    public void setRecipients(List<RecipientDto> recipients) {
+        this.recipientDtoList = recipients;
+        Log.d("Sergey", "recipients size " + recipients.size());
+//        if (recipients.isEmpty()) {
+//            return;
+//        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -63,21 +72,12 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
         return recipientDtoList == null ? 0 : recipientDtoList.size();
     }
 
-    public void setRecipients(List<RecipientDto> recipients) {
-        this.recipientDtoList = recipients;
-        if (recipients.isEmpty()) {
-            return;
-        }
-        notifyDataSetChanged();
-
-    }
-
-    class RecipientVerticalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class RecipientDialogHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView recipientPhoto;
         TextView recipientName, recipientCountry;
         ItemClickListener itemClickListener;
 
-        RecipientVerticalHolder(View itemView) {
+        RecipientDialogHolder(View itemView) {
             super(itemView);
             recipientPhoto = itemView.findViewById(R.id.recipient_img);
             recipientName = itemView.findViewById(R.id.recipient_name);
@@ -94,5 +94,4 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
 
 
     }
-
 }

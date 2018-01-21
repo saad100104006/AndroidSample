@@ -38,11 +38,11 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
 
 
     public void signInClicked() {
-        if (tokenManager.isInitialTokenExist()) {
-            ui.goToSignIn();
-            return;
-        }
-        ui.noTokenError();
+//        if (tokenManager.isInitialTokenExist()) { TODO: should uncomment when server will be reachable
+        ui.goToSignIn();
+//            return;
+//        }
+//        ui.noTokenError();
     }
 
     public void signUpClicked() {

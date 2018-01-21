@@ -1,5 +1,6 @@
 package uk.co.transferx.app.recipients;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -9,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
@@ -47,6 +49,11 @@ public abstract class BaseRecipientFragment extends BaseFragment {
 
         }
     };
+
+    protected void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     @Nullable
     @Override

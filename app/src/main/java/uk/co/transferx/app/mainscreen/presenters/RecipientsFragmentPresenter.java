@@ -12,6 +12,7 @@ import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.RecipientsApi;
 import uk.co.transferx.app.dto.RecipientDto;
+import uk.co.transferx.app.recipientsrepository.RecipientRepository;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
 /**
@@ -20,18 +21,14 @@ import uk.co.transferx.app.tokenmanager.TokenManager;
 
 public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmentPresenter.RecipientsFragmentUI> {
 
-    private boolean isInitialized;
     private boolean isShoulRefresh;
-    private final RecipientsApi recipientsApi;
-    private final TokenManager tokenManager;
+    private final RecipientRepository recipientRepository;
     private Disposable disposable;
-    private List<RecipientDto> recipientDtos;
 
 
     @Inject
-    public RecipientsFragmentPresenter(final RecipientsApi recipientsApi, TokenManager tokenManager) {
-        this.recipientsApi = recipientsApi;
-        this.tokenManager = tokenManager;
+    public RecipientsFragmentPresenter(final RecipientRepository recipientRepository) {
+        this.recipientRepository = recipientRepository;
     }
 
 
@@ -43,26 +40,27 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
     @Override
     public void attachUI(RecipientsFragmentUI ui) {
         super.attachUI(ui);
-        if (!isInitialized || isShoulRefresh) {
-            disposable = recipientsApi.getRecipients(tokenManager.getToken())
-                    .flatMap(resp -> Observable.fromIterable(resp.body()))
-                    .map(RecipientDto::new)
-                    .toList()
+        if (isShoulRefresh) {
+            disposable = recipientRepository.refreshRecipients()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(result -> {
                         if (ui != null) {
                             ui.setRecipients(result);
-                            this.recipientDtos = result;
                         }
                     }, this::handleError);
-            isInitialized = true;
             isShoulRefresh = false;
+            return;
         }
-    }
-
-    public List<RecipientDto> getRecipients() {
-        return recipientDtos;
+        disposable = recipientRepository.getRecipients()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                    if (ui != null) {
+                        ui.setRecipients(result);
+                    }
+                }, this::handleError);
+        isShoulRefresh = false;
     }
 
     private void handleError(Throwable throwable) {

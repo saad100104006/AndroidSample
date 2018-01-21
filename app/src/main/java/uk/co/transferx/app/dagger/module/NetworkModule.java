@@ -17,6 +17,9 @@ import uk.co.transferx.app.BuildConfig;
 import uk.co.transferx.app.api.RecipientsApi;
 import uk.co.transferx.app.api.SignInOutApi;
 import uk.co.transferx.app.api.SignUpApi;
+import uk.co.transferx.app.recipientsrepository.RecipientRepository;
+import uk.co.transferx.app.recipientsrepository.RecipientRepositoryImpl;
+import uk.co.transferx.app.tokenmanager.TokenManager;
 
 /**
  * Created by sergey on 24/12/2017.
@@ -79,6 +82,12 @@ public class NetworkModule {
     @Provides
     RecipientsApi provideRecipientsApi(Retrofit retrofit) {
         return retrofit.create(RecipientsApi.class);
+    }
+
+    @Singleton
+    @Provides
+    RecipientRepository provideRecipientRepository(RecipientsApi recipientsApi, TokenManager tokenManager) {
+        return new RecipientRepositoryImpl(recipientsApi, tokenManager);
     }
 
 }
