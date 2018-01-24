@@ -30,7 +30,9 @@
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
         android:drawableLeft="@drawable/ic_search_recipients"
+        android:hint="@string/search"
         android:drawablePadding="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />

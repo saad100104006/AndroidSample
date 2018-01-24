@@ -1,6 +1,7 @@
 package uk.co.transferx.app.mainscreen.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     RecipientsFragmentPresenter presenter;
 
 
+
     @Override
     public String tagName() {
         return RecipientsFragment.class.getSimpleName();
@@ -64,7 +66,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
             RecyclerView horizontalRecipientRecyclerView = view.findViewById(R.id.horizontal_recycler_view);
             RecyclerView verticalRecipientRecyclerView = view.findViewById(R.id.vertical_recycler_view);
             horizontalRecyclerAdapter = new RecipientHorizontalRecyclerAdapter(getContext());
-            verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(this);
+            verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(this, presenter);
             emptyListVertical = view.findViewById(R.id.empty_list);
             emptyListHorizontal = view.findViewById(R.id.empty_list_horizontal);
             horizontalRecipientRecyclerView.setAdapter(horizontalRecyclerAdapter);
@@ -104,6 +106,11 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     @Override
     public void showError() {
 
+    }
+
+    @Override
+    public void addToFavorite(RecipientDto recipientDto) {
+        horizontalRecyclerAdapter.notifyDataSetChanged();
     }
 
     @Override

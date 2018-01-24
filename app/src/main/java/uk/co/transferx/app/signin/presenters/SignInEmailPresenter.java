@@ -46,38 +46,38 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
 
     public void validateInput(String email, String password) {
 
-   /*     if (!tokenManager.isInitialTokenExist()) {
+      if (!tokenManager.isInitialTokenExist()) {
             ui.showError();
             return;
         }
         if (!Util.validateEmail(email)) {
-            ui.showValidationErrorEmail();      TODO: should uncomment when server will be reachable
+            ui.showValidationErrorEmail();
             return;
         }
         if (!Util.validatePassword(password)) {
             ui.showValidationErrorPassword();
             return;
-        } */
+        }
 
         signIn(email, password, tokenManager.getInitialToken());
     }
 
     private void signIn(String email, String password, String token) {
-     /*   UserRequest.Builder request = new UserRequest.Builder();
+        UserRequest.Builder request = new UserRequest.Builder();
         disposable = signInOutApi.signIn(token, request.uname(email).upass(password).build())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
-                    if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {   TODO: should uncomment when server will be reachable
-                        tokenManager.setToken(resp.body().string()); */
+                    if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
+                        tokenManager.setToken(resp.body().string());
                         ui.goToMainScreen();
-           /*             return;
+                     return;
                     }
                     if (ui != null) {
                         ui.showError();
                     }
 
-                }, this::handleError); */
+                }, this::handleError);
 
     }
 

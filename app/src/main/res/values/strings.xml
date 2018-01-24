@@ -57,6 +57,7 @@
     <string name="empty_list">Empty list</string>
     <string name="edit_recipient">Edit recipient info.</string>
     <string name="view_recipient">View Recipient</string>
+    <string name="search">Search</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>

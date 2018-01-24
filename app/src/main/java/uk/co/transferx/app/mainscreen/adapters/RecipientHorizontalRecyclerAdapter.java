@@ -51,7 +51,7 @@ public class RecipientHorizontalRecyclerAdapter extends RecyclerView.Adapter<Rec
 
     @Override
     public int getItemCount() {
-        return recipientDtoList == null ? 0 : 3;
+        return recipientDtoList == null ? 0 : recipientDtoList.size();
     }
 
 

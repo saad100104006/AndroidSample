@@ -25,7 +25,7 @@ public class RecipientRepositoryImpl implements RecipientRepository {
     public RecipientRepositoryImpl(final RecipientsApi recipientsApi, final TokenManager tokenManager) {
         this.recipientsApi = recipientsApi;
         this.tokenManager = tokenManager;
-        generateData();
+      //  generateData();
     }
 
 //Stub should be deleted when server is up.

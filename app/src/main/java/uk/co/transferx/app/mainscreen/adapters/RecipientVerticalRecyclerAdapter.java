@@ -3,6 +3,7 @@ package uk.co.transferx.app.mainscreen.adapters;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.List;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
+import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
 import uk.co.transferx.app.recipients.detailsrecipient.RecipientDetailsActivity;
 
 import static uk.co.transferx.app.mainscreen.fragments.RecipientsFragment.ADD_CHANGE_RECIPIENT;
@@ -27,14 +29,16 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
 
     private List<RecipientDto> recipientDtoList;
     private final Fragment fragment;
+    private final RecipientsFragmentPresenter presenter;
 
     private interface ItemClickListener {
 
         void onClickItem(final RecipientDto recipientDto);
     }
 
-    public RecipientVerticalRecyclerAdapter(Fragment fragment) {
+    public RecipientVerticalRecyclerAdapter(Fragment fragment, RecipientsFragmentPresenter presenter) {
         this.fragment = fragment;
+        this.presenter = presenter;
     }
 
 
@@ -49,7 +53,7 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
         holder.recipientName.setText(recipientDto.getName());
         holder.recipientCountry.setText(recipientDto.getCountry());
         holder.itemClickListener = recip -> {
-            if(fragment instanceof RecipientsFragment) {
+            if (fragment instanceof RecipientsFragment) {
                 Intent intent = new Intent(fragment.getActivity(), RecipientDetailsActivity.class);
                 intent.putExtra(RECIPIENT, recip);
                 fragment.startActivityForResult(intent, ADD_CHANGE_RECIPIENT);
@@ -72,7 +76,7 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
 
     }
 
-    class RecipientVerticalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class RecipientVerticalHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         ImageView recipientPhoto;
         TextView recipientName, recipientCountry;
         ItemClickListener itemClickListener;
@@ -92,7 +96,12 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
             }
         }
 
-
+        @Override
+        public boolean onLongClick(View v) {
+            v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            presenter.putToFavorite(recipientDtoList.get(getAdapterPosition()));
+            return true;
+        }
     }
 
 }
