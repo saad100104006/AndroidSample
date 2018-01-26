@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import uk.co.transferx.app.firebase.SubscriptionManager;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
 /**
@@ -39,5 +40,11 @@ public class AppModule {
     @Provides
     TokenManager providesTokenManager(SharedPreferences sharedPreferences) {
         return new TokenManager(sharedPreferences);
+    }
+
+    @Singleton
+    @Provides
+    SubscriptionManager provideSubscribtionManager(SharedPreferences sharedPreferences) {
+        return new SubscriptionManager(sharedPreferences);
     }
 }

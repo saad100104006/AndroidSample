@@ -1,17 +1,22 @@
 package uk.co.transferx.app.mainscreen;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.mainscreen.adapters.TransferXTabAdapter;
@@ -77,12 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
@@ -96,17 +95,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        SettingsActivity.startSettings(this);
+        switch (item.getItemId()) {
+            case R.id.one:
+                SettingsActivity.startSettings(this);
+                break;
+            case R.id.two:
+                String token = FirebaseInstanceId.getInstance().getToken();
+                Log.d("Sergey", "Token " + token);
+                new AlertDialog.Builder(this)
+                        .setMessage(token)
+                        .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                        .show();
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (false) {
-            SignInActivity.starSignInActivity(this, SignInType.PIN);
-        }
-
     }
 
     @Override

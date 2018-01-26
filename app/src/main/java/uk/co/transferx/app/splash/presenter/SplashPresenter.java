@@ -1,5 +1,7 @@
 package uk.co.transferx.app.splash.presenter;
 
+import android.content.SharedPreferences;
+
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -11,6 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.SignUpApi;
+import uk.co.transferx.app.firebase.SubscriptionManager;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
 /**
@@ -27,12 +30,14 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
     private final SignUpApi signUpApi;
     private final TokenManager tokenManager;
 
+
     @Inject
-    public SplashPresenter(final SignUpApi signUpApi, final TokenManager tokenManager) {
+    public SplashPresenter(final SignUpApi signUpApi, final TokenManager tokenManager, final SubscriptionManager subscriptionManager) {
         this.signUpApi = signUpApi;
         this.tokenManager = tokenManager;
         this.tokenManager.clearToken();
         this.tokenManager.clearInitToken();
+        subscriptionManager.initSubscribtions();
     }
 
 

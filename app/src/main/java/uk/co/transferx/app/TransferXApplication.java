@@ -1,5 +1,6 @@
 package uk.co.transferx.app;
 
+import android.content.SharedPreferences;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
@@ -23,6 +24,10 @@ public class TransferXApplication extends MultiDexApplication {
 
     @Inject
     RecipientRepository recipientRepository;
+    @Inject
+    SharedPreferences sharedPreferences;
+
+
 
     @Override
     public void onCreate() {

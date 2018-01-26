@@ -17,13 +17,26 @@
             android:name="io.fabric.ApiKey"
             android:value="7c701a587dab135a65c991b03f12146453d44b9c" />
 
+        <service android:name=".firebase.TransferXFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".firebase.TransferXFirebaseIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="${applicationId}.braintree" />
             </intent-filter>
         </activity>
@@ -72,6 +85,10 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".recipients.detailsrecipient.RecipientDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".settings.notification.NotificationSettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

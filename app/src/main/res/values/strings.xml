@@ -58,6 +58,10 @@
     <string name="edit_recipient">Edit recipient info.</string>
     <string name="view_recipient">View Recipient</string>
     <string name="search">Search</string>
+    <string name="notification_title">Notifications</string>
+    <string name="payments_title">Payments</string>
+    <string name="alerts_title">Alerts</string>
+    <string name="news_title">News &amp; Updates</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>

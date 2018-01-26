@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
+import uk.co.transferx.app.settings.notification.NotificationSettingsActivity;
 import uk.co.transferx.app.settings.presenter.SettingsFragmentPresenter;
 import uk.co.transferx.app.welcom.WelcomeActivity;
 
@@ -45,6 +46,7 @@ public class SettingsFragment extends BaseFragment implements SettingsFragmentPr
         if (view == null) {
             view = inflater.inflate(R.layout.settings_fragment_layout, container, false);
             view.findViewById(R.id.logout).setOnClickListener(view -> presenter.logOut());
+            view.findViewById(R.id.app_settings).setOnClickListener(view -> presenter.clickAppSettings());
 
         }
         return view;
@@ -67,5 +69,10 @@ public class SettingsFragment extends BaseFragment implements SettingsFragmentPr
     @Override
     public void goToWelcome() {
         WelcomeActivity.startWelcomeActivity(getActivity());
+    }
+
+    @Override
+    public void goAppSettings() {
+        NotificationSettingsActivity.startNotificationSettingsActivity(getContext());
     }
 }

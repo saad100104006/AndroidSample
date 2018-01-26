@@ -54,8 +54,16 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentPre
 
     }
 
+    public void clickAppSettings(){
+        if(ui != null){
+            ui.goAppSettings();
+        }
+    }
+
     public interface SettingsFragmentUI extends UI {
 
         void goToWelcome();
+
+        void goAppSettings();
     }
 }
