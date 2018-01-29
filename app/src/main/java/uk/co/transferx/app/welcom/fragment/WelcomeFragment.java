@@ -2,6 +2,8 @@ package uk.co.transferx.app.welcom.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,10 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
     @Inject
     WelcomeFragmentPresenter presenter;
 
+    private CoordinatorLayout coordinatorLayout;
+
+    private Snackbar snackbar;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +64,31 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.on_boarding_fragment_layout, container, false);
-        view.findViewById(R.id.sign_up).setOnClickListener(v -> SignUpActivity.startSignUp(getActivity()));
-        view.findViewById(R.id.sign_in).setOnClickListener(v -> SignInActivity.starSignInActivity(getActivity(), SignInType.EMAIL));
+        view.findViewById(R.id.sign_up).setOnClickListener(v -> presenter.signUpClicked());
+        view.findViewById(R.id.sign_in).setOnClickListener(v -> presenter.signInClicked());
+        coordinatorLayout = view.findViewById(R.id.coordinator_layout);
         return view;
     }
+
+    @Override
+    public void goToSignUp() {
+        SignUpActivity.startSignUp(getActivity());
+    }
+
+    @Override
+    public void goToSignIn() {
+        SignInActivity.starSignInActivity(getActivity(), SignInType.EMAIL);
+    }
+
+
+    @Override
+    public void noTokenError() {
+        snackbar = Snackbar.make(coordinatorLayout, "Something wrong with connections", Snackbar.LENGTH_INDEFINITE)
+                .setAction("Try again", v -> {
+                    presenter.refreshToken();
+                    snackbar.dismiss();
+                });
+        snackbar.show();
+    }
+
 }

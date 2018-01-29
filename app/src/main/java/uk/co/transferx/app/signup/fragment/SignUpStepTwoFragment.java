@@ -20,6 +20,8 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.signup.presenters.SignUpStepTwoPresenter;
 
+import static uk.co.transferx.app.signup.fragment.SignUpStepOneFragment.U_NAME;
+
 /**
  * Created by smilevkiy on 15.11.17.
  */
@@ -41,6 +43,10 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
     public void onCreate(@Nullable Bundle savedInstanceState) {
         ((TransferXApplication) getActivity().getApplication()).getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            presenter.setName(bundle.getString(U_NAME));
+        }
     }
 
     @Nullable
@@ -96,18 +102,19 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
 
 
     @Override
-    public void showErrorEmail() {
-        firstInputLayout.setError(getString(R.string.email_error));
+    public void showErrorEmail(String message) {
+
+        firstInputLayout.setError(message == null ? getString(R.string.email_error) : message);
     }
 
     @Override
-    public void showErrorPassword() {
-        secondInputLayout.setError(getString(R.string.password_error));
+    public void showErrorPassword(String message) {
+        secondInputLayout.setError(message == null ? getString(R.string.password_error) : message);
     }
 
     @Override
     public void goToNextView() {
-        ((SignUpActivity) getActivity()).showNextOrPreviousFragment(2);
+        ((SignUpActivity) getActivity()).showNextOrPreviousFragment(2, null);
     }
 
 

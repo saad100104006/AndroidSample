@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="left_right_main_screen">10dp</dimen>
+    <dimen name="main_screen_title_margin">2dp</dimen>
+    <dimen name="size_of_photo">60dp</dimen>
+    <dimen name="size_icon_settings">24dp</dimen>
+</resources>

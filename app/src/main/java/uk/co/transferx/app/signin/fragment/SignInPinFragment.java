@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
+import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.recoverpass.RecoverPasswordActivity;
 import uk.co.transferx.app.view.pinview.PinEditView;
 
@@ -36,7 +37,9 @@ public class SignInPinFragment extends BaseFragment {
         pinEditView.setPinViewListener(pin -> {
             Activity activity = getActivity();
             if (activity != null) {
+                MainActivity.startMainActivity(activity);
                 activity.finish();
+
             }
         });
         forgotPass.setText(forgotPassword.toUpperCase());

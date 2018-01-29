@@ -1,18 +1,19 @@
 package uk.co.transferx.app.signup.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
+import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.signin.SignInActivity;
 import uk.co.transferx.app.signin.SignInType;
 import uk.co.transferx.app.signup.presenters.SignUpStepThreePresenter;
@@ -63,9 +64,11 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
 
     @Override
     public void nextStep(int[] validPin) {
-        Toast.makeText(getContext(), "Pin is valid", Toast.LENGTH_SHORT).show();
-        getActivity().finish();
-
+        Activity activity = getActivity();
+        if (activity != null) {
+            MainActivity.startMainActivity(activity);
+            activity.finish();
+        }
     }
 
     @Override
