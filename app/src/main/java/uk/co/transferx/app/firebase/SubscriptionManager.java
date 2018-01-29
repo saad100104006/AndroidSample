@@ -86,6 +86,10 @@ public class SubscriptionManager {
         return sharedPreferences.getBoolean(NOTIFICATION, false);
     }
 
+    public void setNotificationOn() {
+        sharedPreferences.edit().putBoolean(NOTIFICATION, true).apply();
+    }
+
     public void setAllNotification(boolean subscribe) {
         subscribeToNews(subscribe);
         subscribeToPayments(subscribe);

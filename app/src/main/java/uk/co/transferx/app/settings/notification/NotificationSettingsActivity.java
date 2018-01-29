@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import javax.inject.Inject;
@@ -42,6 +41,14 @@ public class NotificationSettingsActivity extends BaseActivity implements Notifi
         alertSwitch = findViewById(R.id.alerts_switch);
         notificationSwitch = findViewById(R.id.all_notifications);
         paymentsSwitch = findViewById(R.id.payments_switch);
+        newsSwitch.setChecked(presenter.isNewsSubscribed());
+        alertSwitch.setChecked(presenter.isAlertSubscribed());
+        paymentsSwitch.setChecked(presenter.isPaymentsSubscribed());
+        notificationSwitch.setChecked(presenter.isNotificationSubscribed());
+        newsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setNewsSubscribtion(isChecked));
+        alertSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setAlertSubscribtion(isChecked));
+        paymentsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setPaymentsSubscribtion(isChecked));
+        notificationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setNotificationSubscribtion(isChecked));
         toolbar.setTitle(R.string.app_settings);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -81,40 +88,23 @@ public class NotificationSettingsActivity extends BaseActivity implements Notifi
     @Override
     public void setNews(boolean subscribed) {
         newsSwitch.setChecked(subscribed);
-        newsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setNewsSubscribtion(isChecked));
-        if(!notificationSwitch.isChecked() && subscribed){
-            presenter.setNotificationSubscribtion(true);
-        }
     }
 
     @Override
     public void setAlerts(boolean subscribed) {
-
         alertSwitch.setChecked(subscribed);
-        alertSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setAlertSubscribtion(isChecked));
-        if(!notificationSwitch.isChecked() && subscribed){
-            presenter.setNotificationSubscribtion(true);
-        }
-    }
-
-    @Override
-    public void setNotifications(boolean subscribed) {
-        notificationSwitch.setChecked(subscribed);
-        notificationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setNotificationSubscribtion(isChecked));
-        if(!subscribed){
-            presenter.setPaymentsSubscribtion(false);
-            presenter.setAlertSubscribtion(false);
-            presenter.setNewsSubscribtion(false);
-        }
 
     }
 
     @Override
     public void setPayments(boolean subscribed) {
         paymentsSwitch.setChecked(subscribed);
-        paymentsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setPaymentsSubscribtion(isChecked));
-        if(!notificationSwitch.isChecked() && subscribed){
-            presenter.setNotificationSubscribtion(true);
-        }
+    }
+
+    @Override
+    public void setNotificationOn() {
+        notificationSwitch.setOnCheckedChangeListener(null);
+        notificationSwitch.setChecked(true);
+        notificationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setNotificationSubscribtion(isChecked));
     }
 }

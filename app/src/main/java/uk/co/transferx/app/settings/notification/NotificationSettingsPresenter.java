@@ -14,7 +14,6 @@ public class NotificationSettingsPresenter extends BasePresenter<NotificationSet
 
 
     private final SubscriptionManager subscriptionManager;
-    private boolean isInitialized;
 
     @Inject
     public NotificationSettingsPresenter(final SubscriptionManager subscriptionManager) {
@@ -24,30 +23,55 @@ public class NotificationSettingsPresenter extends BasePresenter<NotificationSet
     @Override
     public void attachUI(NotificationSettingsUI ui) {
         super.attachUI(ui);
-        if (!isInitialized) {
-            this.ui.setAlerts(subscriptionManager.isAlertsSubscribed());
-            this.ui.setNews(subscriptionManager.isNewsSubscribed());
-            this.ui.setNotifications(subscriptionManager.isNotificationSubscribed());
-            this.ui.setPayments(subscriptionManager.isPaymentsSubscribed());
-            isInitialized = true;
-        }
+
     }
 
+    public boolean isNotificationSubscribed() {
+        return subscriptionManager.isNotificationSubscribed();
+    }
+
+    public boolean isPaymentsSubscribed() {
+        return subscriptionManager.isPaymentsSubscribed();
+    }
+
+
+    public boolean isAlertSubscribed() {
+        return subscriptionManager.isAlertsSubscribed();
+    }
+
+    public boolean isNewsSubscribed() {
+        return subscriptionManager.isNewsSubscribed();
+    }
 
     public void setNewsSubscribtion(boolean subscription) {
         subscriptionManager.subscribeToNews(subscription);
+        if (subscription && !subscriptionManager.isNotificationSubscribed()) {
+            subscriptionManager.setNotificationOn();
+            ui.setNotificationOn();
+        }
     }
 
-    public void setAlertSubscribtion(boolean subscribtion) {
-        subscriptionManager.subscribeToAlerts(subscribtion);
+    public void setAlertSubscribtion(boolean subscription) {
+        subscriptionManager.subscribeToAlerts(subscription);
+        if (subscription && !subscriptionManager.isNotificationSubscribed()) {
+            subscriptionManager.setNotificationOn();
+            ui.setNotificationOn();
+        }
     }
 
-    public void setPaymentsSubscribtion(boolean subscribtion) {
-        subscriptionManager.subscribeToPayments(subscribtion);
+    public void setPaymentsSubscribtion(boolean subscription) {
+        subscriptionManager.subscribeToPayments(subscription);
+        if (subscription && !subscriptionManager.isNotificationSubscribed()) {
+            subscriptionManager.setNotificationOn();
+            ui.setNotificationOn();
+        }
     }
 
     public void setNotificationSubscribtion(boolean subscribtion) {
         subscriptionManager.setAllNotification(subscribtion);
+        ui.setPayments(subscribtion);
+        ui.setNews(subscribtion);
+        ui.setAlerts(subscribtion);
     }
 
     public interface NotificationSettingsUI extends UI {
@@ -56,9 +80,9 @@ public class NotificationSettingsPresenter extends BasePresenter<NotificationSet
 
         void setAlerts(boolean subscribed);
 
-        void setNotifications(boolean subscribed);
-
         void setPayments(boolean subscribed);
+
+        void setNotificationOn();
 
     }
 }
