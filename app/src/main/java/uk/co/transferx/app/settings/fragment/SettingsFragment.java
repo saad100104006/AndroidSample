@@ -13,6 +13,7 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.settings.notification.NotificationSettingsActivity;
 import uk.co.transferx.app.settings.presenter.SettingsFragmentPresenter;
+import uk.co.transferx.app.settings.profile.ProfileActivity;
 import uk.co.transferx.app.welcom.WelcomeActivity;
 
 /**
@@ -47,6 +48,7 @@ public class SettingsFragment extends BaseFragment implements SettingsFragmentPr
             view = inflater.inflate(R.layout.settings_fragment_layout, container, false);
             view.findViewById(R.id.logout).setOnClickListener(view -> presenter.logOut());
             view.findViewById(R.id.app_settings).setOnClickListener(view -> presenter.clickAppSettings());
+            view.findViewById(R.id.profile_settings).setOnClickListener(v -> presenter.clickProfile());
 
         }
         return view;
@@ -74,5 +76,10 @@ public class SettingsFragment extends BaseFragment implements SettingsFragmentPr
     @Override
     public void goAppSettings() {
         NotificationSettingsActivity.startNotificationSettingsActivity(getContext());
+    }
+
+    @Override
+    public void goToProfile() {
+        ProfileActivity.startProfileActivity(getContext());
     }
 }

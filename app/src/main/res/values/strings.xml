@@ -62,6 +62,11 @@
     <string name="payments_title">Payments</string>
     <string name="alerts_title">Alerts</string>
     <string name="news_title">News &amp; Updates</string>
+    <string name="wallet_title">Wallet</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_pin">Change Pin</string>
+    <string name="upload_documentation">Upload Documentation</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>

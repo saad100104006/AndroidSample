@@ -1,7 +1,5 @@
 package uk.co.transferx.app.splash.presenter;
 
-import android.content.SharedPreferences;
-
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;

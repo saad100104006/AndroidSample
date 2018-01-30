@@ -14,6 +14,7 @@ import uk.co.transferx.app.recipients.addrecipients.fragments.AddRecipientsFragm
 import uk.co.transferx.app.recipients.detailsrecipient.fragment.RecipientDetailsFragment;
 import uk.co.transferx.app.settings.fragment.SettingsFragment;
 import uk.co.transferx.app.settings.notification.NotificationSettingsActivity;
+import uk.co.transferx.app.settings.profile.ProfileActivity;
 import uk.co.transferx.app.signin.fragment.SignInEmailFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepOneFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepThreeFragment;
@@ -56,4 +57,6 @@ public interface AppComponent {
     void inject(RecipientDialogFragment recipientDialogFragment);
 
     void inject(NotificationSettingsActivity notificationSettingsActivity);
+
+    void inject(ProfileActivity profileActivity);
 }
