@@ -127,6 +127,9 @@ dependencies {
     // RxJava support for Room
     implementation "android.arch.persistence.room:rxjava2:1.0.0"
 
+    //Streams
+    implementation "com.annimon:stream:1.1.9"
+
     //tests
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
