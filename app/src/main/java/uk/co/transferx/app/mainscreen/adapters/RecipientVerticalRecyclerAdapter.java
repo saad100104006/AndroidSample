@@ -1,10 +1,11 @@
 package uk.co.transferx.app.mainscreen.adapters;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
-import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
     private List<RecipientDto> recipientDtoList;
     private final Fragment fragment;
     private final RecipientsFragmentPresenter presenter;
+    private final Vibrator vibe;
+    private final static int TIME_OF_VIBRATION = 50;
 
     private interface ItemClickListener {
 
@@ -40,6 +43,7 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
     public RecipientVerticalRecyclerAdapter(Fragment fragment, RecipientsFragmentPresenter presenter) {
         this.fragment = fragment;
         this.presenter = presenter;
+        vibe = (Vibrator) fragment.getContext().getSystemService(Context.VIBRATOR_SERVICE);
     }
 
 
@@ -96,6 +100,7 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
             recipientName = itemView.findViewById(R.id.recipient_name);
             recipientCountry = itemView.findViewById(R.id.recipient_country);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -107,7 +112,7 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
 
         @Override
         public boolean onLongClick(View v) {
-            v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            vibe.vibrate(TIME_OF_VIBRATION);
             presenter.putToFavorite(recipientDtoList.get(getAdapterPosition()));
             return true;
         }

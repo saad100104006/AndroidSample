@@ -22,11 +22,12 @@ import uk.co.transferx.app.recipientsrepository.RecipientRepository;
 
 public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmentPresenter.RecipientsFragmentUI> {
 
-    private boolean isShoulRefresh;
+    private boolean isShouldRefresh;
     private final RecipientRepository recipientRepository;
     private final SharedPreferences sharedPreferences;
     private Disposable disposable;
     private List<RecipientDto> favoriteListRecipients = new ArrayList<>(3);
+    private List<RecipientDto> recipientDtoList = new ArrayList<>();
 
 
     @Inject
@@ -37,15 +38,37 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
 
 
     public void setShouldRefresh(boolean isShouldRefresh) {
-        this.isShoulRefresh = isShouldRefresh;
+        this.isShouldRefresh = isShouldRefresh;
     }
 
 
     @Override
     public void attachUI(RecipientsFragmentUI ui) {
         super.attachUI(ui);
-        if (isShoulRefresh) {
+        if (isShouldRefresh) {
             disposable = recipientRepository.refreshRecipients()
+                    .toObservable()
+                    .flatMap(Observable::fromIterable)
+                    .doOnNext(res -> {
+                        if (sharedPreferences.getBoolean(res.getId(), false)) {
+                            favoriteListRecipients.add(res);
+                        }
+                    })
+                    .toList()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(result -> {
+                        recipientDtoList = result;
+                        if (ui != null) {
+                            ui.setRecipients(recipientDtoList);
+                            ui.setFavoriteRecipients(favoriteListRecipients);
+                        }
+                    }, this::handleError);
+            isShouldRefresh = false;
+            return;
+        }
+        if (recipientDtoList.isEmpty()) {
+            disposable = recipientRepository.getRecipients()
                     .toObservable()
                     .flatMap(Observable::fromIterable)
                     .doOnNext(res -> {
@@ -62,27 +85,8 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
                             ui.setFavoriteRecipients(favoriteListRecipients);
                         }
                     }, this::handleError);
-            isShoulRefresh = false;
-            return;
+            isShouldRefresh = false;
         }
-        disposable = recipientRepository.getRecipients()
-                .toObservable()
-                .flatMap(Observable::fromIterable)
-                .doOnNext(res -> {
-                    if (sharedPreferences.getBoolean(res.getId(), false)) {
-                        favoriteListRecipients.add(res);
-                    }
-                })
-                .toList()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                    if (ui != null) {
-                        ui.setRecipients(result);
-                        ui.setFavoriteRecipients(favoriteListRecipients);
-                    }
-                }, this::handleError);
-        isShoulRefresh = false;
     }
 
     private void handleError(Throwable throwable) {
@@ -90,14 +94,17 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
     }
 
     public void putToFavorite(RecipientDto recipientDto) {
-        if(favoriteListRecipients.size() == 3){
+        if (sharedPreferences.getBoolean(recipientDto.getId(), false)) {
+            return;
+        }
+        if (favoriteListRecipients.size() == 3) {
             sharedPreferences.edit().remove(favoriteListRecipients.get(0).getId()).apply();
             favoriteListRecipients.remove(0);
         }
         sharedPreferences.edit().putBoolean(recipientDto.getId(), true).apply();
         favoriteListRecipients.add(recipientDto);
         if (ui != null) {
-            ui.addToFavorite(recipientDto);
+            ui.updateFavoriteRecipients();
         }
 
     }
@@ -118,6 +125,8 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
         void setRecipients(List<RecipientDto> recipientDtos);
 
         void addToFavorite(RecipientDto recipientDto);
+
+        void updateFavoriteRecipients();
 
         void showError();
 

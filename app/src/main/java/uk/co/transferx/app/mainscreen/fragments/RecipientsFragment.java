@@ -1,7 +1,6 @@
 package uk.co.transferx.app.mainscreen.fragments;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +18,6 @@ import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
-import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.mainscreen.adapters.RecipientHorizontalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.adapters.RecipientVerticalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
@@ -42,7 +40,6 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Inject
     RecipientsFragmentPresenter presenter;
-
 
 
     @Override
@@ -81,6 +78,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Override
     public void setFavoriteRecipients(List<RecipientDto> recipientDtos) {
+        Log.d("Sergey", "recipient settled");
         emptyListHorizontal.setVisibility(recipientDtos.isEmpty() ? View.VISIBLE : View.GONE);
         horizontalRecyclerAdapter.setRecipients(recipientDtos);
     }
@@ -110,16 +108,21 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Override
     public void addToFavorite(RecipientDto recipientDto) {
+        emptyListHorizontal.setVisibility(View.GONE);
         horizontalRecyclerAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("Sergey", "request code " + requestCode + " result_code " + (resultCode == RESULT_OK));
         if (requestCode == ADD_CHANGE_RECIPIENT && resultCode == RESULT_OK) {
             presenter.setShouldRefresh(true);
             presenter.attachUI(this);
         }
+    }
+
+    @Override
+    public void updateFavoriteRecipients() {
+        horizontalRecyclerAdapter.notifyData();
     }
 }

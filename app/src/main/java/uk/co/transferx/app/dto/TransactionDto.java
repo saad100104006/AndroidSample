@@ -8,13 +8,13 @@ import java.util.List;
 
 import uk.co.transferx.app.pojo.TransactionHistory;
 
+import static uk.co.transferx.app.util.Constants.EMPTY;
+
 /**
  * Created by sergey on 07/02/2018.
  */
 
 public class TransactionDto {
-
-    private final static String EMPTY = "";
 
     public TransactionDto(TransactionHistory transactionHistory, List<RecipientDto> recipients) {
         id = transactionHistory.getId();

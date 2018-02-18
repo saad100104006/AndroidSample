@@ -2,6 +2,7 @@ package uk.co.transferx.app.mainscreen.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,10 +57,16 @@ public class RecipientHorizontalRecyclerAdapter extends RecyclerView.Adapter<Rec
 
 
     public void setRecipients(List<RecipientDto> recipients) {
+        Log.d("Sergey", "size of recipients " + recipients.size());
         this.recipientDtoList = recipients;
         notifyDataSetChanged();
-
     }
+
+
+    public void notifyData(){
+        Log.d("Sergey", "notify data size" + recipientDtoList.size());
+    }
+
 
 
     static class RecipientHorizontalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

@@ -5,13 +5,14 @@ import android.os.Parcelable;
 
 import uk.co.transferx.app.pojo.Recipient;
 
+import static uk.co.transferx.app.util.Constants.EMPTY;
+import static uk.co.transferx.app.util.Constants.SPACE;
+
 /**
  * Created by sergey on 17.12.17.
  */
 
 public class RecipientDto implements Parcelable {
-    private final static String EMPTY = "";
-    private final static String SPACE = " ";
     private final String id;
     private final String name;
     private final String imgUrl;
