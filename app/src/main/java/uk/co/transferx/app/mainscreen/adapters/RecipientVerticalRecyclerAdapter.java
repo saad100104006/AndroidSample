@@ -2,6 +2,7 @@ package uk.co.transferx.app.mainscreen.adapters;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -68,11 +69,19 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
     }
 
     public void setRecipients(List<RecipientDto> recipients) {
-        this.recipientDtoList = recipients;
+        if (this.recipientDtoList == null) {
+            this.recipientDtoList = recipients;
+            notifyDataSetChanged();
+            return;
+        }
         if (recipients.isEmpty()) {
             return;
         }
-        notifyDataSetChanged();
+        final RecipientDiffCallback recipientDiffCallback = new RecipientDiffCallback(this.recipientDtoList, recipients);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(recipientDiffCallback);
+        this.recipientDtoList.clear();
+        this.recipientDtoList.addAll(recipients);
+        diffResult.dispatchUpdatesTo(this);
 
     }
 
