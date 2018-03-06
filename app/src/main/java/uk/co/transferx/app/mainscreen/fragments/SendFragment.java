@@ -81,7 +81,7 @@ public class SendFragment extends BaseFragment implements SendFragmentPresenter.
         super.onResume();
         presenter.attachUI(this);
         disposable = RxTextView.textChanges(currencyAmountSender)
-                .debounce(1L, TimeUnit.SECONDS)
+                .debounce(300L, TimeUnit.MILLISECONDS)
                 .filter(val -> !EMPTY.equals(val.toString()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sequence -> presenter.setValueToSend(sequence.toString()));

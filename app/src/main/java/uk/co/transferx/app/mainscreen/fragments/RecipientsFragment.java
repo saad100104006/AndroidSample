@@ -36,6 +36,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     private RecipientVerticalRecyclerAdapter verticalRecyclerAdapter;
     private TextView emptyListVertical, emptyListHorizontal;
     public static final int ADD_CHANGE_RECIPIENT = 333;
+    private RecyclerView horizontalRecipientRecyclerView;
 
 
     @Inject
@@ -60,7 +61,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.recipients_fragment_layout, container, false);
-            RecyclerView horizontalRecipientRecyclerView = view.findViewById(R.id.horizontal_recycler_view);
+            horizontalRecipientRecyclerView = view.findViewById(R.id.horizontal_recycler_view);
             RecyclerView verticalRecipientRecyclerView = view.findViewById(R.id.vertical_recycler_view);
             horizontalRecyclerAdapter = new RecipientHorizontalRecyclerAdapter(getContext());
             verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(this, presenter);
@@ -68,7 +69,6 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
             emptyListHorizontal = view.findViewById(R.id.empty_list_horizontal);
             horizontalRecipientRecyclerView.setAdapter(horizontalRecyclerAdapter);
             verticalRecipientRecyclerView.setAdapter(verticalRecyclerAdapter);
-            horizontalRecipientRecyclerView.setHasFixedSize(true);
             verticalRecipientRecyclerView.setHasFixedSize(true);
             view.findViewById(R.id.add_button).setOnClickListener(v -> startActivityForResult(new Intent(getContext(), AddRecipientsActivity.class), ADD_CHANGE_RECIPIENT));
         }
@@ -123,6 +123,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Override
     public void updateFavoriteRecipients() {
+        emptyListHorizontal.setVisibility(View.GONE);
         horizontalRecyclerAdapter.notifyData();
     }
 }
