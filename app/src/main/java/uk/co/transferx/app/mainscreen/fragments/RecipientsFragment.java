@@ -1,7 +1,6 @@
 package uk.co.transferx.app.mainscreen.fragments;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +18,6 @@ import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
-import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.mainscreen.adapters.RecipientHorizontalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.adapters.RecipientVerticalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
@@ -38,11 +36,11 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     private RecipientVerticalRecyclerAdapter verticalRecyclerAdapter;
     private TextView emptyListVertical, emptyListHorizontal;
     public static final int ADD_CHANGE_RECIPIENT = 333;
+    private RecyclerView horizontalRecipientRecyclerView;
 
 
     @Inject
     RecipientsFragmentPresenter presenter;
-
 
 
     @Override
@@ -63,7 +61,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.recipients_fragment_layout, container, false);
-            RecyclerView horizontalRecipientRecyclerView = view.findViewById(R.id.horizontal_recycler_view);
+            horizontalRecipientRecyclerView = view.findViewById(R.id.horizontal_recycler_view);
             RecyclerView verticalRecipientRecyclerView = view.findViewById(R.id.vertical_recycler_view);
             horizontalRecyclerAdapter = new RecipientHorizontalRecyclerAdapter(getContext());
             verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(this, presenter);
@@ -71,7 +69,6 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
             emptyListHorizontal = view.findViewById(R.id.empty_list_horizontal);
             horizontalRecipientRecyclerView.setAdapter(horizontalRecyclerAdapter);
             verticalRecipientRecyclerView.setAdapter(verticalRecyclerAdapter);
-            horizontalRecipientRecyclerView.setHasFixedSize(true);
             verticalRecipientRecyclerView.setHasFixedSize(true);
             view.findViewById(R.id.add_button).setOnClickListener(v -> startActivityForResult(new Intent(getContext(), AddRecipientsActivity.class), ADD_CHANGE_RECIPIENT));
         }
@@ -81,6 +78,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Override
     public void setFavoriteRecipients(List<RecipientDto> recipientDtos) {
+        Log.d("Sergey", "recipient settled");
         emptyListHorizontal.setVisibility(recipientDtos.isEmpty() ? View.VISIBLE : View.GONE);
         horizontalRecyclerAdapter.setRecipients(recipientDtos);
     }
@@ -110,16 +108,22 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Override
     public void addToFavorite(RecipientDto recipientDto) {
+        emptyListHorizontal.setVisibility(View.GONE);
         horizontalRecyclerAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("Sergey", "request code " + requestCode + " result_code " + (resultCode == RESULT_OK));
         if (requestCode == ADD_CHANGE_RECIPIENT && resultCode == RESULT_OK) {
             presenter.setShouldRefresh(true);
             presenter.attachUI(this);
         }
+    }
+
+    @Override
+    public void updateFavoriteRecipients() {
+        emptyListHorizontal.setVisibility(View.GONE);
+        horizontalRecyclerAdapter.notifyData();
     }
 }

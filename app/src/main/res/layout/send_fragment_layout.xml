@@ -152,6 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@id/first_currency"
                     android:background="@null"
                     android:ellipsize="end"
                     android:gravity="end"
@@ -251,7 +252,7 @@
                     android:layout_height="match_parent"
                     android:gravity="right|center_vertical"
                     android:paddingRight="30dp"
-                    android:text="1 EUR = 4.2105 PLN"
+                    tools:text="1 EUR = 4.2105 PLN"
                     android:textColor="@color/colorAccent"
                     android:textSize="12sp" />
 

@@ -58,7 +58,11 @@ public class RecipientHorizontalRecyclerAdapter extends RecyclerView.Adapter<Rec
     public void setRecipients(List<RecipientDto> recipients) {
         this.recipientDtoList = recipients;
         notifyDataSetChanged();
+    }
 
+
+    public void notifyData() {
+        notifyDataSetChanged();
     }
 
 

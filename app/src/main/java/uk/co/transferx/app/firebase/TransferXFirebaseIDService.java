@@ -12,6 +12,12 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 public class TransferXFirebaseIDService extends FirebaseInstanceIdService {
 
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+
+    }
 
     @Override
     public void onTokenRefresh() {
