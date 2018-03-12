@@ -27,7 +27,7 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
     private final SharedPreferences sharedPreferences;
     private Disposable disposable;
     private List<RecipientDto> favoriteListRecipients = new ArrayList<>(3);
-    private List<RecipientDto> recipientDtoList;
+    private List<RecipientDto> recipientDtoList = new ArrayList<>();
 
 
     @Inject
@@ -46,6 +46,8 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
     public void attachUI(RecipientsFragmentUI ui) {
         super.attachUI(ui);
         if (isShouldRefresh) {
+            recipientDtoList.clear();
+            favoriteListRecipients.clear();
             disposable = recipientRepository.refreshRecipients()
                     .toObservable()
                     .flatMap(Observable::fromIterable)
@@ -67,8 +69,7 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
             isShouldRefresh = false;
             return;
         }
-        if (recipientDtoList == null) {
-            recipientDtoList = new ArrayList<>();
+        if (recipientDtoList.isEmpty()) {
             favoriteListRecipients.clear();
             disposable = recipientRepository.getRecipients()
                     .toObservable()

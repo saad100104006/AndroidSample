@@ -64,8 +64,8 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.on_boarding_fragment_layout, container, false);
-        view.findViewById(R.id.sign_up).setOnClickListener(v -> presenter.signUpClicked());
-        view.findViewById(R.id.sign_in).setOnClickListener(v -> presenter.signInClicked());
+        view.findViewById(R.id.next).setOnClickListener(v -> presenter.signInClicked());
+        view.findViewById(R.id.create_account).setOnClickListener(v -> presenter.signUpClicked());
         coordinatorLayout = view.findViewById(R.id.coordinator_layout);
         return view;
     }
