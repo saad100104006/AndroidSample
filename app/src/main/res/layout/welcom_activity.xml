@@ -10,11 +10,11 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:layout_marginTop="70dp"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
-        android:src="@drawable/ic_logo_primary" />
+        android:layout_marginTop="70dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo_primary" />
 
 
     <FrameLayout
