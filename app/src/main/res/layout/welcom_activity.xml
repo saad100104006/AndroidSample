@@ -7,15 +7,15 @@
     tools:context="uk.co.transferx.app.welcom.WelcomeActivity">
 
 
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:gravity="center_horizontal|bottom"
-        android:text="@string/welcome"
-        android:textAllCaps="true"
-        android:textColor="@color/colorPrimary"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:layout_marginTop="70dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo_primary" />
+
 
     <FrameLayout
         android:id="@+id/container"

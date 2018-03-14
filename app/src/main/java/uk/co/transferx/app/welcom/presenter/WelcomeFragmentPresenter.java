@@ -8,8 +8,11 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
+import uk.co.transferx.app.api.SignInOutApi;
 import uk.co.transferx.app.api.SignUpApi;
+import uk.co.transferx.app.pojo.UserRequest;
 import uk.co.transferx.app.tokenmanager.TokenManager;
+import uk.co.transferx.app.util.Util;
 
 /**
  * Created by smilevkiy on 14.11.17.
@@ -17,14 +20,16 @@ import uk.co.transferx.app.tokenmanager.TokenManager;
 
 public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPresenter.WelcomeUI> {
 
+    private final SignInOutApi signInOutApi;
     private final SignUpApi signUpApi;
     private Disposable disposable;
     private final TokenManager tokenManager;
 
     @Inject
-    public WelcomeFragmentPresenter(final SignUpApi signUpApi, final TokenManager tokenManager) {
-        this.signUpApi = signUpApi;
+    public WelcomeFragmentPresenter(final SignInOutApi signInOutApi, final SignUpApi signUpApi, final TokenManager tokenManager) {
+        this.signInOutApi = signInOutApi;
         this.tokenManager = tokenManager;
+        this.signUpApi = signUpApi;
     }
 
 
@@ -36,13 +41,47 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
         }
     }
 
-
-    public void signInClicked() {
-        if (tokenManager.isInitialTokenExist()) {
-            ui.goToSignIn();
+    public void validateInput(String email, String password) {
+        if (!tokenManager.isInitialTokenExist()) {
+            ui.showConnectionError();
             return;
         }
-        ui.noTokenError();
+        if (!Util.validateEmail(email)) {
+            ui.showEmailError();
+            return;
+        }
+        if (!Util.validatePassword(password)) {
+            ui.showPasswordError();
+            return;
+        }
+        signIn(email, password, tokenManager.getInitialToken());
+    }
+
+    private void signIn(String email, String password, String token) {
+        UserRequest.Builder request = new UserRequest.Builder();
+        disposable = signInOutApi.signIn(token, request.uname(email).upass(password).build())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(resp -> {
+                    if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
+                        tokenManager.setToken(resp.body().string());
+                        ui.goToMainScreen();
+                        return;
+                    } else if (resp.code() == HttpsURLConnection.HTTP_NOT_FOUND && ui != null) {
+                        ui.showUserNotFound();
+                        return;
+                    } else if (resp.code() == HttpsURLConnection.HTTP_UNAUTHORIZED && ui != null) {
+                        ui.showWrongPassword();
+                        return;
+                    }
+                    ui.showConnectionError();
+
+                }, this::handleError);
+
+    }
+
+    public void recoverPasswordClicked() {
+        ui.goRecoverPassword();
     }
 
     public void signUpClicked() {
@@ -50,7 +89,7 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
             ui.goToSignUp();
             return;
         }
-        ui.noTokenError();
+        ui.showConnectionError();
     }
 
     public void refreshToken() {
@@ -62,12 +101,12 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
                         tokenManager.setInitialToken(resp.body().string());
                         return;
                     }
-                    ui.noTokenError();
-                }, throwable -> ui.noTokenError());
+                    ui.showConnectionError();
+                }, throwable -> ui.showConnectionError());
     }
 
     private void handleError(Throwable throwable) {
-
+        ui.showConnectionError();
     }
 
 
@@ -75,9 +114,19 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
 
         void goToSignUp();
 
-        void goToSignIn();
+        void goRecoverPassword();
 
-        void noTokenError();
+        void goToMainScreen();
+
+        void showConnectionError();
+
+        void showEmailError();
+
+        void showPasswordError();
+
+        void showUserNotFound();
+
+        void showWrongPassword();
 
     }
 }

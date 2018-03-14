@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name">TransferX</string>
     <string name="welcome">welcome</string>
-    <string name="sign_in">SIGN IN</string>
+    <string name="sign_in">Sign in</string>
     <string name="sign_up">SIGN UP</string>
+    <string name="create_an_account">create an account</string>
     <string name="next">NEXT</string>
     <string name="steps">Step %d</string>
     <string name="lets_start">Lets Get Started!</string>
     <string name="terms">"By signing up, you are agreeing to our
 <u>Terms &amp; Conditions</u> and <u>Privacy Policy.</u>"</string>
-    <string name="forgot_password">Forgot password</string>
+    <string name="forgot_password">Forgot your password?</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="first_name">First Name</string>
@@ -68,6 +69,14 @@
     <string name="change_pin">Change Pin</string>
     <string name="upload_documentation">Upload Documentation</string>
     <string name="amount_with_currency">%1$s %2$s</string>
+    <string name="money_that_cares">money that cares</string>
+    <string name="enter_your_email_address">Enter your email address</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="email_address">email address</string>
+    <string name="connection_error">Something wrong with connection</string>
+    <string name="try_again">Try again</string>
+    <string name="user_not_found">User not found</string>
+    <string name="wrong_username_or_password">Wrong username &amp; password combination</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>
