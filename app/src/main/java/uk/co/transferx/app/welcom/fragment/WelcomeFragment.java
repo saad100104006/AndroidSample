@@ -84,6 +84,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 firstInput.setTextColor(getResources().getColor(R.color.black));
+                firstInput.getBackground().mutate().setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
             }
 
             @Override
@@ -100,6 +101,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 secondInput.setTextColor(getResources().getColor(R.color.black));
+                secondInput.getBackground().mutate().setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
             }
 
             @Override
@@ -133,7 +135,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
     public void goToMainScreen() {
         Activity activity = getActivity();
         if (activity != null) {
-            MainActivity.startMainActivity(getActivity());
+            MainActivity.startMainActivity(activity);
             activity.finish();
         }
     }
