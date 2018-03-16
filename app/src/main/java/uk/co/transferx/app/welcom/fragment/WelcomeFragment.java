@@ -2,17 +2,22 @@ package uk.co.transferx.app.welcom.fragment;
 
 import android.app.Activity;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -30,7 +35,6 @@ import uk.co.transferx.app.welcom.presenter.WelcomeFragmentPresenter;
 
 public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPresenter.WelcomeUI {
 
-
     @Override
     public String tagName() {
         return WelcomeFragment.class.getSimpleName();
@@ -46,6 +50,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
     private TextInputEditText firstInput;
     private TextInputEditText secondInput;
     private Snackbar snackbar;
+    private TextView emailLabel, passwordLabel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +80,8 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         firstInput = view.findViewById(R.id.first_input);
         secondInput = view.findViewById(R.id.second_input);
+        emailLabel = view.findViewById(R.id.email_label);
+        passwordLabel = view.findViewById(R.id.password_label);
         firstInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -83,8 +90,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                firstInput.setTextColor(getResources().getColor(R.color.black));
-                firstInput.getBackground().mutate().setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
+                setStatusOfError(firstInput, emailLabel, R.color.black);
             }
 
             @Override
@@ -100,8 +106,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                secondInput.setTextColor(getResources().getColor(R.color.black));
-                secondInput.getBackground().mutate().setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
+                setStatusOfError(secondInput, passwordLabel, R.color.black);
             }
 
             @Override
@@ -157,15 +162,13 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
 
     @Override
     public void showEmailError() {
-        firstInput.getBackground().mutate().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
-        firstInput.setTextColor(getResources().getColor(R.color.red));
+        setStatusOfError(firstInput, emailLabel, R.color.red);
         Snackbar.make(coordinatorLayout, getString(R.string.email_error), Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void showPasswordError() {
-        secondInput.getBackground().mutate().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
-        secondInput.setTextColor(getResources().getColor(R.color.red));
+        setStatusOfError(secondInput, passwordLabel, R.color.red);
         Snackbar.make(coordinatorLayout, getString(R.string.password_error), Snackbar.LENGTH_LONG).show();
     }
 }

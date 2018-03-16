@@ -12,6 +12,7 @@ import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
 import uk.co.transferx.app.mainscreen.fragments.SendFragment;
 import uk.co.transferx.app.recipients.addrecipients.fragments.AddRecipientsFragment;
 import uk.co.transferx.app.recipients.detailsrecipient.fragment.RecipientDetailsFragment;
+import uk.co.transferx.app.recoverpass.fragment.RecoverPasswordFragment;
 import uk.co.transferx.app.settings.fragment.SettingsFragment;
 import uk.co.transferx.app.settings.notification.NotificationSettingsActivity;
 import uk.co.transferx.app.settings.profile.ProfileActivity;
@@ -59,4 +60,6 @@ public interface AppComponent {
     void inject(NotificationSettingsActivity notificationSettingsActivity);
 
     void inject(ProfileActivity profileActivity);
+
+    void inject(RecoverPasswordFragment recoverPasswordFragment);
 }

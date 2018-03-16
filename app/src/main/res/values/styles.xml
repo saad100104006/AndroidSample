@@ -41,6 +41,7 @@
     <!-- Define  custom alert theme here extending from base -->
     <style name="AppAlertTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimary</item>
+
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowFixedWidthMajor">90%</item>
         <item name="windowFixedWidthMinor">90%</item>
