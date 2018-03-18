@@ -13,4 +13,6 @@ public final class Constants {
     public static final String U_NAME = "first_name";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
+
+    public static final String CREDENTIAL = "credential";
 }

@@ -34,6 +34,7 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
     SignUpStepTwoPresenter presenter;
     private TextInputEditText firstInput, secondInput;
     private TextView firstLabel, secondLabel;
+    private TextWatcher firstTextWatcher, secondTextWatcher;
 
     @Override
     public String tagName() {
@@ -72,38 +73,6 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
         secondInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         firstInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_email_address, 0, 0, 0);
         secondInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_password, 0, 0, 0);
-        firstInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setStatusOfError(firstInput, firstLabel, R.color.black);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        secondInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setStatusOfError(secondInput, secondLabel, R.color.black);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
         view.findViewById(R.id.next).setOnClickListener(v -> presenter.validateInput(secondInput.getText().toString(), firstInput.getText().toString()));
     }
 
@@ -130,11 +99,45 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
     @Override
     public void onResume() {
         super.onResume();
+        firstInput.addTextChangedListener(firstTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                setStatusOfError(firstInput, firstLabel, R.color.black);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        secondInput.addTextChangedListener(secondTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                setStatusOfError(secondInput, secondLabel, R.color.black);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         presenter.attachUI(this);
     }
 
     @Override
     public void onPause() {
+        firstInput.removeTextChangedListener(firstTextWatcher);
+        secondInput.removeTextChangedListener(secondTextWatcher);
         presenter.detachUI();
         super.onPause();
     }

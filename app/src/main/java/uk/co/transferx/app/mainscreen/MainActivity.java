@@ -29,17 +29,13 @@ import uk.co.transferx.app.signin.SignInType;
  */
 
 public class MainActivity extends AppCompatActivity {
-
     private View progressView;
     private ProgressBar progressBar;
-
 
     public static void startMainActivity(Activity activity) {
         activity.startActivity(new Intent(activity, MainActivity.class));
         activity.finish();
-
     }
-
 
     private TransferXTabAdapter transferXTabAdapter;
 
@@ -80,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -91,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         progressView.setVisibility(visible ? View.VISIBLE : View.GONE);
         progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

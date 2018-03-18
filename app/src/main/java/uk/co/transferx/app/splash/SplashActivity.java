@@ -43,6 +43,7 @@ public class SplashActivity extends BaseActivity implements SplashPresenter.Spla
 
     @Override
     public void goToWelcomeScreen() {
+
         WelcomeActivity.startWelcomeActivity(this);
         finish();
     }

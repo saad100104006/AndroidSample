@@ -44,35 +44,6 @@ public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter
 
     }
 
-    private void sendInfoToBackend(String email, String password) {
-
-     /*   UserRequest.Builder request = new UserRequest.Builder();
-        disposable = signUpApi.registerUser(tokenManager.getInitialToken(), request.uname(uname).email(email).upass(password).upassConfirmation(password).build())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(resp -> {
-                    if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        tokenManager.setToken(resp.body().string());
-                        tokenManager.clearInitToken();
-                        ui.goToNextView();
-                        return;
-                    }
-                    if (resp.code() == HttpsURLConnection.HTTP_BAD_REQUEST && ui != null) {
-                        String message = resp.errorBody().string();
-                        if (message != null && message.contains(EMAIL)) {
-                            ui.showErrorEmail();
-                        }
-                    }
-
-                }, this::handleErrorFromBackend); */
-
-
-    }
-
-    private void handleErrorFromBackend(Throwable throwable) {
-        Log.d("Sergey", throwable.getMessage());
-    }
-
     public interface SignUpStepTwoUI extends UI {
 
         void goToNextView(String uname, String email, String password);

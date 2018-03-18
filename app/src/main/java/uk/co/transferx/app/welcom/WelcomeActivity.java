@@ -20,14 +20,11 @@ import uk.co.transferx.app.welcom.fragment.WelcomeFragment;
 
 public class WelcomeActivity extends BaseActivity {
 
-
-
     public static void startWelcomeActivity(Activity activity) {
         Intent intent = new Intent(activity, WelcomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
     }
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

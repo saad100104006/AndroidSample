@@ -33,6 +33,7 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
     SignUpStepOnePresenter presenter;
     private TextInputEditText firstInput, secondInput;
     private TextView firstLabel, secondLabel;
+    private TextWatcher firstTextWatcher, secondTextWatcher;
 
     @Override
     public String tagName() {
@@ -66,7 +67,14 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
         secondInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         firstInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_name, 0, 0, 0);
         secondInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_name, 0, 0, 0);
-        firstInput.addTextChangedListener(new TextWatcher() {
+        view.findViewById(R.id.next).setOnClickListener(v -> presenter.validateAndGoNext(firstInput.getText().toString(), secondInput.getText().toString()));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.attachUI(this);
+        firstInput.addTextChangedListener(firstTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -82,7 +90,7 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
 
             }
         });
-        secondInput.addTextChangedListener(new TextWatcher() {
+        secondInput.addTextChangedListener(secondTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -98,19 +106,14 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
 
             }
         });
-        view.findViewById(R.id.next).setOnClickListener(v -> presenter.validateAndGoNext(firstInput.getText().toString(), secondInput.getText().toString()));
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.attachUI(this);
     }
 
 
     @Override
     public void onPause() {
         presenter.detachUI();
+        firstInput.removeTextChangedListener(firstTextWatcher);
+        secondInput.removeTextChangedListener(secondTextWatcher);
         super.onPause();
     }
 

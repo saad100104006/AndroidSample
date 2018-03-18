@@ -91,6 +91,9 @@ dependencies {
     //pageindicator
     implementation 'com.romandanylyk:pageindicatorview:1.0.0'
 
+    //pinView
+    implementation 'com.chaos.view:pinview:1.3.0'
+
     //currency picker
     implementation 'com.github.midorikocak:currency-picker-android:1.2.1'
 
