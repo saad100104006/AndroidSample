@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import uk.co.transferx.app.crypto.CryptoManager;
 import uk.co.transferx.app.firebase.SubscriptionManager;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 

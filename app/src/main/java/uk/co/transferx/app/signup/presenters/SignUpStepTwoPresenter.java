@@ -3,15 +3,12 @@ package uk.co.transferx.app.signup.presenters;
 import android.util.Log;
 
 import javax.inject.Inject;
-import javax.net.ssl.HttpsURLConnection;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.SignUpApi;
-import uk.co.transferx.app.pojo.UserRequest;
+import uk.co.transferx.app.crypto.CryptoManager;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 import uk.co.transferx.app.util.Util;
 
@@ -23,48 +20,33 @@ public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter
 
 
     private String uname;
-    private final SignUpApi signUpApi;
-    private Disposable disposable;
-    private final static String EMAIL = "Email";
-    private final TokenManager tokenManager;
 
     @Inject
-    public SignUpStepTwoPresenter(final SignUpApi signUpApi,final TokenManager tokenManager) {
-        this.signUpApi = signUpApi;
-        this.tokenManager = tokenManager;
+    public SignUpStepTwoPresenter() {
+
     }
-
     public void validateInput(String password, String email) {
-        if (!Util.validateEmail(email)) {
-            ui.showErrorEmail(null);
+        if (!Util.validateEmail(email) && ui != null) {
+            ui.showErrorEmail();
             return;
         }
-        if (!Util.validatePassword(password)) {
-            ui.showErrorPassword(null);
+        if (!Util.validatePassword(password) && ui != null) {
+            ui.showErrorPassword();
             return;
         }
-        sendInfoToBackend(email, password);
-
+        if (ui != null) {
+            ui.goToNextView(uname, email, password);
+        }
     }
 
     public void setName(String uname) {
         this.uname = uname;
-        Log.d("Sergey", uname);
 
-    }
-
-
-    @Override
-    public void detachUI() {
-        super.detachUI();
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
-        }
     }
 
     private void sendInfoToBackend(String email, String password) {
 
-        UserRequest.Builder request = new UserRequest.Builder();
+     /*   UserRequest.Builder request = new UserRequest.Builder();
         disposable = signUpApi.registerUser(tokenManager.getInitialToken(), request.uname(uname).email(email).upass(password).upassConfirmation(password).build())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -78,11 +60,11 @@ public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter
                     if (resp.code() == HttpsURLConnection.HTTP_BAD_REQUEST && ui != null) {
                         String message = resp.errorBody().string();
                         if (message != null && message.contains(EMAIL)) {
-                            ui.showErrorEmail(message);
+                            ui.showErrorEmail();
                         }
                     }
 
-                }, this::handleErrorFromBackend);
+                }, this::handleErrorFromBackend); */
 
 
     }
@@ -93,11 +75,11 @@ public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter
 
     public interface SignUpStepTwoUI extends UI {
 
-        void goToNextView();
+        void goToNextView(String uname, String email, String password);
 
-        void showErrorPassword(String message);
+        void showErrorPassword();
 
-        void showErrorEmail(String message);
+        void showErrorEmail();
 
     }
 }

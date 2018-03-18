@@ -42,15 +42,15 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
     }
 
     public void validateInput(String email, String password) {
-        if (!tokenManager.isInitialTokenExist()) {
+        if (!tokenManager.isInitialTokenExist() && ui != null) {
             ui.showConnectionError();
             return;
         }
-        if (!Util.validateEmail(email)) {
+        if (!Util.validateEmail(email) && ui != null) {
             ui.showEmailError();
             return;
         }
-        if (!Util.validatePassword(password)) {
+        if (!Util.validatePassword(password) && ui != null) {
             ui.showPasswordError();
             return;
         }

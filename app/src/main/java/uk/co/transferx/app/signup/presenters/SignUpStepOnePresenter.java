@@ -2,13 +2,8 @@ package uk.co.transferx.app.signup.presenters;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
-import uk.co.transferx.app.api.SignUpApi;
 import uk.co.transferx.app.util.Util;
 
 /**
@@ -26,15 +21,15 @@ public class SignUpStepOnePresenter extends BasePresenter<SignUpStepOnePresenter
 
 
     public void validateAndGoNext(String firstName, String lastName) {
-        if (Util.isNullorEmpty(firstName)) {
+        if (Util.isNullorEmpty(firstName) && ui != null) {
             ui.showNameError();
             return;
         }
-        if (Util.isNullorEmpty(lastName)) {
+        if (Util.isNullorEmpty(lastName) && ui != null) {
             ui.showLastNameError();
             return;
         }
-        String sb = firstName + UNDERSCORE +lastName;
+        String sb = firstName + UNDERSCORE + lastName;
         ui.goToNextStep(sb);
 
     }
