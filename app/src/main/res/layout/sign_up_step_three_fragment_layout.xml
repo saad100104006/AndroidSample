@@ -1,53 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="@dimen/left_right_main_screen"
-        android:layout_marginRight="@dimen/left_right_main_screen"
-        android:layout_marginTop="@dimen/left_right_main_screen"
-        android:gravity="left"
-        android:text="@string/enter_pin"
-        android:textColor="@color/black"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/first_label_pin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/left_right_main_screen"
-        android:layout_marginRight="@dimen/left_right_main_screen"
-        android:gravity="left"
-        android:textStyle="bold"
-        android:textAllCaps="true"
-        android:text="@string/pin"
-        android:textColor="@color/black"
-        android:textSize="12sp" />
-
-    <com.chaos.view.PinView
-        android:id="@+id/first_pin"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="@dimen/left_right_main_screen"
-        android:layout_marginRight="@dimen/left_right_main_screen"
-        android:layout_marginBottom="16dp"
-        android:layout_height="wrap_content"
-        android:inputType="number|numberPassword"
-        android:textSize="18sp"
-        style="@style/PinWidget.PinView"
-        app:itemSpacing="20dp"
-        android:padding="5dp"
-        android:textColor="@color/black"
-        app:itemCount="4"
-        app:viewType="line" />
+    <include layout="@layout/pin_content" />
 
     <TextView
         android:id="@+id/second_label_pin"
@@ -56,26 +16,26 @@
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
         android:gravity="left"
-        android:textStyle="bold"
-        android:textAllCaps="true"
         android:text="@string/confirm_pin"
+        android:textAllCaps="true"
         android:textColor="@color/black"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
     <com.chaos.view.PinView
         android:id="@+id/second_pin"
+        style="@style/PinWidget.PinView"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/left_right_main_screen"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
-        android:layout_marginBottom="@dimen/left_right_main_screen"
-        android:layout_height="wrap_content"
         android:inputType="number|numberPassword"
-        android:textSize="18sp"
-        style="@style/PinWidget.PinView"
-        app:itemSpacing="20dp"
         android:padding="5dp"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:itemCount="4"
+        app:itemSpacing="20dp"
         app:viewType="line" />
 
     <Button

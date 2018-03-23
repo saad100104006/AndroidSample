@@ -103,7 +103,12 @@ public class SendFragment extends BaseFragment implements SendFragmentPresenter.
         if (view == null) {
             view = inflater.inflate(R.layout.send_fragment_layout, container, false);
             // AppCompatSpinner chooseDelivery = view.findViewById(R.id.delivery_method);
-            view.findViewById(R.id.send_container).setOnClickListener(v -> hideKeyboard(v));
+            view.findViewById(R.id.send_container).setOnClickListener(v -> {
+                if (v instanceof EditText) {
+                    return;
+                }
+                hideKeyboard(v);}
+            );
             final CardView recipient = view.findViewById(R.id.recipient_container);
             final ImageView countryFlagFirst = view.findViewById(R.id.country_flag_first);
             final ImageView countryFlagSecond = view.findViewById(R.id.country_flag_second);
@@ -147,14 +152,6 @@ public class SendFragment extends BaseFragment implements SendFragmentPresenter.
                 .into(photo);
         name.setText(recipientDto.getName());
         country.setText(recipientDto.getCountry());
-    }
-
-    private void hideKeyboard(View view) {
-        if (view instanceof EditText) {
-            return;
-        }
-        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private void setUpInitialValue(final TextView codeText, final ImageView flag, String currencyName) {

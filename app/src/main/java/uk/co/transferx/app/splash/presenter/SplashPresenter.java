@@ -1,5 +1,7 @@
 package uk.co.transferx.app.splash.presenter;
 
+import android.content.SharedPreferences;
+
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -14,6 +16,8 @@ import uk.co.transferx.app.api.SignUpApi;
 import uk.co.transferx.app.firebase.SubscriptionManager;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
+import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
+
 /**
  * Created by sergey on 19.11.17.
  */
@@ -27,14 +31,16 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
 
     private final SignUpApi signUpApi;
     private final TokenManager tokenManager;
+    private final SharedPreferences sharedPreferences;
 
 
     @Inject
-    public SplashPresenter(final SignUpApi signUpApi, final TokenManager tokenManager, final SubscriptionManager subscriptionManager) {
+    public SplashPresenter(final SignUpApi signUpApi, final TokenManager tokenManager, final SubscriptionManager subscriptionManager, final SharedPreferences sharedPreferences) {
         this.signUpApi = signUpApi;
         this.tokenManager = tokenManager;
         this.tokenManager.clearToken();
         this.tokenManager.clearInitToken();
+        this.sharedPreferences = sharedPreferences;
         subscriptionManager.initSubscribtions();
     }
 
@@ -47,12 +53,21 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(res -> {
+                    boolean loggedInStatus = sharedPreferences.getBoolean(LOGGED_IN_STATUS, false);
                     if (res.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         tokenManager.setInitialToken(res.body().string());
+                        if (loggedInStatus) {
+                            ui.goToPinScreen();
+                            return;
+                        }
                         ui.goToWelcomeScreen();
                         return;
                     }
                     if (ui != null) {
+                        if (loggedInStatus) {
+                            ui.goToPinScreen();
+                            return;
+                        }
                         ui.goToWelcomeScreen();
                     }
                 }, this::handleError);
@@ -75,6 +90,8 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
     public interface SplashUI extends UI {
 
         void goToWelcomeScreen();
+
+        void goToPinScreen();
 
     }
 }

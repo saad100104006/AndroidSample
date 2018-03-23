@@ -22,6 +22,7 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.signup.presenters.SignUpStepThreePresenter;
+import uk.co.transferx.app.tutorial.TutorialActivity;
 
 import static uk.co.transferx.app.util.Constants.EMAIL;
 import static uk.co.transferx.app.util.Constants.EMPTY;
@@ -102,7 +103,7 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
     public void goToMainScreen() {
         Activity activity = getActivity();
         if (activity != null) {
-            MainActivity.startMainActivity(activity);
+            TutorialActivity.startTutorialActivity(activity);
             activity.finish();
         }
     }

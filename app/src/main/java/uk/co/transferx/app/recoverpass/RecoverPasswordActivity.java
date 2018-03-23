@@ -10,6 +10,7 @@ import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.recoverpass.fragment.RecoverPasswordFragment;
+import uk.co.transferx.app.recoverpass.fragment.RecoverPasswordSuccessFragment;
 
 /**
  * Created by sergey on 23.11.17.
@@ -26,9 +27,18 @@ public class RecoverPasswordActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recover_password_activity_layout);
-        BaseFragment recoverPasswordFragment = new RecoverPasswordFragment();
+        replaceFragment(new RecoverPasswordFragment());
+    }
+
+
+    public void goSuccess(){
+        replaceFragment(new RecoverPasswordSuccessFragment());
+    }
+
+    private void replaceFragment(BaseFragment baseFragment){
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, recoverPasswordFragment, recoverPasswordFragment.getTag());
+        ft.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
+        ft.replace(R.id.container, baseFragment, baseFragment.getTag());
         ft.commit();
     }
 

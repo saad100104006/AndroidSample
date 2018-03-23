@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
+import uk.co.transferx.app.signin.SignInActivity;
+import uk.co.transferx.app.signin.SignInType;
 import uk.co.transferx.app.splash.presenter.SplashPresenter;
 import uk.co.transferx.app.welcom.WelcomeActivity;
 
@@ -43,10 +45,13 @@ public class SplashActivity extends BaseActivity implements SplashPresenter.Spla
 
     @Override
     public void goToWelcomeScreen() {
-
         WelcomeActivity.startWelcomeActivity(this);
         finish();
     }
 
-
+    @Override
+    public void goToPinScreen() {
+        SignInActivity.starSignInActivity(SplashActivity.this, SignInType.PIN);
+        finish();
+    }
 }

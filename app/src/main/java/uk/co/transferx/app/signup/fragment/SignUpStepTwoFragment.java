@@ -33,7 +33,7 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
     @Inject
     SignUpStepTwoPresenter presenter;
     private TextInputEditText firstInput, secondInput;
-    private TextView firstLabel, secondLabel;
+    private TextView firstLabel, secondLabel, firstError, secondError;
     private TextWatcher firstTextWatcher, secondTextWatcher;
 
     @Override
@@ -65,6 +65,8 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
         secondInput = view.findViewById(R.id.second_input);
         firstLabel = view.findViewById(R.id.first_input_label);
         secondLabel = view.findViewById(R.id.second_input_label);
+        firstError = view.findViewById(R.id.first_input_error);
+        secondError = view.findViewById(R.id.second_input_error);
         firstLabel.setText(R.string.email_address);
         secondLabel.setText(R.string.password);
         firstInput.setHint(R.string.enter_your_email_address);
@@ -79,15 +81,20 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
     @Override
     public void showErrorEmail() {
         setStatusOfError(firstInput, firstLabel, R.color.red);
+        firstError.setText(R.string.email_error);
+        firstError.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showErrorPassword() {
         setStatusOfError(secondInput, secondLabel, R.color.red);
+        secondError.setText(R.string.password_error);
+        secondError.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void goToNextView(String uname, String email, String password) {
+        hideKeyboard(secondInput);
         Bundle bundle = new Bundle();
         bundle.putString(U_NAME, uname);
         bundle.putString(EMAIL, email);
@@ -108,6 +115,7 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 setStatusOfError(firstInput, firstLabel, R.color.black);
+                firstError.setVisibility(View.GONE);
             }
 
             @Override
@@ -124,6 +132,7 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 setStatusOfError(secondInput, secondLabel, R.color.black);
+                secondError.setVisibility(View.GONE);
             }
 
             @Override

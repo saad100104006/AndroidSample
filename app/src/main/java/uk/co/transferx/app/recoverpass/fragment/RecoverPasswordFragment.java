@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
+import uk.co.transferx.app.recoverpass.RecoverPasswordActivity;
 import uk.co.transferx.app.recoverpass.presenter.RecoverPasswordPresenter;
 
 /**
@@ -28,7 +29,7 @@ public class RecoverPasswordFragment extends BaseFragment implements RecoverPass
     RecoverPasswordPresenter presenter;
 
     private TextInputEditText textInputEditText;
-    private TextView label;
+    private TextView label, firstError;
 
     @Override
     public String tagName() {
@@ -52,6 +53,7 @@ public class RecoverPasswordFragment extends BaseFragment implements RecoverPass
         super.onViewCreated(view, savedInstanceState);
         textInputEditText = view.findViewById(R.id.first_input);
         label = view.findViewById(R.id.email_label);
+        firstError = view.findViewById(R.id.email_error);
         textInputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -61,6 +63,7 @@ public class RecoverPasswordFragment extends BaseFragment implements RecoverPass
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 setStatusOfError(textInputEditText, label, R.color.black);
+                firstError.setVisibility(View.GONE);
             }
 
             @Override
@@ -75,6 +78,8 @@ public class RecoverPasswordFragment extends BaseFragment implements RecoverPass
     @Override
     public void showValidateError() {
         setStatusOfError(textInputEditText, label, R.color.red);
+        firstError.setText(R.string.email_error);
+        firstError.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -85,7 +90,8 @@ public class RecoverPasswordFragment extends BaseFragment implements RecoverPass
 
     @Override
     public void successGoBack() {
-        getActivity().finish();
+        hideKeyboard(textInputEditText);
+        ((RecoverPasswordActivity)getActivity()).goSuccess();
     }
 
     @Override

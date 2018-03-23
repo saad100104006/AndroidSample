@@ -31,7 +31,7 @@ import timber.log.Timber;
 public class CryptoManager {
     private final static String UTF_8 = "UTF-8";
     private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
-    private final static int ITERATION_COUNT = 1000;
+    private final static int ITERATION_COUNT = 2000;
     private final static int saltLength = 32;
     private static int KEY_LENGTH = 256;
     private static String DELIMITER = "]";
@@ -92,7 +92,7 @@ public class CryptoManager {
         byte[] salt;
         byte[] initialVector;
         byte[] cipherBytes;
-        String decryptedCredential = null;
+        String decryptedCredential = "";
         SecretKey key;
         try {
             if (fields.length != 3) {

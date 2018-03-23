@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
@@ -15,9 +17,10 @@ import uk.co.transferx.app.crypto.CryptoManager;
 import uk.co.transferx.app.pojo.UserRequest;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
-import static uk.co.transferx.app.util.Constants.CREDENTIAL;
 import static uk.co.transferx.app.util.Constants.EMAIL;
-import static uk.co.transferx.app.util.Constants.SPACE;
+import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
+import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
+import static uk.co.transferx.app.util.Constants.TOKEN;
 
 /**
  * Created by sergey on 06.12.17.
@@ -29,8 +32,8 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
     private final SharedPreferences sharedPreferences;
     private final SignUpApi signUpApi;
     private final TokenManager tokenManager;
-    private Disposable disposable;
     private String uname, email, password;
+    private CompositeDisposable compositeDisposable;
 
     @Inject
     public SignUpStepThreePresenter(final CryptoManager cryptoManager, final SharedPreferences sharedPreferences, final SignUpApi signUpApi, final TokenManager tokenManager) {
@@ -48,8 +51,9 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
     @Override
     public void detachUI() {
         super.detachUI();
-        if (disposable != null) {
-            disposable.dispose();
+        if (compositeDisposable != null) {
+            compositeDisposable.dispose();
+            compositeDisposable = null;
         }
     }
 
@@ -59,20 +63,41 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
         this.password = password;
     }
 
+    private void saveTokenWithNewPin(String pin) {
+        if (compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable();
+        }
+        compositeDisposable.add(Observable.just(cryptoManager.getEncryptedCredential(tokenManager.getToken(), pin))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(sec -> {
+                    sharedPreferences.edit().putString(TOKEN, sec).apply();
+                    sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply();
+                    sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply();
+                    if (ui != null) {
+                        ui.goToMainScreen();
+                    }
+                })
+        );
+    }
+
     public void validatePin(final String firstPin, final String secondPin) {
         UserRequest.Builder request = new UserRequest.Builder();
         if (firstPin.equals(secondPin)) {
-            disposable = signUpApi.registerUser(tokenManager.getInitialToken(), request.uname(uname).email(email).upass(password).upassConfirmation(password).build())
-                    .doOnNext(respo -> {
-                        if (respo.code() == HttpsURLConnection.HTTP_OK) {
-                            sharedPreferences.edit().putString(CREDENTIAL, cryptoManager.getEncryptedCredential(String.format("%s%s%s", email, SPACE, password), firstPin)).apply();
-                        }
-                    })
+            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)) {
+                saveTokenWithNewPin(firstPin);
+                return;
+            }
+            Disposable disposable = signUpApi.registerUser(tokenManager.getInitialToken(), request.uname(uname).email(email).upass(password).upassConfirmation(password).build())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(resp -> {
                         if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                            tokenManager.setToken(resp.body().string());
+                            String token = resp.body().string();
+                            SharedPreferences.Editor editorShared = sharedPreferences.edit();
+                            editorShared.putString(TOKEN, cryptoManager.getEncryptedCredential(token, firstPin));
+                            editorShared.putBoolean(LOGGED_IN_STATUS, true).apply();
+                            tokenManager.setToken(token);
                             tokenManager.clearInitToken();
                             ui.goToMainScreen();
                             return;
@@ -85,6 +110,10 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
                         }
 
                     }, this::handleErrorFromBackend);
+            if (compositeDisposable == null) {
+                compositeDisposable = new CompositeDisposable();
+            }
+            compositeDisposable.add(disposable);
             return;
         }
         if (ui != null) {

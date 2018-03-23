@@ -1,5 +1,7 @@
 package uk.co.transferx.app.settings.presenter;
 
+import android.content.SharedPreferences;
+
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -10,6 +12,8 @@ import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.SignInOutApi;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
+import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
+
 /**
  * Created by sergey on 29/12/2017.
  */
@@ -19,6 +23,8 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentPre
     private final SignInOutApi signInOutApi;
     private Disposable disposable;
     private final TokenManager tokenManager;
+    private final SharedPreferences sharedPreferences;
+
 
     @Override
     public void detachUI() {
@@ -29,14 +35,16 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentPre
     }
 
     @Inject
-    public SettingsFragmentPresenter(final SignInOutApi signInOutApi, final TokenManager tokenManager) {
+    public SettingsFragmentPresenter(final SignInOutApi signInOutApi, final TokenManager tokenManager, final SharedPreferences sharedPreferences) {
         this.signInOutApi = signInOutApi;
         this.tokenManager = tokenManager;
+        this.sharedPreferences = sharedPreferences;
     }
 
     public void logOut() {
         if (ui != null && !tokenManager.isTokenExist()) {
             tokenManager.clearInitToken();
+            sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, false).apply();
             ui.goToWelcome();
             return;
         }
@@ -47,6 +55,7 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentPre
                     if (ui != null) {
                         tokenManager.clearToken();
                         tokenManager.clearInitToken();
+                        sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, false).apply();
                         ui.goToWelcome();
                     }
                 });
@@ -54,14 +63,14 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentPre
 
     }
 
-    public void clickAppSettings(){
-        if(ui != null){
+    public void clickAppSettings() {
+        if (ui != null) {
             ui.goAppSettings();
         }
     }
 
-    public void clickProfile(){
-        if(ui != null){
+    public void clickProfile() {
+        if (ui != null) {
             ui.goToProfile();
         }
     }

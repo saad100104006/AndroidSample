@@ -32,7 +32,7 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
     @Inject
     SignUpStepOnePresenter presenter;
     private TextInputEditText firstInput, secondInput;
-    private TextView firstLabel, secondLabel;
+    private TextView firstLabel, secondLabel, firstError, secondError;
     private TextWatcher firstTextWatcher, secondTextWatcher;
 
     @Override
@@ -59,6 +59,8 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
         secondInput = view.findViewById(R.id.second_input);
         firstLabel = view.findViewById(R.id.first_input_label);
         secondLabel = view.findViewById(R.id.second_input_label);
+        firstError = view.findViewById(R.id.first_input_error);
+        secondError = view.findViewById(R.id.second_input_error);
         firstLabel.setText(R.string.first_name);
         secondLabel.setText(R.string.last_name);
         firstInput.setHint(R.string.first_name_hint);
@@ -83,6 +85,7 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 setStatusOfError(firstInput, firstLabel, R.color.black);
+                firstError.setVisibility(View.GONE);
             }
 
             @Override
@@ -99,6 +102,7 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 setStatusOfError(secondInput, secondLabel, R.color.black);
+                secondError.setVisibility(View.GONE);
             }
 
             @Override
@@ -132,10 +136,14 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
     @Override
     public void showNameError() {
         setStatusOfError(firstInput, firstLabel, R.color.red);
+        firstError.setText(R.string.first_name_error);
+        firstError.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showLastNameError() {
         setStatusOfError(secondInput, secondLabel, R.color.red);
+        secondError.setText(R.string.last_name_error);
+        secondError.setVisibility(View.VISIBLE);
     }
 }

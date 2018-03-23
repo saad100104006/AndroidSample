@@ -14,5 +14,12 @@ public final class Constants {
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
 
-    public static final String CREDENTIAL = "credential";
+    public static final String TOKEN = "tok";
+    public static final String LOGGED_IN_STATUS = "logged_in_status";
+
+    public static final String LAYOUT = "layout";
+    public static final String TUTORIAL_IMG = "tutorial_img";
+    public static final String DESCRIPTION_ONE = "description_one";
+    public static final String DESCRIPTION_TWO = "descritption_two";
+    public static final String PIN_SHOULD_BE_INPUT = "pin_should_be_input";
 }

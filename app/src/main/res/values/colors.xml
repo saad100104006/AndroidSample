@@ -13,6 +13,8 @@
     <color name="strong_gray">#808080</color>
     <color name="gray">#979797</color>
     <color name="hint">#9b9b9b</color>
+    <color name="green_blue">#06b07d</color>
+    <color name="green">#00986e</color>
 
 
 </resources>

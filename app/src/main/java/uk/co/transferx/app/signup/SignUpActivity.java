@@ -2,6 +2,7 @@ package uk.co.transferx.app.signup;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,12 +18,17 @@ import android.widget.TextView;
 
 import com.rd.PageIndicatorView;
 
+import javax.inject.Inject;
+
 import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
+import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.signup.fragment.SignUpStepOneFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepThreeFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepTwoFragment;
+
+import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
 
 /**
  * Created by smilevkiy on 15.11.17.
@@ -34,14 +40,25 @@ public class SignUpActivity extends BaseActivity {
         activity.startActivity(new Intent(activity, SignUpActivity.class));
     }
 
+    public static void startSignUp(Activity activity, int fragmentNumber) {
+        currentFragment = fragmentNumber;
+        startSignUp(activity);
+
+    }
+
+    @Inject
+    SharedPreferences sharedPreferences;
+
     private static final int DURATION = 500;
     private final SparseArray<BaseFragment> sparseArray = new SparseArray<>(3);
     private PageIndicatorView pageIndicatorView;
     private static int currentFragment;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((TransferXApplication) (getApplication())).getAppComponent().inject(this);
         setContentView(R.layout.signup_activity_layout);
         pageIndicatorView = findViewById(R.id.page_indicator);
         sparseArray.put(0, new SignUpStepOneFragment());
@@ -77,6 +94,9 @@ public class SignUpActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)) {
+            return;
+        }
         switch (currentFragment) {
             case 0:
                 super.onBackPressed();

@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
+import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Inject;
 
@@ -40,6 +41,13 @@ public class TransferXApplication extends MultiDexApplication {
 
         if (!BuildConfig.DEBUG) {
             Fabric.with(this, new Crashlytics());
+            if (LeakCanary.isInAnalyzerProcess(this)) {
+                // This process is dedicated to LeakCanary for heap analysis.
+                // You should not init your app in this process.
+                return;
+            }
+            LeakCanary.install(this);
+            // Normal app init code...
         }
     }
 

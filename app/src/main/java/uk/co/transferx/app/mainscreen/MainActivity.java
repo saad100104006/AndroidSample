@@ -33,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     public static void startMainActivity(Activity activity) {
-        activity.startActivity(new Intent(activity, MainActivity.class));
+        Intent intent = new Intent(activity, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        activity.startActivity(intent);
         activity.finish();
     }
 

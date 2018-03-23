@@ -1,15 +1,9 @@
 package uk.co.transferx.app.signup.presenters;
 
-import android.util.Log;
-
 import javax.inject.Inject;
 
-import io.reactivex.disposables.Disposable;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
-import uk.co.transferx.app.api.SignUpApi;
-import uk.co.transferx.app.crypto.CryptoManager;
-import uk.co.transferx.app.tokenmanager.TokenManager;
 import uk.co.transferx.app.util.Util;
 
 /**
