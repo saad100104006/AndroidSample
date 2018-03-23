@@ -1,9 +1,26 @@
 package uk.co.transferx.app.signup.presenters;
 
-import javax.inject.Inject;
+import android.content.SharedPreferences;
 
+import javax.inject.Inject;
+import javax.net.ssl.HttpsURLConnection;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
+import uk.co.transferx.app.api.SignUpApi;
+import uk.co.transferx.app.crypto.CryptoManager;
+import uk.co.transferx.app.pojo.UserRequest;
+import uk.co.transferx.app.tokenmanager.TokenManager;
+
+import static uk.co.transferx.app.util.Constants.EMAIL;
+import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
+import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
+import static uk.co.transferx.app.util.Constants.TOKEN;
 
 /**
  * Created by sergey on 06.12.17.
@@ -11,52 +28,110 @@ import uk.co.transferx.app.UI;
 
 public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePresenter.SignUpStepThreeUI> {
 
-    private int[] firstPin;
-    private int[] secondPin;
+    private final CryptoManager cryptoManager;
+    private final SharedPreferences sharedPreferences;
+    private final SignUpApi signUpApi;
+    private final TokenManager tokenManager;
+    private String uname, email, password;
+    private CompositeDisposable compositeDisposable;
 
     @Inject
-    public SignUpStepThreePresenter() {
+    public SignUpStepThreePresenter(final CryptoManager cryptoManager, final SharedPreferences sharedPreferences, final SignUpApi signUpApi, final TokenManager tokenManager) {
+        this.cryptoManager = cryptoManager;
+        this.sharedPreferences = sharedPreferences;
+        this.signUpApi = signUpApi;
+        this.tokenManager = tokenManager;
     }
-
 
     @Override
     public void attachUI(SignUpStepThreeUI ui) {
         super.attachUI(ui);
-        if (firstPin != null && secondPin != null) {
-            validatePin(secondPin);
-            secondPin = null;
+    }
+
+    @Override
+    public void detachUI() {
+        super.detachUI();
+        if (compositeDisposable != null) {
+            compositeDisposable.dispose();
+            compositeDisposable = null;
         }
-
     }
 
-    public void pinFirstEntered(int[] firstPin) {
-        this.firstPin = firstPin;
+    public void setCredential(String uname, String email, String password) {
+        this.uname = uname;
+        this.email = email;
+        this.password = password;
     }
 
-    public void setSecondPin(int[] secondPin) {
-        validatePin(secondPin);
-    }
-
-    private void validatePin(int[] secondPin) {
-        if (ui == null) {
-            this.secondPin = secondPin;
-            return;
+    private void saveTokenWithNewPin(String pin) {
+        if (compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable();
         }
-        for (int i = 0; i < firstPin.length; i++) {
-            if (firstPin[i] != secondPin[i]) {
-                ui.showErrorPin();
+        compositeDisposable.add(Observable.just(cryptoManager.getEncryptedCredential(tokenManager.getToken(), pin))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(sec -> {
+                    sharedPreferences.edit().putString(TOKEN, sec).apply();
+                    sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply();
+                    sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply();
+                    if (ui != null) {
+                        ui.goToMainScreen();
+                    }
+                })
+        );
+    }
+
+    public void validatePin(final String firstPin, final String secondPin) {
+        UserRequest.Builder request = new UserRequest.Builder();
+        if (firstPin.equals(secondPin)) {
+            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)) {
+                saveTokenWithNewPin(firstPin);
                 return;
             }
-        }
-        ui.nextStep(secondPin);
+            Disposable disposable = signUpApi.registerUser(tokenManager.getInitialToken(), request.uname(uname).email(email).upass(password).upassConfirmation(password).build())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(resp -> {
+                        if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
+                            String token = resp.body().string();
+                            SharedPreferences.Editor editorShared = sharedPreferences.edit();
+                            editorShared.putString(TOKEN, cryptoManager.getEncryptedCredential(token, firstPin));
+                            editorShared.putBoolean(LOGGED_IN_STATUS, true).apply();
+                            tokenManager.setToken(token);
+                            tokenManager.clearInitToken();
+                            ui.goToMainScreen();
+                            return;
+                        }
+                        if (resp.code() == HttpsURLConnection.HTTP_BAD_REQUEST && ui != null) {
+                            String message = resp.errorBody().string();
+                            if (message != null && message.contains(EMAIL) && ui != null) {
+                                ui.showErrorFromBackend();
+                            }
+                        }
 
+                    }, this::handleErrorFromBackend);
+            if (compositeDisposable == null) {
+                compositeDisposable = new CompositeDisposable();
+            }
+            compositeDisposable.add(disposable);
+            return;
+        }
+        if (ui != null) {
+            ui.showErrorPin();
+        }
     }
 
+    private void handleErrorFromBackend(Throwable throwable) {
+
+    }
 
     public interface SignUpStepThreeUI extends UI {
 
+        void goToMainScreen();
+
         void showErrorPin();
 
-        void nextStep(int[] validPin);
+        void showErrorFromBackend();
+
     }
 }

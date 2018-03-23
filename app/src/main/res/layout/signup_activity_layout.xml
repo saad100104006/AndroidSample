@@ -1,77 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:attrs="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_cont"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="uk.co.transferx.app.signup.SignUpActivity">
 
-
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:animateLayoutChanges="true">
-
+        android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/arrow_back"
-            android:layout_width="?attr/actionBarSize"
+            android:id="@+id/main_label"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="?selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:paddingBottom="3dp"
-            android:scaleType="center"
-            android:tint="@color/colorPrimary"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:layout_marginLeft="@dimen/left_right_main_screen"
+            android:layout_marginRight="@dimen/left_right_main_screen"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/logo_primary" />
 
         <TextView
+            android:id="@+id/terms"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:gravity="center_horizontal|bottom"
-            android:text="@string/sign_up"
-            android:textAllCaps="true"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="48dp"
+            android:layout_marginLeft="@dimen/left_right_main_screen"
+            android:layout_marginRight="@dimen/left_right_main_screen"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="@string/terms"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
 
-    </FrameLayout>
-
-
-    <TextView
-        android:id="@+id/steps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:gravity="center_horizontal|bottom"
-        android:text="@string/steps"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
-
-    <com.rd.PageIndicatorView
-        android:id="@+id/page_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="5dp"
-        attrs:piv_animationDuration="500"
-        attrs:piv_animationType="slide"
-        attrs:piv_count="3"
-        attrs:piv_selectedColor="@color/colorPrimary"
-        attrs:piv_unselectedColor="@color/color_unselected" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        <com.rd.PageIndicatorView
+            android:id="@+id/page_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/terms"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="48dp"
+            android:padding="4dp"
+            attrs:piv_animationDuration="500"
+            attrs:piv_animationType="fill"
+            attrs:piv_count="3"
+            attrs:piv_padding="16dp"
+            attrs:piv_radius="8dp"
+            attrs:piv_selectedColor="@color/black"
+            attrs:piv_unselectedColor="@color/black" />
 
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_above="@id/page_indicator"
+            android:layout_below="@id/main_label" />
 
-        </FrameLayout>
-    </ScrollView>
-</LinearLayout>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -46,7 +46,7 @@ public class TokenManager {
 
     public void setToken(String token) {
         this.token = token;
-        sharedPreferences.edit().putString(TOKEN, this.token).apply();
+       // sharedPreferences.edit().putString(TOKEN, this.token).apply();
     }
 
     public void setInitialToken(String initialToken) {
@@ -56,9 +56,9 @@ public class TokenManager {
 
 
     public String getToken() {
-        if (token == null) {
-            token = getTokenFromPreferences();
-        }
+      //  if (token == null) {
+      //      token = getTokenFromPreferences();
+      //  }
         return token;
     }
 

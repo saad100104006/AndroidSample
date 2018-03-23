@@ -1,5 +1,7 @@
 package uk.co.transferx.app.welcom.presenter;
 
+import android.content.SharedPreferences;
+
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
 
@@ -14,6 +16,8 @@ import uk.co.transferx.app.pojo.UserRequest;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 import uk.co.transferx.app.util.Util;
 
+import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
+
 /**
  * Created by smilevkiy on 14.11.17.
  */
@@ -24,14 +28,15 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
     private final SignUpApi signUpApi;
     private Disposable disposable;
     private final TokenManager tokenManager;
+    private final SharedPreferences sharedPreferences;
 
     @Inject
-    public WelcomeFragmentPresenter(final SignInOutApi signInOutApi, final SignUpApi signUpApi, final TokenManager tokenManager) {
+    public WelcomeFragmentPresenter(final SignInOutApi signInOutApi, final SignUpApi signUpApi, final TokenManager tokenManager, final SharedPreferences sharedPreferences) {
         this.signInOutApi = signInOutApi;
         this.tokenManager = tokenManager;
         this.signUpApi = signUpApi;
+        this.sharedPreferences = sharedPreferences;
     }
-
 
     @Override
     public void detachUI() {
@@ -42,15 +47,15 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
     }
 
     public void validateInput(String email, String password) {
-        if (!tokenManager.isInitialTokenExist()) {
+        if (!tokenManager.isInitialTokenExist() && ui != null) {
             ui.showConnectionError();
             return;
         }
-        if (!Util.validateEmail(email)) {
+        if (!Util.validateEmail(email) && ui != null) {
             ui.showEmailError();
             return;
         }
-        if (!Util.validatePassword(password)) {
+        if (!Util.validatePassword(password) && ui != null) {
             ui.showPasswordError();
             return;
         }
@@ -65,6 +70,10 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         tokenManager.setToken(resp.body().string());
+                        if(sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)){
+                            ui.goToPinView();
+                            return;
+                        }
                         ui.goToMainScreen();
                         return;
                     } else if (resp.code() == HttpsURLConnection.HTTP_NOT_FOUND && ui != null) {
@@ -127,6 +136,8 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
         void showUserNotFound();
 
         void showWrongPassword();
+
+        void goToPinView();
 
     }
 }

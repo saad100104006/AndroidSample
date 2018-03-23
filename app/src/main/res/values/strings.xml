@@ -3,13 +3,13 @@
     <string name="welcome">welcome</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">SIGN UP</string>
-    <string name="create_an_account">create an account</string>
+    <string name="create_an_account">Create an account</string>
     <string name="next">NEXT</string>
     <string name="steps">Step %d</string>
-    <string name="lets_start">Lets Get Started!</string>
-    <string name="terms">"By signing up, you are agreeing to our
-<u>Terms &amp; Conditions</u> and <u>Privacy Policy.</u>"</string>
+    <string name="lets_start">Create an account</string>
+    <string name="terms">"By signing up, you are agreeing to our<b> Terms &amp; Conditions</b> and <b>Privacy Policy.</b>"</string>
     <string name="forgot_password">Forgot your password?</string>
+    <string name="forgot_pin">Forgot your pin?</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="first_name">First Name</string>
@@ -17,7 +17,7 @@
     <string name="pin">Pin</string>
     <string name="confirm_pin">Confirm pin</string>
     <string name="title_one">Lets Start With You</string>
-    <string name="title_two">Now Your Login Details</string>
+    <string name="title_two">Your login details</string>
     <string name="title_three">And Finally Set A PIN</string>
     <string name="sign_me_up">SIGN ME UP</string>
     <string name="money_logo">money that cares</string>
@@ -78,6 +78,23 @@
     <string name="user_not_found">User not found</string>
     <string name="wrong_username_or_password">Wrong username &amp; password combination</string>
     <string name="forgot_password_text">Enter your email address and we’ll help you reset your password.</string>
+    <string name="first_name_hint">Enter your first name</string>
+    <string name="last_name_hint">Enter your last name</string>
+    <string name="enter_pin">Enter a PIN</string>
+    <string name="enter_your_pin">Enter your PIN</string>
+    <string name="title_recover_success">Your recovery email is on it’s way</string>
+    <string name="check_mail">Check your email inbox for a link to reset your password.</string>
+    <string name="didnt_receive">Didn’t receive an email? <b>Contact Us</b> and we’ll help.</string>
+    <string name="description">TransferX™ provides universal access to financial services. Allow us to point out some of our finest features.</string>
+    <string name="get_started">Get started</string>
+    <string name="ready_get_started">Ready to get started?</string>
+    <string name="get_started_desc">Let’s connect your accounts, set up recipients, payments, and more.</string>
+    <string name="first_page_desc">Enjoy the confidence of superior encryption technology</string>
+    <string name="security">Security</string>
+    <string name="automated_transfer">Automated Transfers</string>
+    <string name="second_page_desc">Set up repeat transfers quickly and easily and adjust them at any time.</string>
+    <string name="exchange_rate">Exchange Rates</string>
+    <string name="three_page_desc">Get up-to-the-minute exchange rates at any time before your transfer.</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>

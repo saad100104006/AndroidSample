@@ -1,11 +1,8 @@
 package uk.co.transferx.app.welcom.fragment;
 
 import android.app.Activity;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -13,7 +10,11 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.recoverpass.RecoverPasswordActivity;
+import uk.co.transferx.app.signin.SignInActivity;
 import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.welcom.presenter.WelcomeFragmentPresenter;
 
@@ -50,7 +52,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
     private TextInputEditText firstInput;
     private TextInputEditText secondInput;
     private Snackbar snackbar;
-    private TextView emailLabel, passwordLabel;
+    private TextView emailLabel, passwordLabel, emailError, passwordError;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +84,8 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
         secondInput = view.findViewById(R.id.second_input);
         emailLabel = view.findViewById(R.id.email_label);
         passwordLabel = view.findViewById(R.id.password_label);
+        emailError = view.findViewById(R.id.email_error);
+        passwordError = view.findViewById(R.id.password_error);
         firstInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -91,6 +95,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 setStatusOfError(firstInput, emailLabel, R.color.black);
+                emailError.setVisibility(View.GONE);
             }
 
             @Override
@@ -107,6 +112,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 setStatusOfError(secondInput, passwordLabel, R.color.black);
+                passwordError.setVisibility(View.GONE);
             }
 
             @Override
@@ -127,13 +133,29 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
     }
 
     @Override
+    public void goToPinView() {
+        SignUpActivity.startSignUp(getActivity(), 2);
+    }
+
+    @Override
     public void goRecoverPassword() {
         RecoverPasswordActivity.starRecoverPasswordActivity(getActivity());
     }
 
     @Override
     public void showWrongPassword() {
-        Snackbar.make(coordinatorLayout, getString(R.string.wrong_username_or_password), Snackbar.LENGTH_LONG).show();
+        Snackbar.make(coordinatorLayout, getColoredString(getString(R.string.wrong_username_or_password)), Snackbar.LENGTH_LONG).show();
+    }
+
+    private SpannableStringBuilder getColoredString(String message) {
+        SpannableStringBuilder ssb = new SpannableStringBuilder()
+                .append(message);
+        ssb.setSpan(
+                new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.red)),
+                0,
+                message.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return ssb;
     }
 
     @Override
@@ -147,7 +169,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
 
     @Override
     public void showUserNotFound() {
-        Snackbar.make(coordinatorLayout, getString(R.string.user_not_found), Snackbar.LENGTH_LONG).show();
+        Snackbar.make(coordinatorLayout, getColoredString(getString(R.string.user_not_found)), Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -163,12 +185,14 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
     @Override
     public void showEmailError() {
         setStatusOfError(firstInput, emailLabel, R.color.red);
-        Snackbar.make(coordinatorLayout, getString(R.string.email_error), Snackbar.LENGTH_LONG).show();
+        emailError.setText(R.string.email_error);
+        emailError.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showPasswordError() {
         setStatusOfError(secondInput, passwordLabel, R.color.red);
-        Snackbar.make(coordinatorLayout, getString(R.string.password_error), Snackbar.LENGTH_LONG).show();
+        passwordError.setText(R.string.password_error);
+        passwordError.setVisibility(View.VISIBLE);
     }
 }

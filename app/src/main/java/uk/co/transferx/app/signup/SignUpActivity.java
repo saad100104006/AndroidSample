@@ -2,6 +2,7 @@ package uk.co.transferx.app.signup;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,12 +18,17 @@ import android.widget.TextView;
 
 import com.rd.PageIndicatorView;
 
+import javax.inject.Inject;
+
 import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
+import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.signup.fragment.SignUpStepOneFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepThreeFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepTwoFragment;
+
+import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
 
 /**
  * Created by smilevkiy on 15.11.17.
@@ -34,23 +40,27 @@ public class SignUpActivity extends BaseActivity {
         activity.startActivity(new Intent(activity, SignUpActivity.class));
     }
 
+    public static void startSignUp(Activity activity, int fragmentNumber) {
+        currentFragment = fragmentNumber;
+        startSignUp(activity);
+
+    }
+
+    @Inject
+    SharedPreferences sharedPreferences;
+
     private static final int DURATION = 500;
     private final SparseArray<BaseFragment> sparseArray = new SparseArray<>(3);
     private PageIndicatorView pageIndicatorView;
-    private TextView steps;
-    private ImageView arrowBack;
     private static int currentFragment;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((TransferXApplication) (getApplication())).getAppComponent().inject(this);
         setContentView(R.layout.signup_activity_layout);
         pageIndicatorView = findViewById(R.id.page_indicator);
-        steps = findViewById(R.id.steps);
-        arrowBack = findViewById(R.id.arrow_back);
-        arrowBack.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.abc_ic_ab_back_material));
-        arrowBack.setOnClickListener(view -> onBackPressed());
-        steps.setText(getString(R.string.steps, currentFragment + 1));
         sparseArray.put(0, new SignUpStepOneFragment());
         sparseArray.put(1, new SignUpStepTwoFragment());
         sparseArray.put(2, new SignUpStepThreeFragment());
@@ -69,32 +79,6 @@ public class SignUpActivity extends BaseActivity {
     public void showNextOrPreviousFragment(int nextView, Bundle bundle) {
         Slide slideTransition = new Slide(nextView > currentFragment ? Gravity.END : Gravity.START);
         slideTransition.setDuration(DURATION);
-        slideTransition.addListener(new Transition.TransitionListener() {
-            @Override
-            public void onTransitionStart(@NonNull Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionEnd(@NonNull Transition transition) {
-                arrowBack.setVisibility(currentFragment > 0 ? View.VISIBLE : View.GONE);
-            }
-
-            @Override
-            public void onTransitionCancel(@NonNull Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionPause(@NonNull Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionResume(@NonNull Transition transition) {
-
-            }
-        });
         BaseFragment fragment = sparseArray.get(nextView);
         fragment.setEnterTransition(slideTransition);
         if (bundle != null) {
@@ -105,12 +89,14 @@ public class SignUpActivity extends BaseActivity {
         ft.commit();
         currentFragment = nextView;
         pageIndicatorView.setSelection(nextView);
-        steps.setText(getString(R.string.steps, currentFragment + 1));
     }
 
 
     @Override
     public void onBackPressed() {
+        if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)) {
+            return;
+        }
         switch (currentFragment) {
             case 0:
                 super.onBackPressed();
