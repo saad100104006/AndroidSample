@@ -5,6 +5,7 @@
     android:id="@+id/main_cont"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="uk.co.transferx.app.signup.SignUpActivity">
 
     <RelativeLayout
@@ -18,11 +19,11 @@
             android:layout_marginLeft="@dimen/left_right_main_screen"
             android:layout_marginRight="@dimen/left_right_main_screen"
             android:layout_marginTop="20dp"
-            android:scaleType="fitXY"
             android:src="@drawable/logo_primary" />
 
         <TextView
             android:id="@+id/terms"
+            style="@style/CommonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -47,7 +48,7 @@
             attrs:piv_animationType="fill"
             attrs:piv_count="3"
             attrs:piv_padding="16dp"
-            attrs:piv_radius="8dp"
+            attrs:piv_radius="7dp"
             attrs:piv_selectedColor="@color/black"
             attrs:piv_unselectedColor="@color/black" />
 

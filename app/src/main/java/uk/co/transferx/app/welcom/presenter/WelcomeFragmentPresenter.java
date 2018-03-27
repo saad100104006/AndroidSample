@@ -95,6 +95,7 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
 
     public void signUpClicked() {
         if (tokenManager.isInitialTokenExist()) {
+            sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply();
             ui.goToSignUp();
             return;
         }

@@ -13,7 +13,6 @@
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
         android:layout_marginTop="70dp"
-        android:scaleType="fitXY"
         android:src="@drawable/logo_primary" />
 
 

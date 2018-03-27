@@ -98,4 +98,11 @@
         <item name="colorAccent">@color/white</item>
     </style>
 
+    <style name="CommonStyle">
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+    <style name="CommonButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
 </resources>
