@@ -44,7 +44,7 @@ public class ActivityRecylerViewAdapter extends RecyclerView.Adapter<ActivityRec
         final TransactionDto transactionDto = transactionDtos.get(position);
         holder.amount.setText(context.getString(R.string.amount_with_currency, transactionDto.getAmount().toPlainString(), transactionDto.getCurrency()));
         holder.name.setText(transactionDto.getRecipientName());
-        holder.data.setText("data");
+        holder.amount.setCompoundDrawablesWithIntrinsicBounds(0,0, position % 2 == 0 ? R.drawable.ic_in_progress : R.drawable.ic_complete, 0);
 
     }
 
@@ -72,15 +72,14 @@ public class ActivityRecylerViewAdapter extends RecyclerView.Adapter<ActivityRec
 
     class ActivityRecyclerHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView data, name, amount;
+        TextView name, amount;
         ActivityRecylerViewAdapter.ItemClickListener itemClickListener;
 
         ActivityRecyclerHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            data = itemView.findViewById(R.id.data);
-            name = itemView.findViewById(R.id.recipient_name);
-            amount = itemView.findViewById(R.id.amount);
+            name = itemView.findViewById(R.id.name_recipient);
+            amount = itemView.findViewById(R.id.amount_recipient);
         }
 
         @Override

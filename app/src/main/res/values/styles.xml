@@ -98,10 +98,34 @@
         <item name="colorAccent">@color/white</item>
     </style>
 
+    <style name="EditText.White" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">@color/white</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+    </style>
+
     <style name="CommonStyle">
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
     <style name="CommonButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="indicator_style">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="ThemeSpinner">
+        <item name="colorAccent">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="AutoPay.control" parent="Widget.AppCompat.CompoundButton.Switch">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorSwitchThumbNormal">@color/hint</item>
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
 

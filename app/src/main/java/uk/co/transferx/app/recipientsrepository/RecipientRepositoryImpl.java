@@ -59,7 +59,7 @@ public class RecipientRepositoryImpl implements RecipientRepository {
 
     private Single<List<RecipientDto>> getFromServer() {
         return recipientsApi.getRecipients(tokenManager.getToken())
-                .flatMap(resp -> Observable.fromIterable(resp.body()))
+                .flatMap(resp -> Observable.fromIterable(resp.body().getResipients()))
                 .map(RecipientDto::new)
                 .toList()
                 .doAfterSuccess(list -> this.recipientDtos.addAll(list));

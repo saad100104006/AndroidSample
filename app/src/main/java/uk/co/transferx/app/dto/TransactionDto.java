@@ -28,6 +28,17 @@ public class TransactionDto {
         recipientName = recipient.isPresent() ? recipient.get().getFavoriteName() : EMPTY;
     }
 
+    public TransactionDto(int id, String recipientId, String recipientName, String currency, BigDecimal amount, long created, long updated, String status) {
+        this.id = id;
+        this.recipientId = recipientId;
+        this.recipientName = recipientName;
+        this.currency = currency;
+        this.amount = amount;
+        this.created = created;
+        this.updated = updated;
+        this.status = status;
+    }
+
     private final int id;
     private final String recipientId;
     private final String recipientName;

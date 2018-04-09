@@ -69,7 +69,7 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        tokenManager.setToken(resp.body().string());
+                        tokenManager.setToken(resp.body().getToken());
                         if(sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)){
                             ui.goToPinView();
                             return;
@@ -108,7 +108,7 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        tokenManager.setInitialToken(resp.body().string());
+                        tokenManager.setInitialToken(resp.body().getToken());
                         return;
                     }
                     ui.showConnectionError();

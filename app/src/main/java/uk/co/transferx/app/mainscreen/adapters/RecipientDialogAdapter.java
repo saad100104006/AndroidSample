@@ -16,8 +16,8 @@ import java.util.List;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.dto.RecipientDto;
 
-import static uk.co.transferx.app.mainscreen.fragments.SendFragment.RECIPIENT;
-import static uk.co.transferx.app.mainscreen.fragments.SendFragment.REQUEST_RECIPIENT;
+import static uk.co.transferx.app.mainscreen.fragments.TransferFragment.RECIPIENT;
+import static uk.co.transferx.app.mainscreen.fragments.TransferFragment.REQUEST_RECIPIENT;
 
 /**
  * Created by sergey on 15/01/2018.
@@ -80,8 +80,8 @@ public class RecipientDialogAdapter extends RecyclerView.Adapter<RecipientDialog
         RecipientDialogHolder(View itemView) {
             super(itemView);
             recipientPhoto = itemView.findViewById(R.id.recipient_img);
-            recipientName = itemView.findViewById(R.id.recipient_name);
-            recipientCountry = itemView.findViewById(R.id.recipient_country);
+           // recipientName = itemView.findViewById(R.id.recipient_name);
+          //  recipientCountry = itemView.findViewById(R.id.recipient_country);
             itemView.setOnClickListener(this);
         }
 

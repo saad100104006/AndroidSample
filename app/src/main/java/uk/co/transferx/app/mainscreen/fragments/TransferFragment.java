@@ -3,13 +3,13 @@ package uk.co.transferx.app.mainscreen.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +32,8 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.glide.GlideApp;
 import uk.co.transferx.app.mainscreen.presenters.SendFragmentPresenter;
+import uk.co.transferx.app.util.Constants;
+import uk.co.transferx.app.view.CustomSpinner;
 
 import static uk.co.transferx.app.util.Constants.EMPTY;
 
@@ -39,7 +41,7 @@ import static uk.co.transferx.app.util.Constants.EMPTY;
  * Created by sergey on 14.12.17.
  */
 
-public class SendFragment extends BaseFragment implements SendFragmentPresenter.SendFragmentUI {
+public class TransferFragment extends BaseFragment implements SendFragmentPresenter.SendFragmentUI {
 
     private static final String CURRENCY_PICKER = "currency_picker";
     private View view;
@@ -47,13 +49,14 @@ public class SendFragment extends BaseFragment implements SendFragmentPresenter.
     public final static int REQUEST_RECIPIENT = 321;
     public static final String RECIPIENT = "recipient";
     private ImageView photo;
-    private TextView name, rate, country, currencyCodeFirst, currencyCodeSecond;
+    private TextView name, rate, country, currencyCodeFirst, currencyCodeSecond, calculatedValue;
     private RecipientDialogFragment recipientDialogFragment;
     private final static String GBP = "GBP";
     private final static String UGX = "UGX";
     private List<ExtendedCurrency> currencyList;
-    private EditText currencyAmountRecipient, currencyAmountSender;
+    private EditText sendInput;
     private Disposable disposable;
+    private CustomSpinner recipientSpinner, paymentMethod;
 
     @Inject
     SendFragmentPresenter presenter;
@@ -61,7 +64,7 @@ public class SendFragment extends BaseFragment implements SendFragmentPresenter.
 
     @Override
     public String tagName() {
-        return SendFragment.class.getSimpleName();
+        return TransferFragment.class.getSimpleName();
     }
 
 
@@ -69,10 +72,10 @@ public class SendFragment extends BaseFragment implements SendFragmentPresenter.
     public void onCreate(@Nullable Bundle savedInstanceState) {
         ((TransferXApplication) getActivity().getApplication()).getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null && view != null) {
+    /*    if (savedInstanceState != null && view != null) {
             presenter.setCurrencyFrom(currencyCodeFirst.getText().toString());
             presenter.setCurrencyTo(currencyCodeSecond.getText().toString());
-        }
+        } */
     }
 
 
@@ -80,7 +83,7 @@ public class SendFragment extends BaseFragment implements SendFragmentPresenter.
     public void onResume() {
         super.onResume();
         presenter.attachUI(this);
-        disposable = RxTextView.textChanges(currencyAmountSender)
+        disposable = RxTextView.textChanges(sendInput)
                 .debounce(300L, TimeUnit.MILLISECONDS)
                 .filter(val -> !EMPTY.equals(val.toString()))
                 .observeOn(AndroidSchedulers.mainThread())
@@ -100,8 +103,8 @@ public class SendFragment extends BaseFragment implements SendFragmentPresenter.
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.send_fragment_layout, container, false);
+      /*  if (view == null) {
+            view = inflater.inflate(R.layout.transfer_fragment_layout, container, false);
             // AppCompatSpinner chooseDelivery = view.findViewById(R.id.delivery_method);
             view.findViewById(R.id.send_container).setOnClickListener(v -> {
                 if (v instanceof EditText) {
@@ -132,9 +135,33 @@ public class SendFragment extends BaseFragment implements SendFragmentPresenter.
             //  ArrayAdapter<String> deliveryMethodAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item, getResources().getStringArray(R.array.delivery_method));
             //  deliveryMethodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             //  chooseDelivery.setAdapter(deliveryMethodAdapter);
-        }
-        return view;
+        } */
+        return inflater.inflate(R.layout.transfer_fragment_layout, container, false);
 
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rate = view.findViewById(R.id.exchange_rate);
+        sendInput = view.findViewById(R.id.send_input);
+        calculatedValue = view.findViewById(R.id.receive_input);
+        paymentMethod = view.findViewById(R.id.spinner_choose_method);
+        paymentMethod.setDataWithHintItem(getResources().getStringArray(R.array.payment_method), getString(R.string.select_a_payment_method));
+        paymentMethod.setOnItemSelectedListener(new CustomSpinner.ListenerExecutable() {
+            @Override
+            public void execute(int position, Object object) {
+
+            }
+        });
+        recipientSpinner = view.findViewById(R.id.spinner_choose_recipients);
+        recipientSpinner.setOnItemSelectedListener((position, object) -> {
+        });
+    }
+
+    @Override
+    public void setRecipients(List<RecipientDto> recipients) {
+        recipientSpinner.setDataWithHintItem(recipients.toArray(), getString(R.string.recipient));
     }
 
     @Override
@@ -199,6 +226,6 @@ public class SendFragment extends BaseFragment implements SendFragmentPresenter.
 
     @Override
     public void setCalculatedValueForTransfer(String value) {
-        currencyAmountRecipient.setText(value);
+        calculatedValue.setText(value);
     }
 }

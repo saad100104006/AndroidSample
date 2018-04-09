@@ -1,6 +1,7 @@
 package uk.co.transferx.app.signup.fragment;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.chaos.view.PinView;
@@ -27,6 +29,7 @@ import uk.co.transferx.app.tutorial.TutorialActivity;
 import static uk.co.transferx.app.util.Constants.EMAIL;
 import static uk.co.transferx.app.util.Constants.EMPTY;
 import static uk.co.transferx.app.util.Constants.PASSWORD;
+import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
 import static uk.co.transferx.app.util.Constants.U_NAME;
 
 /**
@@ -37,6 +40,8 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
 
     @Inject
     SignUpStepThreePresenter presenter;
+    @Inject
+    SharedPreferences sharedPreferences;
     private PinView firstPinView, secondPinView;
     private TextView firsLabelPin, secondLabelPin;
     private TextWatcher textWatcher = new TextWatcher() {
@@ -87,7 +92,9 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
         secondPinView = view.findViewById(R.id.second_pin);
         firsLabelPin = view.findViewById(R.id.first_label_pin);
         secondLabelPin = view.findViewById(R.id.second_label_pin);
-        view.findViewById(R.id.next).setOnClickListener(v -> presenter.validatePin(firstPinView.getText().toString(), secondPinView.getText().toString()));
+        final Button registerButton = view.findViewById(R.id.next);
+        registerButton.setText(sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) ? R.string.sign_in : R.string.register);
+        registerButton.setOnClickListener(v -> presenter.validatePin(firstPinView.getText().toString(), secondPinView.getText().toString()));
         firstPinView.setAnimationEnable(true);
         secondPinView.setAnimationEnable(true);
     }
@@ -103,6 +110,11 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
     public void goToMainScreen() {
         Activity activity = getActivity();
         if (activity != null) {
+            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)) {
+                MainActivity.startMainActivity(activity);
+                activity.finish();
+                return;
+            }
             TutorialActivity.startTutorialActivity(activity);
             activity.finish();
         }

@@ -1,6 +1,8 @@
 package uk.co.transferx.app.mainscreen.presenters;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -11,6 +13,7 @@ import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.TransactionApi;
 import uk.co.transferx.app.dto.RecipientDto;
+import uk.co.transferx.app.recipientsrepository.RecipientRepository;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -31,11 +34,14 @@ public class SendFragmentPresenter extends BasePresenter<SendFragmentPresenter.S
     private BigDecimal valueToSend;
     private BigDecimal calculatedValue;
     private final static int SCALE_VALUE = 4;
+    private final RecipientRepository recipientRepository;
+    private List<RecipientDto> recipientDtos = new ArrayList<>();
 
     @Inject
-    public SendFragmentPresenter(final TransactionApi transactionApi, final TokenManager tokenManager) {
+    public SendFragmentPresenter(final TransactionApi transactionApi, final TokenManager tokenManager, final RecipientRepository recipientRepository) {
         this.transactionApi = transactionApi;
         this.tokenManager = tokenManager;
+        this.recipientRepository = recipientRepository;
     }
 
 
@@ -45,19 +51,32 @@ public class SendFragmentPresenter extends BasePresenter<SendFragmentPresenter.S
         if (rates == null && isShouldFetch()) {
             fetchRate();
         }
+        if (recipientDtos.isEmpty()) {
+            recipientRepository.getRecipients()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(recip -> {
+                        recipientDtos.addAll(recip);
+                        if (ui != null) {
+                            ui.setRecipients(recipientDtos);
+                        }
+                    });
+            return;
+        }
+        ui.setRecipients(recipientDtos);
     }
 
     private void fetchRate() {
         if (currencyTo.equals(currencyFrom)) {
             return;
         }
-        disposable = transactionApi.getRatest(tokenManager.getToken(), currencyFrom, currencyTo)
+        disposable = transactionApi.getRats(tokenManager.getToken(), currencyFrom, currencyTo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (resp.code() == HTTP_OK && ui != null) {
-                        rates = new BigDecimal(resp.body()).setScale(SCALE_VALUE, BigDecimal.ROUND_HALF_UP);
-                        ui.showRates(rates.toPlainString());
+                        rates = new BigDecimal(resp.body().getRates().get(0).getRate()).setScale(SCALE_VALUE, BigDecimal.ROUND_HALF_UP);
+                        ui.showRates(String.format("%s %s = %s %s", "1", currencyFrom, rates.toPlainString(), currencyTo));
                         calculateValue();
                     }
                 });
@@ -139,5 +158,7 @@ public class SendFragmentPresenter extends BasePresenter<SendFragmentPresenter.S
         void showChoosenRecipient(RecipientDto recipientDto);
 
         void setCalculatedValueForTransfer(String value);
+
+        void setRecipients(List<RecipientDto> recipients);
     }
 }

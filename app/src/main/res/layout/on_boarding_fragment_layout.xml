@@ -18,6 +18,7 @@
             android:layout_marginLeft="@dimen/left_right_main_screen"
             android:layout_marginRight="@dimen/left_right_main_screen"
             android:layout_marginTop="@dimen/left_right_main_screen"
+            android:lineSpacingExtra="12sp"
             android:text="@string/sign_in"
             android:textColor="@color/black"
             android:textSize="24sp" />
@@ -27,6 +28,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
             <TextView
@@ -39,7 +41,7 @@
                 android:text="@string/password"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -68,13 +70,13 @@
             android:layout_marginBottom="48dp"
             android:layout_marginLeft="@dimen/left_right_main_screen"
             android:layout_marginRight="@dimen/left_right_main_screen"
+            android:background="@drawable/underline_normal"
             android:drawableLeft="@drawable/ic_password"
             android:drawablePadding="10dp"
-            android:paddingBottom="8dp"
-            android:background="@drawable/underline_normal"
             android:hint="@string/enter_your_password"
             android:inputType="textPassword"
             android:maxLines="1"
+            android:paddingBottom="8dp"
             android:textColor="@color/black"
             android:textColorHint="@color/hint"
             android:textSize="16sp" />
@@ -84,38 +86,43 @@
             android:id="@+id/next"
             style="@style/CommonButtonStyle"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="36dp"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
             android:background="@drawable/oval_button_black"
-            android:text="@string/next"
+            android:letterSpacing="0.17"
+            android:lineSpacingExtra="2sp"
+            android:text="@string/sign_in"
+            android:textStyle="bold"
             android:theme="@style/Button.Black" />
 
         <Button
             android:id="@+id/create_account"
             style="@style/CommonButtonStyle"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="36dp"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
             android:background="@drawable/oval_button_white"
+            android:letterSpacing="0.17"
+            android:lineSpacingExtra="2sp"
             android:text="@string/create_an_account"
             android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
             android:theme="@style/Button.White" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/forgot_password"
             style="@style/CommonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
             android:clickable="true"
             android:gravity="center"
+            android:lineSpacingExtra="6sp"
             android:text="@string/forgot_password"
             android:textColor="@color/black"
             android:textSize="14sp"

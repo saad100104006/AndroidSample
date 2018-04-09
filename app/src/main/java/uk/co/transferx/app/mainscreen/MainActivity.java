@@ -1,36 +1,35 @@
 package uk.co.transferx.app.mainscreen;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
-import uk.co.transferx.app.mainscreen.adapters.TransferXTabAdapter;
-import uk.co.transferx.app.settings.SettingsActivity;
-import uk.co.transferx.app.signin.SignInActivity;
-import uk.co.transferx.app.signin.SignInType;
+import uk.co.transferx.app.mainscreen.fragments.ActivityFragment;
+import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
+import uk.co.transferx.app.mainscreen.fragments.TransferFragment;
 
 /**
  * Created by sergey on 14.12.17.
  */
 
 public class MainActivity extends AppCompatActivity {
-    private View progressView;
-    private ProgressBar progressBar;
+
+    private final SparseArray<BaseFragment> fragments = new SparseArray<>(4);
 
     public static void startMainActivity(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -39,43 +38,60 @@ public class MainActivity extends AppCompatActivity {
         activity.finish();
     }
 
-    private TransferXTabAdapter transferXTabAdapter;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_layout);
-        ViewPager viewPager = findViewById(R.id.pager_tabs);
-        TabLayout tabLayout = findViewById(R.id.tabs);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        progressView = findViewById(R.id.alpha_view);
-        progressBar = findViewById(R.id.progress_bar);
-        toolbar.setOnMenuItemClickListener(item -> false);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        transferXTabAdapter = new TransferXTabAdapter(getSupportFragmentManager(), this);
-        viewPager.setAdapter(transferXTabAdapter);
-        tabLayout.setupWithViewPager(viewPager);
-        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
-            tab.setCustomView(transferXTabAdapter.getTabView(i));
-        }
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        final BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_navigation);
+        bottomNavigationViewEx.setTypeface(ResourcesCompat.getFont(this, R.font.montserrat));
+        selectScreen(R.id.activity);
+      //  bottomNavigationViewEx.enableAnimation(false);
+        bottomNavigationViewEx.enableShiftingMode(false);
+        bottomNavigationViewEx.enableItemShiftingMode(false);
+        bottomNavigationViewEx.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public final void onTabSelected(TabLayout.Tab tab) {
-                transferXTabAdapter.setCheckStatus(tab.getPosition(), true);
-            }
-
-            @Override
-            public final void onTabUnselected(TabLayout.Tab tab) {
-                transferXTabAdapter.setCheckStatus(tab.getPosition(), false);
-            }
-
-            @Override
-            public final void onTabReselected(TabLayout.Tab tab) {
-                // not necessary
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                selectScreen(item.getItemId());
+                return true;
             }
         });
+      //  bottomNavigationViewEx.setIconsMarginTop(80);
+    }
+
+    private void selectScreen(@IdRes int item){
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction()
+               // .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
+        switch (item){
+            case R.id.activity :
+                ActivityFragment activityFragment = (ActivityFragment) fragments.get(0);
+                if (activityFragment == null) {
+                    activityFragment = new ActivityFragment();
+                    fragments.put(0, activityFragment);
+                }
+                ft.replace(R.id.container_main, activityFragment, activityFragment.getTag());
+                break;
+            case R.id.transfer:
+                TransferFragment transferFragment = (TransferFragment) fragments.get(1);
+                if (transferFragment == null) {
+                    transferFragment = new TransferFragment();
+                    fragments.put(1, transferFragment);
+                }
+                ft.replace(R.id.container_main, transferFragment, transferFragment.getTag());
+                break;
+           /* case R.id.recipients:
+                RecipientsFragment recipientsFragment = (RecipientsFragment) fragments.get(1);
+                if (recipientsFragment == null) {
+                    recipientsFragment = new RecipientsFragment();
+                    fragments.put(1, recipientsFragment);
+                }
+                ft.replace(R.id.container, recipientsFragment, recipientsFragment.getTag());
+                break; */
+                default:
+                    Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
+        }
+        ft.commit();
+
     }
 
     @Override
@@ -84,28 +100,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void setProrges(boolean visible) {
-        progressView.setVisibility(visible ? View.VISIBLE : View.GONE);
-        progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.one:
-                SettingsActivity.startSettings(this);
-                break;
-            case R.id.two:
-                String token = FirebaseInstanceId.getInstance().getToken();
-                Log.d("Sergey", "Token " + token);
-                new AlertDialog.Builder(this)
-                        .setMessage(token)
-                        .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
-                        .show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onResume() {

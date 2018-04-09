@@ -5,50 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:orientation="vertical"
-    tools:parentTag="LinearLayout">
+    tools:parentTag="android.widget.LinearLayout">
 
     <TextView
-        style="@style/CommonStyle"
         android:id="@+id/title"
+        style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
-        android:layout_marginTop="@dimen/left_right_main_screen"
-        android:gravity="center_horizontal"
+        android:gravity="center_horizontal|top"
+        android:lineSpacingExtra="12sp"
         android:text="@string/enter_pin"
         android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:typeface="sans" />
 
     <TextView
         style="@style/CommonStyle"
         android:id="@+id/first_label_pin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/left_right_main_screen"
-        android:layout_marginRight="@dimen/left_right_main_screen"
-        android:gravity="left"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
         android:text="@string/pin"
         android:textAllCaps="true"
         android:textColor="@color/black"
-        android:textSize="12sp"
+        android:textSize="10sp"
         android:textStyle="bold" />
 
     <com.chaos.view.PinView
         android:id="@+id/first_pin"
         style="@style/PinWidget.PinView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="@dimen/left_right_main_screen"
-        android:layout_marginRight="@dimen/left_right_main_screen"
         android:inputType="number|numberPassword"
-        android:padding="5dp"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:itemCount="4"
-        app:itemSpacing="20dp"
+        app:lineWidth="2dp"
+        app:itemSpacing="16dp"
         app:viewType="line" />
 
 </merge>

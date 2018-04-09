@@ -31,7 +31,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "uk.co.transferx.app"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -136,6 +136,9 @@ dependencies {
     //Streams
     implementation "com.annimon:stream:1.1.9"
 
+    //bottomBar
+    implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+
     //tests
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
@@ -149,8 +152,8 @@ dependencies {
     androidTestCompile 'com.github.fabioCollini.daggermock:daggermock:0.8.2'
 
     dependencies {
-        implementation 'com.google.firebase:firebase-core:12.0.0'
-        implementation 'com.google.firebase:firebase-messaging:12.0.0'
+        implementation 'com.google.firebase:firebase-core:12.0.1'
+        implementation 'com.google.firebase:firebase-messaging:12.0.1'
     }
 
 }

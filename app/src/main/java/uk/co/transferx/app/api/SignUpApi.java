@@ -7,6 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import uk.co.transferx.app.pojo.Token;
 import uk.co.transferx.app.pojo.UserRequest;
 
 /**
@@ -16,7 +17,7 @@ import uk.co.transferx.app.pojo.UserRequest;
 public interface SignUpApi {
 
     @GET("/v1/auth/client/genesis")
-    Observable<Response<ResponseBody>> getInitialToken();
+    Observable<Response<Token>> getInitialToken();
 
 
     @POST("/v1/auth/user")

@@ -1,6 +1,7 @@
 package uk.co.transferx.app.mainscreen.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,7 +26,6 @@ import uk.co.transferx.app.mainscreen.presenters.ActivityFragmentPresenter;
 
 public class ActivityFragment extends BaseFragment implements ActivityFragmentPresenter.ActivityFragmentUI {
 
-    private View view;
 
     @Inject
     ActivityFragmentPresenter presenter;
@@ -46,14 +46,15 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.activity_fragment_layout, container, false);
-            final RecyclerView historyView = view.findViewById(R.id.activity_recycler_view);
-            adapter = new ActivityRecylerViewAdapter(getContext());
-            historyView.setAdapter(adapter);
-        }
-        return view;
+        return inflater.inflate(R.layout.activity_fragment_layout, container, false);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        final RecyclerView historyView = view.findViewById(R.id.activity_recycler_view);
+        adapter = new ActivityRecylerViewAdapter(getContext());
+        historyView.setAdapter(adapter);
     }
 
     @Override

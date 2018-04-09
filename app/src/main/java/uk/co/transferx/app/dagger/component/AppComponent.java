@@ -9,7 +9,7 @@ import uk.co.transferx.app.dagger.module.NetworkModule;
 import uk.co.transferx.app.mainscreen.fragments.ActivityFragment;
 import uk.co.transferx.app.mainscreen.fragments.RecipientDialogFragment;
 import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
-import uk.co.transferx.app.mainscreen.fragments.SendFragment;
+import uk.co.transferx.app.mainscreen.fragments.TransferFragment;
 import uk.co.transferx.app.recipients.addrecipients.fragments.AddRecipientsFragment;
 import uk.co.transferx.app.recipients.detailsrecipient.fragment.RecipientDetailsFragment;
 import uk.co.transferx.app.recoverpass.fragment.RecoverPasswordFragment;
@@ -39,7 +39,7 @@ public interface AppComponent {
 
     void inject(SignUpStepTwoFragment signUpStepTwoFragment);
 
-    void inject(SendFragment sendFragment);
+    void inject(TransferFragment transferFragment);
 
     void inject(RecipientsFragment recipientsFragment);
 

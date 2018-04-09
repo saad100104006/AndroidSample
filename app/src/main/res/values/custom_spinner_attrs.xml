@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomSpinner">
+        <attr name="headerRes" format="reference"/>
+        <attr name="headerLabelId" format="reference"/>
+        <attr name="dropDownItemRes" format="reference"/>
+        <attr name="dropDownLabelId" format="reference"/>
+        <attr name="dropDownSelectionImageId" format="reference"/>
+    </declare-styleable>
+</resources>

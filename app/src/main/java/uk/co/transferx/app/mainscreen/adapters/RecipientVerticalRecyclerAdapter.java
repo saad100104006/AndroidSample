@@ -55,15 +55,15 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
     @Override
     public void onBindViewHolder(RecipientVerticalHolder holder, int position) {
         RecipientDto recipientDto = recipientDtoList.get(position);
-        holder.recipientName.setText(recipientDto.getName());
-        holder.recipientCountry.setText(recipientDto.getCountry());
-        holder.itemClickListener = recip -> {
-            if (fragment instanceof RecipientsFragment) {
-                Intent intent = new Intent(fragment.getActivity(), RecipientDetailsActivity.class);
-                intent.putExtra(RECIPIENT, recip);
-                fragment.startActivityForResult(intent, ADD_CHANGE_RECIPIENT);
-            }
-        };
+//        holder.recipientName.setText(recipientDto.getName());
+ //       holder.recipientCountry.setText(recipientDto.getCountry());
+ //       holder.itemClickListener = recip -> {
+ //           if (fragment instanceof RecipientsFragment) {
+ //               Intent intent = new Intent(fragment.getActivity(), RecipientDetailsActivity.class);
+ //               intent.putExtra(RECIPIENT, recip);
+  //              fragment.startActivityForResult(intent, ADD_CHANGE_RECIPIENT);
+  //          }
+   //     };
 
     }
 
@@ -97,8 +97,8 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
         RecipientVerticalHolder(View itemView) {
             super(itemView);
             recipientPhoto = itemView.findViewById(R.id.recipient_img);
-            recipientName = itemView.findViewById(R.id.recipient_name);
-            recipientCountry = itemView.findViewById(R.id.recipient_country);
+          //  recipientName = itemView.findViewById(R.id.recipient_name);
+         //   recipientCountry = itemView.findViewById(R.id.recipient_country);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }

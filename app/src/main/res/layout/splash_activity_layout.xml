@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/splash">
+    android:background="@color/dark_blue_grey">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:tint="@color/black"
-        android:alpha="0.1"
+        android:tint="@color/hint"
+        android:alpha="0.05"
         android:src="@drawable/decor" />
 
     <ImageView

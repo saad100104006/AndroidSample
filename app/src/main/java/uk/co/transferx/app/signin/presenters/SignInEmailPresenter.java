@@ -69,7 +69,7 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        tokenManager.setToken(resp.body().string());
+                        tokenManager.setToken(resp.body().getToken());
                         ui.goToMainScreen();
                      return;
                     }

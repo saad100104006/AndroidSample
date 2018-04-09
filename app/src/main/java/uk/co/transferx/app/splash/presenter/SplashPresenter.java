@@ -55,7 +55,7 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
                 .subscribe(res -> {
                     boolean loggedInStatus = sharedPreferences.getBoolean(LOGGED_IN_STATUS, false);
                     if (res.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        tokenManager.setInitialToken(res.body().string());
+                        tokenManager.setInitialToken(res.body().getToken());
                         if (loggedInStatus) {
                             ui.goToPinScreen();
                             return;

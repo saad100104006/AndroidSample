@@ -14,7 +14,7 @@ import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.mainscreen.fragments.ActivityFragment;
 import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
-import uk.co.transferx.app.mainscreen.fragments.SendFragment;
+import uk.co.transferx.app.mainscreen.fragments.TransferFragment;
 
 /**
  * Created by sergey on 14.12.17.
@@ -40,12 +40,12 @@ public class TransferXTabAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                SendFragment sendFragment = (SendFragment) fragments.get(0);
-                if (sendFragment == null) {
-                    sendFragment = new SendFragment();
-                    fragments.put(0, sendFragment);
+                TransferFragment transferFragment = (TransferFragment) fragments.get(0);
+                if (transferFragment == null) {
+                    transferFragment = new TransferFragment();
+                    fragments.put(0, transferFragment);
                 }
-                return sendFragment;
+                return transferFragment;
             case 1:
                 ActivityFragment activityFragment = (ActivityFragment) fragments.get(1);
                 if (activityFragment == null) {

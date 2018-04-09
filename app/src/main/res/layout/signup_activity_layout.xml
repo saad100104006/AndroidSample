@@ -9,55 +9,53 @@
     tools:context="uk.co.transferx.app.signup.SignUpActivity">
 
     <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
+        android:gravity="center_horizontal"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/main_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/left_right_main_screen"
-            android:layout_marginRight="@dimen/left_right_main_screen"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/logo_primary" />
 
         <TextView
             android:id="@+id/terms"
             style="@style/CommonStyle"
+            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginBottom="48dp"
             android:layout_marginLeft="@dimen/left_right_main_screen"
             android:layout_marginRight="@dimen/left_right_main_screen"
+            android:lineSpacingExtra="6sp"
             android:gravity="center"
             android:maxLines="2"
             android:text="@string/terms"
             android:textColor="@color/black"
             android:textSize="10sp" />
 
+
         <com.rd.PageIndicatorView
             android:id="@+id/page_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/terms"
+            android:layout_marginBottom="52dp"
+            android:padding="3dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="48dp"
-            android:padding="4dp"
             attrs:piv_animationDuration="500"
             attrs:piv_animationType="fill"
+            android:layout_above="@id/terms"
             attrs:piv_count="3"
             attrs:piv_padding="16dp"
             attrs:piv_radius="7dp"
             attrs:piv_selectedColor="@color/black"
-            attrs:piv_unselectedColor="@color/black" />
+            attrs:piv_unselectedColor="@color/black"
+            attrs:piv_strokeWidth="2dp"/>
 
         <FrameLayout
+            tools:layout="@layout/sign_up_step_fragment_layout"
+            android:layout_alignParentTop="true"
+            android:layout_above="@id/page_indicator"
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/page_indicator"
-            android:layout_below="@id/main_label" />
+            android:layout_height="match_parent"/>
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

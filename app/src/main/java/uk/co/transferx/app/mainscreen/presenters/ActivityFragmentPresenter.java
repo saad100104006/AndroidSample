@@ -1,5 +1,6 @@
 package uk.co.transferx.app.mainscreen.presenters;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,16 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
         this.recipientRepository = recipientRepository;
         this.transactionApi = transactionApi;
         this.tokenManager = tokenManager;
+        generateMockData();
+    }
+
+    private void generateMockData() {
+        transactionDtos.add(new TransactionDto(0, " ", "Ahmet Shakir", "GBP", new BigDecimal("50"), 0, 0, ""));
+        transactionDtos.add(new TransactionDto(0, " ", "Tim Hardon", "GBP", new BigDecimal("100"), 0, 0, ""));
+        transactionDtos.add(new TransactionDto(0, " ", "Steve Jobs", "GBP", new BigDecimal("1000"), 0, 0, ""));
+        transactionDtos.add(new TransactionDto(0, " ", "Tom Bibik", "GBP", new BigDecimal("430"), 0, 0, ""));
+        transactionDtos.add(new TransactionDto(0, " ", "Leonid Warik", "GBP", new BigDecimal("40"), 0, 0, ""));
+        transactionDtos.add(new TransactionDto(0, " ", "Sergey Milewski", "GBP", new BigDecimal("50"), 0, 0, ""));
     }
 
     @Override
@@ -52,8 +63,10 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
     @Override
     public void detachUI() {
         super.detachUI();
-        compositeDisposable.dispose();
-        compositeDisposable = null;
+        if (compositeDisposable != null) {
+            compositeDisposable.dispose();
+            compositeDisposable = null;
+        }
     }
 
     public void loadData() {

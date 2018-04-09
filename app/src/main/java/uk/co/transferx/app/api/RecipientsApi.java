@@ -14,6 +14,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import uk.co.transferx.app.pojo.AddedRecipientResponce;
 import uk.co.transferx.app.pojo.Recipient;
+import uk.co.transferx.app.pojo.Recipients;
 
 /**
  * Created by sergey on 03/01/2018.
@@ -23,7 +24,7 @@ public interface RecipientsApi {
 
 
     @GET("/v1/recipients")
-    Observable<Response<List<Recipient>>> getRecipients(@Header("Authorization") String token);
+    Observable<Response<Recipients>> getRecipients(@Header("Authorization") String token);
 
 
     @POST("/v1/recipients")

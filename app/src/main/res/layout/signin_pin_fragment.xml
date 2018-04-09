@@ -14,15 +14,12 @@
         android:layout_height="42dp"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/oval_button_black"
+        android:letterSpacing="0.17"
+        android:lineSpacingExtra="2sp"
         android:text="@string/sign_in"
         android:theme="@style/Button.Black" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/forgot_pin"
@@ -33,6 +30,8 @@
         android:gravity="center"
         android:text="@string/forgot_pin"
         android:textColor="@color/black"
+        android:layout_marginTop="48dp"
+        android:lineSpacingExtra="6sp"
         android:textSize="14sp"
         android:textStyle="bold" />
 

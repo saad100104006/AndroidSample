@@ -81,6 +81,10 @@ public class RecipientDto implements Parcelable {
         phone = recipient.getPhone() == null ? EMPTY : recipient.getPhone();
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
 
     private String getName(String firstName, String lastName) {
         StringBuilder sb = new StringBuilder();
