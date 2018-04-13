@@ -1,7 +1,6 @@
 package uk.co.transferx.app.mainscreen.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v7.util.DiffUtil;
@@ -16,12 +15,7 @@ import java.util.List;
 
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.dto.RecipientDto;
-import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
-import uk.co.transferx.app.recipients.detailsrecipient.RecipientDetailsActivity;
-
-import static uk.co.transferx.app.mainscreen.fragments.RecipientsFragment.ADD_CHANGE_RECIPIENT;
-import static uk.co.transferx.app.recipients.detailsrecipient.RecipientDetailsActivity.RECIPIENT;
 
 /**
  * Created by sergey on 17.12.17.
@@ -55,7 +49,7 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
     @Override
     public void onBindViewHolder(RecipientVerticalHolder holder, int position) {
         RecipientDto recipientDto = recipientDtoList.get(position);
-//        holder.recipientName.setText(recipientDto.getName());
+        holder.recipientName.setText(recipientDto.getName());
  //       holder.recipientCountry.setText(recipientDto.getCountry());
  //       holder.itemClickListener = recip -> {
  //           if (fragment instanceof RecipientsFragment) {
@@ -97,7 +91,7 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
         RecipientVerticalHolder(View itemView) {
             super(itemView);
             recipientPhoto = itemView.findViewById(R.id.recipient_img);
-          //  recipientName = itemView.findViewById(R.id.recipient_name);
+            recipientName = itemView.findViewById(R.id.name_recipient);
          //   recipientCountry = itemView.findViewById(R.id.recipient_country);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);

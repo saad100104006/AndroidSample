@@ -13,6 +13,7 @@ import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.SignInOutApi;
 import uk.co.transferx.app.api.SignUpApi;
 import uk.co.transferx.app.pojo.UserRequest;
+import uk.co.transferx.app.pojo.UserSignIn;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 import uk.co.transferx.app.util.Util;
 
@@ -63,7 +64,7 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
     }
 
     private void signIn(String email, String password, String token) {
-        UserRequest.Builder request = new UserRequest.Builder();
+        UserSignIn.Builder request = new UserSignIn.Builder();
         disposable = signInOutApi.signIn(token, request.uname(email).upass(password).build())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

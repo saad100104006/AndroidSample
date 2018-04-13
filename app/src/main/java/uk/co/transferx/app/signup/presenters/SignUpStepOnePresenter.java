@@ -6,13 +6,15 @@ import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.util.Util;
 
+import static uk.co.transferx.app.util.Constants.UNDERSCORE;
+
 /**
  * Created by sergey on 27/12/2017.
  */
 
 public class SignUpStepOnePresenter extends BasePresenter<SignUpStepOnePresenter.SignUpStepOneUI> {
 
-    private final char UNDERSCORE = '_';
+
 
 
     @Inject

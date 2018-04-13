@@ -246,7 +246,7 @@
             android:textColor="@color/white"
             android:textColorHint="@color/hint"
             android:textCursorDrawable="@null"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:theme="@style/EditText.White" />
 
         <View
@@ -260,20 +260,31 @@
             android:background="@color/white" />
 
 
-        <android.support.v7.widget.SwitchCompat
+        <CheckBox
             android:id="@+id/auto_pay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:text="@string/auto_transfer"
-            style="@style/CommonStyle"
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/left_right_main_screen"
             android:textSize="14sp"
+            android:button="@drawable/check_box_selector"
             android:textColor="@color/white"
             android:layout_marginRight="@dimen/left_right_main_screen"
             android:layout_below="@id/underline_foure"
             android:theme="@style/AutoPay.control" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@id/underline_foure"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/left_right_main_screen"
+            style="@style/CommonStyle"
+            android:textColor="@color/white"
+            android:text="@string/auto_transfer"
+            android:textSize="14sp"/>
 
         <Button
             android:id="@+id/next"
@@ -289,8 +300,7 @@
             android:background="@drawable/oval_button_white"
             android:letterSpacing="0.17"
             android:lineSpacingExtra="2sp"
-            android:text="@string/next"
-            android:theme="@style/Button.White" />
+            android:text="@string/next" />
 
         <Space
             android:layout_below="@id/next"

@@ -21,6 +21,7 @@ import static uk.co.transferx.app.util.Constants.EMAIL;
 import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
 import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
 import static uk.co.transferx.app.util.Constants.TOKEN;
+import static uk.co.transferx.app.util.Constants.UNDERSCORE;
 
 /**
  * Created by sergey on 06.12.17.
@@ -34,6 +35,8 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
     private final TokenManager tokenManager;
     private String uname, email, password;
     private CompositeDisposable compositeDisposable;
+    private final static short FIRST_NAME = 0;
+    private final static short LAST_NAME = 1;
 
     @Inject
     public SignUpStepThreePresenter(final CryptoManager cryptoManager, final SharedPreferences sharedPreferences, final SignUpApi signUpApi, final TokenManager tokenManager) {
@@ -88,7 +91,12 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
                 saveTokenWithNewPin(firstPin);
                 return;
             }
-            Disposable disposable = signUpApi.registerUser(tokenManager.getInitialToken(), request.uname(uname).email(email).upass(password).upassConfirmation(password).build())
+            String[] firstNameAndLastName = uname.split(UNDERSCORE);
+            Disposable disposable = signUpApi.registerUser(tokenManager.getInitialToken(),
+                    request.firstName(firstNameAndLastName[FIRST_NAME])
+                            .lastName(firstNameAndLastName[LAST_NAME])
+                            .email(email)
+                            .upass(password).build())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(resp -> {

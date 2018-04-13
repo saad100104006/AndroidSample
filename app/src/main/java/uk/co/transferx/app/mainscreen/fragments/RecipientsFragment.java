@@ -1,14 +1,15 @@
 package uk.co.transferx.app.mainscreen.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -18,8 +19,8 @@ import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
-import uk.co.transferx.app.mainscreen.adapters.RecipientHorizontalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.adapters.RecipientVerticalRecyclerAdapter;
+import uk.co.transferx.app.mainscreen.adapters.SwipeHelper;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
 import uk.co.transferx.app.recipients.addrecipients.AddRecipientsActivity;
 
@@ -31,12 +32,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class RecipientsFragment extends BaseFragment implements RecipientsFragmentPresenter.RecipientsFragmentUI {
 
-    private View view;
-    private RecipientHorizontalRecyclerAdapter horizontalRecyclerAdapter;
     private RecipientVerticalRecyclerAdapter verticalRecyclerAdapter;
-    private TextView emptyListVertical, emptyListHorizontal;
     public static final int ADD_CHANGE_RECIPIENT = 333;
-    private RecyclerView horizontalRecipientRecyclerView;
 
 
     @Inject
@@ -59,33 +56,58 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.recipients_fragment_layout, container, false);
-            horizontalRecipientRecyclerView = view.findViewById(R.id.horizontal_recycler_view);
-            RecyclerView verticalRecipientRecyclerView = view.findViewById(R.id.vertical_recycler_view);
-            horizontalRecyclerAdapter = new RecipientHorizontalRecyclerAdapter(getContext());
-            verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(this, presenter);
-            emptyListVertical = view.findViewById(R.id.empty_list);
-            emptyListHorizontal = view.findViewById(R.id.empty_list_horizontal);
-            horizontalRecipientRecyclerView.setAdapter(horizontalRecyclerAdapter);
-            verticalRecipientRecyclerView.setAdapter(verticalRecyclerAdapter);
-            verticalRecipientRecyclerView.setHasFixedSize(true);
-            view.findViewById(R.id.add_button).setOnClickListener(v -> startActivityForResult(new Intent(getContext(), AddRecipientsActivity.class), ADD_CHANGE_RECIPIENT));
-        }
-        return view;
+        return inflater.inflate(R.layout.recipients_fragment_layout, container, false);
 
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        RecyclerView verticalRecipientRecyclerView = view.findViewById(R.id.vertical_recycler_view);
+        verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(this, presenter);
+        verticalRecipientRecyclerView.setAdapter(verticalRecyclerAdapter);
+        verticalRecipientRecyclerView.setHasFixedSize(true);
+        SwipeHelper swipeHelper = new SwipeHelper(getContext(), verticalRecipientRecyclerView) {
+            @Override
+            public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
+                underlayButtons.add(new SwipeHelper.UnderlayButton(
+                        getString(R.string.delete).toUpperCase(),
+                        0,
+                        Color.parseColor("#da1010"),
+                        pos -> {
+                            // TODO: onDelete
+                        }
+                ));
+
+                underlayButtons.add(new SwipeHelper.UnderlayButton(
+                        getString(R.string.edit),
+                        0,
+                        Color.parseColor("#01b1fb"),
+                        pos -> {
+                            // TODO: OnTransfer
+                        }
+                ));
+                underlayButtons.add(new SwipeHelper.UnderlayButton(
+                        getString(R.string.transfer),
+                        0,
+                        Color.parseColor("#00986e"),
+                        pos -> {
+                            // TODO: OnUnshare
+                        }
+                ));
+            }
+        };
+        view.findViewById(R.id.add_button).setOnClickListener(v -> startActivityForResult(new Intent(getContext(), AddRecipientsActivity.class), ADD_CHANGE_RECIPIENT));
     }
 
     @Override
     public void setFavoriteRecipients(List<RecipientDto> recipientDtos) {
         Log.d("Sergey", "recipient settled");
-        emptyListHorizontal.setVisibility(recipientDtos.isEmpty() ? View.VISIBLE : View.GONE);
-        horizontalRecyclerAdapter.setRecipients(recipientDtos);
+
     }
 
     @Override
     public void setRecipients(List<RecipientDto> recipientDtos) {
-        emptyListVertical.setVisibility(recipientDtos.isEmpty() ? View.VISIBLE : View.GONE);
         verticalRecyclerAdapter.setRecipients(recipientDtos);
     }
 
@@ -108,8 +130,6 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Override
     public void addToFavorite(RecipientDto recipientDto) {
-        emptyListHorizontal.setVisibility(View.GONE);
-        horizontalRecyclerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -123,7 +143,6 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Override
     public void updateFavoriteRecipients() {
-        emptyListHorizontal.setVisibility(View.GONE);
-        horizontalRecyclerAdapter.notifyData();
+
     }
 }

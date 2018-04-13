@@ -1,7 +1,6 @@
 package uk.co.transferx.app.welcom.fragment;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
@@ -27,7 +25,6 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.recoverpass.RecoverPasswordActivity;
-import uk.co.transferx.app.signin.SignInActivity;
 import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.welcom.presenter.WelcomeFragmentPresenter;
 

@@ -148,11 +148,8 @@ public class TransferFragment extends BaseFragment implements SendFragmentPresen
         calculatedValue = view.findViewById(R.id.receive_input);
         paymentMethod = view.findViewById(R.id.spinner_choose_method);
         paymentMethod.setDataWithHintItem(getResources().getStringArray(R.array.payment_method), getString(R.string.select_a_payment_method));
-        paymentMethod.setOnItemSelectedListener(new CustomSpinner.ListenerExecutable() {
-            @Override
-            public void execute(int position, Object object) {
+        paymentMethod.setOnItemSelectedListener((position, object) -> {
 
-            }
         });
         recipientSpinner = view.findViewById(R.id.spinner_choose_recipients);
         recipientSpinner.setOnItemSelectedListener((position, object) -> {

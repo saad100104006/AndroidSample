@@ -53,6 +53,7 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final RecyclerView historyView = view.findViewById(R.id.activity_recycler_view);
+        historyView.setHasFixedSize(true);
         adapter = new ActivityRecylerViewAdapter(getContext());
         historyView.setAdapter(adapter);
     }

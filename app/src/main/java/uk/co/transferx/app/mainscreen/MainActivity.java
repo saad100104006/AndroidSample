@@ -79,14 +79,14 @@ public class MainActivity extends AppCompatActivity {
                 }
                 ft.replace(R.id.container_main, transferFragment, transferFragment.getTag());
                 break;
-           /* case R.id.recipients:
-                RecipientsFragment recipientsFragment = (RecipientsFragment) fragments.get(1);
+           case R.id.recipients:
+                RecipientsFragment recipientsFragment = (RecipientsFragment) fragments.get(2);
                 if (recipientsFragment == null) {
                     recipientsFragment = new RecipientsFragment();
-                    fragments.put(1, recipientsFragment);
+                    fragments.put(2, recipientsFragment);
                 }
-                ft.replace(R.id.container, recipientsFragment, recipientsFragment.getTag());
-                break; */
+                ft.replace(R.id.container_main, recipientsFragment, recipientsFragment.getTag());
+                break;
                 default:
                     Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
         }

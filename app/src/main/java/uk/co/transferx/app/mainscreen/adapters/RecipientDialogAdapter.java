@@ -40,7 +40,7 @@ public class RecipientDialogAdapter extends RecyclerView.Adapter<RecipientDialog
 
     @Override
     public RecipientDialogHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new RecipientDialogAdapter.RecipientDialogHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recipient_item, parent, false));
+        return new RecipientDialogAdapter.RecipientDialogHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recipient_item_activity, parent, false));
 
     }
 

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/dark_blue_grey"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/title_recipient"
+        style="@style/CommonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/recipient"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/title_amount"
+        style="@style/CommonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/amount_sent"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="10sp" />
+
+    <ImageView
+        android:id="@+id/recipient_img"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_below="@id/title_recipient"
+        android:layout_marginBottom="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="6dp"
+        android:background="@color/white" />
+
+
+    <View
+        android:id="@+id/underline"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/recipient_img"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/amount_recipient"
+        style="@style/CommonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@id/underline"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/title_amount"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:text="10000 - GBP"
+        android:drawableRight="@drawable/ic_complete"
+        android:drawablePadding="6dp"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/name_recipient"
+        style="@style/CommonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@id/underline"
+        android:layout_below="@id/title_recipient"
+        android:layout_toLeftOf="@id/amount_recipient"
+        android:layout_toRightOf="@id/recipient_img"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:text="Louetta Cahill"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</RelativeLayout>

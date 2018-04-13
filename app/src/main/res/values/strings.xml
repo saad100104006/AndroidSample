@@ -100,6 +100,7 @@
     <string name="activity">ACTIVITY</string>
     <string name="transfer">TRANSFER</string>
     <string name="recipients">RECIPIENTS</string>
+    <string name="edit">EDIT</string>
     <string name="recipient">Recipient</string>
     <string name="amount_sent">Amount sent</string>
     <string name="send_amount">Send amount</string>
