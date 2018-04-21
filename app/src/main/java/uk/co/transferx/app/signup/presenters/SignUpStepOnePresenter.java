@@ -14,32 +14,42 @@ import static uk.co.transferx.app.util.Constants.UNDERSCORE;
 
 public class SignUpStepOnePresenter extends BasePresenter<SignUpStepOnePresenter.SignUpStepOneUI> {
 
-
+    private String firstName, lastName;
 
 
     @Inject
     public SignUpStepOnePresenter() {
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+        isInputDataValid();
+    }
 
-    public void validateAndGoNext(String firstName, String lastName) {
-        if (Util.isNullorEmpty(firstName) && ui != null) {
-            ui.showNameError();
-            return;
-        }
-        if (Util.isNullorEmpty(lastName) && ui != null) {
-            ui.showLastNameError();
-            return;
-        }
-        String sb = firstName + UNDERSCORE + lastName;
-        ui.goToNextStep(sb);
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+        isInputDataValid();
+    }
 
+    public void goToNextStep() {
+        if (ui != null) {
+            String sb = firstName + UNDERSCORE + lastName;
+            ui.goToNextStep(sb);
+        }
+    }
+
+    private void isInputDataValid() {
+        if (ui != null) {
+            ui.setButton(Util.validateName(firstName) && Util.validateName(lastName));
+        }
     }
 
     public interface SignUpStepOneUI extends UI {
         void goToNextStep(String uname);
 
         void showError();
+
+        void setButton(boolean isEnabled);
 
         void showNameError();
 

@@ -5,11 +5,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -73,27 +75,21 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
                 underlayButtons.add(new SwipeHelper.UnderlayButton(
                         getString(R.string.delete).toUpperCase(),
                         0,
-                        Color.parseColor("#da1010"),
-                        pos -> {
-                            // TODO: onDelete
-                        }
+                        ContextCompat.getColor(getContext(), R.color.red_delete),
+                        pos -> Toast.makeText(getContext(), "Delete clicked", Toast.LENGTH_SHORT).show()
                 ));
 
                 underlayButtons.add(new SwipeHelper.UnderlayButton(
-                        getString(R.string.edit),
-                        0,
-                        Color.parseColor("#01b1fb"),
-                        pos -> {
-                            // TODO: OnTransfer
-                        }
-                ));
-                underlayButtons.add(new SwipeHelper.UnderlayButton(
                         getString(R.string.transfer),
                         0,
-                        Color.parseColor("#00986e"),
-                        pos -> {
-                            // TODO: OnUnshare
-                        }
+                        ContextCompat.getColor(getContext(), R.color.green),
+                        pos -> Toast.makeText(getContext(), "Transfer clicked", Toast.LENGTH_SHORT).show()
+                ));
+                underlayButtons.add(new SwipeHelper.UnderlayButton(
+                        getString(R.string.edit),
+                        0,
+                        ContextCompat.getColor(getContext(), R.color.gray),
+                        pos -> Toast.makeText(getContext(), "Edit clicked", Toast.LENGTH_SHORT).show()
                 ));
             }
         };
@@ -102,7 +98,6 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Override
     public void setFavoriteRecipients(List<RecipientDto> recipientDtos) {
-        Log.d("Sergey", "recipient settled");
 
     }
 

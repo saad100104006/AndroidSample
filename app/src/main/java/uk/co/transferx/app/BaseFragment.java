@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import android.widget.TextView;
 public abstract class BaseFragment extends Fragment {
 
     public abstract String tagName();
+    protected Button buttonNext;
 
     protected void setStatusOfError(final EditText textInputEditText, final TextView label, @ColorRes int color) {
         Drawable draw = textInputEditText.getBackground();
@@ -38,6 +40,13 @@ public abstract class BaseFragment extends Fragment {
     protected void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    protected void setButtonStatus(boolean isEnabled){
+        buttonNext.setEnabled(isEnabled);
+        buttonNext.setBackground(isEnabled ?
+                ContextCompat.getDrawable(getContext(), R.drawable.oval_button_black) :
+                ContextCompat.getDrawable(getContext(), R.drawable.oval_button_gray));
     }
 
 }

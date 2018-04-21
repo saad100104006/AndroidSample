@@ -47,6 +47,7 @@
         android:textSize="18sp"
         app:itemCount="4"
         app:lineWidth="2dp"
+
         app:itemSpacing="16dp"
         app:viewType="line" />
 

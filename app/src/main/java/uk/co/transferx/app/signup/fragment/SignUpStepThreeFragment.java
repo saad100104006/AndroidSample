@@ -12,7 +12,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chaos.view.PinView;
@@ -44,24 +44,8 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
     SharedPreferences sharedPreferences;
     private PinView firstPinView, secondPinView;
     private TextView firsLabelPin, secondLabelPin;
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            setStatusOfError(firstPinView, firsLabelPin, R.color.black);
-            setStatusOfError(secondPinView, secondLabelPin, R.color.black);
-            setLinesColor(R.color.black);
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
+    private ImageView backButton;
+    private TextWatcher firstPinWatcher, secondPinWatcher;
 
     @Override
     public String tagName() {
@@ -92,9 +76,14 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
         secondPinView = view.findViewById(R.id.second_pin);
         firsLabelPin = view.findViewById(R.id.first_label_pin);
         secondLabelPin = view.findViewById(R.id.second_label_pin);
-        final Button registerButton = view.findViewById(R.id.next);
-        registerButton.setText(sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) ? R.string.sign_in : R.string.register);
-        registerButton.setOnClickListener(v -> presenter.validatePin(firstPinView.getText().toString(), secondPinView.getText().toString()));
+        backButton = view.findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> {
+            hideKeyboard(backButton);
+            getActivity().onBackPressed();
+        });
+        buttonNext = view.findViewById(R.id.sign_in);
+        buttonNext.setText(sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) ? R.string.sign_in : R.string.register);
+        buttonNext.setOnClickListener(v -> presenter.validatePin());
         firstPinView.setAnimationEnable(true);
         secondPinView.setAnimationEnable(true);
     }
@@ -104,6 +93,12 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
         setStatusOfError(firstPinView, firsLabelPin, R.color.red);
         setStatusOfError(secondPinView, secondLabelPin, R.color.red);
         setLinesColor(R.color.red);
+    }
+
+    private void resetErrorPin() {
+        setStatusOfError(firstPinView, firsLabelPin, R.color.black);
+        setStatusOfError(secondPinView, secondLabelPin, R.color.black);
+        setLinesColor(R.color.black);
     }
 
     @Override
@@ -124,8 +119,40 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
     public void onResume() {
         super.onResume();
         presenter.attachUI(this);
-        firstPinView.addTextChangedListener(textWatcher);
-        secondPinView.addTextChangedListener(textWatcher);
+        firstPinView.addTextChangedListener(firstPinWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                resetErrorPin();
+                presenter.setFirstPin(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        secondPinView.addTextChangedListener(secondPinWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                resetErrorPin();
+                presenter.setSecondPin(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void setLinesColor(@ColorRes int color) {
@@ -136,8 +163,8 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
     @Override
     public void onPause() {
         presenter.detachUI();
-        firstPinView.removeTextChangedListener(textWatcher);
-        secondPinView.removeTextChangedListener(textWatcher);
+        firstPinView.removeTextChangedListener(firstPinWatcher);
+        secondPinView.removeTextChangedListener(secondPinWatcher);
         firstPinView.setText(EMPTY);
         secondPinView.setText(EMPTY);
         super.onPause();
@@ -146,6 +173,11 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
     @Override
     public void showErrorFromBackend() {
 
+    }
+
+    @Override
+    public void setButtonEnabled(boolean isEnabled) {
+        setButtonStatus(isEnabled);
     }
 
     @Override

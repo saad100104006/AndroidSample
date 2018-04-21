@@ -158,6 +158,9 @@ public class TransferFragment extends BaseFragment implements SendFragmentPresen
 
     @Override
     public void setRecipients(List<RecipientDto> recipients) {
+        if(isDetached()){
+            return;
+        }
         recipientSpinner.setDataWithHintItem(recipients.toArray(), getString(R.string.recipient));
     }
 

@@ -1,6 +1,7 @@
 package uk.co.transferx.app.welcom.presenter;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
@@ -30,6 +31,8 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
     private Disposable disposable;
     private final TokenManager tokenManager;
     private final SharedPreferences sharedPreferences;
+    private String email;
+    private String password;
 
     @Inject
     public WelcomeFragmentPresenter(final SignInOutApi signInOutApi, final SignUpApi signUpApi, final TokenManager tokenManager, final SharedPreferences sharedPreferences) {
@@ -47,20 +50,30 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
         }
     }
 
-    public void validateInput(String email, String password) {
+    public void signInClicked() {
         if (!tokenManager.isInitialTokenExist() && ui != null) {
             ui.showConnectionError();
             return;
         }
-        if (!Util.validateEmail(email) && ui != null) {
-            ui.showEmailError();
-            return;
-        }
-        if (!Util.validatePassword(password) && ui != null) {
-            ui.showPasswordError();
-            return;
-        }
         signIn(email, password, tokenManager.getInitialToken());
+    }
+
+    public void validateEmail(String email) {
+        if (ui != null) {
+            this.email = email;
+            ui.changeButtonState(isInputDataValid());
+        }
+    }
+
+    public void validatePassword(String password) {
+        if (ui != null) {
+            this.password = password;
+            ui.changeButtonState(isInputDataValid());
+        }
+    }
+
+    private boolean isInputDataValid() {
+        return Util.validateEmail(email) && Util.validatePassword(password);
     }
 
     private void signIn(String email, String password, String token) {
@@ -71,7 +84,7 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         tokenManager.setToken(resp.body().getToken());
-                        if(sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)){
+                        if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)) {
                             ui.goToPinView();
                             return;
                         }
@@ -140,6 +153,9 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
         void showWrongPassword();
 
         void goToPinView();
+
+        void changeButtonState(boolean isEnabled);
+
 
     }
 }

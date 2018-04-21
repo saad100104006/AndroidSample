@@ -4,17 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.transition.Slide;
-import android.support.transition.Transition;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.content.res.AppCompatResources;
 import android.util.SparseArray;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.rd.PageIndicatorView;
 
@@ -38,6 +30,7 @@ public class SignUpActivity extends BaseActivity {
 
     public static void startSignUp(Activity activity) {
         activity.startActivity(new Intent(activity, SignUpActivity.class));
+        activity.finish();
     }
 
     public static void startSignUp(Activity activity, int fragmentNumber) {
@@ -48,8 +41,6 @@ public class SignUpActivity extends BaseActivity {
 
     @Inject
     SharedPreferences sharedPreferences;
-
-    private static final int DURATION = 500;
     private final SparseArray<BaseFragment> sparseArray = new SparseArray<>(3);
     private PageIndicatorView pageIndicatorView;
     private static int currentFragment;
@@ -73,24 +64,19 @@ public class SignUpActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         currentFragment = 0;
+        sparseArray.clear();
         super.onDestroy();
     }
 
     public void showNextOrPreviousFragment(int nextView, Bundle bundle) {
-        Slide slideTransition = new Slide(nextView > currentFragment ? Gravity.END : Gravity.START);
-        slideTransition.setDuration(DURATION);
         BaseFragment fragment = sparseArray.get(nextView);
-        fragment.setEnterTransition(slideTransition);
         if (bundle != null) {
             fragment.setArguments(bundle);
         }
-        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, fragment, fragment.getTag());
-        ft.commit();
+        replaceFragment(fragment, currentFragment - nextView, R.id.container);
         currentFragment = nextView;
         pageIndicatorView.setSelection(nextView);
     }
-
 
     @Override
     public void onBackPressed() {

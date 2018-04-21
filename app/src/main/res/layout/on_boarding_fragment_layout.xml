@@ -83,17 +83,19 @@
 
 
         <Button
-            android:id="@+id/next"
+            android:id="@+id/sign_in"
             style="@style/CommonButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
-            android:background="@drawable/oval_button_black"
+            android:textColor="@color/white"
             android:letterSpacing="0.17"
             android:lineSpacingExtra="2sp"
             android:text="@string/sign_in"
+            android:background="@drawable/oval_button_gray"
+            android:enabled="false"
             android:textStyle="bold"
             android:theme="@style/Button.Black" />
 

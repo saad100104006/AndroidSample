@@ -14,6 +14,17 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent">
 
+        <ImageView
+            android:id="@+id/label"
+            android:layout_width="match_parent"
+            android:layout_height="82dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/left_right_main_screen"
+            android:layout_marginRight="@dimen/left_right_main_screen"
+            android:layout_marginTop="72dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/logo_secondary" />
+
 
         <TextView
             android:id="@+id/title_send"
@@ -24,6 +35,7 @@
             android:layout_below="@id/label"
             android:layout_marginLeft="@dimen/left_right_main_screen"
             android:text="@string/send_to"
+            android:layout_marginTop="@dimen/left_right_main_screen"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="10sp" />
@@ -287,7 +299,7 @@
             android:textSize="14sp"/>
 
         <Button
-            android:id="@+id/next"
+            android:id="@+id/sign_in"
             style="@style/CommonButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="36dp"
@@ -303,7 +315,7 @@
             android:text="@string/next" />
 
         <Space
-            android:layout_below="@id/next"
+            android:layout_below="@id/sign_in"
             android:layout_width="match_parent"
             android:layout_height="48dp" />
 

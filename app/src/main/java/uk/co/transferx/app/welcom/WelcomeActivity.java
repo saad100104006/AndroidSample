@@ -24,6 +24,7 @@ public class WelcomeActivity extends BaseActivity {
         Intent intent = new Intent(activity, WelcomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
+        activity.finish();
     }
 
     @Override
