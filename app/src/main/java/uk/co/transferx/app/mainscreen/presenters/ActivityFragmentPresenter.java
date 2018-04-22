@@ -47,6 +47,10 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
         transactionDtos.add(new TransactionDto(0, " ", "Tom Bibik", "GBP", new BigDecimal("430"), 0, 0, ""));
         transactionDtos.add(new TransactionDto(0, " ", "Leonid Warik", "GBP", new BigDecimal("40"), 0, 0, ""));
         transactionDtos.add(new TransactionDto(0, " ", "Sergey Milewski", "GBP", new BigDecimal("50"), 0, 0, ""));
+        transactionDtos.add(new TransactionDto(0, " ", "Kukumber Bibik", "GBP", new BigDecimal("430"), 0, 0, ""));
+        transactionDtos.add(new TransactionDto(0, " ", "Kuropatka Warik", "GBP", new BigDecimal("40"), 0, 0, ""));
+        transactionDtos.add(new TransactionDto(0, " ", "Piatka Bibik", "GBP", new BigDecimal("430"), 0, 0, ""));
+        transactionDtos.add(new TransactionDto(0, " ", "Kakosik Warik", "GBP", new BigDecimal("40"), 0, 0, ""));
     }
 
     @Override

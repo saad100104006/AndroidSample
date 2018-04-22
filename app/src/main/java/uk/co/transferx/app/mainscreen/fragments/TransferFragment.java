@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,7 +31,6 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.glide.GlideApp;
 import uk.co.transferx.app.mainscreen.presenters.SendFragmentPresenter;
-import uk.co.transferx.app.util.Constants;
 import uk.co.transferx.app.view.CustomSpinner;
 
 import static uk.co.transferx.app.util.Constants.EMPTY;
@@ -158,10 +156,9 @@ public class TransferFragment extends BaseFragment implements SendFragmentPresen
 
     @Override
     public void setRecipients(List<RecipientDto> recipients) {
-        if(isDetached()){
-            return;
+        if (getActivity() != null && isAdded()) {
+            recipientSpinner.setDataWithHintItem(recipients.toArray(), getString(R.string.recipient));
         }
-        recipientSpinner.setDataWithHintItem(recipients.toArray(), getString(R.string.recipient));
     }
 
     @Override

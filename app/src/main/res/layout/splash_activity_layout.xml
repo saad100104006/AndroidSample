@@ -7,10 +7,12 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:tint="@color/hint"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:alpha="0.05"
-        android:src="@drawable/decor" />
+        android:scaleType="fitXY"
+        android:src="@drawable/decor"
+        android:tint="@color/hint" />
 
     <ImageView
         android:id="@+id/main_logo"
@@ -25,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_logo"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/money_that_cares"
         android:textColor="@color/white"

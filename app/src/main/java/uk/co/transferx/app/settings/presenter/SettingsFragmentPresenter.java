@@ -63,7 +63,7 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentPre
 
     }
 
-    public void clickAppSettings() {
+    public void clickNotification() {
         if (ui != null) {
             ui.goAppSettings();
         }

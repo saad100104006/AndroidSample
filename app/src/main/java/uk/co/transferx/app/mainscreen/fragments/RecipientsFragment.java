@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.List;
@@ -34,8 +35,10 @@ import static android.app.Activity.RESULT_OK;
 
 public class RecipientsFragment extends BaseFragment implements RecipientsFragmentPresenter.RecipientsFragmentUI {
 
-    private RecipientVerticalRecyclerAdapter verticalRecyclerAdapter;
     public static final int ADD_CHANGE_RECIPIENT = 333;
+    private RecipientVerticalRecyclerAdapter verticalRecyclerAdapter;
+    private RecyclerView recipientRecyclerView;
+    private LinearLayout emptyDescription;
 
 
     @Inject
@@ -65,11 +68,11 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView verticalRecipientRecyclerView = view.findViewById(R.id.vertical_recycler_view);
+        recipientRecyclerView = view.findViewById(R.id.vertical_recycler_view);
+        emptyDescription = view.findViewById(R.id.empty_description);
         verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(this, presenter);
-        verticalRecipientRecyclerView.setAdapter(verticalRecyclerAdapter);
-        verticalRecipientRecyclerView.setHasFixedSize(true);
-        SwipeHelper swipeHelper = new SwipeHelper(getContext(), verticalRecipientRecyclerView) {
+        recipientRecyclerView.setAdapter(verticalRecyclerAdapter);
+        SwipeHelper swipeHelper = new SwipeHelper(recipientRecyclerView) {
             @Override
             public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
                 underlayButtons.add(new SwipeHelper.UnderlayButton(
@@ -93,8 +96,9 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
                 ));
             }
         };
-        view.findViewById(R.id.add_button).setOnClickListener(v -> startActivityForResult(new Intent(getContext(), AddRecipientsActivity.class), ADD_CHANGE_RECIPIENT));
+        view.findViewById(R.id.add_new_recipients).setOnClickListener(v -> presenter.addRecipient());
     }
+
 
     @Override
     public void setFavoriteRecipients(List<RecipientDto> recipientDtos) {
@@ -103,6 +107,9 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Override
     public void setRecipients(List<RecipientDto> recipientDtos) {
+        boolean isEmpty = recipientDtos.isEmpty();
+        recipientRecyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        emptyDescription.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         verticalRecyclerAdapter.setRecipients(recipientDtos);
     }
 
@@ -139,5 +146,10 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     @Override
     public void updateFavoriteRecipients() {
 
+    }
+
+    @Override
+    public void addRecipient() {
+        startActivityForResult(new Intent(getContext(), AddRecipientsActivity.class), ADD_CHANGE_RECIPIENT);
     }
 }

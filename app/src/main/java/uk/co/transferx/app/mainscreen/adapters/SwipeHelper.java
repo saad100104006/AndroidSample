@@ -43,7 +43,6 @@ public abstract class SwipeHelper extends ItemTouchHelper.SimpleCallback {
     private Map<Integer, List<UnderlayButton>> buttonsBuffer;
     private Queue<Integer> recoverQueue;
     private DisplayMetrics displayMetrics;
-
     private GestureDetector.SimpleOnGestureListener gestureListener = new GestureDetector.SimpleOnGestureListener() {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -79,15 +78,15 @@ public abstract class SwipeHelper extends ItemTouchHelper.SimpleCallback {
         }
     };
 
-    public SwipeHelper(Context context, RecyclerView recyclerView) {
+    public SwipeHelper(RecyclerView recyclerView) {
         super(0, ItemTouchHelper.LEFT);
-        displayMetrics = context.getResources().getDisplayMetrics();
+        displayMetrics = recyclerView.getContext().getResources().getDisplayMetrics();
         buttonWidth = (int) (TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, BUTTON_WITH_DP, displayMetrics));
         textSize = (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, TEXT_SIZE_SP, displayMetrics));
         this.recyclerView = recyclerView;
         this.buttons = new ArrayList<>();
-        this.gestureDetector = new GestureDetector(context, gestureListener);
+        this.gestureDetector = new GestureDetector(recyclerView.getContext(), gestureListener);
         this.recyclerView.setOnTouchListener(onTouchListener);
         buttonsBuffer = new HashMap<>();
         recoverQueue = new LinkedList<Integer>() {
@@ -206,6 +205,10 @@ public abstract class SwipeHelper extends ItemTouchHelper.SimpleCallback {
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
+    public void clearReasorces(){
+       recyclerView = null;
+    }
+
     public abstract void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons);
 
     public class UnderlayButton {
@@ -235,7 +238,6 @@ public abstract class SwipeHelper extends ItemTouchHelper.SimpleCallback {
             // Draw background
             paint.setColor(color);
             canvas.drawRect(rect, paint);
-
             // Draw Text
             paint.setColor(Color.WHITE);
             paint.setTextSize(textSize);

@@ -19,6 +19,7 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.mainscreen.fragments.ActivityFragment;
 import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
 import uk.co.transferx.app.mainscreen.fragments.TransferFragment;
+import uk.co.transferx.app.settings.fragment.SettingsFragment;
 
 /**
  * Created by sergey on 14.12.17.
@@ -40,6 +41,10 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_layout);
+        fragments.put(0, new ActivityFragment());
+        fragments.put(1, new TransferFragment());
+        fragments.put(2, new RecipientsFragment());
+        fragments.put(3, new SettingsFragment());
         final BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_navigation);
         bottomNavigationViewEx.setTypeface(ResourcesCompat.getFont(this, R.font.montserrat));
         selectScreen(R.id.activity);
@@ -52,39 +57,25 @@ public class MainActivity extends BaseActivity {
     }
 
     private void selectScreen(@IdRes int item) {
-        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction()
-                // .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         switch (item) {
             case R.id.activity:
-                BaseFragment activityFragment = fragments.get(0);
-                if (activityFragment == null) {
-                    activityFragment = new ActivityFragment();
-                    fragments.put(0, activityFragment);
-                }
-                replaceFragment(activityFragment, CURRENT_ITEM, R.id.container_main);
+                replaceFragment(fragments.get(0), CURRENT_ITEM, R.id.container_main);
                 CURRENT_ITEM = 0;
                 break;
             case R.id.transfer:
-                BaseFragment transferFragment = fragments.get(1);
-                if (transferFragment == null) {
-                    transferFragment = new TransferFragment();
-                    fragments.put(1, transferFragment);
-                }
-                replaceFragment(transferFragment, CURRENT_ITEM - 1, R.id.container_main);
+                replaceFragment(fragments.get(1), CURRENT_ITEM - 1, R.id.container_main);
                 CURRENT_ITEM = 1;
                 break;
             case R.id.recipients:
-                BaseFragment recipientsFragment = fragments.get(2);
-                if (recipientsFragment == null) {
-                    recipientsFragment = new RecipientsFragment();
-                    fragments.put(2, recipientsFragment);
-                }
-                replaceFragment(recipientsFragment, CURRENT_ITEM - 2, R.id.container_main);
+                replaceFragment(fragments.get(2), CURRENT_ITEM - 2, R.id.container_main);
                 CURRENT_ITEM = 2;
                 break;
+            case R.id.settings:
+                replaceFragment(fragments.get(3), CURRENT_ITEM - 3, R.id.container_main);
+                CURRENT_ITEM = 3;
+                break;
             default:
-                Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
+                throw new IllegalStateException(MainActivity.class.getSimpleName() + " Error state number " + item );
         }
 
     }

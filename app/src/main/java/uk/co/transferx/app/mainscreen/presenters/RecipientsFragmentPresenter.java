@@ -96,6 +96,12 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
 
     }
 
+    public void addRecipient(){
+        if(ui != null){
+            ui.addRecipient();
+        }
+    }
+
     public void putToFavorite(RecipientDto recipientDto) {
         if (sharedPreferences.getBoolean(recipientDto.getId(), false)) {
             return;
@@ -132,6 +138,8 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
         void updateFavoriteRecipients();
 
         void showError();
+
+        void addRecipient();
 
     }
 }
