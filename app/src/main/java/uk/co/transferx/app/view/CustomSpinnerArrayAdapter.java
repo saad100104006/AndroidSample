@@ -29,8 +29,8 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
     @LayoutRes
     private int dropDownView, headerView;
     @IdRes
-    private int selectionImageId, itemLabelId;
-    private int currentSelection = 0, hintItemIndex = -1;
+    private int selectionImageId, itemLabelId, imagePhotoId;
+    private int currentSelection = -4, hintItemIndex = -1;
     private CharSequence hint;
     private boolean hintVisible = false;
     private SparseArray<TextViewBinder> labelsToBind;
@@ -89,7 +89,7 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
 
     private CharSequence setColor(CharSequence hint) {
         SpannableStringBuilder str = new SpannableStringBuilder(hint);
-        str.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mContext,R.color.hint)),0, hint.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.hint)), 0, hint.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return str;
     }
 
@@ -103,10 +103,9 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
 
     private View getCustomView(int position, View convertView) {
         TextView textView = convertView.findViewById(itemLabelId);
-        ImageView imageView =  convertView.findViewById(selectionImageId);
+        ImageView imageView = convertView.findViewById(selectionImageId);
 
         if (position == currentSelection) {
-            textView.setTypeface(null, Typeface.BOLD);
             imageView.setVisibility(View.VISIBLE);
         } else {
             textView.setTypeface(ResourcesCompat.getFont(convertView.getContext(), R.font.montserrat));
@@ -124,6 +123,7 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
             TextViewBinder binder = labelsToBind.get(labelsToBind.keyAt(i));
             ((TextView) convertView.findViewById(binder.textViewId))
                     .setText(binder.textProvider.provide(getItem(position)));
+
         }
     }
 
@@ -145,5 +145,9 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
 
     void setSelectionImageId(int selectionImageId) {
         this.selectionImageId = selectionImageId;
+    }
+
+    void setImageId(int imagePhotoId) {
+        this.imagePhotoId = imagePhotoId;
     }
 }

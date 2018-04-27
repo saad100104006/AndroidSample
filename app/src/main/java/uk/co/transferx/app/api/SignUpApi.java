@@ -21,6 +21,6 @@ public interface SignUpApi {
 
 
     @POST("/v1/auth/user")
-    Observable<Response<ResponseBody>> registerUser(@Header("Authorization") String token, @Body UserRequest request);
+    Observable<Response<Token>> registerUser(@Header("Authorization") String token, @Body UserRequest request);
 
 }

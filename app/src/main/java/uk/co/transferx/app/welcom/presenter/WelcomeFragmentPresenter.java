@@ -45,7 +45,7 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
     @Override
     public void detachUI() {
         super.detachUI();
-        if (disposable != null && !disposable.isDisposed()) {
+        if (disposable != null) {
             disposable.dispose();
         }
     }
@@ -121,16 +121,21 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
-                    if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        tokenManager.setInitialToken(resp.body().getToken());
-                        return;
+                    if(ui != null) {
+                        if (resp.code() == HttpsURLConnection.HTTP_OK) {
+                            tokenManager.setInitialToken(resp.body().getToken());
+                            return;
+                        }
+                        ui.showConnectionError();
                     }
-                    ui.showConnectionError();
-                }, throwable -> ui.showConnectionError());
+
+                }, this::handleError);
     }
 
     private void handleError(Throwable throwable) {
-        ui.showConnectionError();
+        if(ui != null) {
+            ui.showConnectionError();
+        }
     }
 
 

@@ -143,19 +143,19 @@ dependencies {
 
     //tests
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //mokito
-    testCompile 'org.mockito:mockito-core:2.13.0'
-    androidTestCompile 'org.mockito:mockito-android:2.12.0'
+    testImplementation 'org.mockito:mockito-core:2.13.0'
+    androidTestImplementation 'org.mockito:mockito-android:2.12.0'
     //dagger mock
-    testCompile 'com.github.fabioCollini.daggermock:daggermock:0.8.2'
-    androidTestCompile 'com.github.fabioCollini.daggermock:daggermock:0.8.2'
+    testImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.2'
+    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.2'
 
     dependencies {
-        implementation 'com.google.firebase:firebase-core:12.0.1'
-        implementation 'com.google.firebase:firebase-messaging:12.0.1'
+        implementation 'com.google.firebase:firebase-core:15.0.0'
+        implementation 'com.google.firebase:firebase-messaging:15.0.0'
     }
 
 }

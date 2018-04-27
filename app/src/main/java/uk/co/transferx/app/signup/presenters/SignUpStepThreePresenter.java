@@ -125,7 +125,7 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(resp -> {
                         if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                            String token = resp.body().string();
+                            String token = resp.body().getToken();
                             SharedPreferences.Editor editorShared = sharedPreferences.edit();
                             editorShared.putString(TOKEN, cryptoManager.getEncryptedCredential(token, firstPin));
                             editorShared.putBoolean(LOGGED_IN_STATUS, true).apply();

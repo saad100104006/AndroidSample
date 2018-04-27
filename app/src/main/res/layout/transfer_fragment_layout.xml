@@ -210,6 +210,7 @@
                 android:layout_below="@id/payment_method_title"
                 android:layout_marginRight="@dimen/left_right_main_screen"
                 android:layout_toRightOf="@id/method_img"
+                app:dropDownItemRes="@layout/item_payments"
                 android:background="@android:color/transparent"
                 android:theme="@style/ThemeSpinner">
 

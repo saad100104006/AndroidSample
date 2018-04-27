@@ -20,6 +20,7 @@ import com.mynameismidori.currencypicker.ExtendedCurrency;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -30,7 +31,7 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.glide.GlideApp;
-import uk.co.transferx.app.mainscreen.presenters.SendFragmentPresenter;
+import uk.co.transferx.app.mainscreen.presenters.TransferFragmentPresenter;
 import uk.co.transferx.app.view.CustomSpinner;
 
 import static uk.co.transferx.app.util.Constants.EMPTY;
@@ -39,7 +40,7 @@ import static uk.co.transferx.app.util.Constants.EMPTY;
  * Created by sergey on 14.12.17.
  */
 
-public class TransferFragment extends BaseFragment implements SendFragmentPresenter.SendFragmentUI {
+public class TransferFragment extends BaseFragment implements TransferFragmentPresenter.SendFragmentUI {
 
     private static final String CURRENCY_PICKER = "currency_picker";
     private View view;
@@ -55,9 +56,10 @@ public class TransferFragment extends BaseFragment implements SendFragmentPresen
     private EditText sendInput;
     private Disposable disposable;
     private CustomSpinner recipientSpinner, paymentMethod;
+    private Pattern pattern = Pattern.compile("^(\\d+\\.)?\\d+$");
 
     @Inject
-    SendFragmentPresenter presenter;
+    TransferFragmentPresenter presenter;
 
 
     @Override
@@ -84,6 +86,7 @@ public class TransferFragment extends BaseFragment implements SendFragmentPresen
         disposable = RxTextView.textChanges(sendInput)
                 .debounce(300L, TimeUnit.MILLISECONDS)
                 .filter(val -> !EMPTY.equals(val.toString()))
+                .filter(value -> pattern.matcher(value.toString()).matches())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sequence -> presenter.setValueToSend(sequence.toString()));
     }
