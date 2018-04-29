@@ -2,6 +2,7 @@ package uk.co.transferx.app.mainscreen.presenters;
 
 import android.content.SharedPreferences;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,12 +10,15 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
+import uk.co.transferx.app.api.RecipientsApi;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.recipientsrepository.RecipientRepository;
+import uk.co.transferx.app.tokenmanager.TokenManager;
 
 /**
  * Created by sergey on 17.12.17.
@@ -25,30 +29,35 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
     private boolean isShouldRefresh;
     private final RecipientRepository recipientRepository;
     private final SharedPreferences sharedPreferences;
-    private Disposable disposable;
+    private CompositeDisposable compositeDisposable;
     private List<RecipientDto> favoriteListRecipients = new ArrayList<>(3);
     private List<RecipientDto> recipientDtoList = new ArrayList<>();
-
+    private final RecipientsApi recipientsApi;
+    private final TokenManager tokenManager;
 
     @Inject
-    public RecipientsFragmentPresenter(final RecipientRepository recipientRepository, final SharedPreferences sharedPreferences) {
+    public RecipientsFragmentPresenter(final RecipientRepository recipientRepository,
+                                       final SharedPreferences sharedPreferences,
+                                       final RecipientsApi recipientsApi,
+                                       final TokenManager tokenManager) {
         this.recipientRepository = recipientRepository;
         this.sharedPreferences = sharedPreferences;
+        this.recipientsApi = recipientsApi;
+        this.tokenManager = tokenManager;
     }
-
 
     public void setShouldRefresh(boolean isShouldRefresh) {
         this.isShouldRefresh = isShouldRefresh;
     }
 
-
     @Override
     public void attachUI(RecipientsFragmentUI ui) {
         super.attachUI(ui);
+        compositeDisposable = new CompositeDisposable();
         if (isShouldRefresh) {
             recipientDtoList.clear();
             favoriteListRecipients.clear();
-            disposable = recipientRepository.refreshRecipients()
+            final Disposable disposable = recipientRepository.refreshRecipients()
                     .toObservable()
                     .flatMap(Observable::fromIterable)
                     .doOnNext(res -> {
@@ -67,11 +76,12 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
                         }
                     }, this::handleError);
             isShouldRefresh = false;
+            compositeDisposable.add(disposable);
             return;
         }
         if (recipientDtoList.isEmpty()) {
             favoriteListRecipients.clear();
-            disposable = recipientRepository.getRecipients()
+            final Disposable recipientDisposable = recipientRepository.getRecipients()
                     .toObservable()
                     .flatMap(Observable::fromIterable)
                     .doOnNext(res -> {
@@ -89,6 +99,7 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
                         }
                     }, this::handleError);
             isShouldRefresh = false;
+            compositeDisposable.add(recipientDisposable);
         }
     }
 
@@ -96,8 +107,20 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
 
     }
 
-    public void addRecipient(){
-        if(ui != null){
+    public void deleteRecipient(final RecipientDto recipientDto) {
+        final Disposable disposable = recipientsApi.deleteRecipient(tokenManager.getToken(), recipientDto.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(responseBodyResponse -> {
+                    if (responseBodyResponse.code() == HttpURLConnection.HTTP_OK && ui != null) {
+                        ui.deleteRecipient(recipientDto);
+                    }
+                });
+        compositeDisposable.add(disposable);
+    }
+
+    public void addRecipient() {
+        if (ui != null) {
             ui.addRecipient();
         }
     }
@@ -121,8 +144,8 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
     @Override
     public void detachUI() {
         super.detachUI();
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
+        if (compositeDisposable != null) {
+            compositeDisposable.dispose();
         }
     }
 
@@ -140,6 +163,8 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
         void showError();
 
         void addRecipient();
+
+        void deleteRecipient(RecipientDto recipientDto);
 
     }
 }

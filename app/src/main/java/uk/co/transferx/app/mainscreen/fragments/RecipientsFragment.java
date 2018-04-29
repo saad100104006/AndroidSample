@@ -1,13 +1,11 @@
 package uk.co.transferx.app.mainscreen.fragments;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +24,11 @@ import uk.co.transferx.app.mainscreen.adapters.RecipientVerticalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.adapters.SwipeHelper;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
 import uk.co.transferx.app.recipients.addrecipients.AddRecipientsActivity;
+import uk.co.transferx.app.view.ConfirmationDialogFragment;
 
 import static android.app.Activity.RESULT_OK;
+import static uk.co.transferx.app.view.ConfirmationDialogFragment.MESSAGE;
+import static uk.co.transferx.app.view.ConfirmationDialogFragment.POSITION;
 
 /**
  * Created by sergey on 17.12.17.
@@ -36,10 +37,11 @@ import static android.app.Activity.RESULT_OK;
 public class RecipientsFragment extends BaseFragment implements RecipientsFragmentPresenter.RecipientsFragmentUI {
 
     public static final int ADD_CHANGE_RECIPIENT = 333;
+    public static final int DELETE_USER = 234;
     private RecipientVerticalRecyclerAdapter verticalRecyclerAdapter;
     private RecyclerView recipientRecyclerView;
     private LinearLayout emptyDescription;
-
+    private static final int DEFAULT_VALUE = -1;
 
     @Inject
     RecipientsFragmentPresenter presenter;
@@ -79,7 +81,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
                         getString(R.string.delete).toUpperCase(),
                         0,
                         ContextCompat.getColor(getContext(), R.color.red_delete),
-                        pos -> Toast.makeText(getContext(), "Delete clicked", Toast.LENGTH_SHORT).show()
+                        pos -> showDialogConfirmation(pos)
                 ));
 
                 underlayButtons.add(new SwipeHelper.UnderlayButton(
@@ -99,6 +101,16 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
         view.findViewById(R.id.add_new_recipients).setOnClickListener(v -> presenter.addRecipient());
     }
 
+    private void showDialogConfirmation(int position) {
+        ConfirmationDialogFragment dialogFragment = new ConfirmationDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(MESSAGE, getString(R.string.delete_user_message, verticalRecyclerAdapter.getRecipient(position).toString()));
+        bundle.putInt(POSITION, position);
+        dialogFragment.setArguments(bundle);
+        dialogFragment.setTargetFragment(this, DELETE_USER);
+        dialogFragment.setCancelable(false);
+        dialogFragment.show(getFragmentManager(), "TAG");
+    }
 
     @Override
     public void setFavoriteRecipients(List<RecipientDto> recipientDtos) {
@@ -141,6 +153,12 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
             presenter.setShouldRefresh(true);
             presenter.attachUI(this);
         }
+        if (requestCode == DELETE_USER) {
+            int position = data.getIntExtra(POSITION, DEFAULT_VALUE);
+            if (position != DEFAULT_VALUE) {
+                presenter.deleteRecipient(verticalRecyclerAdapter.getRecipient(position));
+            }
+        }
     }
 
     @Override
@@ -151,5 +169,10 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     @Override
     public void addRecipient() {
         startActivityForResult(new Intent(getContext(), AddRecipientsActivity.class), ADD_CHANGE_RECIPIENT);
+    }
+
+    @Override
+    public void deleteRecipient(RecipientDto recipientDto) {
+        verticalRecyclerAdapter.removeItem(recipientDto);
     }
 }

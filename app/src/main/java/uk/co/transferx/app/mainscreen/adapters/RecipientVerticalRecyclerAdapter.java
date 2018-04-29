@@ -55,6 +55,25 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
         return null;
     }
 
+    public RecipientDto getRecipient(int position) {
+        return recipientDtoList.get(position);
+    }
+
+    private int getPositionOfRecipient(RecipientDto recipientDto) {
+        return recipientDtoList.indexOf(recipientDto);
+    }
+
+    public void removeItem(int position) {
+        recipientDtoList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void removeItem(RecipientDto recipientDto) {
+        final int pos = getPositionOfRecipient(recipientDto);
+        recipientDtoList.remove(pos);
+        notifyItemRemoved(pos);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof RecipientVerticalHolder) {

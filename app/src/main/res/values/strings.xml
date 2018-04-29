@@ -117,6 +117,9 @@
     <string name="send_later">send later</string>
     <string name="empty_list_recipients_desc">You have not yet set up any recipients. In order to transfer money to someone, you’ll have to set them up as a recipient.
         \n \n Let us help you get started with that.</string>
+    <string name="delete_user_message">Are you sure you want to delete \n%s as a recipient?</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>
