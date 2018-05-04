@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <TextView
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:text="@string/personal_details"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <TextView
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:text="@string/address_one"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="10sp" />
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/firstName"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:textSize="14sp"
+        android:background="@drawable/underline_normal"
+        android:drawablePadding="10dp"
+        android:inputType="textNoSuggestions|text"
+        android:lineSpacingExtra="2sp"
+        android:maxLines="1"
+        android:paddingBottom="8dp"
+        android:textColor="@color/black"
+        android:theme="@style/Button.Black" />
+
+
+    <TextView
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:text="@string/address_two"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="10sp" />
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/lastName"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:textSize="14sp"
+        android:background="@drawable/underline_normal"
+        android:drawablePadding="10dp"
+        android:inputType="textNoSuggestions|text"
+        android:lineSpacingExtra="2sp"
+        android:maxLines="1"
+        android:paddingBottom="8dp"
+        android:textColor="@color/black"
+        android:theme="@style/Button.Black" />
+
+
+    <TextView
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:text="@string/city"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="10sp" />
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/emailInput"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:background="@drawable/underline_normal"
+        android:textSize="14sp"
+        tools:text="mail@mail.com"
+        android:inputType="textNoSuggestions|text"
+        android:lineSpacingExtra="2sp"
+        android:maxLines="1"
+        android:paddingBottom="8dp"
+        android:textColor="@color/black"
+        android:theme="@style/Button.Black" />
+
+
+    <TextView
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:text="@string/post_code"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="10sp" />
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/phoneInput"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:background="@drawable/underline_normal"
+        android:textSize="14sp"
+        tools:text="220140"
+        android:inputType="textNoSuggestions|textPostalAddress"
+        android:lineSpacingExtra="2sp"
+        android:maxLines="1"
+        android:paddingBottom="8dp"
+        android:textColor="@color/black"
+        android:theme="@style/Button.Black" />
+
+        <TextView
+            style="@style/CommonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/left_right_main_screen"
+            android:layout_marginRight="@dimen/left_right_main_screen"
+            android:text="@string/country"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/countryInput"
+            style="@style/CommonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="@dimen/left_right_main_screen"
+            android:layout_marginRight="@dimen/left_right_main_screen"
+            android:background="@drawable/underline_normal"
+            android:textSize="14sp"
+            tools:text="Belarus"
+            android:inputType="textNoSuggestions|text"
+            android:lineSpacingExtra="2sp"
+            android:maxLines="1"
+            android:paddingBottom="8dp"
+            android:textColor="@color/black"
+            android:theme="@style/Button.Black" />
+
+    <Button
+        android:id="@+id/saveChanges"
+        style="@style/CommonButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/oval_button_gray"
+        android:letterSpacing="0.17"
+        android:lineSpacingExtra="2sp"
+        android:text="@string/save_changes"
+        android:enabled="false"
+        android:textColor="@color/white"
+        android:theme="@style/Button.Black" />
+        
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="48dp" />
+
+</LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

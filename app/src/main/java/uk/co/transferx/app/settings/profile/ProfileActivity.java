@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 
 import javax.inject.Inject;
 
 import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
+import uk.co.transferx.app.settings.profile.personaldetails.PersonalDetailsActivity;
 import uk.co.transferx.app.settings.profile.presenter.ProfileActivityPresenter;
 
 /**
@@ -33,30 +32,13 @@ public class ProfileActivity extends BaseActivity implements ProfileActivityPres
         super.onCreate(savedInstanceState);
         ((TransferXApplication) getApplication()).getAppComponent().inject(this);
         setContentView(R.layout.profile_activity_layout);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.profile);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
+        findViewById(R.id.button_back).setOnClickListener(v -> onBackPressed());
+        findViewById(R.id.personal_details).setOnClickListener(v -> runPersonalDetailsActivity());
     }
 
 
-    @Override
-    public void onBackPressed() {
-        finish();
-        super.onBackPressed();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    private void runPersonalDetailsActivity(){
+        startActivity(new Intent(ProfileActivity.this, PersonalDetailsActivity.class));
     }
 
     @Override

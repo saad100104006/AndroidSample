@@ -21,7 +21,7 @@ import static uk.co.transferx.app.util.Constants.EMPTY;
 public class ConfirmationDialogFragment extends DialogFragment {
 
     public static final String MESSAGE = "message";
-    public static final String POSITION = "position";
+    public static final String ADDITIONAL_DATA = "additional_data";
     private String message;
     private int position;
 
@@ -31,7 +31,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             message = bundle.getString(MESSAGE, EMPTY);
-            position = bundle.getInt(POSITION, -1);
+            position = bundle.getInt(ADDITIONAL_DATA, -1);
         }
     }
 
@@ -53,7 +53,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
         Fragment fragment = getTargetFragment();
         if (fragment != null) {
             Intent intent = new Intent();
-            intent.putExtra(POSITION, position);
+            intent.putExtra(ADDITIONAL_DATA, position);
             fragment.onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
         }
         dismiss();

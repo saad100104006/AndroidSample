@@ -45,6 +45,7 @@
     <string name="country_error">You have to input correct country</string>
     <string name="phone_error">You have to input correct phone number</string>
     <string name="profile">Your Profile</string>
+    <string name="profile_label">Profile</string>
     <string name="referals">Referals</string>
     <string name="app_settings">App Settings</string>
     <string name="support">Support</string>
@@ -67,7 +68,7 @@
     <string name="wallet_title">Wallet</string>
     <string name="personal_details">Personal Details</string>
     <string name="change_password">Change Password</string>
-    <string name="change_pin">Change Pin</string>
+    <string name="change_pin">Change PIN</string>
     <string name="upload_documentation">Upload Documentation</string>
     <string name="amount_with_currency">%1$s - %2$s</string>
     <string name="money_that_cares">money that cares</string>
@@ -118,8 +119,14 @@
     <string name="empty_list_recipients_desc">You have not yet set up any recipients. In order to transfer money to someone, you’ll have to set them up as a recipient.
         \n \n Let us help you get started with that.</string>
     <string name="delete_user_message">Are you sure you want to delete \n%s as a recipient?</string>
+    <string name="phone">phone</string>
+    <string name="save_changes">Save Changes</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
+    <string name="address_one">Address 1</string>
+    <string name="address_two">Address 2</string>
+    <string name="city">city</string>
+    <string name="post_code">post code</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>

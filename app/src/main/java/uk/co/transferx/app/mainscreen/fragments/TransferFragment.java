@@ -30,7 +30,6 @@ import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
-import uk.co.transferx.app.glide.GlideApp;
 import uk.co.transferx.app.mainscreen.presenters.TransferFragmentPresenter;
 import uk.co.transferx.app.view.CustomSpinner;
 
@@ -173,10 +172,10 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
 
     @Override
     public void showChoosenRecipient(RecipientDto recipientDto) {
-        GlideApp.with(this)
-                .load(recipientDto.getImgUrl())
-                .placeholder(R.drawable.placeholder)
-                .into(photo);
+      //  GlideApp.with(this)
+     //           .load(recipientDto.getImgUrl())
+     //           .placeholder(R.drawable.placeholder)
+    //            .into(photo);
         name.setText(recipientDto.getName());
         country.setText(recipientDto.getCountry());
     }
