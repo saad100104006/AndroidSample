@@ -45,7 +45,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/notification"
+        android:id="@+id/wallet"
         style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="32dp"
@@ -61,6 +61,7 @@
 
     <TextView
         style="@style/CommonStyle"
+        android:id="@+id/change_password"
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:layout_marginBottom="32dp"

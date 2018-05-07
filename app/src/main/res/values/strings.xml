@@ -36,6 +36,7 @@
     <string name="select_currency_title">Select Currency</string>
     <string name="favourite_recipients">Favourite Recipients</string>
     <string name="add_new">Add New</string>
+    <string name="add_card">Add card</string>
     <string name="recent_transfers">Recent transfers</string>
     <string name="zero_value">0</string>
     <string name="mobile_money">Mobile Money</string>
@@ -127,6 +128,8 @@
     <string name="address_two">Address 2</string>
     <string name="city">city</string>
     <string name="post_code">post code</string>
+    <string name="add_payment_method">Add Payment Methods</string>
+    <string name="payment_methods_desc">Choose from several different payment methods to make transferring funds simple.</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>

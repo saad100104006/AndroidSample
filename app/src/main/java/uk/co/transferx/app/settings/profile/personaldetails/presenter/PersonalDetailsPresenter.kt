@@ -1,26 +1,26 @@
 package uk.co.transferx.app.settings.profile.personaldetails.presenter
 
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.subscribeBy
 import uk.co.transferx.app.BasePresenter
 import uk.co.transferx.app.UI
-import uk.co.transferx.app.api.ProfileApi
-import uk.co.transferx.app.tokenmanager.TokenManager
+import uk.co.transferx.app.pojo.Profile
+import uk.co.transferx.app.repository.ProfileRepository
 import javax.inject.Inject
 
-class PersonalDetailsPresenter @Inject constructor(private val profileApi: ProfileApi,
-                                                   private val tokenManager: TokenManager) : BasePresenter<PersonalDetailsPresenter.PersonalDetailsUI>() {
+class PersonalDetailsPresenter @Inject constructor(private val profileRepository: ProfileRepository) : BasePresenter<PersonalDetailsPresenter.PersonalDetailsUI>() {
+
+    private var compositeDisposable: CompositeDisposable? = null
 
 
-    override fun attachUI(ui: PersonalDetailsUI?) {
-        super.attachUI(ui)
-       profileApi.featchUserProfile(tokenManager.token)
-               .subscribeOn(Schedulers.io())
-               .observeOn(AndroidSchedulers.mainThread())
-               .subscribe()
+    override fun detachUI() {
+        compositeDisposable?.dispose()
+        super.detachUI()
     }
 
-
     interface PersonalDetailsUI : UI {
+
+
     }
 }

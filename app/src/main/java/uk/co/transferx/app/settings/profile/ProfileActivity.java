@@ -12,6 +12,7 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.settings.profile.personaldetails.PersonalDetailsActivity;
 import uk.co.transferx.app.settings.profile.presenter.ProfileActivityPresenter;
+import uk.co.transferx.app.settings.profile.wallet.WalletActivity;
 
 /**
  * Created by sergey on 30/01/2018.
@@ -33,13 +34,15 @@ public class ProfileActivity extends BaseActivity implements ProfileActivityPres
         ((TransferXApplication) getApplication()).getAppComponent().inject(this);
         setContentView(R.layout.profile_activity_layout);
         findViewById(R.id.button_back).setOnClickListener(v -> onBackPressed());
-        findViewById(R.id.personal_details).setOnClickListener(v -> runPersonalDetailsActivity());
+        findViewById(R.id.personal_details).setOnClickListener(v -> runActivity(PersonalDetailsActivity.class));
+        findViewById(R.id.wallet).setOnClickListener(v -> runActivity(WalletActivity.class));
     }
 
 
-    private void runPersonalDetailsActivity(){
-        startActivity(new Intent(ProfileActivity.this, PersonalDetailsActivity.class));
+    private void runActivity(Class clazz) {
+        startActivity(new Intent(ProfileActivity.this, clazz));
     }
+
 
     @Override
     protected void onResume() {

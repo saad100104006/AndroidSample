@@ -5,6 +5,7 @@ import kotlinx.android.synthetic.main.personal_details_activity_layout.*
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.pojo.Profile
 import uk.co.transferx.app.settings.profile.personaldetails.adapter.PersonalDetailsAdapter
 import uk.co.transferx.app.settings.profile.personaldetails.presenter.PersonalDetailsPresenter
 import javax.inject.Inject
