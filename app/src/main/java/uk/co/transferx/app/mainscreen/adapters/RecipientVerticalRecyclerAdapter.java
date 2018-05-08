@@ -1,14 +1,15 @@
 package uk.co.transferx.app.mainscreen.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Vibrator;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,24 +17,21 @@ import java.util.List;
 
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.dto.RecipientDto;
-import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
-import uk.co.transferx.app.recipients.detailsrecipient.RecipientDetailsActivity;
-
-import static uk.co.transferx.app.mainscreen.fragments.RecipientsFragment.ADD_CHANGE_RECIPIENT;
-import static uk.co.transferx.app.recipients.detailsrecipient.RecipientDetailsActivity.RECIPIENT;
 
 /**
  * Created by sergey on 17.12.17.
  */
 
-public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<RecipientVerticalRecyclerAdapter.RecipientVerticalHolder> {
+public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
 
     private List<RecipientDto> recipientDtoList;
     private final Fragment fragment;
     private final RecipientsFragmentPresenter presenter;
     private final Vibrator vibe;
     private final static int TIME_OF_VIBRATION = 50;
+    private final static int FOOTER_VIEW = 111;
+    private final static int NORMAL_VIEW = 222;
 
     private interface ItemClickListener {
 
@@ -48,28 +46,49 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
 
 
     @Override
-    public RecipientVerticalHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new RecipientVerticalHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recipient_item, parent, false));
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == NORMAL_VIEW) {
+            return new RecipientVerticalHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recipient_item, parent, false));
+        } else if (viewType == FOOTER_VIEW) {
+            return new RecipientFooter(LayoutInflater.from(parent.getContext()).inflate(R.layout.recipient_footer, parent, false));
+        }
+        return null;
+    }
+
+    public RecipientDto getRecipient(int position) {
+        return recipientDtoList.get(position);
+    }
+
+    private int getPositionOfRecipient(RecipientDto recipientDto) {
+        return recipientDtoList.indexOf(recipientDto);
+    }
+
+    public void removeItem(int position) {
+        recipientDtoList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void removeItem(RecipientDto recipientDto) {
+        final int pos = getPositionOfRecipient(recipientDto);
+        recipientDtoList.remove(pos);
+        notifyItemRemoved(pos);
     }
 
     @Override
-    public void onBindViewHolder(RecipientVerticalHolder holder, int position) {
-        RecipientDto recipientDto = recipientDtoList.get(position);
-//        holder.recipientName.setText(recipientDto.getName());
- //       holder.recipientCountry.setText(recipientDto.getCountry());
- //       holder.itemClickListener = recip -> {
- //           if (fragment instanceof RecipientsFragment) {
- //               Intent intent = new Intent(fragment.getActivity(), RecipientDetailsActivity.class);
- //               intent.putExtra(RECIPIENT, recip);
-  //              fragment.startActivityForResult(intent, ADD_CHANGE_RECIPIENT);
-  //          }
-   //     };
-
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof RecipientVerticalHolder) {
+            RecipientVerticalHolder recipientVerticalHolder = (RecipientVerticalHolder) holder;
+            RecipientDto recipientDto = recipientDtoList.get(position);
+            recipientVerticalHolder.recipientName.setText(recipientDto.getName());
+        }
+        if (holder instanceof RecipientFooter) {
+            ((RecipientFooter) holder).addButton.setOnClickListener(v -> presenter.addRecipient());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return recipientDtoList == null ? 0 : recipientDtoList.size();
+        return recipientDtoList == null ? 0 : recipientDtoList.size() + 1;
     }
 
     public void setRecipients(List<RecipientDto> recipients) {
@@ -89,6 +108,17 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
 
     }
 
+    class RecipientFooter extends RecyclerView.ViewHolder {
+
+        Button addButton;
+
+        RecipientFooter(View itemView) {
+            super(itemView);
+            addButton = itemView.findViewById(R.id.add_button);
+        }
+
+    }
+
     class RecipientVerticalHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         ImageView recipientPhoto;
         TextView recipientName, recipientCountry;
@@ -97,8 +127,8 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
         RecipientVerticalHolder(View itemView) {
             super(itemView);
             recipientPhoto = itemView.findViewById(R.id.recipient_img);
-          //  recipientName = itemView.findViewById(R.id.recipient_name);
-         //   recipientCountry = itemView.findViewById(R.id.recipient_country);
+            recipientName = itemView.findViewById(R.id.name_recipient);
+            //   recipientCountry = itemView.findViewById(R.id.recipient_country);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
@@ -116,6 +146,14 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter<Recip
             presenter.putToFavorite(recipientDtoList.get(getAdapterPosition()));
             return true;
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (recipientDtoList != null && position == recipientDtoList.size()) {
+            return FOOTER_VIEW;
+        }
+        return NORMAL_VIEW;
     }
 
 }

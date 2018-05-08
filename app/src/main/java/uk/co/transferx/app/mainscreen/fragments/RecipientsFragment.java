@@ -2,13 +2,15 @@ package uk.co.transferx.app.mainscreen.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -18,12 +20,15 @@ import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
-import uk.co.transferx.app.mainscreen.adapters.RecipientHorizontalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.adapters.RecipientVerticalRecyclerAdapter;
+import uk.co.transferx.app.mainscreen.adapters.SwipeHelper;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
 import uk.co.transferx.app.recipients.addrecipients.AddRecipientsActivity;
+import uk.co.transferx.app.view.ConfirmationDialogFragment;
 
 import static android.app.Activity.RESULT_OK;
+import static uk.co.transferx.app.view.ConfirmationDialogFragment.MESSAGE;
+import static uk.co.transferx.app.view.ConfirmationDialogFragment.ADDITIONAL_DATA;
 
 /**
  * Created by sergey on 17.12.17.
@@ -31,13 +36,12 @@ import static android.app.Activity.RESULT_OK;
 
 public class RecipientsFragment extends BaseFragment implements RecipientsFragmentPresenter.RecipientsFragmentUI {
 
-    private View view;
-    private RecipientHorizontalRecyclerAdapter horizontalRecyclerAdapter;
-    private RecipientVerticalRecyclerAdapter verticalRecyclerAdapter;
-    private TextView emptyListVertical, emptyListHorizontal;
     public static final int ADD_CHANGE_RECIPIENT = 333;
-    private RecyclerView horizontalRecipientRecyclerView;
-
+    public static final int DELETE_USER = 234;
+    private RecipientVerticalRecyclerAdapter verticalRecyclerAdapter;
+    private RecyclerView recipientRecyclerView;
+    private LinearLayout emptyDescription;
+    private static final int DEFAULT_VALUE = -1;
 
     @Inject
     RecipientsFragmentPresenter presenter;
@@ -59,33 +63,65 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.recipients_fragment_layout, container, false);
-            horizontalRecipientRecyclerView = view.findViewById(R.id.horizontal_recycler_view);
-            RecyclerView verticalRecipientRecyclerView = view.findViewById(R.id.vertical_recycler_view);
-            horizontalRecyclerAdapter = new RecipientHorizontalRecyclerAdapter(getContext());
-            verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(this, presenter);
-            emptyListVertical = view.findViewById(R.id.empty_list);
-            emptyListHorizontal = view.findViewById(R.id.empty_list_horizontal);
-            horizontalRecipientRecyclerView.setAdapter(horizontalRecyclerAdapter);
-            verticalRecipientRecyclerView.setAdapter(verticalRecyclerAdapter);
-            verticalRecipientRecyclerView.setHasFixedSize(true);
-            view.findViewById(R.id.add_button).setOnClickListener(v -> startActivityForResult(new Intent(getContext(), AddRecipientsActivity.class), ADD_CHANGE_RECIPIENT));
-        }
-        return view;
+        return inflater.inflate(R.layout.recipients_fragment_layout, container, false);
 
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recipientRecyclerView = view.findViewById(R.id.vertical_recycler_view);
+        emptyDescription = view.findViewById(R.id.empty_description);
+        verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(this, presenter);
+        recipientRecyclerView.setAdapter(verticalRecyclerAdapter);
+        SwipeHelper swipeHelper = new SwipeHelper(recipientRecyclerView) {
+            @Override
+            public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
+                underlayButtons.add(new SwipeHelper.UnderlayButton(
+                        getString(R.string.delete).toUpperCase(),
+                        0,
+                        ContextCompat.getColor(getContext(), R.color.red_delete),
+                        pos -> showDialogConfirmation(pos)
+                ));
+
+                underlayButtons.add(new SwipeHelper.UnderlayButton(
+                        getString(R.string.transfer),
+                        0,
+                        ContextCompat.getColor(getContext(), R.color.green),
+                        pos -> Toast.makeText(getContext(), "Transfer clicked", Toast.LENGTH_SHORT).show()
+                ));
+                underlayButtons.add(new SwipeHelper.UnderlayButton(
+                        getString(R.string.edit),
+                        0,
+                        ContextCompat.getColor(getContext(), R.color.gray),
+                        pos -> Toast.makeText(getContext(), "Edit clicked", Toast.LENGTH_SHORT).show()
+                ));
+            }
+        };
+        view.findViewById(R.id.add_new_recipients).setOnClickListener(v -> presenter.addRecipient());
+    }
+
+    private void showDialogConfirmation(int position) {
+        ConfirmationDialogFragment dialogFragment = new ConfirmationDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(MESSAGE, getString(R.string.delete_user_message, verticalRecyclerAdapter.getRecipient(position).toString()));
+        bundle.putInt(ADDITIONAL_DATA, position);
+        dialogFragment.setArguments(bundle);
+        dialogFragment.setTargetFragment(this, DELETE_USER);
+        dialogFragment.setCancelable(false);
+        dialogFragment.show(getFragmentManager(), "TAG");
     }
 
     @Override
     public void setFavoriteRecipients(List<RecipientDto> recipientDtos) {
-        Log.d("Sergey", "recipient settled");
-        emptyListHorizontal.setVisibility(recipientDtos.isEmpty() ? View.VISIBLE : View.GONE);
-        horizontalRecyclerAdapter.setRecipients(recipientDtos);
+
     }
 
     @Override
     public void setRecipients(List<RecipientDto> recipientDtos) {
-        emptyListVertical.setVisibility(recipientDtos.isEmpty() ? View.VISIBLE : View.GONE);
+        boolean isEmpty = recipientDtos.isEmpty();
+        recipientRecyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        emptyDescription.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         verticalRecyclerAdapter.setRecipients(recipientDtos);
     }
 
@@ -108,8 +144,6 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Override
     public void addToFavorite(RecipientDto recipientDto) {
-        emptyListHorizontal.setVisibility(View.GONE);
-        horizontalRecyclerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -119,11 +153,26 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
             presenter.setShouldRefresh(true);
             presenter.attachUI(this);
         }
+        if (requestCode == DELETE_USER) {
+            int position = data.getIntExtra(ADDITIONAL_DATA, DEFAULT_VALUE);
+            if (position != DEFAULT_VALUE) {
+                presenter.deleteRecipient(verticalRecyclerAdapter.getRecipient(position));
+            }
+        }
     }
 
     @Override
     public void updateFavoriteRecipients() {
-        emptyListHorizontal.setVisibility(View.GONE);
-        horizontalRecyclerAdapter.notifyData();
+
+    }
+
+    @Override
+    public void addRecipient() {
+        startActivityForResult(new Intent(getContext(), AddRecipientsActivity.class), ADD_CHANGE_RECIPIENT);
+    }
+
+    @Override
+    public void deleteRecipient(RecipientDto recipientDto) {
+        verticalRecyclerAdapter.removeItem(recipientDto);
     }
 }

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.List;
@@ -30,6 +31,8 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
     @Inject
     ActivityFragmentPresenter presenter;
     private ActivityRecylerViewAdapter adapter;
+    private RecyclerView historyView;
+    private LinearLayout emptyDescription;
 
     @Override
     public String tagName() {
@@ -52,7 +55,10 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final RecyclerView historyView = view.findViewById(R.id.activity_recycler_view);
+        historyView = view.findViewById(R.id.activity_recycler_view);
+        emptyDescription = view.findViewById(R.id.empty_description);
+        view.findViewById(R.id.title).setVisibility(View.VISIBLE);
+        historyView.setHasFixedSize(true);
         adapter = new ActivityRecylerViewAdapter(getContext());
         historyView.setAdapter(adapter);
     }
@@ -67,11 +73,13 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
     public void onPause() {
         presenter.detachUI();
         super.onPause();
-
     }
 
     @Override
     public void setData(List<TransactionDto> transactionDtos) {
+        boolean isEmpty = transactionDtos.isEmpty();
+        historyView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        emptyDescription.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         adapter.setRecipients(transactionDtos);
     }
 

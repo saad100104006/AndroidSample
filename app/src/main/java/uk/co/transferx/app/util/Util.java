@@ -19,18 +19,18 @@ public final class Util {
     }
 
     public static boolean validatePassword(String password) {
-        return password.matches(VALIDATE_PATTERN_PASSWORD);
+        return password != null && password.matches(VALIDATE_PATTERN_PASSWORD);
     }
 
     public static boolean validatePhone(String phone) {
-        return phone.matches(VALIDATE_PATTERN_PHONE);
+        return phone != null && phone.matches(VALIDATE_PATTERN_PHONE);
     }
 
     public static boolean validateName(String name) {
-        return name.matches(VALIDATE_PATTERN_NAME);
+        return name != null && name.matches(VALIDATE_PATTERN_NAME);
     }
 
-    public static boolean isNullorEmpty(String text){
+    public static boolean isNullorEmpty(String text) {
         return text == null || text.isEmpty();
     }
 }

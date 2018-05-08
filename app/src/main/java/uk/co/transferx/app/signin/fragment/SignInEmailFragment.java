@@ -100,12 +100,12 @@ public class SignInEmailFragment extends BaseFragment implements SignInEmailPres
 
             }
         });
-        Button buttonSignIn = view.findViewById(R.id.next);
+        Button buttonSignIn = view.findViewById(R.id.sign_in);
         buttonSignIn.setText(R.string.sign_in);
         TextView forgotPass = view.findViewById(R.id.terms);
         String forgotPassword = getString(R.string.forgot_password) + "?";
         forgotPass.setText(forgotPassword.toUpperCase());
-        forgotPass.setOnClickListener(v -> RecoverPasswordActivity.starRecoverPasswordActivity(getActivity()));
+     //   forgotPass.setOnClickListener(v -> RecoverPasswordActivity.starRecoverPasswordActivity(getActivity()));
         buttonSignIn.setOnClickListener(v -> presenter.validateInput(email.getText().toString(), password.getText().toString()));
         return view;
     }

@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,11 +32,15 @@ import static uk.co.transferx.app.util.Constants.U_NAME;
 
 public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOnePresenter.SignUpStepOneUI {
 
+    private final static String FIRST_NAME = "first_name";
+    private final static String LAST_NAME = "last_name";
+
     @Inject
     SignUpStepOnePresenter presenter;
     private TextInputEditText firstInput, secondInput;
     private TextView firstLabel, secondLabel, firstError, secondError;
     private TextWatcher firstTextWatcher, secondTextWatcher;
+    private ImageView backButton;
 
     @Override
     public String tagName() {
@@ -61,6 +68,11 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
         secondLabel = view.findViewById(R.id.second_input_label);
         firstError = view.findViewById(R.id.first_input_error);
         secondError = view.findViewById(R.id.second_input_error);
+        backButton = view.findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> {
+            hideKeyboard(backButton);
+            getActivity().onBackPressed();
+        });
         firstLabel.setText(R.string.first_name);
         secondLabel.setText(R.string.last_name);
         firstInput.setHint(R.string.first_name_hint);
@@ -69,13 +81,20 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
         secondInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         firstInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_name, 0, 0, 0);
         secondInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_name, 0, 0, 0);
-        view.findViewById(R.id.next).setOnClickListener(v -> presenter.validateAndGoNext(firstInput.getText().toString(), secondInput.getText().toString()));
+        buttonNext = view.findViewById(R.id.sign_in);
+        buttonNext.setOnClickListener(v -> presenter.goToNextStep());
+        if (savedInstanceState != null) {
+            firstInput.setText(savedInstanceState.getString(FIRST_NAME));
+            secondInput.setText(savedInstanceState.getString(LAST_NAME));
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         presenter.attachUI(this);
+        presenter.setFirstName(firstInput.getText().toString());
+        presenter.setLastName(secondInput.getText().toString());
         firstInput.addTextChangedListener(firstTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -84,8 +103,7 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setStatusOfError(firstInput, firstLabel, R.color.black);
-                firstError.setVisibility(View.GONE);
+                presenter.setFirstName(charSequence.toString());
             }
 
             @Override
@@ -101,8 +119,7 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setStatusOfError(secondInput, secondLabel, R.color.black);
-                secondError.setVisibility(View.GONE);
+                presenter.setLastName(charSequence.toString());
             }
 
             @Override
@@ -112,7 +129,6 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
         });
     }
 
-
     @Override
     public void onPause() {
         presenter.detachUI();
@@ -121,11 +137,24 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
         super.onPause();
     }
 
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(FIRST_NAME, firstInput.getText().toString());
+        outState.putString(LAST_NAME, secondInput.getText().toString());
+        super.onSaveInstanceState(outState);
+    }
+
     @Override
     public void goToNextStep(String uname) {
         Bundle bundle = new Bundle();
         bundle.putString(U_NAME, uname);
         ((SignUpActivity) getActivity()).showNextOrPreviousFragment(1, bundle);
+    }
+
+    @Override
+    public void setButton(boolean isEnabled) {
+        setButtonStatus(isEnabled);
     }
 
     @Override

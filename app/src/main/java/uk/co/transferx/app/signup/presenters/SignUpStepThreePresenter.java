@@ -21,6 +21,7 @@ import static uk.co.transferx.app.util.Constants.EMAIL;
 import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
 import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
 import static uk.co.transferx.app.util.Constants.TOKEN;
+import static uk.co.transferx.app.util.Constants.UNDERSCORE;
 
 /**
  * Created by sergey on 06.12.17.
@@ -28,12 +29,17 @@ import static uk.co.transferx.app.util.Constants.TOKEN;
 
 public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePresenter.SignUpStepThreeUI> {
 
+    private final static short FIRST_NAME = 0;
+    private final static short LAST_NAME = 1;
+    private final static short PIN_SIZE = 4;
     private final CryptoManager cryptoManager;
     private final SharedPreferences sharedPreferences;
     private final SignUpApi signUpApi;
     private final TokenManager tokenManager;
     private String uname, email, password;
     private CompositeDisposable compositeDisposable;
+    private String firstPin, secondPin;
+
 
     @Inject
     public SignUpStepThreePresenter(final CryptoManager cryptoManager, final SharedPreferences sharedPreferences, final SignUpApi signUpApi, final TokenManager tokenManager) {
@@ -81,19 +87,45 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
         );
     }
 
-    public void validatePin(final String firstPin, final String secondPin) {
+    public void setFirstPin(String firstPin) {
+        this.firstPin = firstPin;
+        validateInputs();
+    }
+
+    public void setSecondPin(String secondPin) {
+        this.secondPin = secondPin;
+        validateInputs();
+    }
+
+    private boolean isPinFilled() {
+        return firstPin != null && secondPin != null &&
+                firstPin.length() == PIN_SIZE && secondPin.length() == PIN_SIZE;
+    }
+
+    private void validateInputs() {
+        if (ui != null) {
+            ui.setButtonEnabled(isPinFilled());
+        }
+    }
+
+    public void validatePin() {
         UserRequest.Builder request = new UserRequest.Builder();
         if (firstPin.equals(secondPin)) {
             if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)) {
                 saveTokenWithNewPin(firstPin);
                 return;
             }
-            Disposable disposable = signUpApi.registerUser(tokenManager.getInitialToken(), request.uname(uname).email(email).upass(password).upassConfirmation(password).build())
+            String[] firstNameAndLastName = uname.split(UNDERSCORE);
+            Disposable disposable = signUpApi.registerUser(tokenManager.getInitialToken(),
+                    request.firstName(firstNameAndLastName[FIRST_NAME])
+                            .lastName(firstNameAndLastName[LAST_NAME])
+                            .email(email)
+                            .upass(password).build())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(resp -> {
                         if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                            String token = resp.body().string();
+                            String token = resp.body().getToken();
                             SharedPreferences.Editor editorShared = sharedPreferences.edit();
                             editorShared.putString(TOKEN, cryptoManager.getEncryptedCredential(token, firstPin));
                             editorShared.putBoolean(LOGGED_IN_STATUS, true).apply();
@@ -132,6 +164,8 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
         void showErrorPin();
 
         void showErrorFromBackend();
+
+        void setButtonEnabled(boolean isEnabled);
 
     }
 }

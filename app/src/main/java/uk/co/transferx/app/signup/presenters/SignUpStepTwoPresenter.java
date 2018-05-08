@@ -1,5 +1,7 @@
 package uk.co.transferx.app.signup.presenters;
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 import uk.co.transferx.app.BasePresenter;
@@ -14,23 +16,37 @@ public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter
 
 
     private String uname;
+    private String email, password;
 
     @Inject
     public SignUpStepTwoPresenter() {
 
     }
-    public void validateInput(String password, String email) {
-        if (!Util.validateEmail(email) && ui != null) {
-            ui.showErrorEmail();
-            return;
-        }
-        if (!Util.validatePassword(password) && ui != null) {
-            ui.showErrorPassword();
-            return;
-        }
+
+    public void goToNextStep() {
         if (ui != null) {
             ui.goToNextView(uname, email, password);
         }
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+        validateInputData();
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+        validateInputData();
+    }
+
+    private void validateInputData() {
+        if (ui != null) {
+            ui.setStateButton(isInputCorrect());
+        }
+    }
+
+    private boolean isInputCorrect() {
+        return Util.validatePassword(password) && Util.validateEmail(email);
     }
 
     public void setName(String uname) {
@@ -45,6 +61,8 @@ public class SignUpStepTwoPresenter extends BasePresenter<SignUpStepTwoPresenter
         void showErrorPassword();
 
         void showErrorEmail();
+
+        void setStateButton(boolean isEnabled);
 
     }
 }

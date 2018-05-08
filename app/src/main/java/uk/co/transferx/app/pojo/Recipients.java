@@ -3,6 +3,7 @@ package uk.co.transferx.app.pojo;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
 public class Recipients {
 
     public List<Recipient> getResipients() {
-        return resipients;
+        return resipients == null ? Collections.emptyList() : resipients;
     }
 
     @SerializedName("recipients")

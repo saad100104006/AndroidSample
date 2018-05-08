@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +20,7 @@ import com.mynameismidori.currencypicker.ExtendedCurrency;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -30,9 +30,7 @@ import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
-import uk.co.transferx.app.glide.GlideApp;
-import uk.co.transferx.app.mainscreen.presenters.SendFragmentPresenter;
-import uk.co.transferx.app.util.Constants;
+import uk.co.transferx.app.mainscreen.presenters.TransferFragmentPresenter;
 import uk.co.transferx.app.view.CustomSpinner;
 
 import static uk.co.transferx.app.util.Constants.EMPTY;
@@ -41,7 +39,7 @@ import static uk.co.transferx.app.util.Constants.EMPTY;
  * Created by sergey on 14.12.17.
  */
 
-public class TransferFragment extends BaseFragment implements SendFragmentPresenter.SendFragmentUI {
+public class TransferFragment extends BaseFragment implements TransferFragmentPresenter.SendFragmentUI {
 
     private static final String CURRENCY_PICKER = "currency_picker";
     private View view;
@@ -57,9 +55,10 @@ public class TransferFragment extends BaseFragment implements SendFragmentPresen
     private EditText sendInput;
     private Disposable disposable;
     private CustomSpinner recipientSpinner, paymentMethod;
+    private Pattern pattern = Pattern.compile("^(\\d+\\.)?\\d+$");
 
     @Inject
-    SendFragmentPresenter presenter;
+    TransferFragmentPresenter presenter;
 
 
     @Override
@@ -86,6 +85,7 @@ public class TransferFragment extends BaseFragment implements SendFragmentPresen
         disposable = RxTextView.textChanges(sendInput)
                 .debounce(300L, TimeUnit.MILLISECONDS)
                 .filter(val -> !EMPTY.equals(val.toString()))
+                .filter(value -> pattern.matcher(value.toString()).matches())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sequence -> presenter.setValueToSend(sequence.toString()));
     }
@@ -148,11 +148,8 @@ public class TransferFragment extends BaseFragment implements SendFragmentPresen
         calculatedValue = view.findViewById(R.id.receive_input);
         paymentMethod = view.findViewById(R.id.spinner_choose_method);
         paymentMethod.setDataWithHintItem(getResources().getStringArray(R.array.payment_method), getString(R.string.select_a_payment_method));
-        paymentMethod.setOnItemSelectedListener(new CustomSpinner.ListenerExecutable() {
-            @Override
-            public void execute(int position, Object object) {
+        paymentMethod.setOnItemSelectedListener((position, object) -> {
 
-            }
         });
         recipientSpinner = view.findViewById(R.id.spinner_choose_recipients);
         recipientSpinner.setOnItemSelectedListener((position, object) -> {
@@ -161,7 +158,9 @@ public class TransferFragment extends BaseFragment implements SendFragmentPresen
 
     @Override
     public void setRecipients(List<RecipientDto> recipients) {
-        recipientSpinner.setDataWithHintItem(recipients.toArray(), getString(R.string.recipient));
+        if (getActivity() != null && isAdded()) {
+            recipientSpinner.setDataWithHintItem(recipients.toArray(), getString(R.string.recipient));
+        }
     }
 
     @Override
@@ -173,10 +172,10 @@ public class TransferFragment extends BaseFragment implements SendFragmentPresen
 
     @Override
     public void showChoosenRecipient(RecipientDto recipientDto) {
-        GlideApp.with(this)
-                .load(recipientDto.getImgUrl())
-                .placeholder(R.drawable.placeholder)
-                .into(photo);
+      //  GlideApp.with(this)
+     //           .load(recipientDto.getImgUrl())
+     //           .placeholder(R.drawable.placeholder)
+    //            .into(photo);
         name.setText(recipientDto.getName());
         country.setText(recipientDto.getCountry());
     }

@@ -1,9 +1,11 @@
 package uk.co.transferx.app.recipientsrepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.net.ssl.HttpsURLConnection;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -25,10 +27,10 @@ public class RecipientRepositoryImpl implements RecipientRepository {
     public RecipientRepositoryImpl(final RecipientsApi recipientsApi, final TokenManager tokenManager) {
         this.recipientsApi = recipientsApi;
         this.tokenManager = tokenManager;
-      //  generateData();
+        //  generateData();
     }
 
-//Stub should be deleted when server is up.
+    //Stub should be deleted when server is up.
     private void generateData() {
         recipientDtos.add(new RecipientDto("id1", "Sergey Milewski", null, "PL", "+12345678"));
         recipientDtos.add(new RecipientDto("id2", "Ekrem Karatas", null, "TR", "+12345678"));
@@ -59,6 +61,7 @@ public class RecipientRepositoryImpl implements RecipientRepository {
 
     private Single<List<RecipientDto>> getFromServer() {
         return recipientsApi.getRecipients(tokenManager.getToken())
+                .filter(resp -> resp.code() == HttpsURLConnection.HTTP_OK)
                 .flatMap(resp -> Observable.fromIterable(resp.body().getResipients()))
                 .map(RecipientDto::new)
                 .toList()

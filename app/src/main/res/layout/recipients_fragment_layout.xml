@@ -1,95 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@android:color/transparent"
+    tools:background="@color/dark_blue_grey">
 
-
-    <TextView
-        android:id="@+id/recipient_title"
-        style="@style/TextMainStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/left_right_main_screen"
-        android:layout_marginRight="@dimen/left_right_main_screen"
-        android:text="@string/favourite_recipients" />
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/horizontal_recycler_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/recipient_title"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager">
-
-    </android.support.v7.widget.RecyclerView>
-
-    <TextView
-        android:id="@+id/empty_list_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/recipient_title"
-        android:layout_above="@id/vertical_recycler_view"
-        android:gravity="center"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/empty_list"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        tools:visibility="visible" />
-
-
-    <Button
-        android:id="@+id/add_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="-7dp"
-        android:layout_marginEnd="-5dp"
-        android:layout_marginStart="-5dp"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:minHeight="60dp"
-        android:text="@string/add_new"
-        android:textAllCaps="false"
-        android:textSize="24sp"
-        android:theme="@style/ButtonSend" />
+    <include layout="@layout/app_bar_with_collapsing"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/vertical_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_above="@id/add_button"
-        android:layout_below="@id/horizontal_recycler_view"
-        android:layout_margin="10dp"
+        android:layout_marginTop="@dimen/left_right_main_screen"
         android:orientation="vertical"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@android:layout/simple_gallery_item">
-
     </android.support.v7.widget.RecyclerView>
 
-    <TextView
-        android:id="@+id/empty_list"
+    <LinearLayout
+        android:id="@+id/empty_description"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/add_button"
-        android:layout_below="@id/horizontal_recycler_view"
-        android:gravity="center"
-        android:text="@string/empty_list"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:background="@android:color/transparent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</RelativeLayout>
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="58dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/recipients" />
+
+        <TextView
+            style="@style/CommonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/left_right_main_screen"
+            android:layout_marginLeft="@dimen/left_right_main_screen"
+            android:layout_marginRight="@dimen/left_right_main_screen"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="6sp"
+            android:text="@string/empty_list_recipients_desc"
+            android:textColor="@color/white"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/add_new_recipients"
+            style="@style/CommonButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/oval_button_white"
+            android:letterSpacing="0.14"
+            android:lineSpacingExtra="2sp"
+            android:text="@string/add_new"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 
 import javax.inject.Inject;
 
@@ -23,7 +25,8 @@ public class NotificationSettingsActivity extends BaseActivity implements Notifi
     @Inject
     NotificationSettingsPresenter presenter;
 
-    private SwitchCompat newsSwitch, alertSwitch, notificationSwitch, paymentsSwitch;
+    private CheckBox newsSwitch, alertSwitch, notificationSwitch, paymentsSwitch;
+
 
 
     public static void startNotificationSettingsActivity(final Context context) {
@@ -36,11 +39,11 @@ public class NotificationSettingsActivity extends BaseActivity implements Notifi
         super.onCreate(savedInstanceState);
         ((TransferXApplication) getApplication()).getAppComponent().inject(this);
         setContentView(R.layout.notification_settings_activity_layout);
-        Toolbar toolbar = findViewById(R.id.toolbar);
         newsSwitch = findViewById(R.id.news_switch);
         alertSwitch = findViewById(R.id.alerts_switch);
         notificationSwitch = findViewById(R.id.all_notifications);
         paymentsSwitch = findViewById(R.id.payments_switch);
+        findViewById(R.id.button_back).setOnClickListener(v -> finish());
         newsSwitch.setChecked(presenter.isNewsSubscribed());
         alertSwitch.setChecked(presenter.isAlertSubscribed());
         paymentsSwitch.setChecked(presenter.isPaymentsSubscribed());
@@ -49,11 +52,6 @@ public class NotificationSettingsActivity extends BaseActivity implements Notifi
         alertSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setAlertSubscribtion(isChecked));
         paymentsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setPaymentsSubscribtion(isChecked));
         notificationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setNotificationSubscribtion(isChecked));
-        toolbar.setTitle(R.string.app_settings);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
     }
 
     @Override

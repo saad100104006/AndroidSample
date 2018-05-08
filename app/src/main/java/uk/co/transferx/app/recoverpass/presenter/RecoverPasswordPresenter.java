@@ -14,26 +14,39 @@ import uk.co.transferx.app.util.Util;
 public class RecoverPasswordPresenter extends BasePresenter<RecoverPasswordPresenter.RecoverPasswordUI> {
 
     private final TokenManager tokenManager;
+    private String validEmail;
 
     @Inject
     public RecoverPasswordPresenter(final TokenManager tokenManager) {
         this.tokenManager = tokenManager;
     }
 
-
-    public void sendEmail(String email){
+    public void validateEmail(String email){
         if (!Util.validateEmail(email)) {
-            ui.showValidateError();
+            ui.lockButton();
             return;
         }
-         ui.successGoBack();
+        validEmail = email;
+        ui.unlockButton();
+    }
+
+    public void sendEmail(){
+        ui.successGoBack();
+    }
+
+    public void goBack(){
+        ui.goBackToMain();
     }
 
     public interface RecoverPasswordUI extends UI{
 
-        void showValidateError();
+        void unlockButton();
 
         void successGoBack();
+
+        void lockButton();
+
+        void goBackToMain();
 
     }
 }

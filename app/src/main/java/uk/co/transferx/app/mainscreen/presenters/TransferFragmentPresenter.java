@@ -1,5 +1,7 @@
 package uk.co.transferx.app.mainscreen.presenters;
 
+import android.util.Log;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,20 +19,21 @@ import uk.co.transferx.app.recipientsrepository.RecipientRepository;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
 import static java.net.HttpURLConnection.HTTP_OK;
+import static uk.co.transferx.app.util.Constants.EMPTY;
 
 /**
  * Created by sergey on 15.12.17.
  */
 
-public class SendFragmentPresenter extends BasePresenter<SendFragmentPresenter.SendFragmentUI> {
+public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPresenter.SendFragmentUI> {
 
     private RecipientDto recipientDto;
     private final TransactionApi transactionApi;
     private final TokenManager tokenManager;
     private BigDecimal rates;
     private Disposable disposable;
-    private String currencyFrom;
-    private String currencyTo;
+    private String currencyFrom = "GBP";
+    private String currencyTo = "UGX";
     private BigDecimal valueToSend;
     private BigDecimal calculatedValue;
     private final static int SCALE_VALUE = 4;
@@ -38,7 +41,7 @@ public class SendFragmentPresenter extends BasePresenter<SendFragmentPresenter.S
     private List<RecipientDto> recipientDtos = new ArrayList<>();
 
     @Inject
-    public SendFragmentPresenter(final TransactionApi transactionApi, final TokenManager tokenManager, final RecipientRepository recipientRepository) {
+    public TransferFragmentPresenter(final TransactionApi transactionApi, final TokenManager tokenManager, final RecipientRepository recipientRepository) {
         this.transactionApi = transactionApi;
         this.tokenManager = tokenManager;
         this.recipientRepository = recipientRepository;
@@ -67,6 +70,7 @@ public class SendFragmentPresenter extends BasePresenter<SendFragmentPresenter.S
     }
 
     private void fetchRate() {
+        Log.d("Serge", "currencyTo " + currencyTo + " currency from " + currencyFrom);
         if (currencyTo.equals(currencyFrom)) {
             return;
         }
@@ -76,10 +80,11 @@ public class SendFragmentPresenter extends BasePresenter<SendFragmentPresenter.S
                 .subscribe(resp -> {
                     if (resp.code() == HTTP_OK && ui != null) {
                         rates = new BigDecimal(resp.body().getRates().get(0).getRate()).setScale(SCALE_VALUE, BigDecimal.ROUND_HALF_UP);
+                        Log.d("Serge", "rate " + rates.toPlainString());
                         ui.showRates(String.format("%s %s = %s %s", "1", currencyFrom, rates.toPlainString(), currencyTo));
                         calculateValue();
                     }
-                });
+                }, throwable -> Log.e(TransferFragmentPresenter.class.getSimpleName(), "Error ", throwable));
     }
 
     @Override

@@ -1,5 +1,7 @@
 package uk.co.transferx.app.dagger.component;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -16,6 +18,10 @@ import uk.co.transferx.app.recoverpass.fragment.RecoverPasswordFragment;
 import uk.co.transferx.app.settings.fragment.SettingsFragment;
 import uk.co.transferx.app.settings.notification.NotificationSettingsActivity;
 import uk.co.transferx.app.settings.profile.ProfileActivity;
+import uk.co.transferx.app.settings.profile.personaldetails.PersonalDetailsActivity;
+import uk.co.transferx.app.settings.profile.personaldetails.fragments.PersonalDetailsFragmentOne;
+import uk.co.transferx.app.settings.profile.personaldetails.fragments.PersonalDetailsFragmentTwo;
+import uk.co.transferx.app.settings.profile.wallet.WalletActivity;
 import uk.co.transferx.app.signin.fragment.SignInEmailFragment;
 import uk.co.transferx.app.signin.fragment.SignInPinFragment;
 import uk.co.transferx.app.signup.SignUpActivity;
@@ -68,4 +74,12 @@ public interface AppComponent {
     void inject(SignInPinFragment signInPinFragment);
 
     void inject(SignUpActivity signUpActivity);
+
+    void inject(PersonalDetailsActivity personalDetailsActivity);
+
+    void inject(PersonalDetailsFragmentOne personalDetailsFragmentOne);
+
+    void inject(PersonalDetailsFragmentTwo personalDetailsFragmentTwo);
+
+    void inject(WalletActivity walletActivity);
 }

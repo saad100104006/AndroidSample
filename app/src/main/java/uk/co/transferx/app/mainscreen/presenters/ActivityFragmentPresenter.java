@@ -1,5 +1,7 @@
 package uk.co.transferx.app.mainscreen.presenters;
 
+import android.util.Log;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,7 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
         this.recipientRepository = recipientRepository;
         this.transactionApi = transactionApi;
         this.tokenManager = tokenManager;
-        generateMockData();
+        //    generateMockData();
     }
 
     private void generateMockData() {
@@ -47,6 +49,10 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
         transactionDtos.add(new TransactionDto(0, " ", "Tom Bibik", "GBP", new BigDecimal("430"), 0, 0, ""));
         transactionDtos.add(new TransactionDto(0, " ", "Leonid Warik", "GBP", new BigDecimal("40"), 0, 0, ""));
         transactionDtos.add(new TransactionDto(0, " ", "Sergey Milewski", "GBP", new BigDecimal("50"), 0, 0, ""));
+        transactionDtos.add(new TransactionDto(0, " ", "Kukumber Bibik", "GBP", new BigDecimal("430"), 0, 0, ""));
+        transactionDtos.add(new TransactionDto(0, " ", "Kuropatka Warik", "GBP", new BigDecimal("40"), 0, 0, ""));
+        transactionDtos.add(new TransactionDto(0, " ", "Piatka Bibik", "GBP", new BigDecimal("430"), 0, 0, ""));
+        transactionDtos.add(new TransactionDto(0, " ", "Kakosik Warik", "GBP", new BigDecimal("40"), 0, 0, ""));
     }
 
     @Override
@@ -88,7 +94,7 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
             compositeDisposable = new CompositeDisposable();
         }
         final Disposable dis = transactionApi.getHistory(tokenManager.getToken())
-                .flatMap(trans -> Observable.fromIterable(trans.body()))
+                .flatMap(trans -> Observable.fromIterable(trans.body().getTransactions()))
                 .map(history -> new TransactionDto(history, recipientDtos))
                 .doOnNext(trans -> {
                     if (!transactionDtos.contains(trans)) {
@@ -102,9 +108,16 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
                     if (ui != null) {
                         ui.setData(transactionDtos);
                     }
-                }, throwable -> ui.setError());
+                }, this::handleError);
         compositeDisposable.add(dis);
 
+    }
+
+    private void handleError(Throwable throwable) {
+        Log.e(ActivityFragmentPresenter.class.getSimpleName(), "error", throwable);
+        if (ui != null) {
+            ui.setError();
+        }
     }
 
     public interface ActivityFragmentUI extends UI {

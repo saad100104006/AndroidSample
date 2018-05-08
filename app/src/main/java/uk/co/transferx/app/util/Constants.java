@@ -8,6 +8,7 @@ public final class Constants {
 
     public final static String EMPTY = "";
     public final static String SPACE = " ";
+    public final static String UNDERSCORE = "_";
 
 
     public static final String U_NAME = "first_name";

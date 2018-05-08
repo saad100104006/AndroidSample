@@ -9,7 +9,7 @@ import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.SignInOutApi;
-import uk.co.transferx.app.pojo.UserRequest;
+import uk.co.transferx.app.pojo.UserSignIn;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 import uk.co.transferx.app.util.Util;
 
@@ -22,7 +22,6 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
     private final SignInOutApi signInOutApi;
     private Disposable disposable;
     private final TokenManager tokenManager;
-
 
     @Override
     public void attachUI(SignInEmailUI ui) {
@@ -46,7 +45,7 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
 
     public void validateInput(String email, String password) {
 
-      if (!tokenManager.isInitialTokenExist()) {
+        if (!tokenManager.isInitialTokenExist()) {
             ui.showError();
             return;
         }
@@ -63,15 +62,15 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
     }
 
     private void signIn(String email, String password, String token) {
-        UserRequest.Builder request = new UserRequest.Builder();
-        disposable = signInOutApi.signIn(token, request.uname(email).upass(password).build())
+        UserSignIn.Builder signIn = new UserSignIn.Builder();
+        disposable = signInOutApi.signIn(token, signIn.uname(email).upass(password).build())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         tokenManager.setToken(resp.body().getToken());
                         ui.goToMainScreen();
-                     return;
+                        return;
                     }
                     if (ui != null) {
                         ui.showError();
@@ -80,7 +79,6 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
                 }, this::handleError);
 
     }
-
 
     private void handleError(Throwable throwable) {
         if (ui != null) {

@@ -1,123 +1,145 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+    <ImageView
+        android:id="@+id/button_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/left_right_main_screen"
+        android:layout_marginTop="52dp"
+        android:src="@drawable/ic_back" />
+
+    <TextView
+        android:id="@+id/settings_label"
+        style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        </android.support.v7.widget.Toolbar>
-
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_below="@id/button_back"
+        android:layout_marginBottom="@dimen/left_right_main_screen"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
-        android:layout_marginTop="@dimen/left_right_main_screen"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardBackgroundColor="@color/white"
-        app:cardElevation="2dp">
+        android:layout_marginTop="32dp"
+        android:text="@string/settings"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <CheckBox
+        android:id="@+id/all_notifications"
+        android:layout_width="48dp"
+        android:layout_height="32dp"
+        android:layout_alignEnd="@+id/settings_label"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/settings_label"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:button="@drawable/check_box_selector_black"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_alignParentLeft="true"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:text="@string/notification_title"
-                android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+        android:gravity="center_vertical" />
 
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/all_notifications"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="25dp" />
 
-            <View
-                android:id="@+id/line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/all_notifications"
-                android:background="@color/background" />
+    <TextView
+        android:id="@+id/notif_label"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_below="@id/settings_label"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_toLeftOf="@id/all_notifications"
+        android:drawableLeft="@drawable/ic_notifications"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
+        android:text="@string/notification_title"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/line"
-                android:gravity="center"
-                android:paddingLeft="50dp"
-                android:text="@string/payments_title"
-                android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
+    <CheckBox
+        android:id="@+id/payments_switch"
+        android:layout_width="48dp"
+        android:layout_height="32dp"
+        android:layout_alignEnd="@+id/settings_label"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/notif_label"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:button="@drawable/check_box_selector_black"
+        android:gravity="center_vertical" />
 
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/payments_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/line"
-                android:layout_marginRight="25dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/payments_switch"
-                android:gravity="center"
-                android:paddingLeft="50dp"
-                android:text="@string/alerts_title"
-                android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
+    <TextView
+        android:id="@+id/payment_label"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_below="@id/notif_label"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:drawableLeft="@drawable/ic_payments_black"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
+        android:text="@string/payments_title"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/alerts_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/payments_switch"
-                android:layout_marginRight="25dp" />
+    <CheckBox
+        android:id="@+id/alerts_switch"
+        android:layout_width="48dp"
+        android:layout_height="32dp"
+        android:layout_alignEnd="@+id/settings_label"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/payment_label"
+        android:layout_marginEnd="@dimen/left_right_main_screen"
+        android:button="@drawable/check_box_selector_black"
+        android:gravity="center_vertical" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/alerts_switch"
-                android:gravity="center"
-                android:paddingLeft="50dp"
-                android:text="@string/news_title"
-                android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
 
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/news_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/alerts_switch"
-                android:layout_marginRight="25dp" />
+    <TextView
+        android:id="@+id/alert_label"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_below="@id/payment_label"
+        android:layout_toStartOf="@id/alerts_switch"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:drawableLeft="@drawable/ic_error"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
+        android:text="@string/alerts_title"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-</LinearLayout>
+    <CheckBox
+        android:id="@+id/news_switch"
+        android:layout_width="48dp"
+        android:layout_height="32dp"
+        android:layout_alignEnd="@+id/settings_label"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/alert_label"
+        android:layout_marginEnd="@dimen/left_right_main_screen"
+        android:button="@drawable/check_box_selector_black"
+        android:gravity="center_vertical" />
+
+
+    <TextView
+        android:id="@+id/news_label"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_below="@id/alert_label"
+        android:layout_toStartOf="@id/news_switch"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:drawableLeft="@drawable/ic_news"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
+        android:text="@string/news_title"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+
+</RelativeLayout>

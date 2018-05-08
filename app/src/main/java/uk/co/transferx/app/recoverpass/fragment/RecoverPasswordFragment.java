@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -30,6 +33,7 @@ public class RecoverPasswordFragment extends BaseFragment implements RecoverPass
 
     private TextInputEditText textInputEditText;
     private TextView label, firstError;
+    private Button sendEmail;
 
     @Override
     public String tagName() {
@@ -62,8 +66,9 @@ public class RecoverPasswordFragment extends BaseFragment implements RecoverPass
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                setStatusOfError(textInputEditText, label, R.color.black);
-                firstError.setVisibility(View.GONE);
+               // setStatusOfError(textInputEditText, label, R.color.black);
+               // firstError.setVisibility(View.GONE);
+                presenter.validateEmail(s.toString());
             }
 
             @Override
@@ -71,15 +76,19 @@ public class RecoverPasswordFragment extends BaseFragment implements RecoverPass
 
             }
         });
-        view.findViewById(R.id.send_mail_button).setOnClickListener(v -> presenter.sendEmail(textInputEditText.getText().toString()));
-
+        sendEmail = view.findViewById(R.id.send_mail_button);
+        sendEmail.setOnClickListener(v -> presenter.sendEmail());
+        view.findViewById(R.id.back_button).setOnClickListener(v -> presenter.goBack());
     }
 
     @Override
-    public void showValidateError() {
-        setStatusOfError(textInputEditText, label, R.color.red);
-        firstError.setText(R.string.email_error);
-        firstError.setVisibility(View.VISIBLE);
+    public void unlockButton() {
+        sendEmail.setEnabled(true);
+        sendEmail.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.oval_button_black));
+        sendEmail.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+      //  setStatusOfError(textInputEditText, label, R.color.red);
+      //  firstError.setText(R.string.email_error);
+      //  firstError.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -91,12 +100,23 @@ public class RecoverPasswordFragment extends BaseFragment implements RecoverPass
     @Override
     public void successGoBack() {
         hideKeyboard(textInputEditText);
-        ((RecoverPasswordActivity)getActivity()).goSuccess();
+        ((RecoverPasswordActivity) getActivity()).goSuccess();
     }
 
     @Override
     public void onPause() {
         presenter.detachUI();
         super.onPause();
+    }
+
+    @Override
+    public void lockButton() {
+        sendEmail.setEnabled(false);
+        sendEmail.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.oval_button_gray));
+    }
+
+    @Override
+    public void goBackToMain() {
+        getActivity().finish();
     }
 }

@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -35,6 +36,7 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
     private TextInputEditText firstInput, secondInput;
     private TextView firstLabel, secondLabel, firstError, secondError;
     private TextWatcher firstTextWatcher, secondTextWatcher;
+    private ImageView backButton;
 
     @Override
     public String tagName() {
@@ -67,6 +69,11 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
         secondLabel = view.findViewById(R.id.second_input_label);
         firstError = view.findViewById(R.id.first_input_error);
         secondError = view.findViewById(R.id.second_input_error);
+        backButton = view.findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> {
+            hideKeyboard(backButton);
+            getActivity().onBackPressed();
+        });
         firstLabel.setText(R.string.email_address);
         secondLabel.setText(R.string.password);
         firstInput.setHint(R.string.enter_your_email_address);
@@ -75,7 +82,12 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
         secondInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         firstInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_email_address, 0, 0, 0);
         secondInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_password, 0, 0, 0);
-        view.findViewById(R.id.next).setOnClickListener(v -> presenter.validateInput(secondInput.getText().toString(), firstInput.getText().toString()));
+        buttonNext = view.findViewById(R.id.sign_in);
+        buttonNext.setOnClickListener(v -> presenter.goToNextStep());
+        if (savedInstanceState != null) {
+            firstInput.setText(savedInstanceState.getString(EMAIL));
+            secondInput.setText(savedInstanceState.getString(PASSWORD));
+        }
     }
 
     @Override
@@ -102,10 +114,12 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
         ((SignUpActivity) getActivity()).showNextOrPreviousFragment(2, bundle);
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
+        presenter.attachUI(this);
+        presenter.setEmail(firstInput.getText().toString());
+        presenter.setPassword(secondInput.getText().toString());
         firstInput.addTextChangedListener(firstTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -114,8 +128,7 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setStatusOfError(firstInput, firstLabel, R.color.black);
-                firstError.setVisibility(View.GONE);
+                presenter.setEmail(charSequence.toString());
             }
 
             @Override
@@ -131,8 +144,7 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setStatusOfError(secondInput, secondLabel, R.color.black);
-                secondError.setVisibility(View.GONE);
+                presenter.setPassword(charSequence.toString());
             }
 
             @Override
@@ -140,14 +152,25 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
 
             }
         });
-        presenter.attachUI(this);
     }
 
     @Override
     public void onPause() {
+        presenter.detachUI();
         firstInput.removeTextChangedListener(firstTextWatcher);
         secondInput.removeTextChangedListener(secondTextWatcher);
-        presenter.detachUI();
         super.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(EMAIL, firstInput.getText().toString());
+        outState.putString(PASSWORD, secondInput.getText().toString());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void setStateButton(boolean isEnabled) {
+        setButtonStatus(isEnabled);
     }
 }
