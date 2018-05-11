@@ -3,39 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:layout_marginLeft="@dimen/left_right_main_screen"
-    android:layout_marginRight="@dimen/left_right_main_screen"
-    android:background="@android:color/transparent"
-    android:layout_marginBottom="16dp"
-    tools:background="@color/black"
+    android:background="@color/white"
     android:orientation="horizontal">
 
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/white"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:background="@color/black" />
 
     <ImageView
         android:id="@+id/image_recip"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_centerVertical="true"
-        android:src="@drawable/placeholder" />
+        android:src="@drawable/uganda" />
 
     <TextView
-        android:id="@+id/name_recipient"
+        android:id="@+id/tv_spinner_item_title"
         style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerVertical="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="8dp"
-        android:textColor="@color/white"
-        android:lineSpacingExtra="6sp"
-        android:layout_centerVertical="true"
-        android:gravity="center_vertical"
         android:layout_toRightOf="@id/image_recip"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="6sp"
+        android:textColor="@color/black"
         android:textSize="14sp"
         tools:text="testsdfasdf" />
 
@@ -48,7 +44,5 @@
         android:src="@drawable/ic_complete"
         android:visibility="invisible"
         tools:visibility="visible" />
-
-
 
 </RelativeLayout>

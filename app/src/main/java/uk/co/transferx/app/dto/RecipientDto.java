@@ -19,9 +19,9 @@ public class RecipientDto implements Parcelable {
     private final String country;
     private final String phone;
 
-    public RecipientDto(String id, String name, String imgUrl, String country, String number) {
+    public RecipientDto(String id, String firstName, String lastname, String imgUrl, String country, String number) {
         this.id = id == null ? EMPTY : id;
-        this.name = name == null ? EMPTY : name;
+        this.name = (firstName  == null) && (lastname == null) ? EMPTY : getName(firstName, lastname);
         this.imgUrl = imgUrl == null ? EMPTY : imgUrl;
         this.country = country == null ? EMPTY : country;
         this.phone = number == null ? EMPTY : number;

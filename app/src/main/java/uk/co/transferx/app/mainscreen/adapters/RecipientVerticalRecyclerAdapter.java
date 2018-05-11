@@ -28,7 +28,6 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
     private List<RecipientDto> recipientDtoList;
     private final Fragment fragment;
     private final RecipientsFragmentPresenter presenter;
-    private final Vibrator vibe;
     private final static int TIME_OF_VIBRATION = 50;
     private final static int FOOTER_VIEW = 111;
     private final static int NORMAL_VIEW = 222;
@@ -41,12 +40,12 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
     public RecipientVerticalRecyclerAdapter(Fragment fragment, RecipientsFragmentPresenter presenter) {
         this.fragment = fragment;
         this.presenter = presenter;
-        vibe = (Vibrator) fragment.getContext().getSystemService(Context.VIBRATOR_SERVICE);
     }
 
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == NORMAL_VIEW) {
             return new RecipientVerticalHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.recipient_item, parent, false));
         } else if (viewType == FOOTER_VIEW) {
@@ -109,7 +108,6 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     class RecipientFooter extends RecyclerView.ViewHolder {
-
         Button addButton;
 
         RecipientFooter(View itemView) {
@@ -119,7 +117,7 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
 
     }
 
-    class RecipientVerticalHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    class RecipientVerticalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView recipientPhoto;
         TextView recipientName, recipientCountry;
         ItemClickListener itemClickListener;
@@ -128,9 +126,8 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
             super(itemView);
             recipientPhoto = itemView.findViewById(R.id.recipient_img);
             recipientName = itemView.findViewById(R.id.name_recipient);
-            //   recipientCountry = itemView.findViewById(R.id.recipient_country);
+               //recipientCountry = itemView.findViewById(R.id.recipient_country);
             itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -138,13 +135,6 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
             if (itemClickListener != null) {
                 itemClickListener.onClickItem(recipientDtoList.get(getAdapterPosition()));
             }
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            vibe.vibrate(TIME_OF_VIBRATION);
-            presenter.putToFavorite(recipientDtoList.get(getAdapterPosition()));
-            return true;
         }
     }
 

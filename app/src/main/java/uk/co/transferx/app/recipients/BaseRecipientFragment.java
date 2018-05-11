@@ -60,10 +60,10 @@ public abstract class BaseRecipientFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.add_recipient_fragment_layout, container, false);
-            firstName = view.findViewById(R.id.first_name);
-            lastName = view.findViewById(R.id.last_name);
-            country = view.findViewById(R.id.country);
-            phone = view.findViewById(R.id.phone);
+//            firstName = view.findViewById(R.id.first_name);
+//            lastName = view.findViewById(R.id.last_name);
+//            country = view.findViewById(R.id.country);
+//            phone = view.findViewById(R.id.phone);
             firstName.getEditText().addTextChangedListener(textWatcher);
             lastName.getEditText().addTextChangedListener(textWatcher);
             country.getEditText().addTextChangedListener(textWatcher);

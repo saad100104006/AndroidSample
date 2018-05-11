@@ -17,4 +17,6 @@ public interface RecipientRepository {
 
     Single<List<RecipientDto>> refreshRecipients();
 
+    void addUser(RecipientDto recipientDto);
+
 }

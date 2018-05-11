@@ -112,8 +112,8 @@ public class RecipientDetailsPresenter extends BasePresenter<RecipientDetailsPre
             ui.phoneError();
             return;
         }
-        RecipientDto recipientDtoChanged = new RecipientDto(recipientDto.getId(), firstName + " " + lastName, recipientDto.getImgUrl(), country, phone);
-        saveRecipient(recipientDtoChanged);
+     //   RecipientDto recipientDtoChanged = new RecipientDto(recipientDto.getId(), firstName + " " + lastName, recipientDto.getImgUrl(), country, phone);
+     //   saveRecipient(recipientDtoChanged);
 
     }
 

@@ -49,11 +49,11 @@ public class RecipientDetailsFragment extends BaseRecipientFragment implements R
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        view.findViewById(R.id.edit_cont).setVisibility(View.VISIBLE);
-        ((TextView) view.findViewById(R.id.recipient_sub_title)).setText(R.string.edit_recipient);
-        view.findViewById(R.id.delete_recipient).setOnClickListener(v -> presenter.deleteRecipient());
-        view.findViewById(R.id.save_recipient).setOnClickListener(v -> presenter.validateInput(firstName.getEditText().getText().toString(),
-                lastName.getEditText().getText().toString(), country.getEditText().getText().toString(), phone.getEditText().getText().toString()));
+//        view.findViewById(R.id.edit_cont).setVisibility(View.VISIBLE);
+//        ((TextView) view.findViewById(R.id.recipient_sub_title)).setText(R.string.edit_recipient);
+//        view.findViewById(R.id.delete_recipient).setOnClickListener(v -> presenter.deleteRecipient());
+//        view.findViewById(R.id.save_recipient).setOnClickListener(v -> presenter.validateInput(firstName.getEditText().getText().toString(),
+//                lastName.getEditText().getText().toString(), country.getEditText().getText().toString(), phone.getEditText().getText().toString()));
         return view;
 
     }

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     private RecyclerView recipientRecyclerView;
     private LinearLayout emptyDescription;
     private static final int DEFAULT_VALUE = -1;
+
 
     @Inject
     RecipientsFragmentPresenter presenter;
@@ -129,12 +131,14 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     public void onResume() {
         super.onResume();
         presenter.attachUI(this);
+        Log.d("Serge", "attach UI");
     }
 
     @Override
     public void onPause() {
         super.onPause();
         presenter.detachUI();
+        Log.d("Serge", "detatache UI");
     }
 
     @Override
@@ -151,7 +155,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_CHANGE_RECIPIENT && resultCode == RESULT_OK) {
             presenter.setShouldRefresh(true);
-            presenter.attachUI(this);
+            Log.d("Serge", "onResult");
         }
         if (requestCode == DELETE_USER) {
             int position = data.getIntExtra(ADDITIONAL_DATA, DEFAULT_VALUE);

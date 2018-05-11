@@ -1,7 +1,5 @@
 package uk.co.transferx.app.api;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;

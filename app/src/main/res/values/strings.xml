@@ -45,6 +45,7 @@
     <string name="last_name_error">You have to input correct last name</string>
     <string name="country_error">You have to input correct country</string>
     <string name="phone_error">You have to input correct phone number</string>
+    <string name="enter_phone_number">Enter phone number</string>
     <string name="profile">Your Profile</string>
     <string name="profile_label">Profile</string>
     <string name="referals">Referals</string>
@@ -55,6 +56,7 @@
     <string name="add_recipients">Add Recipient</string>
     <string name="recipient_details">Recipient Details</string>
     <string name="country">Country</string>
+    <string name="choose_country">Choose Country</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
@@ -83,6 +85,8 @@
     <string name="forgot_password_text">Enter your email address and we’ll help you reset your password.</string>
     <string name="first_name_hint">Enter your first name</string>
     <string name="last_name_hint">Enter your last name</string>
+    <string name="first_name_recipient_hint">Enter a first name</string>
+    <string name="last_name_recipient_hint">Enter a last name</string>
     <string name="enter_pin">Enter a PIN</string>
     <string name="enter_your_pin">Enter your PIN</string>
     <string name="title_recover_success">Your recovery email is on it’s way</string>
@@ -144,6 +148,12 @@
     <string-array name="payment_method">
         <item>PayPal</item>
         <item>Card</item>
+    </string-array>
+
+    <string-array name="countries">
+        <item>Uganda</item>
+        <item>Kenya</item>
+        <item>Tanzania</item>
     </string-array>
 
 </resources>

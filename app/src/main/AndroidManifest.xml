@@ -79,8 +79,7 @@
         <activity
             android:name=".recipients.addrecipients.AddRecipientsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".recipients.detailsrecipient.RecipientDetailsActivity"
             android:screenOrientation="portrait"

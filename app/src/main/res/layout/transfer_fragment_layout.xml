@@ -56,7 +56,6 @@
 
 
             <uk.co.transferx.app.view.CustomSpinner
-
                 android:id="@+id/spinner_choose_recipients"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"

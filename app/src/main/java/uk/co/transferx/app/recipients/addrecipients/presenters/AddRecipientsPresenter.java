@@ -1,5 +1,7 @@
 package uk.co.transferx.app.recipients.addrecipients.presenters;
 
+import android.util.Log;
+
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
 
@@ -9,7 +11,9 @@ import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.RecipientsApi;
+import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.pojo.Recipient;
+import uk.co.transferx.app.recipientsrepository.RecipientRepository;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 import uk.co.transferx.app.util.Util;
 
@@ -23,15 +27,20 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
 
     private Disposable disposable;
     private final TokenManager tokenManager;
+    private String firstName, lastName, country, phone;
+    private final RecipientRepository recipientRepository;
 
     @Inject
-    public AddRecipientsPresenter(final RecipientsApi recipientsApi, final TokenManager tokenManager) {
+    public AddRecipientsPresenter(final RecipientsApi recipientsApi,
+                                  final TokenManager tokenManager,
+                                  final RecipientRepository recipientRepository) {
         this.recipientsApi = recipientsApi;
         this.tokenManager = tokenManager;
+        this.recipientRepository = recipientRepository;
     }
 
-    public void saveUserToApi(String firstName, String lastName, String country, String phone, String token) {
-        disposable = recipientsApi.addRecipient(token, new Recipient.Builder()
+    public void saveUserToApi() {
+        disposable = recipientsApi.addRecipient(tokenManager.getToken(), new Recipient.Builder()
                 .firstname(firstName)
                 .lastname(lastName)
                 .country(country)
@@ -41,31 +50,41 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
+                        recipientRepository.addUser(new RecipientDto(resp.body().getId(),firstName, lastName, null, country, phone));
                         ui.userWasAdded();
                     }
                 }, this::handleError);
     }
 
-    public void validateInput(String firstName, String lastName, String country, String phone) {
-        if (!Util.validateName(firstName)) {
-            ui.nameError();
-            return;
-        }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+        validateInput();
+    }
 
-        if (!Util.validateName(lastName)) {
-            ui.lastNameError();
-            return;
-        }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+        validateInput();
+    }
 
-        if (!Util.validateName(country)) {
-            ui.countryError();
-            return;
+    public void setCountry(String country) {
+        this.country = country;
+        validateInput();
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+        validateInput();
+    }
+
+    private void validateInput() {
+        if (ui != null) {
+            ui.setEnabledButton(isInputValid());
         }
-        if (!Util.validatePhone(phone)) {
-            ui.phoneError();
-            return;
-        }
-        saveUserToApi(firstName, lastName, country, phone, tokenManager.getToken());
+    }
+
+    private boolean isInputValid() {
+        return Util.validateName(firstName) && Util.validateName(lastName)
+                && Util.validateName(country) && Util.validatePhone(phone);
     }
 
     @Override
@@ -90,14 +109,8 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
 
         void userWasAdded();
 
-        void nameError();
-
-        void lastNameError();
-
-        void countryError();
-
-        void phoneError();
-
         void showError();
+
+        void setEnabledButton(boolean enabled);
     }
 }
