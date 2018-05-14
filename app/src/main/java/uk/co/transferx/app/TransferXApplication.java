@@ -28,7 +28,7 @@ public class TransferXApplication extends MultiDexApplication {
         super.onCreate();
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
-                .networkModule(new NetworkModule("http://transferx.ddns.net"))
+                .networkModule(new NetworkModule("http://transferx.ddns.net:3001"))
                 .build();
         appComponent.inject(this);
 

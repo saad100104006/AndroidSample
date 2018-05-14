@@ -18,6 +18,7 @@ import uk.co.transferx.app.recoverpass.fragment.RecoverPasswordFragment;
 import uk.co.transferx.app.settings.fragment.SettingsFragment;
 import uk.co.transferx.app.settings.notification.NotificationSettingsActivity;
 import uk.co.transferx.app.settings.profile.ProfileActivity;
+import uk.co.transferx.app.settings.profile.changepassword.ChangePasswordActivity;
 import uk.co.transferx.app.settings.profile.personaldetails.PersonalDetailsActivity;
 import uk.co.transferx.app.settings.profile.personaldetails.fragments.PersonalDetailsFragmentOne;
 import uk.co.transferx.app.settings.profile.personaldetails.fragments.PersonalDetailsFragmentTwo;
@@ -82,4 +83,6 @@ public interface AppComponent {
     void inject(PersonalDetailsFragmentTwo personalDetailsFragmentTwo);
 
     void inject(WalletActivity walletActivity);
+
+    void inject(ChangePasswordActivity changePasswordActivity);
 }
