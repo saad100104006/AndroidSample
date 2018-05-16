@@ -1,6 +1,6 @@
 package uk.co.transferx.app.recipients.addrecipients.presenters;
 
-import android.util.Log;
+import java.net.HttpURLConnection;
 
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
@@ -24,6 +24,7 @@ import uk.co.transferx.app.util.Util;
 public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter.AddRecipientsUI> {
 
     private final RecipientsApi recipientsApi;
+    private RecipientDto recipientDto;
 
     private Disposable disposable;
     private final TokenManager tokenManager;
@@ -50,29 +51,81 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        recipientRepository.addUser(new RecipientDto(resp.body().getId(),firstName, lastName, null, country, phone));
-                        ui.userWasAdded();
+                        recipientRepository.addUser(new RecipientDto(resp.body().getId(), firstName, lastName, null, country, phone));
+                        ui.userActionPerformed();
                     }
                 }, this::handleError);
     }
 
+    public void refreshUserData() {
+        disposable = recipientsApi.updateRecipient(tokenManager.getToken(),
+                recipientDto.getId(),
+                new Recipient.Builder()
+                        .firstname(recipientDto.getFirstName())
+                        .lastname(recipientDto.getLastName())
+                        .country(recipientDto.getCountry())
+                        .phone(recipientDto.getPhone())
+                        .build())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(resp -> {
+                    if (resp.code() == HttpURLConnection.HTTP_OK && ui != null) {
+                        ui.userActionPerformed();
+                        return;
+                    }
+                    handleError(new Throwable(resp.errorBody().string()));
+                }, this::handleError);
+    }
+
+    public RecipientDto getRecipient() {
+        return recipientDto;
+    }
+
+    public void deleteRecipient(final String id) {
+        if (id == null) {
+            handleError(new Throwable("Error id is null"));
+            return;
+        }
+        disposable = recipientsApi.deleteRecipient(tokenManager.getToken(), id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(responseBodyResponse -> {
+                    if (responseBodyResponse.code() == HttpURLConnection.HTTP_OK && ui != null) {
+                        ui.userActionPerformed();
+                    }
+                });
+
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+        if (recipientDto != null) {
+            recipientDto.setFirstName(firstName);
+        }
         validateInput();
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+        if (recipientDto != null) {
+            recipientDto.setLastName(lastName);
+        }
         validateInput();
     }
 
     public void setCountry(String country) {
         this.country = country;
+        if (recipientDto != null) {
+            recipientDto.setCountry(country);
+        }
         validateInput();
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
+        if (recipientDto != null) {
+            recipientDto.setPhone(phone);
+        }
         validateInput();
     }
 
@@ -87,9 +140,23 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
                 && Util.validateName(country) && Util.validatePhone(phone);
     }
 
+    public void setRecipient(RecipientDto recipient) {
+        if (recipient == null) {
+            return;
+        }
+        this.recipientDto = recipient;
+        firstName = recipientDto.getFirstName();
+        lastName = recipientDto.getLastName();
+        phone = recipientDto.getPhone();
+        country = recipientDto.getCountry();
+    }
+
     @Override
     public void attachUI(AddRecipientsUI ui) {
         super.attachUI(ui);
+        if (recipientDto != null) {
+            this.ui.setData(recipientDto);
+        }
     }
 
     @Override
@@ -107,9 +174,11 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
 
     public interface AddRecipientsUI extends UI {
 
-        void userWasAdded();
+        void userActionPerformed();
 
         void showError();
+
+        void setData(RecipientDto recipientDto);
 
         void setEnabledButton(boolean enabled);
     }

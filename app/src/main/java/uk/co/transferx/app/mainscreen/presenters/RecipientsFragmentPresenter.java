@@ -15,6 +15,7 @@ import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.RecipientsApi;
 import uk.co.transferx.app.dto.RecipientDto;
+import uk.co.transferx.app.recipients.addrecipients.Mode;
 import uk.co.transferx.app.recipientsrepository.RecipientRepository;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
@@ -105,9 +106,9 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
 
     }
 
-    public void addRecipient() {
+    public void addRecipient(Mode mode, RecipientDto recipientDto) {
         if (ui != null) {
-            ui.addRecipient();
+            ui.addRecipient(mode, recipientDto);
         }
     }
 
@@ -135,7 +136,7 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
 
         void showError();
 
-        void addRecipient();
+        void addRecipient(Mode mode, RecipientDto recipientDto);
 
         void deleteRecipient(RecipientDto recipientDto);
 

@@ -47,7 +47,7 @@ public class RecipientDialogAdapter extends RecyclerView.Adapter<RecipientDialog
     @Override
     public void onBindViewHolder(RecipientDialogHolder holder, int position) {
         RecipientDto recipientDto = recipientDtoList.get(position);
-        holder.recipientName.setText(recipientDto.getName());
+        holder.recipientName.setText(recipientDto.getFullName());
         holder.recipientCountry.setText(recipientDto.getCountry());
         holder.itemClickListener = recip -> {
             Intent data = new Intent();

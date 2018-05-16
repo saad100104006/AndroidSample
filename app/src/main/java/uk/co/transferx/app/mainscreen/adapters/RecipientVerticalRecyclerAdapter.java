@@ -1,6 +1,7 @@
 package uk.co.transferx.app.mainscreen.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,11 @@ import java.util.List;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
+import uk.co.transferx.app.recipients.addrecipients.AddRecipientsActivity;
+import uk.co.transferx.app.recipients.addrecipients.Mode;
+
+import static uk.co.transferx.app.util.Constants.MODE;
+import static uk.co.transferx.app.util.Constants.RECIPIENT;
 
 /**
  * Created by sergey on 17.12.17.
@@ -28,7 +34,6 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
     private List<RecipientDto> recipientDtoList;
     private final Fragment fragment;
     private final RecipientsFragmentPresenter presenter;
-    private final static int TIME_OF_VIBRATION = 50;
     private final static int FOOTER_VIEW = 111;
     private final static int NORMAL_VIEW = 222;
 
@@ -78,10 +83,11 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
         if (holder instanceof RecipientVerticalHolder) {
             RecipientVerticalHolder recipientVerticalHolder = (RecipientVerticalHolder) holder;
             RecipientDto recipientDto = recipientDtoList.get(position);
-            recipientVerticalHolder.recipientName.setText(recipientDto.getName());
+            recipientVerticalHolder.recipientName.setText(recipientDto.getFullName());
+            recipientVerticalHolder.itemClickListener = recipient -> presenter.addRecipient(Mode.EDIT, recipient);
         }
         if (holder instanceof RecipientFooter) {
-            ((RecipientFooter) holder).addButton.setOnClickListener(v -> presenter.addRecipient());
+            ((RecipientFooter) holder).addButton.setOnClickListener(v -> presenter.addRecipient(Mode.ADD, null));
         }
     }
 

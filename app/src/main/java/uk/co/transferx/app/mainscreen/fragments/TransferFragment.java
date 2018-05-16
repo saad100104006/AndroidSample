@@ -176,7 +176,7 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
      //           .load(recipientDto.getImgUrl())
      //           .placeholder(R.drawable.placeholder)
     //            .into(photo);
-        name.setText(recipientDto.getName());
+        name.setText(recipientDto.getFullName());
         country.setText(recipientDto.getCountry());
     }
 

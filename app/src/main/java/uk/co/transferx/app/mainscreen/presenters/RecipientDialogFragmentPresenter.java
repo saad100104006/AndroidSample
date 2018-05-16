@@ -49,7 +49,7 @@ public class RecipientDialogFragmentPresenter extends BasePresenter<RecipientDia
         Disposable searchDisposable = recipientRepository.getRecipients()
                 .toObservable()
                 .flatMap(Observable::fromIterable)
-                .filter(recipient -> recipient.getName().toLowerCase().contains(search.toLowerCase()))
+                .filter(recipient -> recipient.getFullName().toLowerCase().contains(search.toLowerCase()))
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

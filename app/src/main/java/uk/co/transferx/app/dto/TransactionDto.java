@@ -25,7 +25,7 @@ public class TransactionDto {
         updated = transactionHistory.getUpdated();
         status = transactionHistory.getStatus();
         Optional<RecipientDto> recipient = Stream.of(recipients).filter(recip -> recip.getId().equals(recipientId)).findFirst();
-        recipientName = recipient.isPresent() ? recipient.get().getFavoriteName() : EMPTY;
+        recipientName = recipient.isPresent() ? recipient.get().getFullName() : EMPTY;
     }
 
     public TransactionDto(int id, String recipientId, String recipientName, String currency, BigDecimal amount, long created, long updated, String status) {

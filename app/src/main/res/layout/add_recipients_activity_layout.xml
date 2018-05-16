@@ -1,18 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/button_back"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginBottom="32dp"
-        android:layout_marginStart="@dimen/left_right_main_screen"
-        android:layout_marginTop="52dp"
-        android:src="@drawable/ic_back" />
+    android:background="@color/white">
 
         <FrameLayout
             android:id="@+id/container"
@@ -21,4 +11,4 @@
 
         </FrameLayout>
 
-</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -24,6 +24,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
     public static final String ADDITIONAL_DATA = "additional_data";
     private String message;
     private int position;
+    private String id;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
         if (bundle != null) {
             message = bundle.getString(MESSAGE, EMPTY);
             position = bundle.getInt(ADDITIONAL_DATA, -1);
+            id = bundle.getString(ADDITIONAL_DATA);
         }
     }
 
@@ -53,12 +55,13 @@ public class ConfirmationDialogFragment extends DialogFragment {
         Fragment fragment = getTargetFragment();
         if (fragment != null) {
             Intent intent = new Intent();
-            intent.putExtra(ADDITIONAL_DATA, position);
+            intent.putExtra(ADDITIONAL_DATA, id == null ? position : id);
             fragment.onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
         }
         dismiss();
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);

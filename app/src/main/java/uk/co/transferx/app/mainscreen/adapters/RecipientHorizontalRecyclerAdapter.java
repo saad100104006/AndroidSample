@@ -40,7 +40,7 @@ public class RecipientHorizontalRecyclerAdapter extends RecyclerView.Adapter<Rec
     @Override
     public void onBindViewHolder(RecipientHorizontalHolder holder, int position) {
         final RecipientDto recipientDto = recipientDtoList.get(position);
-        holder.recipientName.setText(recipientDto.getFavoriteName());
+        holder.recipientName.setText(recipientDto.getFullName());
        /* GlideApp.with(context)
                 .load(recipientDto.getImgUrl())
                 .transform(new CircleCrop())

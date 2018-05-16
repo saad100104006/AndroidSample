@@ -60,6 +60,7 @@
     <string name="mobile_number">Mobile Number</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
+    <string name="delete_recipient">Delete Recipient</string>
     <string name="empty_list">Empty list</string>
     <string name="edit_recipient">Edit recipient info.</string>
     <string name="view_recipient">View Recipient</string>
@@ -140,6 +141,7 @@
     <string name="confirm_password">confirm password</string>
     <string name="enter_a_new_password">Enter a new password</string>
     <string name="confirm_new_password">Confirm your new password</string>
+    <string name="new_transfer">New Transfer</string>
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>

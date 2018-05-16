@@ -25,9 +25,12 @@ import uk.co.transferx.app.mainscreen.adapters.RecipientVerticalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.adapters.SwipeHelper;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
 import uk.co.transferx.app.recipients.addrecipients.AddRecipientsActivity;
+import uk.co.transferx.app.recipients.addrecipients.Mode;
 import uk.co.transferx.app.view.ConfirmationDialogFragment;
 
 import static android.app.Activity.RESULT_OK;
+import static uk.co.transferx.app.util.Constants.MODE;
+import static uk.co.transferx.app.util.Constants.RECIPIENT;
 import static uk.co.transferx.app.view.ConfirmationDialogFragment.MESSAGE;
 import static uk.co.transferx.app.view.ConfirmationDialogFragment.ADDITIONAL_DATA;
 
@@ -100,7 +103,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
                 ));
             }
         };
-        view.findViewById(R.id.add_new_recipients).setOnClickListener(v -> presenter.addRecipient());
+        view.findViewById(R.id.add_new_recipients).setOnClickListener(v -> presenter.addRecipient(Mode.ADD, null));
     }
 
     private void showDialogConfirmation(int position) {
@@ -171,8 +174,13 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     }
 
     @Override
-    public void addRecipient() {
-        startActivityForResult(new Intent(getContext(), AddRecipientsActivity.class), ADD_CHANGE_RECIPIENT);
+    public void addRecipient(Mode mode, RecipientDto recipientDto) {
+        final Intent intent = new Intent(getContext(), AddRecipientsActivity.class);
+        intent.putExtra(MODE, mode.ordinal());
+        if (recipientDto != null) {
+            intent.putExtra(RECIPIENT, recipientDto);
+        }
+        startActivityForResult(intent, ADD_CHANGE_RECIPIENT);
     }
 
     @Override

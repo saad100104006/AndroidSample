@@ -1,16 +1,17 @@
 package uk.co.transferx.app.recipients.addrecipients;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.view.View;
 
 import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.recipients.addrecipients.fragments.AddRecipientsFragment;
+
+import static uk.co.transferx.app.util.Constants.MODE;
+import static uk.co.transferx.app.util.Constants.RECIPIENT;
 
 /**
  * Created by sergey on 03/01/2018.
@@ -19,18 +20,19 @@ import uk.co.transferx.app.recipients.addrecipients.fragments.AddRecipientsFragm
 public class AddRecipientsActivity extends BaseActivity {
 
 
-    public static void startAddRecipientActivity(final Activity activity) {
-        //   activity.startActivityForResult(new Intent(activity, AddRecipientsActivity.class), ADD_CHANGE_RECIPIENT);
-
-    }
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_recipients_activity_layout);
-        findViewById(R.id.button_back).setOnClickListener(v -> onBackPressed());
         final AddRecipientsFragment addRecipientsFragment = new AddRecipientsFragment();
+        final Bundle bundle = new Bundle();
+        final Intent intent = getIntent();
+        final Mode mode = Mode.values()[intent.getIntExtra(MODE, 3)];
+        if (mode == Mode.EDIT) {
+            bundle.putParcelable(RECIPIENT, intent.getParcelableExtra(RECIPIENT));
+        }
+        bundle.putInt(MODE, intent.getIntExtra(MODE, -1));
+        addRecipientsFragment.setArguments(bundle);
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, addRecipientsFragment, addRecipientsFragment.getTag());
         ft.commit();
