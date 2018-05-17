@@ -138,4 +138,9 @@ public class RecipientDto implements Parcelable {
 
         return Objects.hash(id, firstName, lastName, imgUrl, country, phone);
     }
+
+    @Override
+    public String toString() {
+        return getFullName();
+    }
 }

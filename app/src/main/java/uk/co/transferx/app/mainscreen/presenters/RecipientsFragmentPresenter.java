@@ -50,35 +50,20 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
     @Override
     public void attachUI(RecipientsFragmentUI ui) {
         super.attachUI(ui);
-        if (isShouldRefresh()) {
-            refreshData();
-            return;
-        }
-        if (ui != null) {
-            ui.setRecipients(recipientDtoList);
-        }
+        refreshData();
     }
 
     public void refreshIfNeeded() {
-        if (isShouldRefresh()) {
-            refreshData();
-        }
+
     }
 
     private void refreshData() {
-        if (isReqested) {
-            return;
-        }
-        isShouldRefresh = false;
-        recipientDtoList.clear();
-        isReqested = true;
         disposable = recipientRepository.getRecipients()
                 .toObservable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
                     recipientDtoList = result;
-                    isReqested = false;
                     if (ui != null) {
                         ui.setRecipients(recipientDtoList);
                     }
@@ -101,8 +86,9 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
                 .subscribe(responseBodyResponse -> {
                     if (responseBodyResponse.code() == HttpURLConnection.HTTP_OK && ui != null) {
                         ui.deleteRecipient(recipientDto);
+                        recipientRepository.deleteRecipient(recipientDto);
                     }
-                });
+                }, this::handleError);
 
     }
 

@@ -157,7 +157,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_CHANGE_RECIPIENT && resultCode == RESULT_OK) {
-            presenter.setShouldRefresh(true);
+           presenter.attachUI(this);
             Log.d("Serge", "onResult");
         }
         if (requestCode == DELETE_USER) {

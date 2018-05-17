@@ -1,7 +1,8 @@
 package uk.co.transferx.app.recipientsrepository;
 
+import com.annimon.stream.Stream;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -76,5 +77,33 @@ public class RecipientRepositoryImpl implements RecipientRepository {
     @Override
     public void addUser(RecipientDto recipientDto) {
         recipientDtos.add(recipientDto);
+    }
+
+    @Override
+    public void deleteRecipient(RecipientDto recipientDto) {
+        recipientDtos.remove(recipientDto);
+    }
+
+    @Override
+    public void deleteRecipient(final String id) {
+        final RecipientDto recipient = Stream.of(recipientDtos)
+                .filter(rec -> id.equals(rec.getId()))
+                .findFirst()
+                .get();
+        if (recipient != null) {
+            recipientDtos.remove(recipient);
+        }
+    }
+
+    @Override
+    public void upDateUser(final RecipientDto recipient) {
+        final RecipientDto oldRecipient = Stream.of(recipientDtos)
+                .filter(rec -> recipient.getId().equals(rec.getId()))
+                .findFirst()
+                .get();
+
+        if (oldRecipient != null) {
+            recipientDtos.set(recipientDtos.indexOf(oldRecipient), recipient);
+        }
     }
 }

@@ -1,8 +1,5 @@
 package uk.co.transferx.app.mainscreen.adapters;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.util.DiffUtil;
@@ -14,16 +11,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
-import uk.co.transferx.app.recipients.addrecipients.AddRecipientsActivity;
 import uk.co.transferx.app.recipients.addrecipients.Mode;
-
-import static uk.co.transferx.app.util.Constants.MODE;
-import static uk.co.transferx.app.util.Constants.RECIPIENT;
 
 /**
  * Created by sergey on 17.12.17.
@@ -31,7 +25,7 @@ import static uk.co.transferx.app.util.Constants.RECIPIENT;
 
 public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
 
-    private List<RecipientDto> recipientDtoList;
+    private List<RecipientDto> recipientDtoList = new ArrayList<>();
     private final Fragment fragment;
     private final RecipientsFragmentPresenter presenter;
     private final static int FOOTER_VIEW = 111;
@@ -97,14 +91,6 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     public void setRecipients(List<RecipientDto> recipients) {
-        if (this.recipientDtoList == null) {
-            this.recipientDtoList = recipients;
-            notifyDataSetChanged();
-            return;
-        }
-        if (recipients.isEmpty()) {
-            return;
-        }
         final RecipientDiffCallback recipientDiffCallback = new RecipientDiffCallback(this.recipientDtoList, recipients);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(recipientDiffCallback);
         this.recipientDtoList.clear();
@@ -120,7 +106,6 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
             super(itemView);
             addButton = itemView.findViewById(R.id.add_button);
         }
-
     }
 
     class RecipientVerticalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -132,7 +117,7 @@ public class RecipientVerticalRecyclerAdapter extends RecyclerView.Adapter {
             super(itemView);
             recipientPhoto = itemView.findViewById(R.id.recipient_img);
             recipientName = itemView.findViewById(R.id.name_recipient);
-               //recipientCountry = itemView.findViewById(R.id.recipient_country);
+            //recipientCountry = itemView.findViewById(R.id.recipient_country);
             itemView.setOnClickListener(this);
         }
 

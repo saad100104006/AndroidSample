@@ -71,6 +71,7 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
                 .subscribe(resp -> {
                     if (resp.code() == HttpURLConnection.HTTP_OK && ui != null) {
                         ui.userActionPerformed();
+                        recipientRepository.upDateUser(recipientDto);
                         return;
                     }
                     handleError(new Throwable(resp.errorBody().string()));
@@ -91,6 +92,7 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(responseBodyResponse -> {
                     if (responseBodyResponse.code() == HttpURLConnection.HTTP_OK && ui != null) {
+                        recipientRepository.deleteRecipient(id);
                         ui.userActionPerformed();
                     }
                 });

@@ -19,4 +19,10 @@ public interface RecipientRepository {
 
     void addUser(RecipientDto recipientDto);
 
+    void deleteRecipient(RecipientDto recipientDto);
+
+    void deleteRecipient(final String id);
+
+    void upDateUser(final RecipientDto recipient);
+
 }
