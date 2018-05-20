@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.mainscreen.presenters.TransferFragmentPresenter;
+import uk.co.transferx.app.mainscreen.schedule.ScheduleActivity;
 import uk.co.transferx.app.view.CustomSpinner;
 
 import static uk.co.transferx.app.util.Constants.EMPTY;
@@ -56,6 +58,7 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     private Disposable disposable;
     private CustomSpinner recipientSpinner, paymentMethod;
     private Pattern pattern = Pattern.compile("^(\\d+\\.)?\\d+$");
+    private Button sendNowButton;
 
     @Inject
     TransferFragmentPresenter presenter;
@@ -147,6 +150,8 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
         sendInput = view.findViewById(R.id.send_input);
         calculatedValue = view.findViewById(R.id.receive_input);
         paymentMethod = view.findViewById(R.id.spinner_choose_method);
+        sendNowButton = view.findViewById(R.id.send_now);
+        sendNowButton.setOnClickListener(v -> startActivity(new Intent(getContext(), ScheduleActivity.class)));
         paymentMethod.setDataWithHintItem(getResources().getStringArray(R.array.payment_method), getString(R.string.select_a_payment_method));
         paymentMethod.setOnItemSelectedListener((position, object) -> {
 

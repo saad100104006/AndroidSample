@@ -33,15 +33,14 @@
                 android:textColor="@color/white"
                 android:textSize="10sp" />
 
-           <Space
+            <Space
                 android:id="@+id/recipient_img"
                 android:layout_width="0dp"
                 android:layout_height="24dp"
                 android:layout_below="@id/title_send"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="@dimen/left_right_main_screen"
-                android:layout_marginTop="10dp"/>
-
+                android:layout_marginTop="10dp" />
 
 
             <View
@@ -124,7 +123,6 @@
                 android:backgroundTint="@android:color/transparent"
                 android:gravity="end|center_vertical"
                 android:maxLines="1"
-                android:text="50"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:theme="@style/EditText.White" />
@@ -187,7 +185,7 @@
                 android:layout_below="@id/payment_method_title"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="@dimen/left_right_main_screen"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp" />
 
             <View
                 android:id="@+id/underline_three"
@@ -209,9 +207,9 @@
                 android:layout_below="@id/payment_method_title"
                 android:layout_marginRight="@dimen/left_right_main_screen"
                 android:layout_toRightOf="@id/method_img"
-                app:dropDownItemRes="@layout/item_payments"
                 android:background="@android:color/transparent"
-                android:theme="@style/ThemeSpinner">
+                android:theme="@style/ThemeSpinner"
+                app:dropDownItemRes="@layout/item_payments">
 
             </uk.co.transferx.app.view.CustomSpinner>
 
@@ -220,9 +218,9 @@
                 style="@style/CommonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@id/underline_three"
-                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginStart="@dimen/left_right_main_screen"
                 android:text="@string/message"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
@@ -264,7 +262,7 @@
                 android:id="@+id/auto_pay"
                 android:layout_width="48dp"
                 android:layout_height="30dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@id/underline_foure"
                 android:layout_marginLeft="@dimen/left_right_main_screen"
                 android:layout_marginRight="@dimen/left_right_main_screen"
