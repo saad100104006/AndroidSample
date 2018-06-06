@@ -1,29 +1,738 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true">
 
-
-    <uk.co.transferx.app.view.SimpleCalendar
-        android:id="@+id/calendarMain"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent=".5">
+        android:layout_height="match_parent">
 
-    </uk.co.transferx.app.view.SimpleCalendar>
+        <ImageView
+            android:id="@+id/buttonBackSchedule"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:layout_marginTop="52dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_back"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <uk.co.transferx.app.view.CustomCalendar
-        android:id="@+id/customCalendar"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/calendarMain">
 
-    </uk.co.transferx.app.view.CustomCalendar>
+        <TextView
+            android:id="@+id/stage_one"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/circle"
+            android:gravity="center"
+            android:text="@string/check"
+            android:textColor="@color/white"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/stage_two"
+            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule" />
 
-</android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/stage_two"
+            style="@style/CommonStyle"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="36dp"
+            android:layout_toEndOf="@id/stage_one"
+            android:background="@drawable/circle_white"
+            android:gravity="center"
+            android:text="2"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toRightOf="@id/stage_one"
+            app:layout_constraintRight_toLeftOf="@id/stage_three"
+            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule" />
+
+        <TextView
+            android:id="@+id/stage_three"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="36dp"
+            android:layout_toEndOf="@id/stage_two"
+            android:background="@drawable/circle"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toRightOf="@id/stage_two"
+            app:layout_constraintRight_toLeftOf="@id/stage_four"
+            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule" />
+
+        <TextView
+            android:id="@+id/stage_four"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="53dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/circle"
+            android:gravity="center"
+            android:text="4"
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toRightOf="@id/stage_three"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/barrier_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:constraint_referenced_ids="stage_one, stage_two, stage_three, stage_four" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/barrier_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="stage_one, stage_two, stage_three, stage_four" />
+
+        <View
+            android:id="@+id/first_line"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/barrier_two"
+            app:layout_constraintLeft_toRightOf="@id/stage_one"
+            app:layout_constraintRight_toLeftOf="@id/stage_two"
+            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule"
+            app:layout_constraintTop_toTopOf="@id/barrier_one" />
+
+        <View
+            android:id="@+id/first_two"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/barrier_two"
+            app:layout_constraintLeft_toRightOf="@id/stage_two"
+            app:layout_constraintRight_toLeftOf="@id/stage_three"
+            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule"
+            app:layout_constraintTop_toTopOf="@id/barrier_one" />
+
+        <View
+            android:id="@+id/first_three"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/barrier_two"
+            app:layout_constraintLeft_toRightOf="@id/stage_three"
+            app:layout_constraintRight_toLeftOf="@id/stage_four"
+            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule"
+            app:layout_constraintTop_toTopOf="@id/barrier_one" />
+
+
+        <TextView
+            android:id="@+id/stage_one_title"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="@string/setup"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/stage_two_title"
+            app:layout_constraintTop_toBottomOf="@id/barrier_two" />
+
+
+        <TextView
+            android:id="@+id/stage_two_title"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_toEndOf="@id/stage_one"
+            android:gravity="center"
+            android:text="@string/schedule"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toRightOf="@id/stage_one_title"
+            app:layout_constraintRight_toLeftOf="@id/stage_three_title"
+            app:layout_constraintTop_toBottomOf="@id/barrier_two" />
+
+        <TextView
+            android:id="@+id/stage_three_title"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="6dp"
+            android:layout_toEndOf="@id/stage_two"
+            android:gravity="center"
+            android:text="@string/repeat"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toRightOf="@id/stage_two_title"
+            app:layout_constraintRight_toLeftOf="@id/stage_four_title"
+            app:layout_constraintTop_toBottomOf="@id/barrier_two" />
+
+        <TextView
+            android:id="@+id/stage_four_title"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="@string/review"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toRightOf="@id/stage_three_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrier_two" />
+
+        <TextView
+            android:id="@+id/big_title"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="@string/set_transfer_schedule"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/stage_one_title" />
+
+        <TextView
+            android:id="@+id/date_title"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="@string/date"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/big_title" />
+
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:gravity="center"
+            android:text="April"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/date_title" />
+
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:rotation="-90"
+            android:scaleType="center"
+            android:src="@drawable/arrow"
+            app:layout_constraintLeft_toRightOf="@id/date"
+            app:layout_constraintTop_toBottomOf="@id/date_title" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/barrier_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="date, arrow" />
+
+        <TextView
+            android:id="@+id/s"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="40dp"
+            android:gravity="center"
+            android:text="@string/sunday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/m"
+            app:layout_constraintTop_toBottomOf="@id/barrier_three" />
+
+
+        <TextView
+            android:id="@+id/m"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/stage_one"
+            android:gravity="center"
+            android:text="@string/monday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toRightOf="@id/s"
+            app:layout_constraintRight_toLeftOf="@id/t"
+            app:layout_constraintTop_toBottomOf="@id/barrier_three" />
+
+        <TextView
+            android:id="@+id/t"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/stage_two"
+            android:gravity="center"
+            android:text="@string/thursday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toRightOf="@id/m"
+            app:layout_constraintRight_toLeftOf="@id/w"
+            app:layout_constraintTop_toBottomOf="@id/barrier_three" />
+
+        <TextView
+            android:id="@+id/w"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/wednesday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toRightOf="@id/t"
+            app:layout_constraintRight_toLeftOf="@id/th"
+            app:layout_constraintTop_toBottomOf="@id/barrier_three" />
+
+        <TextView
+            android:id="@+id/th"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/thursday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toRightOf="@id/w"
+            app:layout_constraintRight_toLeftOf="@id/f"
+            app:layout_constraintTop_toBottomOf="@id/barrier_three" />
+
+        <TextView
+            android:id="@+id/f"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/friday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toRightOf="@id/th"
+            app:layout_constraintRight_toLeftOf="@id/sat"
+            app:layout_constraintTop_toBottomOf="@id/barrier_three" />
+
+        <TextView
+            android:id="@+id/sat"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:gravity="center"
+            android:text="@string/saturday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toRightOf="@id/f"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrier_three" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/barrier_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="s, sat" />
+
+        <TextView
+            android:id="@+id/One"
+            style="@style/CommonStyle"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circle_calendar"
+            android:gravity="center"
+            android:text="@string/sunday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/Two"
+            app:layout_constraintTop_toBottomOf="@id/barrier_four" />
+
+
+        <TextView
+            android:id="@+id/Two"
+            style="@style/CommonStyle"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circle_calendar"
+            android:gravity="center"
+            android:text="@string/monday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toRightOf="@id/One"
+            app:layout_constraintRight_toLeftOf="@id/Tree"
+            app:layout_constraintTop_toBottomOf="@id/barrier_four" />
+
+        <TextView
+            android:id="@+id/Tree"
+            style="@style/CommonStyle"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/stage_two"
+            android:background="@drawable/circle_calendar"
+            android:gravity="center"
+            android:text="@string/thursday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toRightOf="@id/Two"
+            app:layout_constraintRight_toLeftOf="@id/Four"
+            app:layout_constraintTop_toBottomOf="@id/barrier_four" />
+
+        <TextView
+            android:id="@+id/Four"
+            style="@style/CommonStyle"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circle_calendar"
+            android:gravity="center"
+            android:text="@string/wednesday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toRightOf="@id/Tree"
+            app:layout_constraintRight_toLeftOf="@id/Five"
+            app:layout_constraintTop_toBottomOf="@id/barrier_four" />
+
+        <TextView
+            android:id="@+id/Five"
+            style="@style/CommonStyle"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circle_calendar"
+            android:gravity="center"
+            android:text="@string/thursday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toRightOf="@id/Four"
+            app:layout_constraintRight_toLeftOf="@id/Six"
+            app:layout_constraintTop_toBottomOf="@id/barrier_four" />
+
+        <TextView
+            android:id="@+id/Six"
+            style="@style/CommonStyle"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circle_calendar"
+            android:gravity="center"
+            android:text="@string/friday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toRightOf="@id/Five"
+            app:layout_constraintRight_toLeftOf="@id/Seven"
+            app:layout_constraintTop_toBottomOf="@id/barrier_four" />
+
+        <TextView
+            android:id="@+id/Seven"
+            style="@style/CommonStyle"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circle_calendar"
+            android:gravity="center"
+            android:text="@string/saturday"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toRightOf="@id/Six"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrier_four" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/barrier_five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="One, Seven" />
+
+        <TextView
+            android:id="@+id/oneToday"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/today"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:visibility="invisible"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/twoToday"
+            app:layout_constraintTop_toBottomOf="@id/barrier_five" />
+
+
+        <TextView
+            android:id="@+id/twoToday"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/today"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toRightOf="@id/oneToday"
+            app:layout_constraintRight_toLeftOf="@id/treeToday"
+            app:layout_constraintTop_toBottomOf="@id/barrier_five" />
+
+        <TextView
+            android:id="@+id/treeToday"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@id/stage_two"
+            android:gravity="center"
+            android:text="@string/today"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toRightOf="@id/twoToday"
+            app:layout_constraintRight_toLeftOf="@id/fourToday"
+            app:layout_constraintTop_toBottomOf="@id/barrier_five" />
+
+        <TextView
+            android:id="@+id/fourToday"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/today"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toRightOf="@id/treeToday"
+            app:layout_constraintRight_toLeftOf="@id/fiveToday"
+            app:layout_constraintTop_toBottomOf="@id/barrier_five" />
+
+        <TextView
+            android:id="@+id/fiveToday"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/today"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toRightOf="@id/fourToday"
+            app:layout_constraintRight_toLeftOf="@id/sixToday"
+            app:layout_constraintTop_toBottomOf="@id/barrier_five" />
+
+        <TextView
+            android:id="@+id/sixToday"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/today"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toRightOf="@id/fiveToday"
+            app:layout_constraintRight_toLeftOf="@id/sevenToday"
+            app:layout_constraintTop_toBottomOf="@id/barrier_five" />
+
+        <TextView
+            android:id="@+id/sevenToday"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/today"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toRightOf="@id/sixToday"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrier_five" />
+
+        <TextView
+            android:id="@+id/time"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:text="@string/time"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/oneToday" />
+
+        <ImageView
+            android:id="@+id/time_img"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="center"
+            android:src="@drawable/ic_clock_black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/barrier_six"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:constraint_referenced_ids="time_img" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/barrier_seven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="time_img" />
+
+        <TextView
+            android:id="@+id/time_input"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:hint="@string/set_a_time"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/barrier_six"
+            app:layout_constraintLeft_toRightOf="@id/time_img"
+            app:layout_constraintRight_toLeftOf="@id/time_arrow"
+            app:layout_constraintTop_toBottomOf="@id/time"
+            app:layout_constraintTop_toTopOf="@id/barrier_seven" />
+
+
+        <ImageView
+            android:id="@+id/time_arrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:rotation="-90"
+            android:scaleType="center"
+            android:src="@drawable/arrow"
+            app:layout_constraintBottom_toBottomOf="@id/barrier_six"
+            app:layout_constraintLeft_toRightOf="@id/time_input"
+            app:layout_constraintTop_toBottomOf="@id/time"
+            app:layout_constraintTop_toTopOf="@id/barrier_seven" />
+
+
+        <View
+            android:id="@+id/clock_line"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:layout_marginTop="6dp"
+            android:background="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/time_arrow"
+            app:layout_constraintTop_toBottomOf="@id/barrier_seven" />
+
+        <Button
+            android:id="@+id/buttonSubmite"
+            style="@style/CommonButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/oval_button_gray"
+            android:enabled="false"
+            android:letterSpacing="0.17"
+            android:lineSpacingExtra="2sp"
+            android:text="@string/next"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:theme="@style/Button.Black"
+            app:layout_constraintTop_toBottomOf="@id/clock_line" />
+        
+        <Space
+            app:layout_constraintTop_toBottomOf="@id/buttonSubmite"
+            android:layout_width="match_parent"
+            android:layout_height="36dp" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

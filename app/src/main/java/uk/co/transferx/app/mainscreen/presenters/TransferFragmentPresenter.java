@@ -9,6 +9,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
@@ -31,7 +32,6 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     private final TransactionApi transactionApi;
     private final TokenManager tokenManager;
     private BigDecimal rates;
-    private Disposable disposable;
     private String currencyFrom = "GBP";
     private String currencyTo = "UGX";
     private BigDecimal valueToSend;
@@ -39,23 +39,28 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     private final static int SCALE_VALUE = 4;
     private final RecipientRepository recipientRepository;
     private List<RecipientDto> recipientDtos = new ArrayList<>();
+    private CompositeDisposable compositeDisposable;
 
     @Inject
     public TransferFragmentPresenter(final TransactionApi transactionApi, final TokenManager tokenManager, final RecipientRepository recipientRepository) {
         this.transactionApi = transactionApi;
         this.tokenManager = tokenManager;
         this.recipientRepository = recipientRepository;
+        compositeDisposable = new CompositeDisposable();
     }
 
 
     @Override
     public void attachUI(SendFragmentUI ui) {
         super.attachUI(ui);
+        if(compositeDisposable.isDisposed()){
+            compositeDisposable = new CompositeDisposable();
+        }
         if (rates == null && isShouldFetch()) {
             fetchRate();
         }
         if (recipientDtos.isEmpty()) {
-            recipientRepository.getRecipients()
+            compositeDisposable.add(recipientRepository.getRecipients()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(recip -> {
@@ -63,7 +68,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                         if (ui != null) {
                             ui.setRecipients(recipientDtos);
                         }
-                    });
+                    }, throwable -> Log.e(TransferFragmentPresenter.class.getSimpleName(), "Error ", throwable)));
             return;
         }
         ui.setRecipients(recipientDtos);
@@ -74,7 +79,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         if (currencyTo.equals(currencyFrom)) {
             return;
         }
-        disposable = transactionApi.getRats(tokenManager.getToken(), currencyFrom, currencyTo)
+        Disposable disposable = transactionApi.getRats(tokenManager.getToken(), currencyFrom, currencyTo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
@@ -85,13 +90,14 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                         calculateValue();
                     }
                 }, throwable -> Log.e(TransferFragmentPresenter.class.getSimpleName(), "Error ", throwable));
+        compositeDisposable.add(disposable);
     }
 
     @Override
     public void detachUI() {
         super.detachUI();
-        if (disposable != null) {
-            disposable.dispose();
+        if (compositeDisposable != null) {
+            compositeDisposable.dispose();
         }
 
     }

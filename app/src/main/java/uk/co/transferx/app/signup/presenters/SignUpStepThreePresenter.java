@@ -111,7 +111,8 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
     public void validatePin() {
         UserRequest.Builder request = new UserRequest.Builder();
         if (firstPin.equals(secondPin)) {
-            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)) {
+            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) ||
+                    !sharedPreferences.getBoolean(LOGGED_IN_STATUS, false)) {
                 saveTokenWithNewPin(firstPin);
                 return;
             }

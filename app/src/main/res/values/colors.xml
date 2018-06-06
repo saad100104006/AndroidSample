@@ -18,6 +18,7 @@
     <color name="dark_blue_grey">#0d1e27</color>
     <color name="red_delete">#da1010</color>
     <color name="transparent">#00000000</color>
+    <color name="not_active">#d8d8d8</color>
 
 
 </resources>

@@ -142,6 +142,16 @@
     <string name="enter_a_new_password">Enter a new password</string>
     <string name="confirm_new_password">Confirm your new password</string>
     <string name="new_transfer">New Transfer</string>
+    <string name="check">"\u2713"</string>
+    <string name="setup">setup</string>
+    <string name="schedule">schedule</string>
+    <string name="repeat">repeat</string>
+    <string name="review">review</string>
+    <string name="set_transfer_schedule">Set transfer schedule</string>
+    <string name="date">Date</string>
+    <string name="today">Today</string>
+    <string name="time">Time</string>
+    <string name="set_a_time">Set a time</string>
 
     <!-- Calendar -->
     <string name="monday">M</string>

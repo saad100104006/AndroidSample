@@ -90,7 +90,6 @@ public class SimpleCalendar extends LinearLayout {
         currentMonth = view.findViewById(R.id.current_month);
 
         currentDateDay = chosenDateDay = calendar.get(Calendar.DAY_OF_MONTH);
-
         if (userMonth != 0 && userYear != 0) {
             currentDateMonth = chosenDateMonth = userMonth;
             currentDateYear = chosenDateYear = userYear;
@@ -117,6 +116,7 @@ public class SimpleCalendar extends LinearLayout {
     private void initializeDaysWeeks() {
         weeks = new LinearLayout[6];
         days = new Button[6 * 7];
+        Button butts[] = new Button[6 * 7];
 
         weeks[0] = weekOneLayout;
         weeks[1] = weekTwoLayout;
@@ -132,6 +132,7 @@ public class SimpleCalendar extends LinearLayout {
         calendar.set(year, month, day);
 
         int daysInCurrentMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        String.format(Locale.getDefault(),"%d %s", 23, "may");
 
         chosenDateYear = year;
         chosenDateMonth = month;

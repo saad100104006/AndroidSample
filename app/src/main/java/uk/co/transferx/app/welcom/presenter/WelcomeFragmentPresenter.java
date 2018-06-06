@@ -18,6 +18,7 @@ import uk.co.transferx.app.pojo.UserSignIn;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 import uk.co.transferx.app.util.Util;
 
+import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
 import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
 
 /**
@@ -84,7 +85,8 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         tokenManager.setToken(resp.body().getToken());
-                        if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)) {
+                        if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) ||
+                                !sharedPreferences.getBoolean(LOGGED_IN_STATUS, false)) {
                             ui.goToPinView();
                             return;
                         }

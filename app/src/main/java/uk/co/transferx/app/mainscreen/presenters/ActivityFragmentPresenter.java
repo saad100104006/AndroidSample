@@ -84,7 +84,7 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
                 .subscribe(recipients -> {
                     recipientDtos = recipients;
                     fetchHistory();
-                });
+                }, this::handleError);
         compositeDisposable.add(dis);
 
     }
