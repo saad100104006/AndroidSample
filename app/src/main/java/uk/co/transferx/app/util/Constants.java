@@ -25,4 +25,5 @@ public final class Constants {
     public static final String PIN_SHOULD_BE_INPUT = "pin_should_be_input";
     public static final String MODE = "mode";
     public static final String RECIPIENT = "recipient";
+    public static final String CARDS = "cards";
 }

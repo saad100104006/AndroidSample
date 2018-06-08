@@ -29,6 +29,13 @@
         android:textColor="@color/black"
         android:textSize="24sp" />
 
+    <Space
+
+        android:id="@+id/additionalMargin"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="32dp" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardsView"
         android:layout_width="match_parent"

@@ -3,35 +3,39 @@ package uk.co.transferx.app.settings.profile.wallet.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.startActivity
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
-import uk.co.transferx.app.pojo.PaymentCard
+import uk.co.transferx.app.settings.profile.wallet.AddCardActivity
 
 
-class WalletAdapter(private val activity: BaseActivity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
+class WalletAdapter(private val activity: BaseActivity) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    
     companion object {
         const val EMPTY_HEADER: Int = 10
         const val FOOTER: Int = 20
         const val ITEM: Int = 30
     }
 
-    private var paymentCards: List<PaymentCard> = emptyList()
-
+    private var paymentCards: ArrayList<String> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             RecyclerView.ViewHolder = when (viewType) {
         EMPTY_HEADER -> EmptyHeaderHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.empty_wallet_layout, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.empty_wallet_layout, parent, false)
         )
         FOOTER -> FooterHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.footer_wallet_layout, parent, false),
-                { activity.toast("Not implemented yet") }
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.footer_wallet_layout,
+                parent,
+                false
+            ),
+            { activity.startActivity<AddCardActivity>() }
         )
 
         ITEM -> ItemHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.empty_wallet_layout, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.card_wallet_item, parent, false)
         )
         else -> throw IllegalStateException("Error state $viewType")
     }
@@ -48,12 +52,21 @@ class WalletAdapter(private val activity: BaseActivity) : RecyclerView.Adapter<R
 
         }
         is ItemHolder -> {
+            val numberCard = paymentCards[position]
+            holder.bindata(activity.getString(R.string.card_ending, numberCard.takeLast(4)))
+            val cardType =
+                if ("^4[0-9]{12}(?:[0-9]{3})?$".toRegex().matches(numberCard)) R.drawable.ic_visa else R.drawable.ic_master_card
+            holder.card.setCompoundDrawablesWithIntrinsicBounds(cardType, 0, 0, 0)
         }
 
         is EmptyHeaderHolder -> {
-
         }
         else -> throw IllegalArgumentException("error argument $holder")
+    }
+
+    fun setCards(cards: Set<String>) {
+        paymentCards = cards.toList() as ArrayList<String>
+        notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int): Int {

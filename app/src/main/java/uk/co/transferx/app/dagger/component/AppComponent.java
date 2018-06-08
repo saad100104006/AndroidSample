@@ -24,6 +24,7 @@ import uk.co.transferx.app.settings.profile.changepassword.ChangePasswordActivit
 import uk.co.transferx.app.settings.profile.personaldetails.PersonalDetailsActivity;
 import uk.co.transferx.app.settings.profile.personaldetails.fragments.PersonalDetailsFragmentOne;
 import uk.co.transferx.app.settings.profile.personaldetails.fragments.PersonalDetailsFragmentTwo;
+import uk.co.transferx.app.settings.profile.wallet.AddCardActivity;
 import uk.co.transferx.app.settings.profile.wallet.WalletActivity;
 import uk.co.transferx.app.signin.fragment.SignInEmailFragment;
 import uk.co.transferx.app.signin.fragment.SignInPinFragment;
@@ -91,4 +92,6 @@ public interface AppComponent {
     void inject(EditRecipientActivity editRecipientActivity);
 
     void inject(ScheduleActivity scheduleActivity);
+
+    void inject(AddCardActivity addCardActivity);
 }

@@ -152,6 +152,14 @@
     <string name="today">Today</string>
     <string name="time">Time</string>
     <string name="set_a_time">Set a time</string>
+    <string name="add_a_new_card">Add a new card</string>
+    <string name="name_on_card">Name on card</string>
+    <string name="required">Required</string>
+    <string name="card_number">Curd number</string>
+    <string name="expiration_date">Expiration Date</string>
+    <string name="security_code">Security Code</string>
+    <string name="save_card">Save card</string>
+    <string name="card_ending">Ending in %s</string>
 
     <!-- Calendar -->
     <string name="monday">M</string>
