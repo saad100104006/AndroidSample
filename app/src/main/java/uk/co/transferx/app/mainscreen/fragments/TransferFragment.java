@@ -33,6 +33,7 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.mainscreen.presenters.TransferFragmentPresenter;
 import uk.co.transferx.app.mainscreen.schedule.ScheduleActivity;
+import uk.co.transferx.app.pojo.Card;
 import uk.co.transferx.app.view.CustomSpinner;
 
 import static uk.co.transferx.app.util.Constants.EMPTY;
@@ -58,7 +59,7 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     private Disposable disposable;
     private CustomSpinner recipientSpinner, paymentMethod;
     private Pattern pattern = Pattern.compile("^(\\d+\\.)?\\d+$");
-    private Button sendNowButton;
+    private Button sendNowButton, sendLaterButton;
 
     @Inject
     TransferFragmentPresenter presenter;
@@ -151,7 +152,8 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
         calculatedValue = view.findViewById(R.id.receive_input);
         paymentMethod = view.findViewById(R.id.spinner_choose_method);
         sendNowButton = view.findViewById(R.id.send_now);
-        sendNowButton.setOnClickListener(v -> startActivity(new Intent(getContext(), ScheduleActivity.class)));
+        sendLaterButton = view.findViewById(R.id.send_later);
+        sendLaterButton.setOnClickListener(v -> startActivity(new Intent(getContext(), ScheduleActivity.class)));
         paymentMethod.setDataWithHintItem(getResources().getStringArray(R.array.payment_method), getString(R.string.select_a_payment_method));
         paymentMethod.setOnItemSelectedListener((position, object) -> {
 
@@ -221,6 +223,11 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
             currencyPicker.dismiss();
         });
         currencyPicker.show(getActivity().getSupportFragmentManager(), CURRENCY_PICKER);
+    }
+
+    @Override
+    public void setCardToSpinner(List<Card> cards) {
+        paymentMethod.setDataWithHintItem(cards.toArray(), getString(R.string.select_a_payment_method));
     }
 
     @Override

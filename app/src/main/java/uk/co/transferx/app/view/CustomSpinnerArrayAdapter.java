@@ -123,7 +123,6 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
             TextViewBinder binder = labelsToBind.get(labelsToBind.keyAt(i));
             ((TextView) convertView.findViewById(binder.textViewId))
                     .setText(binder.textProvider.provide(getItem(position)));
-
         }
     }
 

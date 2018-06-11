@@ -79,7 +79,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
         emptyDescription = view.findViewById(R.id.empty_description);
         verticalRecyclerAdapter = new RecipientVerticalRecyclerAdapter(this, presenter);
         recipientRecyclerView.setAdapter(verticalRecyclerAdapter);
-        SwipeHelper swipeHelper = new SwipeHelper(recipientRecyclerView) {
+        new SwipeHelper(recipientRecyclerView) {
             @Override
             public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
                 underlayButtons.add(new SwipeHelper.UnderlayButton(

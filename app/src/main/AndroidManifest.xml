@@ -124,6 +124,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".transfersummary.TransferSummaryActivity" />
     </application>
 
 </manifest>

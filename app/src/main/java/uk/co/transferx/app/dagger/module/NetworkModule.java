@@ -14,6 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import uk.co.transferx.app.BuildConfig;
+import uk.co.transferx.app.api.CardsApi;
 import uk.co.transferx.app.api.ProfileApi;
 import uk.co.transferx.app.api.RecipientsApi;
 import uk.co.transferx.app.api.SignInOutApi;
@@ -102,6 +103,12 @@ public class NetworkModule {
     @Provides
     ProfileApi provideProfileApi(Retrofit retrofit) {
         return retrofit.create(ProfileApi.class);
+    }
+
+    @Singleton
+    @Provides
+    CardsApi provideCardsApi(Retrofit retrofit) {
+        return retrofit.create(CardsApi.class);
     }
 
 }

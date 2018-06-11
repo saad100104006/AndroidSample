@@ -9,7 +9,7 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val card: TextView = itemView.cardNumber
 
     fun bindata(textNumber: String) {
-        card.setText(textNumber)
+        card.text = textNumber
     }
 
 }

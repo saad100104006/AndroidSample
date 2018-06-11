@@ -6,19 +6,21 @@ import android.view.ViewGroup
 import org.jetbrains.anko.startActivity
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
+import uk.co.transferx.app.pojo.Card
 import uk.co.transferx.app.settings.profile.wallet.AddCardActivity
+import uk.co.transferx.app.settings.profile.wallet.CardType
 
 
 class WalletAdapter(private val activity: BaseActivity) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    
+
     companion object {
         const val EMPTY_HEADER: Int = 10
         const val FOOTER: Int = 20
         const val ITEM: Int = 30
     }
 
-    private var paymentCards: ArrayList<String> = arrayListOf()
+    private var paymentCards: List<Card> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             RecyclerView.ViewHolder = when (viewType) {
@@ -53,9 +55,9 @@ class WalletAdapter(private val activity: BaseActivity) :
         }
         is ItemHolder -> {
             val numberCard = paymentCards[position]
-            holder.bindata(activity.getString(R.string.card_ending, numberCard.takeLast(4)))
-            val cardType =
-                if ("^4[0-9]{12}(?:[0-9]{3})?$".toRegex().matches(numberCard)) R.drawable.ic_visa else R.drawable.ic_master_card
+
+            holder.bindata(numberCard.toString())
+            val cardType = if(CardType.VISA == CardType.valueOf(numberCard.type.capitalize())) R.drawable.ic_visa else R.drawable.ic_master_card
             holder.card.setCompoundDrawablesWithIntrinsicBounds(cardType, 0, 0, 0)
         }
 
@@ -64,8 +66,8 @@ class WalletAdapter(private val activity: BaseActivity) :
         else -> throw IllegalArgumentException("error argument $holder")
     }
 
-    fun setCards(cards: Set<String>) {
-        paymentCards = cards.toList() as ArrayList<String>
+    fun setCards(cards: List<Card>) {
+        paymentCards = cards
         notifyDataSetChanged()
     }
 

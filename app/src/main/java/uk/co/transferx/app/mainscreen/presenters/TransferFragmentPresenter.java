@@ -1,9 +1,14 @@
 package uk.co.transferx.app.mainscreen.presenters;
 
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.LinearLayout;
+
+import com.annimon.stream.Stream;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,12 +19,15 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
+import uk.co.transferx.app.api.CardsApi;
 import uk.co.transferx.app.api.TransactionApi;
 import uk.co.transferx.app.dto.RecipientDto;
+import uk.co.transferx.app.pojo.Card;
 import uk.co.transferx.app.recipientsrepository.RecipientRepository;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
 import static java.net.HttpURLConnection.HTTP_OK;
+import static uk.co.transferx.app.util.Constants.CARDS;
 import static uk.co.transferx.app.util.Constants.EMPTY;
 
 /**
@@ -40,22 +48,29 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     private final RecipientRepository recipientRepository;
     private List<RecipientDto> recipientDtos = new ArrayList<>();
     private CompositeDisposable compositeDisposable;
+    private final SharedPreferences sharedPreferences;
+    private List<String> cards;
+    private final CardsApi cardsApi;
 
     @Inject
-    public TransferFragmentPresenter(final TransactionApi transactionApi, final TokenManager tokenManager, final RecipientRepository recipientRepository) {
+    public TransferFragmentPresenter(final TransactionApi transactionApi, final TokenManager tokenManager, final RecipientRepository recipientRepository,
+                                     final SharedPreferences sharedPreferences, final CardsApi cardsApi) {
         this.transactionApi = transactionApi;
         this.tokenManager = tokenManager;
         this.recipientRepository = recipientRepository;
+        this.sharedPreferences = sharedPreferences;
         compositeDisposable = new CompositeDisposable();
+        this.cardsApi = cardsApi;
     }
 
 
     @Override
     public void attachUI(SendFragmentUI ui) {
         super.attachUI(ui);
-        if(compositeDisposable.isDisposed()){
+        if (compositeDisposable.isDisposed()) {
             compositeDisposable = new CompositeDisposable();
         }
+        setCards();
         if (rates == null && isShouldFetch()) {
             fetchRate();
         }
@@ -127,10 +142,17 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         }
     }
 
-    public void clickMainRecipient() {
-        if (ui != null) {
-            ui.showDialogRecipients();
-        }
+    private void setCards() {
+        compositeDisposable.add(cardsApi.getCards(tokenManager.getToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(cards ->
+                        {
+                            if (ui != null) {
+                                ui.setCardToSpinner(cards.getCards());
+                            }
+                        }
+                ));
     }
 
     public void setValueToSend(String value) {
@@ -171,5 +193,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         void setCalculatedValueForTransfer(String value);
 
         void setRecipients(List<RecipientDto> recipients);
+
+        void setCardToSpinner(List<Card> cards);
     }
 }

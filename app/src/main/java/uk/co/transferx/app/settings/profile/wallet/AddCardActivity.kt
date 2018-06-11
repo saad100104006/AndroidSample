@@ -8,6 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.add_card_activity.*
+import org.jetbrains.anko.toast
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
@@ -74,5 +75,9 @@ class AddCardActivity : BaseActivity(), AddCardPresenter.AddCardUI {
 
     override fun goBack() {
         finish()
+    }
+
+    override fun error() {
+        toast("Error occurred. Card not added")
     }
 }
