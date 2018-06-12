@@ -3,6 +3,7 @@ package uk.co.transferx.app.pojo
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import uk.co.transferx.app.dto.RecipientDto
 
 @Parcelize
 data class TransactionCreate(
@@ -17,5 +18,7 @@ data class TransactionCreate(
     @SerializedName("repeat") val repeat: Boolean,
     @SerializedName("start_time") val startTime: String?,
     @SerializedName("end_time") val endTime: String?,
-    @SerializedName("frequency") val frequency: String?
+    @SerializedName("frequency") val frequency: String?,
+    var card: Card?,
+    var recipientDto: RecipientDto?
 ) : Parcelable

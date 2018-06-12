@@ -35,7 +35,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     private RecipientDto recipientDto;
     private final TransactionApi transactionApi;
     private final TokenManager tokenManager;
-    private BigDecimal rates = new BigDecimal("4583");
+    private BigDecimal rates;
     private String currencyFrom = "GBP";
     private String currencyTo = "UGX";
     private BigDecimal valueToSend;
@@ -45,8 +45,8 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     private List<RecipientDto> recipientDtos = new ArrayList<>();
     private CompositeDisposable compositeDisposable;
     private final SharedPreferences sharedPreferences;
-    private String recipient;
-    private String card;
+    private RecipientDto recipient;
+    private Card card;
     private int amount;
     private final CardsApi cardsApi;
     private String message;
@@ -89,12 +89,12 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     }
 
     private boolean isDataValid() {
-        return !TextUtils.isEmpty(recipient) && !TextUtils.isEmpty(card) && amount > 0;
+        return recipient != null && card != null && amount > 0;
     }
 
 
     public void setCard(Card card) {
-        this.card = card.getId();
+        this.card = card;
         if (ui != null) {
             ui.setButtonEnabled(isDataValid());
         }
@@ -189,7 +189,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     }
 
     public void chooseRecipientForTransfer(RecipientDto recipientDto) {
-        recipient = recipientDto.getId();
+        recipient = recipientDto;
     }
 
 
@@ -207,18 +207,20 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     public void goToTrasferSummary() {
         if (ui != null) {
             ui.sendNowClick(new TransactionCreate(
-                    recipient,
-                    calculatedValue.intValue(),
+                    recipient.getId(),
+                    calculatedValue == null ? BigDecimal.ZERO.intValue() : calculatedValue.intValue(),
                     currencyTo,
                     currencyFrom,
-                    card,
+                    card.getId(),
                     message,
                     true,
                     amount,
                     false,
                     null,
                     null,
-                    null
+                    null,
+                    card,
+                    recipient
             ));
         }
     }

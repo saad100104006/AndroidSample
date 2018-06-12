@@ -17,17 +17,30 @@ class TransferSummaryPresenter @Inject constructor(
 ) :
     BasePresenter<TransferSummaryPresenter.TransferSummaryUI>() {
 
-    var transactionCreate: TransactionCreate? = null
-    var disposable: Disposable? = null
+    private var transactionCreate: TransactionCreate? = null
+    private var disposable: Disposable? = null
+    private var isInitialized: Boolean = false
+
+    override fun attachUI(ui: TransferSummaryUI?) {
+        super.attachUI(ui)
+        if(!isInitialized) {
+            this.ui?.fillUser(transactionCreate)
+            isInitialized = true
+            transactionCreate?.card = null
+            transactionCreate?.recipientDto = null
+        }
+    }
 
     override fun detachUI() {
         super.detachUI()
         disposable?.dispose()
     }
 
+
     fun setData(transactionCreate: TransactionCreate) {
         this.transactionCreate = transactionCreate
     }
+
 
     fun sendTransfer() {
         disposable = transactionApi.createTransaction(tokenManager.token, transactionCreate)
@@ -40,8 +53,7 @@ class TransferSummaryPresenter @Inject constructor(
     }
 
     interface TransferSummaryUI : UI {
-
         fun goBack()
-
+        fun fillUser(transactionCreate: TransactionCreate?)
     }
 }

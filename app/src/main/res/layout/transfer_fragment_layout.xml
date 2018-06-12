@@ -113,7 +113,7 @@
                 android:theme="@style/EditText.White" />
 
             <TextView
-                android:id="@+id/receive_input"
+                android:id="@+id/receiveInput"
                 style="@style/CommonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -199,7 +199,7 @@
 
 
             <uk.co.transferx.app.view.CustomSpinner
-                android:id="@+id/spinner_choose_method"
+                android:id="@+id/paymentCard"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -227,7 +227,7 @@
                 android:textSize="10sp" />
 
             <EditText
-                android:id="@+id/message_input"
+                android:id="@+id/messageInput"
                 style="@style/CommonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="86dp"
@@ -251,7 +251,7 @@
                 android:id="@+id/underline_foure"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@id/message_input"
+                android:layout_below="@id/messageInput"
                 android:layout_marginBottom="36dp"
                 android:layout_marginLeft="@dimen/left_right_main_screen"
                 android:layout_marginRight="@dimen/left_right_main_screen"

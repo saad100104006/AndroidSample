@@ -1,5 +1,6 @@
 package uk.co.transferx.app.recipientsrepository;
 
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 
 import java.util.ArrayList;
@@ -28,23 +29,7 @@ public class RecipientRepositoryImpl implements RecipientRepository {
     public RecipientRepositoryImpl(final RecipientsApi recipientsApi, final TokenManager tokenManager) {
         this.recipientsApi = recipientsApi;
         this.tokenManager = tokenManager;
-        //  generateData();
     }
-
-    //Stub should be deleted when server is up.
-  /*  private void generateData() {
-        recipientDtos.add(new RecipientDto("id1", "Sergey Milewski", null, "PL", "+12345678"));
-        recipientDtos.add(new RecipientDto("id2", "Ekrem Karatas", null, "TR", "+12345678"));
-        recipientDtos.add(new RecipientDto("id3", "Evangelos Pappas", null, "GB", "+12345678"));
-        recipientDtos.add(new RecipientDto("id4", "Windsor Kitaka", null, "GB", "+12345678"));
-        recipientDtos.add(new RecipientDto("id5", "Paulo Chaves", null, "BR", "+12345678"));
-        recipientDtos.add(new RecipientDto("id6", "Super Man", null, "UN", "+12345678"));
-        recipientDtos.add(new RecipientDto("id7", "Zili Boba", null, "MU", "+12345678"));
-        recipientDtos.add(new RecipientDto("id8", "Rembo Rembo", null, "ZX", "+12345678"));
-        recipientDtos.add(new RecipientDto("id9", "Tom Papacha", null, "XU", "+12345678"));
-
-    } */
-
 
     @Override
     public Single<List<RecipientDto>> getRecipients() {
@@ -105,5 +90,10 @@ public class RecipientRepositoryImpl implements RecipientRepository {
         if (oldRecipient != null) {
             recipientDtos.set(recipientDtos.indexOf(oldRecipient), recipient);
         }
+    }
+
+    @Override
+    public RecipientDto getUserById(String id) {
+        return Stream.of(recipientDtos).filter(res -> id.equals(res.getId())).findFirst().get();
     }
 }

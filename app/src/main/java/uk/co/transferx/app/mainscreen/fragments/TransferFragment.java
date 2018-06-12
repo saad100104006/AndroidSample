@@ -58,7 +58,7 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     private final static String GBP = "GBP";
     private final static String UGX = "UGX";
     private List<ExtendedCurrency> currencyList;
-    private EditText sendInput;
+    private EditText sendInput, messageInput;
     private Disposable disposable;
     private Disposable messageDisposable;
     private CustomSpinner recipientSpinner, paymentMethod;
@@ -96,7 +96,7 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
                 .filter(value -> pattern.matcher(value.toString()).matches())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sequence -> presenter.setValueToSend(sequence.toString()));
-        messageDisposable = RxTextView.textChanges(sendInput)
+        messageDisposable = RxTextView.textChanges(messageInput)
                 .debounce(100L, TimeUnit.MILLISECONDS)
                 .filter(val -> !EMPTY.equals(val.toString()))
                 .observeOn(AndroidSchedulers.mainThread())
@@ -160,9 +160,10 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rate = view.findViewById(R.id.exchange_rate);
+        messageInput = view.findViewById(R.id.messageInput);
         sendInput = view.findViewById(R.id.sendInput);
-        calculatedValue = view.findViewById(R.id.receive_input);
-        paymentMethod = view.findViewById(R.id.spinner_choose_method);
+        calculatedValue = view.findViewById(R.id.receiveInput);
+        paymentMethod = view.findViewById(R.id.paymentCard);
         sendNowButton = view.findViewById(R.id.sendNow);
         sendLaterButton = view.findViewById(R.id.sendLater);
         sendNowButton.setOnClickListener(v -> presenter.goToTrasferSummary());

@@ -25,4 +25,6 @@ public interface RecipientRepository {
 
     void upDateUser(final RecipientDto recipient);
 
+    RecipientDto getUserById(final String id);
+
 }
