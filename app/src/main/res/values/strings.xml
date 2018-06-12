@@ -160,6 +160,8 @@
     <string name="security_code">Security Code</string>
     <string name="save_card">Save card</string>
     <string name="card_ending">Ending in %s</string>
+    <string name="transfer_details">Transfer details</string>
+    <string name="cancel">Cancel</string>
 
     <!-- Calendar -->
     <string name="monday">M</string>

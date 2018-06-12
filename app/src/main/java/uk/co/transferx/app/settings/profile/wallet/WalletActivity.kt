@@ -1,12 +1,16 @@
 package uk.co.transferx.app.settings.profile.wallet
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.wallet_activity_layout.*
 import org.jetbrains.anko.toast
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.mainscreen.adapters.SwipeHelper
 import uk.co.transferx.app.pojo.Card
 import uk.co.transferx.app.settings.profile.wallet.adapter.WalletAdapter
 import uk.co.transferx.app.settings.profile.wallet.presenter.WalletActivityPresenter
@@ -30,6 +34,20 @@ class WalletActivity : BaseActivity(), WalletActivityPresenter.WalletActivityUI 
         walletAdapter = WalletAdapter(this)
         cardsView.adapter = walletAdapter
 
+     /*   val button: SwipeHelper.UnderlayButton = SwipeHelper.UnderlayButton("Text",
+            0,
+            ContextCompat.getColor(this@WalletActivity, R.color.red_delete),
+            { showDialogConfirmation(it) })
+        val helper = object : SwipeHelper(cardsView) {
+            override fun instantiateUnderlayButton(
+                viewHolder: RecyclerView.ViewHolder?,
+                underlayButtons: MutableList<UnderlayButton>?
+            ) {
+          //      underlayButtons?.add(button)
+
+            }
+
+        } */
     }
 
     private fun showDialogConfirmation(position: Int) {

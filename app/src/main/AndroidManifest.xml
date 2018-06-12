@@ -123,8 +123,11 @@
             android:name=".settings.profile.wallet.AddCardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".transfersummary.TransferSummaryActivity" />
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".transfersummary.TransferSummaryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

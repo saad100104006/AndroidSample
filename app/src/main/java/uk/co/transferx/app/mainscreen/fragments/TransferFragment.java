@@ -34,9 +34,12 @@ import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.mainscreen.presenters.TransferFragmentPresenter;
 import uk.co.transferx.app.mainscreen.schedule.ScheduleActivity;
 import uk.co.transferx.app.pojo.Card;
+import uk.co.transferx.app.pojo.TransactionCreate;
+import uk.co.transferx.app.transfersummary.TransferSummaryActivity;
 import uk.co.transferx.app.view.CustomSpinner;
 
 import static uk.co.transferx.app.util.Constants.EMPTY;
+import static uk.co.transferx.app.util.Constants.TRANSACTION;
 
 /**
  * Created by sergey on 14.12.17.
@@ -57,6 +60,7 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     private List<ExtendedCurrency> currencyList;
     private EditText sendInput;
     private Disposable disposable;
+    private Disposable messageDisposable;
     private CustomSpinner recipientSpinner, paymentMethod;
     private Pattern pattern = Pattern.compile("^(\\d+\\.)?\\d+$");
     private Button sendNowButton, sendLaterButton;
@@ -92,6 +96,11 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
                 .filter(value -> pattern.matcher(value.toString()).matches())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sequence -> presenter.setValueToSend(sequence.toString()));
+        messageDisposable = RxTextView.textChanges(sendInput)
+                .debounce(100L, TimeUnit.MILLISECONDS)
+                .filter(val -> !EMPTY.equals(val.toString()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(sequence -> presenter.setMessage(sequence.toString()));
     }
 
 
@@ -100,6 +109,9 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
         presenter.detachUI();
         if (disposable != null) {
             disposable.dispose();
+        }
+        if (messageDisposable != null) {
+            messageDisposable.dispose();
         }
         super.onPause();
     }
@@ -148,18 +160,20 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rate = view.findViewById(R.id.exchange_rate);
-        sendInput = view.findViewById(R.id.send_input);
+        sendInput = view.findViewById(R.id.sendInput);
         calculatedValue = view.findViewById(R.id.receive_input);
         paymentMethod = view.findViewById(R.id.spinner_choose_method);
-        sendNowButton = view.findViewById(R.id.send_now);
-        sendLaterButton = view.findViewById(R.id.send_later);
+        sendNowButton = view.findViewById(R.id.sendNow);
+        sendLaterButton = view.findViewById(R.id.sendLater);
+        sendNowButton.setOnClickListener(v -> presenter.goToTrasferSummary());
         sendLaterButton.setOnClickListener(v -> startActivity(new Intent(getContext(), ScheduleActivity.class)));
         paymentMethod.setDataWithHintItem(getResources().getStringArray(R.array.payment_method), getString(R.string.select_a_payment_method));
         paymentMethod.setOnItemSelectedListener((position, object) -> {
-
+            presenter.setCard((Card) object);
         });
-        recipientSpinner = view.findViewById(R.id.spinner_choose_recipients);
+        recipientSpinner = view.findViewById(R.id.SendToRecipient);
         recipientSpinner.setOnItemSelectedListener((position, object) -> {
+            presenter.chooseRecipientForTransfer((RecipientDto) object);
         });
     }
 
@@ -179,10 +193,10 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
 
     @Override
     public void showChoosenRecipient(RecipientDto recipientDto) {
-      //  GlideApp.with(this)
-     //           .load(recipientDto.getImgUrl())
-     //           .placeholder(R.drawable.placeholder)
-    //            .into(photo);
+        //  GlideApp.with(this)
+        //           .load(recipientDto.getImgUrl())
+        //           .placeholder(R.drawable.placeholder)
+        //            .into(photo);
         name.setText(recipientDto.getFullName());
         country.setText(recipientDto.getCountry());
     }
@@ -238,5 +252,20 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     @Override
     public void setCalculatedValueForTransfer(String value) {
         calculatedValue.setText(value);
+    }
+
+    @Override
+    public void setButtonEnabled(boolean isEnabled) {
+        sendNowButton.setEnabled(isEnabled);
+        sendNowButton.setBackground(isEnabled ?
+                ContextCompat.getDrawable(getContext(), R.drawable.oval_button_white) :
+                ContextCompat.getDrawable(getContext(), R.drawable.oval_button_gray));
+    }
+
+    @Override
+    public void sendNowClick(TransactionCreate transactionCreate) {
+        final Intent intent = new Intent(getContext(), TransferSummaryActivity.class);
+        intent.putExtra(TRANSACTION, transactionCreate);
+        startActivity(intent);
     }
 }

@@ -42,7 +42,7 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
         //    generateMockData();
     }
 
-    private void generateMockData() {
+   /* private void generateMockData() {
         transactionDtos.add(new TransactionDto(0, " ", "Ahmet Shakir", "GBP", new BigDecimal("50"), 0, 0, ""));
         transactionDtos.add(new TransactionDto(0, " ", "Tim Hardon", "GBP", new BigDecimal("100"), 0, 0, ""));
         transactionDtos.add(new TransactionDto(0, " ", "Steve Jobs", "GBP", new BigDecimal("1000"), 0, 0, ""));
@@ -53,7 +53,7 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
         transactionDtos.add(new TransactionDto(0, " ", "Kuropatka Warik", "GBP", new BigDecimal("40"), 0, 0, ""));
         transactionDtos.add(new TransactionDto(0, " ", "Piatka Bibik", "GBP", new BigDecimal("430"), 0, 0, ""));
         transactionDtos.add(new TransactionDto(0, " ", "Kakosik Warik", "GBP", new BigDecimal("40"), 0, 0, ""));
-    }
+    } */
 
     @Override
     public void attachUI(ActivityFragmentUI ui) {

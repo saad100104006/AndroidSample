@@ -44,7 +44,7 @@ public class ActivityRecylerViewAdapter extends RecyclerView.Adapter<ActivityRec
         final TransactionDto transactionDto = transactionDtos.get(position);
         holder.amount.setText(context.getString(R.string.amount_with_currency, transactionDto.getAmount().toPlainString(), transactionDto.getCurrency()));
         holder.name.setText(transactionDto.getRecipientName());
-        holder.amount.setCompoundDrawablesWithIntrinsicBounds(0,0, position % 2 == 0 ? R.drawable.ic_in_progress : R.drawable.ic_complete, 0);
+        holder.amount.setCompoundDrawablesWithIntrinsicBounds(0,0, transactionDto.getStatus() ? R.drawable.ic_in_progress : R.drawable.ic_complete, 0);
 
     }
 

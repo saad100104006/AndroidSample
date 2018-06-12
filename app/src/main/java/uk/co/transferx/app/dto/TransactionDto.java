@@ -28,7 +28,7 @@ public class TransactionDto {
         recipientName = recipient.isPresent() ? recipient.get().getFullName() : EMPTY;
     }
 
-    public TransactionDto(int id, String recipientId, String recipientName, String currency, BigDecimal amount, long created, long updated, String status) {
+    public TransactionDto(int id, String recipientId, String recipientName, String currency, BigDecimal amount, String created, String updated, String status) {
         this.id = id;
         this.recipientId = recipientId;
         this.recipientName = recipientName;
@@ -44,8 +44,8 @@ public class TransactionDto {
     private final String recipientName;
     private final String currency;
     private final BigDecimal amount;
-    private final long created;
-    private final long updated;
+    private final String created;
+    private final String updated;
     private final String status;
 
 
@@ -69,11 +69,11 @@ public class TransactionDto {
         return amount;
     }
 
-    public long getCreated() {
+    public String getCreated() {
         return created;
     }
 
-    public long getUpdated() {
+    public String getUpdated() {
         return updated;
     }
 

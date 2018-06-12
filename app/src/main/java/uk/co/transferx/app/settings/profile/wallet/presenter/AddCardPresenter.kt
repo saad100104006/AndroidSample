@@ -78,7 +78,7 @@ class AddCardPresenter @Inject constructor(
     fun saveCard() {
         disposable = cardsApi.addCards(
             tokenManager.token,
-            Card(nameOfCard, cardNumber, cardType.name, expDate, cvc)
+            Card(null, nameOfCard, cardNumber, cardType.name, expDate, cvc)
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

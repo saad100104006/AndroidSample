@@ -2,6 +2,7 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <RelativeLayout
@@ -10,6 +11,32 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white">
 
+            <ImageView
+                android:id="@+id/buttonBackSummary"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/left_right_main_screen"
+                android:layout_marginTop="52dp"
+                android:layout_marginBottom="36dp"
+                android:src="@drawable/ic_back" />
+
+
+            <TextView
+                android:id="@+id/mainTitle"
+                style="@style/CommonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/buttonBackSummary"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:text="@string/transfer_details"
+                android:layout_marginBottom="@dimen/left_right_main_screen"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
 
             <TextView
                 android:id="@+id/title_send"
@@ -17,9 +44,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
+                android:layout_below="@id/mainTitle"
                 android:layout_marginLeft="@dimen/left_right_main_screen"
-                android:layout_marginTop="@dimen/left_right_main_screen"
                 android:text="@string/send_to"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
@@ -46,8 +72,8 @@
                 android:background="@color/black" />
 
 
-            <uk.co.transferx.app.view.CustomSpinner
-                android:id="@+id/spinner_choose_recipients"
+            <TextView
+                android:id="@+id/SendToRecipient"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -58,7 +84,7 @@
                 android:background="@android:color/transparent"
                 android:theme="@style/ThemeSpinner">
 
-            </uk.co.transferx.app.view.CustomSpinner>
+            </TextView>
 
             <TextView
                 android:id="@+id/title_amount_send"
@@ -83,11 +109,11 @@
                 android:layout_marginRight="@dimen/left_right_main_screen"
                 android:text="@string/receive_amount"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="10sp" />
 
-            <EditText
-                android:id="@+id/send_input"
+            <TextView
+                android:id="@+id/sendInput"
                 style="@style/CommonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -95,8 +121,6 @@
                 android:layout_marginLeft="@dimen/left_right_main_screen"
                 android:background="@null"
                 android:gravity="start|center_vertical"
-                android:hint="@string/enter_send_amount"
-                android:inputType="textNoSuggestions|numberDecimal"
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textColorHint="@color/hint"
@@ -111,7 +135,7 @@
                 android:layout_height="40dp"
                 android:layout_below="@id/title_amount_receive"
                 android:layout_marginRight="@dimen/left_right_main_screen"
-                android:layout_toRightOf="@id/send_input"
+                android:layout_toRightOf="@id/sendInput"
                 android:backgroundTint="@android:color/transparent"
                 android:gravity="end|center_vertical"
                 android:maxLines="1"
@@ -123,7 +147,7 @@
                 android:id="@+id/underline_two"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@+id/send_input"
+                android:layout_below="@+id/sendInput"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="@dimen/left_right_main_screen"
                 android:layout_marginRight="@dimen/left_right_main_screen"
@@ -191,8 +215,8 @@
 
 
             <TextView
+                style="@style/CommonStyle"
                 android:id="@+id/spinner_choose_method"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/underline_three"
@@ -245,67 +269,138 @@
                 android:background="@color/black" />
 
 
-            <CheckBox
-                android:id="@+id/auto_pay"
-                android:layout_width="48dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@id/underline_foure"
-                android:layout_marginLeft="@dimen/left_right_main_screen"
-                android:layout_marginRight="@dimen/left_right_main_screen"
-                android:button="@drawable/check_box_selector"
-                android:gravity="center_vertical"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:theme="@style/AutoPay.control" />
-
             <TextView
+                android:id="@+id/schedule"
                 style="@style/CommonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/underline_foure"
                 android:layout_marginLeft="@dimen/left_right_main_screen"
-                android:gravity="center_vertical"
-                android:text="@string/auto_transfer"
+                android:text="@string/schedule"
+                android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="10sp" />
+
+            <Space
+                android:id="@+id/scheduleImg"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_below="@id/schedule"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginTop="10dp" />
+
+            <View
+                android:id="@+id/underline_five"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/scheduleImg"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:background="@color/black" />
+
+
+            <TextView
+                android:id="@+id/sendNowLabel"
+                style="@style/CommonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/underline_five"
+                android:text="Send Now"
+                android:gravity="center_vertical"
+                android:layout_below="@id/schedule"
+                android:textColor="@color/black"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:layout_toRightOf="@id/method_img"
+                android:background="@android:color/transparent">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/repeat"
+                style="@style/CommonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/underline_five"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:text="@string/repeat"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
+
+            <Space
+                android:id="@+id/repeatImg"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_below="@id/repeat"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginTop="10dp" />
+
+            <View
+                android:id="@+id/underline_six"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/repeatImg"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:background="@color/black" />
+
+
+            <TextView
+                android:id="@+id/repeatLabel"
+                style="@style/CommonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/underline_six"
+                android:text="None"
+                android:gravity="center_vertical"
+                android:layout_below="@id/repeat"
+                android:textColor="@color/black"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:layout_toRightOf="@id/method_img"
+                android:background="@android:color/transparent">
+
+            </TextView>
 
             <Button
-                android:id="@+id/send_now"
+                android:id="@+id/sendNow"
                 style="@style/CommonButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:layout_below="@id/auto_pay"
+                android:layout_below="@id/underline_six"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
                 android:layout_marginTop="48dp"
-                android:background="@drawable/oval_button_gray"
+                android:background="@drawable/oval_button_black"
                 android:letterSpacing="0.17"
                 android:lineSpacingExtra="2sp"
                 android:text="@string/send_now"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/send_later"
+                android:id="@+id/sendLater"
                 style="@style/CommonButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:layout_below="@id/send_now"
+                android:layout_below="@id/sendNow"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/oval_button_transparent_gray"
+                android:background="@drawable/oval_button_white"
                 android:letterSpacing="0.17"
                 android:lineSpacingExtra="2sp"
-                android:text="@string/send_later"
-                android:textColor="@color/hint"
+                android:text="@string/cancel"
+                android:textColor="@color/black"
                 android:textSize="12sp" />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_below="@id/send_later" />
+                android:layout_below="@id/sendLater" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>

@@ -1,14 +1,11 @@
 package uk.co.transferx.app.mainscreen.presenters;
 
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.Log;
-import android.widget.LinearLayout;
-
-import com.annimon.stream.Stream;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,12 +20,11 @@ import uk.co.transferx.app.api.CardsApi;
 import uk.co.transferx.app.api.TransactionApi;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.pojo.Card;
+import uk.co.transferx.app.pojo.TransactionCreate;
 import uk.co.transferx.app.recipientsrepository.RecipientRepository;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
 import static java.net.HttpURLConnection.HTTP_OK;
-import static uk.co.transferx.app.util.Constants.CARDS;
-import static uk.co.transferx.app.util.Constants.EMPTY;
 
 /**
  * Created by sergey on 15.12.17.
@@ -39,7 +35,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     private RecipientDto recipientDto;
     private final TransactionApi transactionApi;
     private final TokenManager tokenManager;
-    private BigDecimal rates;
+    private BigDecimal rates = new BigDecimal("4583");
     private String currencyFrom = "GBP";
     private String currencyTo = "UGX";
     private BigDecimal valueToSend;
@@ -49,8 +45,11 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     private List<RecipientDto> recipientDtos = new ArrayList<>();
     private CompositeDisposable compositeDisposable;
     private final SharedPreferences sharedPreferences;
-    private List<String> cards;
+    private String recipient;
+    private String card;
+    private int amount;
     private final CardsApi cardsApi;
+    private String message;
 
     @Inject
     public TransferFragmentPresenter(final TransactionApi transactionApi, final TokenManager tokenManager, final RecipientRepository recipientRepository,
@@ -89,6 +88,22 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         ui.setRecipients(recipientDtos);
     }
 
+    private boolean isDataValid() {
+        return !TextUtils.isEmpty(recipient) && !TextUtils.isEmpty(card) && amount > 0;
+    }
+
+
+    public void setCard(Card card) {
+        this.card = card.getId();
+        if (ui != null) {
+            ui.setButtonEnabled(isDataValid());
+        }
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     private void fetchRate() {
         Log.d("Serge", "currencyTo " + currencyTo + " currency from " + currencyFrom);
         if (currencyTo.equals(currencyFrom)) {
@@ -114,7 +129,6 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         if (compositeDisposable != null) {
             compositeDisposable.dispose();
         }
-
     }
 
     private boolean isShouldFetch() {
@@ -157,7 +171,12 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
 
     public void setValueToSend(String value) {
         valueToSend = new BigDecimal(value).setScale(SCALE_VALUE, BigDecimal.ROUND_HALF_UP);
+        if (ui != null) {
+            amount = valueToSend.intValue();
+            ui.setButtonEnabled(isDataValid());
+        }
         calculateValue();
+
     }
 
     private void calculateValue() {
@@ -167,8 +186,12 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         if (ui != null && calculatedValue != null) {
             ui.setCalculatedValueForTransfer(calculatedValue.toPlainString());
         }
-
     }
+
+    public void chooseRecipientForTransfer(RecipientDto recipientDto) {
+        recipient = recipientDto.getId();
+    }
+
 
     private boolean isCalculate() {
         return rates != null && valueToSend != null;
@@ -178,6 +201,25 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         recipientDto = recipient;
         if (ui != null) {
             ui.showChoosenRecipient(recipientDto);
+        }
+    }
+
+    public void goToTrasferSummary() {
+        if (ui != null) {
+            ui.sendNowClick(new TransactionCreate(
+                    recipient,
+                    calculatedValue.intValue(),
+                    currencyTo,
+                    currencyFrom,
+                    card,
+                    message,
+                    true,
+                    amount,
+                    false,
+                    null,
+                    null,
+                    null
+            ));
         }
     }
 
@@ -195,5 +237,9 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         void setRecipients(List<RecipientDto> recipients);
 
         void setCardToSpinner(List<Card> cards);
+
+        void setButtonEnabled(boolean isEnabled);
+
+        void sendNowClick(TransactionCreate transactionCreate);
     }
 }

@@ -26,4 +26,5 @@ public final class Constants {
     public static final String MODE = "mode";
     public static final String RECIPIENT = "recipient";
     public static final String CARDS = "cards";
+    public static final String TRANSACTION = "transaction";
 }
