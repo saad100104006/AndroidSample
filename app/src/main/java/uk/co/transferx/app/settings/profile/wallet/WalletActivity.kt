@@ -34,20 +34,24 @@ class WalletActivity : BaseActivity(), WalletActivityPresenter.WalletActivityUI 
         walletAdapter = WalletAdapter(this)
         cardsView.adapter = walletAdapter
 
-     /*   val button: SwipeHelper.UnderlayButton = SwipeHelper.UnderlayButton("Text",
-            0,
-            ContextCompat.getColor(this@WalletActivity, R.color.red_delete),
-            { showDialogConfirmation(it) })
         val helper = object : SwipeHelper(cardsView) {
             override fun instantiateUnderlayButton(
-                viewHolder: RecyclerView.ViewHolder?,
+                viewHolder: RecyclerView.ViewHolder,
                 underlayButtons: MutableList<UnderlayButton>?
             ) {
-          //      underlayButtons?.add(button)
-
+                underlayButtons!!.add(
+                    UnderlayButton(
+                        "Text", ContextCompat.getColor(
+                            this@WalletActivity, R.color.red_delete),
+                        object : UnderlayButtonClickListener{
+                            override fun onClick(pos: Int) {
+                                toast("message")
+                            }
+                        }
+                            )
+                    )
             }
-
-        } */
+        }
     }
 
     private fun showDialogConfirmation(position: Int) {

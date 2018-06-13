@@ -84,20 +84,17 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
             public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
                 underlayButtons.add(new SwipeHelper.UnderlayButton(
                         getString(R.string.delete).toUpperCase(),
-                        0,
                         ContextCompat.getColor(getContext(), R.color.red_delete),
                         pos -> showDialogConfirmation(pos)
                 ));
 
                 underlayButtons.add(new SwipeHelper.UnderlayButton(
                         getString(R.string.transfer),
-                        0,
                         ContextCompat.getColor(getContext(), R.color.green),
                         pos -> Toast.makeText(getContext(), "Transfer clicked", Toast.LENGTH_SHORT).show()
                 ));
                 underlayButtons.add(new SwipeHelper.UnderlayButton(
                         getString(R.string.edit),
-                        0,
                         ContextCompat.getColor(getContext(), R.color.gray),
                         pos -> Toast.makeText(getContext(), "Edit clicked", Toast.LENGTH_SHORT).show()
                 ));

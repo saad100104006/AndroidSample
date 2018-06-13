@@ -23,7 +23,7 @@ class TransferSummaryPresenter @Inject constructor(
 
     override fun attachUI(ui: TransferSummaryUI?) {
         super.attachUI(ui)
-        if(!isInitialized) {
+        if (!isInitialized) {
             this.ui?.fillUser(transactionCreate)
             isInitialized = true
             transactionCreate?.card = null
