@@ -14,6 +14,7 @@ public final class Constants {
     public static final String U_NAME = "first_name";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
+    public static final String CREDENTIAL = "credential";
 
     public static final String TOKEN = "tok";
     public static final String LOGGED_IN_STATUS = "logged_in_status";
@@ -27,4 +28,5 @@ public final class Constants {
     public static final String RECIPIENT = "recipient";
     public static final String CARDS = "cards";
     public static final String TRANSACTION = "transaction";
+    public static final String CARD = "card";
 }

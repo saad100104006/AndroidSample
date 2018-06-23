@@ -1,6 +1,7 @@
 package uk.co.transferx.app.settings.profile.wallet.presenter
 
 import android.content.SharedPreferences
+import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -9,6 +10,7 @@ import uk.co.transferx.app.BasePresenter
 import uk.co.transferx.app.UI
 import uk.co.transferx.app.api.CardsApi
 import uk.co.transferx.app.pojo.Card
+import uk.co.transferx.app.settings.profile.wallet.CardMode
 import uk.co.transferx.app.settings.profile.wallet.CardType
 import uk.co.transferx.app.tokenmanager.TokenManager
 import uk.co.transferx.app.util.Constants.CARDS
@@ -31,6 +33,17 @@ class AddCardPresenter @Inject constructor(
     private var isVisa: Boolean = false
     private var isMasterCard = false
     private var disposable: Disposable? = null
+    private var cardMode = CardMode.ADD
+    private var card: Card? = null
+
+
+    override fun attachUI(ui: AddCardUI?) {
+        super.attachUI(ui)
+        if (cardMode == CardMode.EDIT) {
+            ui?.setCard(card)
+        }
+
+    }
 
     override fun detachUI() {
         disposable?.dispose()
@@ -43,6 +56,20 @@ class AddCardPresenter @Inject constructor(
         isMasterCard = "^5[1-5][0-9]{14}\$".toRegex().matches(cardNumber)
         validateData()
 
+    }
+
+    fun setMode(cardMode: CardMode) {
+        this.cardMode = cardMode
+    }
+
+    fun setCard(card: Card) {
+        this.card = card
+        nameOfCard = card.name
+        expDate = card.expDate
+        cardNumber = card.number
+        isVisa = "^4[0-9]{12}(?:[0-9]{3})?$".toRegex().matches(card.number)
+        isMasterCard = "^5[1-5][0-9]{14}\$".toRegex().matches(card.number)
+        cvc = card.cvc
     }
 
     fun setNameOfCard(nameOfCard: String) {
@@ -82,18 +109,29 @@ class AddCardPresenter @Inject constructor(
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ resp ->
-                val cards = sharedPreferences.getStringSet(CARDS, HashSet<String>())
-                cards.add(resp.id)
-                sharedPreferences.edit().putStringSet(CARDS, cards).apply()
-                ui?.goBack()
-            }, { ui?.error() })
+            .subscribe({ ui?.goBack() }, { ui?.error() })
+    }
+
+    fun saveEditedCard() {
+        val editedCard = Card(null, nameOfCard, cardNumber, cardType.name, expDate, cvc)
+        if (isCardsTheSame(editedCard)) {
+            ui?.goBack()
+            return
+        }
+        disposable = cardsApi.saveEditedCard(tokenManager.token, card?.id, editedCard)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ ui?.goBack() }, { ui?.error() })
+
+    }
+
+    private fun isCardsTheSame(newCard: Card): Boolean {
+        return newCard.name == card?.name && newCard.expDate == card?.expDate
+                && newCard.number == card?.number && newCard.cvc == card?.cvc
     }
 
     private fun isValid(): Boolean {
-        return cardNumber.length == 16 &&
-                (isVisa || isMasterCard)
-                && cvc.length == 3
+        return cardNumber.length == 16 && (isVisa || isMasterCard) && cvc.length == 3 && "^(0[1-9]|1[0-2])\\/?([0-9]{4}|[0-9]{2})$".toRegex().matches(expDate)
     }
 
 
@@ -101,5 +139,6 @@ class AddCardPresenter @Inject constructor(
         fun setButtonEnabled(isEnabled: Boolean)
         fun goBack()
         fun error()
+        fun setCard(card: Card?)
     }
 }

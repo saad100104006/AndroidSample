@@ -141,12 +141,12 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
 
     @Override
     public void goToSignUp() {
-        SignUpActivity.startSignUp(getActivity());
+        SignUpActivity.startSignUp(getActivity(), null);
     }
 
     @Override
-    public void goToPinView() {
-        SignUpActivity.startSignUp(getActivity(), 2);
+    public void goToPinView(final String email, final String password) {
+        SignUpActivity.startSignUp(getActivity(), 2, email, password);
     }
 
     @Override

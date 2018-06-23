@@ -1,13 +1,13 @@
 package uk.co.transferx.app.api;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import uk.co.transferx.app.pojo.Token;
-import uk.co.transferx.app.pojo.UserRequest;
 import uk.co.transferx.app.pojo.UserSignIn;
 
 /**
@@ -18,11 +18,17 @@ public interface SignInOutApi {
 
 
     @POST("/v1/auth/user/login")
-    Observable<Response<Token>> signIn(@Header("Authorization") String token, @Body UserSignIn request);
+    Single<Response<Token>> signIn(@Header("Authorization") String token, @Body UserSignIn request);
 
 
     @POST("/v1/auth/user/logout")
-    Observable<Response<ResponseBody>> logOut(@Header("Authorization") String token);
+    Single<Response<ResponseBody>> logOut(@Header("Authorization") String token);
+
+    @POST("/v1/auth/user/forgot/{mail}")
+    Single<Response<ResponseBody>> forgotEmail(@Header("Authorization") String token, @Path("mail") String mail);
+
+    @POST("/v1/auth/client/refresh")
+    Single<Response<ResponseBody>> refreshToken(@Header("Authorization") String token);
 
 
 }

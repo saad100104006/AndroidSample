@@ -16,11 +16,16 @@ import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
+import uk.co.transferx.app.pojo.Recipient;
 import uk.co.transferx.app.signup.fragment.SignUpStepOneFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepThreeFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepTwoFragment;
 
+import static uk.co.transferx.app.util.Constants.CREDENTIAL;
+import static uk.co.transferx.app.util.Constants.EMAIL;
+import static uk.co.transferx.app.util.Constants.PASSWORD;
 import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
+import static uk.co.transferx.app.util.Constants.U_NAME;
 
 /**
  * Created by smilevkiy on 15.11.17.
@@ -28,14 +33,21 @@ import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
 
 public class SignUpActivity extends BaseActivity {
 
-    public static void startSignUp(Activity activity) {
-        activity.startActivity(new Intent(activity, SignUpActivity.class));
+    public static void startSignUp(Activity activity, Bundle bundle) {
+        final Intent intent = new Intent(activity, SignUpActivity.class);
+        if (bundle != null) {
+            intent.putExtra(CREDENTIAL, bundle);
+        }
+        activity.startActivity(intent);
         activity.finish();
     }
 
-    public static void startSignUp(Activity activity, int fragmentNumber) {
+    public static void startSignUp(Activity activity, int fragmentNumber, final String email, final String password) {
+        final Bundle bundle = new Bundle();
+        bundle.putString(EMAIL, email);
+        bundle.putString(PASSWORD, password);
         currentFragment = fragmentNumber;
-        startSignUp(activity);
+        startSignUp(activity, bundle);
 
     }
 
@@ -50,13 +62,19 @@ public class SignUpActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((TransferXApplication) (getApplication())).getAppComponent().inject(this);
+        final Intent intent = getIntent();
+        final Bundle bundle = intent.getBundleExtra(CREDENTIAL);
         setContentView(R.layout.signup_activity_layout);
         pageIndicatorView = findViewById(R.id.page_indicator);
         sparseArray.put(0, new SignUpStepOneFragment());
         sparseArray.put(1, new SignUpStepTwoFragment());
         sparseArray.put(2, new SignUpStepThreeFragment());
+        final BaseFragment fragment = sparseArray.get(currentFragment);
+        if (bundle != null) {
+            fragment.setArguments(bundle);
+        }
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, sparseArray.get(currentFragment), sparseArray.get(currentFragment).getTag());
+        ft.replace(R.id.container, fragment, sparseArray.get(currentFragment).getTag());
         ft.commit();
         pageIndicatorView.setSelection(currentFragment);
     }

@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +18,22 @@ import android.widget.TextView;
 import uk.co.transferx.app.R;
 
 import static android.app.Activity.RESULT_OK;
+import static uk.co.transferx.app.settings.profile.wallet.WalletActivity.DELETE_CARD;
 import static uk.co.transferx.app.util.Constants.EMPTY;
 
 public class ConfirmationDialogFragment extends DialogFragment {
 
     public static final String MESSAGE = "message";
     public static final String ADDITIONAL_DATA = "additional_data";
+    public static final String POSITION = "position";
     private String message;
     private int position;
     private String id;
+
+    public interface CallBackInterfaceDialog {
+        void onSucces();
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,8 +41,8 @@ public class ConfirmationDialogFragment extends DialogFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             message = bundle.getString(MESSAGE, EMPTY);
-            position = bundle.getInt(ADDITIONAL_DATA, -1);
-            id = bundle.getString(ADDITIONAL_DATA);
+            position = bundle.getInt(POSITION, -1);
+            id = bundle.getString(ADDITIONAL_DATA, null);
         }
     }
 
@@ -53,11 +62,20 @@ public class ConfirmationDialogFragment extends DialogFragment {
 
     private void clickOkButton() {
         Fragment fragment = getTargetFragment();
+        Intent intent;
         if (fragment != null) {
-            Intent intent = new Intent();
-            intent.putExtra(ADDITIONAL_DATA, id == null ? position : id);
+            intent = new Intent();
+            intent.putExtra(ADDITIONAL_DATA, id);
+            intent.putExtra(POSITION, position);
             fragment.onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+        } else {
+            Log.d("Serge", "confirmation fragment else");
+            intent = new Intent(DELETE_CARD);
+            intent.putExtra(POSITION, position);
+            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(
+                    intent);
         }
+
         dismiss();
     }
 

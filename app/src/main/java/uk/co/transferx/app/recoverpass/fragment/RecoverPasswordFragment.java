@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -118,5 +119,10 @@ public class RecoverPasswordFragment extends BaseFragment implements RecoverPass
     @Override
     public void goBackToMain() {
         getActivity().finish();
+    }
+
+    @Override
+    public void error() {
+        Toast.makeText(getContext(), "Error occurred", Toast.LENGTH_SHORT).show();
     }
 }

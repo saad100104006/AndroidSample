@@ -126,6 +126,7 @@
     <string name="empty_list_recipients_desc">You have not yet set up any recipients. In order to transfer money to someone, you’ll have to set them up as a recipient.
         \n \n Let us help you get started with that.</string>
     <string name="delete_user_message">Are you sure you want to delete \n%s as a recipient?</string>
+    <string name="card_delete_message">Are you sure you want to delete this payment method?</string>
     <string name="phone">phone</string>
     <string name="save_changes">Save Changes</string>
     <string name="yes">yes</string>
@@ -162,6 +163,7 @@
     <string name="card_ending">Ending in %s</string>
     <string name="transfer_details">Transfer details</string>
     <string name="cancel">Cancel</string>
+    <string name="edit_card">Edit this card</string>
 
     <!-- Calendar -->
     <string name="monday">M</string>

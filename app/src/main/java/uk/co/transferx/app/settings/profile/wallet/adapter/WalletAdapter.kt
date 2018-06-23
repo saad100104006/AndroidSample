@@ -1,26 +1,22 @@
 package uk.co.transferx.app.settings.profile.wallet.adapter
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import org.jetbrains.anko.startActivity
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.pojo.Card
 import uk.co.transferx.app.settings.profile.wallet.AddCardActivity
-import uk.co.transferx.app.settings.profile.wallet.CardType
+import uk.co.transferx.app.settings.profile.wallet.CardMode
+import uk.co.transferx.app.util.Constants.MODE
 
 
 class WalletAdapter(private val activity: BaseActivity) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    companion object {
-        const val EMPTY_HEADER: Int = 10
-        const val FOOTER: Int = 20
-        const val ITEM: Int = 30
-    }
 
-    private var paymentCards: List<Card> = emptyList()
+    private var paymentCards: MutableList<Card> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             RecyclerView.ViewHolder = when (viewType) {
@@ -33,7 +29,11 @@ class WalletAdapter(private val activity: BaseActivity) :
                 parent,
                 false
             ),
-            { activity.startActivity<AddCardActivity>() }
+            {
+                val intent = Intent(activity, AddCardActivity::class.java)
+                intent.putExtra(MODE, CardMode.ADD.ordinal)
+                activity.startActivity(intent)
+            }
         )
 
         ITEM -> ItemHolder(
@@ -54,11 +54,8 @@ class WalletAdapter(private val activity: BaseActivity) :
 
         }
         is ItemHolder -> {
-            val numberCard = paymentCards[position]
+            holder.bindata(paymentCards[position])
 
-            holder.bindata(numberCard.toString())
-            val cardType = if(CardType.VISA == CardType.valueOf(numberCard.type.capitalize())) R.drawable.ic_visa else R.drawable.ic_master_card
-            holder.card.setCompoundDrawablesWithIntrinsicBounds(cardType, 0, 0, 0)
         }
 
         is EmptyHeaderHolder -> {
@@ -67,8 +64,19 @@ class WalletAdapter(private val activity: BaseActivity) :
     }
 
     fun setCards(cards: List<Card>) {
-        paymentCards = cards
+        paymentCards = cards.toMutableList()
         notifyDataSetChanged()
+    }
+
+    fun getCard(position: Int): Card {
+        return paymentCards[position]
+
+    }
+
+    fun deleteCard(card: Card) {
+        val itemPosition = paymentCards.indexOf(card)
+        paymentCards.remove(card)
+        notifyItemRemoved(itemPosition)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -82,5 +90,11 @@ class WalletAdapter(private val activity: BaseActivity) :
             return FOOTER
         }
         return ITEM
+    }
+
+    companion object {
+        const val EMPTY_HEADER: Int = 10
+        const val FOOTER: Int = 20
+        const val ITEM: Int = 30
     }
 }

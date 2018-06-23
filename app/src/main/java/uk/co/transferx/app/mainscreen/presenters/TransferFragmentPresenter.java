@@ -44,7 +44,6 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     private final RecipientRepository recipientRepository;
     private List<RecipientDto> recipientDtos = new ArrayList<>();
     private CompositeDisposable compositeDisposable;
-    private final SharedPreferences sharedPreferences;
     private RecipientDto recipient;
     private Card card;
     private int amount;
@@ -53,11 +52,10 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
 
     @Inject
     public TransferFragmentPresenter(final TransactionApi transactionApi, final TokenManager tokenManager, final RecipientRepository recipientRepository,
-                                     final SharedPreferences sharedPreferences, final CardsApi cardsApi) {
+                                     final CardsApi cardsApi) {
         this.transactionApi = transactionApi;
         this.tokenManager = tokenManager;
         this.recipientRepository = recipientRepository;
-        this.sharedPreferences = sharedPreferences;
         compositeDisposable = new CompositeDisposable();
         this.cardsApi = cardsApi;
     }
@@ -166,7 +164,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                                 ui.setCardToSpinner(cards.getCards());
                             }
                         }
-                ));
+                        , throwable -> Log.e(TransferFragmentPresenter.class.getSimpleName(), "error ", throwable)));
     }
 
     public void setValueToSend(String value) {

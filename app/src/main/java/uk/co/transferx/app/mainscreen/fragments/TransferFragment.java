@@ -170,6 +170,9 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
         sendLaterButton.setOnClickListener(v -> startActivity(new Intent(getContext(), ScheduleActivity.class)));
         paymentMethod.setDataWithHintItem(getResources().getStringArray(R.array.payment_method), getString(R.string.select_a_payment_method));
         paymentMethod.setOnItemSelectedListener((position, object) -> {
+            if(object == null || !(object instanceof Card)){
+                return;
+            }
             presenter.setCard((Card) object);
         });
         recipientSpinner = view.findViewById(R.id.SendToRecipient);

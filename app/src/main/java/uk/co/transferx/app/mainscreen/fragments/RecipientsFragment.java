@@ -33,6 +33,7 @@ import static uk.co.transferx.app.util.Constants.MODE;
 import static uk.co.transferx.app.util.Constants.RECIPIENT;
 import static uk.co.transferx.app.view.ConfirmationDialogFragment.MESSAGE;
 import static uk.co.transferx.app.view.ConfirmationDialogFragment.ADDITIONAL_DATA;
+import static uk.co.transferx.app.view.ConfirmationDialogFragment.POSITION;
 
 /**
  * Created by sergey on 17.12.17.
@@ -107,7 +108,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
         ConfirmationDialogFragment dialogFragment = new ConfirmationDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putString(MESSAGE, getString(R.string.delete_user_message, verticalRecyclerAdapter.getRecipient(position).toString()));
-        bundle.putInt(ADDITIONAL_DATA, position);
+        bundle.putInt(POSITION, position);
         dialogFragment.setArguments(bundle);
         dialogFragment.setTargetFragment(this, DELETE_USER);
         dialogFragment.setCancelable(false);
@@ -158,7 +159,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
             Log.d("Serge", "onResult");
         }
         if (requestCode == DELETE_USER) {
-            int position = data.getIntExtra(ADDITIONAL_DATA, DEFAULT_VALUE);
+            int position = data.getIntExtra(POSITION, DEFAULT_VALUE);
             if (position != DEFAULT_VALUE) {
                 presenter.deleteRecipient(verticalRecyclerAdapter.getRecipient(position));
             }

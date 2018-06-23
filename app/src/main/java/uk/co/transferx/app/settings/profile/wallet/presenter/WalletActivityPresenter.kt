@@ -1,12 +1,14 @@
 package uk.co.transferx.app.settings.profile.wallet.presenter
 
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import uk.co.transferx.app.BasePresenter
 import uk.co.transferx.app.UI
 import uk.co.transferx.app.api.CardsApi
 import uk.co.transferx.app.pojo.Card
 import uk.co.transferx.app.tokenmanager.TokenManager
+import java.net.HttpURLConnection
 import javax.inject.Inject
 
 class WalletActivityPresenter @Inject constructor(
@@ -14,22 +16,43 @@ class WalletActivityPresenter @Inject constructor(
     private val cardsApi: CardsApi
 ) : BasePresenter<WalletActivityPresenter.WalletActivityUI>() {
 
+    private var compositeDisposable: CompositeDisposable? = null
+
     override fun attachUI(ui: WalletActivityUI?) {
         super.attachUI(ui)
+        compositeDisposable = CompositeDisposable()
         setCards()
     }
 
+    override fun detachUI() {
+        super.detachUI()
+        compositeDisposable?.dispose()
+    }
+
     private fun setCards() {
-        cardsApi.getCards(tokenManager.token)
+        compositeDisposable?.add(cardsApi.getCards(tokenManager.token)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ resp -> ui?.fillCardsOnUI(resp.cards) }, { ui?.error(it) })
-
+        )
 
     }
+
+    fun deleteCard(card: Card) {
+        compositeDisposable?.add(
+            cardsApi.deleteCard(tokenManager.token, card.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { resp -> if (resp.code() == HttpURLConnection.HTTP_OK) ui?.deleteCard(card) },
+                    { ui?.error(it) })
+        )
+    }
+
 
     interface WalletActivityUI : UI {
         fun fillCardsOnUI(cards: List<Card>)
         fun error(throwable: Throwable)
+        fun deleteCard(card: Card)
     }
 }

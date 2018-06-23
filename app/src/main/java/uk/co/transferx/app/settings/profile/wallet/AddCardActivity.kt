@@ -12,7 +12,10 @@ import org.jetbrains.anko.toast
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.pojo.Card
 import uk.co.transferx.app.settings.profile.wallet.presenter.AddCardPresenter
+import uk.co.transferx.app.util.Constants.CARD
+import uk.co.transferx.app.util.Constants.MODE
 import uk.co.transferx.app.util.CreditCardNumberFormattingTextWatcher
 import uk.co.transferx.app.util.DataCardFormatter
 import java.util.concurrent.TimeUnit
@@ -20,7 +23,7 @@ import javax.inject.Inject
 
 class AddCardActivity : BaseActivity(), AddCardPresenter.AddCardUI {
 
-    lateinit var creditCardNumberFormattingTextWatcher: CreditCardNumberFormattingTextWatcher
+    private lateinit var creditCardNumberFormattingTextWatcher: CreditCardNumberFormattingTextWatcher
     private val dataCardFormatter = DataCardFormatter()
     @Inject
     lateinit var presenter: AddCardPresenter
@@ -30,10 +33,20 @@ class AddCardActivity : BaseActivity(), AddCardPresenter.AddCardUI {
         super.onCreate(savedInstanceState)
         (application as TransferXApplication).appComponent.inject(this)
         setContentView(R.layout.add_card_activity)
+        val intent = intent
+        val cardMode = CardMode.values()[intent.getIntExtra(MODE, 0)]
+        presenter.setMode(cardMode)
         ButtonBackCard.setOnClickListener { finish() }
         creditCardNumberFormattingTextWatcher = CreditCardNumberFormattingTextWatcher(cardNumber)
         dataCardFormatter.setLister { presenter.setExpirationDate(it) }
         creditCardNumberFormattingTextWatcher.setLister { presenter.setCardNumber(it) }
+        if(cardMode == CardMode.EDIT){
+            saveCard.text = getString(R.string.save_changes)
+            presenter.setCard(intent.getParcelableExtra(CARD))
+            mainCardTitle.text = getString(R.string.edit_card)
+            saveCard.setOnClickListener({ presenter.saveEditedCard() })
+            return
+        }
         saveCard.setOnClickListener({ presenter.saveCard() })
 
     }
@@ -75,6 +88,14 @@ class AddCardActivity : BaseActivity(), AddCardPresenter.AddCardUI {
 
     override fun goBack() {
         finish()
+    }
+
+    override fun setCard(card: Card?) {
+        nameOnCard.setText(card?.name)
+        cardNumber.setText(card?.getFormattedNumber())
+        securityCode.setText(card?.cvc)
+        ExpirationDate.setText(card?.expDate)
+
     }
 
     override fun error() {

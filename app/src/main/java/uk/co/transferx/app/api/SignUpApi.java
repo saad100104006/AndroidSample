@@ -1,6 +1,7 @@
 package uk.co.transferx.app.api;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -21,6 +22,6 @@ public interface SignUpApi {
 
 
     @POST("/v1/auth/user")
-    Observable<Response<Token>> registerUser(@Header("Authorization") String token, @Body UserRequest request);
+    Single<Response<Token>> registerUser(@Header("Authorization") String token, @Body UserRequest request);
 
 }
