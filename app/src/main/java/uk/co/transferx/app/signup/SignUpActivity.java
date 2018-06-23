@@ -20,6 +20,7 @@ import uk.co.transferx.app.pojo.Recipient;
 import uk.co.transferx.app.signup.fragment.SignUpStepOneFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepThreeFragment;
 import uk.co.transferx.app.signup.fragment.SignUpStepTwoFragment;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 import static uk.co.transferx.app.util.Constants.CREDENTIAL;
 import static uk.co.transferx.app.util.Constants.EMAIL;
@@ -103,7 +104,8 @@ public class SignUpActivity extends BaseActivity {
         }
         switch (currentFragment) {
             case 0:
-                super.onBackPressed();
+                startActivity(new Intent(SignUpActivity.this, WelcomeActivity.class));
+                finish();
                 break;
             case 1:
                 showNextOrPreviousFragment(0, null);
