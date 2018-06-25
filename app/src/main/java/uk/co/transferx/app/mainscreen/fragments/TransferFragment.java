@@ -79,6 +79,10 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     public void onCreate(@Nullable Bundle savedInstanceState) {
         ((TransferXApplication) getActivity().getApplication()).getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
+        final Bundle bundle = getArguments();
+        if (bundle != null) {
+            presenter.chooseRecipientForTransfer(bundle.getParcelable(RECIPIENT));
+        }
     /*    if (savedInstanceState != null && view != null) {
             presenter.setCurrencyFrom(currencyCodeFirst.getText().toString());
             presenter.setCurrencyTo(currencyCodeSecond.getText().toString());
@@ -119,39 +123,6 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-      /*  if (view == null) {
-            view = inflater.inflate(R.layout.transfer_fragment_layout, container, false);
-            // AppCompatSpinner chooseDelivery = view.findViewById(R.id.delivery_method);
-            view.findViewById(R.id.send_container).setOnClickListener(v -> {
-                if (v instanceof EditText) {
-                    return;
-                }
-                hideKeyboard(v);}
-            );
-            final CardView recipient = view.findViewById(R.id.recipient_container);
-            final ImageView countryFlagFirst = view.findViewById(R.id.country_flag_first);
-            final ImageView countryFlagSecond = view.findViewById(R.id.country_flag_second);
-            currencyCodeFirst = view.findViewById(R.id.first_currency);
-            currencyCodeSecond = view.findViewById(R.id.second_currency);
-            currencyAmountSender = view.findViewById(R.id.amount_sender);
-            currencyAmountRecipient = view.findViewById(R.id.amount_recipient);
-            photo = view.findViewById(R.id.photo);
-            name = view.findViewById(R.id.name);
-            country = view.findViewById(R.id.country);
-            rate = view.findViewById(R.id.rate_value);
-            recipient.setOnClickListener(view -> presenter.clickMainRecipient());
-            setUpInitialValue(currencyCodeFirst, countryFlagFirst, GBP);
-            presenter.setCurrencyFrom(GBP);
-            setUpInitialValue(currencyCodeSecond, countryFlagSecond, UGX);
-            presenter.setCurrencyTo(UGX);
-            currencyAmountSender.setText(INITIAL_VALUE);
-            presenter.setValueToSend(INITIAL_VALUE);
-            currencyCodeFirst.setOnClickListener(v -> showCurrencyPicker((TextView) v, countryFlagFirst));
-            currencyCodeSecond.setOnClickListener(v -> showCurrencyPicker((TextView) v, countryFlagSecond));
-            //  ArrayAdapter<String> deliveryMethodAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item, getResources().getStringArray(R.array.delivery_method));
-            //  deliveryMethodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            //  chooseDelivery.setAdapter(deliveryMethodAdapter);
-        } */
         return inflater.inflate(R.layout.transfer_fragment_layout, container, false);
 
     }
@@ -170,7 +141,7 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
         sendLaterButton.setOnClickListener(v -> startActivity(new Intent(getContext(), ScheduleActivity.class)));
         paymentMethod.setDataWithHintItem(getResources().getStringArray(R.array.payment_method), getString(R.string.select_a_payment_method));
         paymentMethod.setOnItemSelectedListener((position, object) -> {
-            if(object == null || !(object instanceof Card)){
+            if (object == null || !(object instanceof Card)) {
                 return;
             }
             presenter.setCard((Card) object);
@@ -196,19 +167,13 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     }
 
     @Override
-    public void showChoosenRecipient(RecipientDto recipientDto) {
+    public void showChoosenRecipient(RecipientDto recipientDto, int position) {
         //  GlideApp.with(this)
         //           .load(recipientDto.getImgUrl())
         //           .placeholder(R.drawable.placeholder)
         //            .into(photo);
-        name.setText(recipientDto.getFullName());
-        country.setText(recipientDto.getCountry());
-    }
+        recipientSpinner.setSelection(position);
 
-    private void setUpInitialValue(final TextView codeText, final ImageView flag, String currencyName) {
-        ExtendedCurrency currency = ExtendedCurrency.getCurrencyByISO(currencyName);
-        codeText.setText(currency.getCode());
-        flag.setImageDrawable(ContextCompat.getDrawable(flag.getContext(), currency.getFlag()));
     }
 
     @Override
@@ -220,27 +185,6 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
             }
             presenter.setRecipient(data.getParcelableExtra(RECIPIENT));
         }
-    }
-
-    private void showCurrencyPicker(final TextView textView, final ImageView imageView) {
-        final CurrencyPicker currencyPicker = CurrencyPicker.newInstance(getString(R.string.select_currency_title));
-        if (currencyList == null) {
-            currencyList = new ArrayList<>(2);
-            currencyList.add(ExtendedCurrency.getCurrencyByISO(GBP));
-            currencyList.add(ExtendedCurrency.getCurrencyByISO(UGX));
-        }
-        currencyPicker.setCurrenciesList(currencyList);
-        currencyPicker.setListener((name, code, symbol, flagDrawableResID) -> {
-            if (textView.equals(currencyCodeFirst)) {
-                presenter.setCurrencyFrom(code);
-            } else {
-                presenter.setCurrencyTo(code);
-            }
-            textView.setText(code);
-            imageView.setImageDrawable(ContextCompat.getDrawable(imageView.getContext(), flagDrawableResID));
-            currencyPicker.dismiss();
-        });
-        currencyPicker.show(getActivity().getSupportFragmentManager(), CURRENCY_PICKER);
     }
 
     @Override

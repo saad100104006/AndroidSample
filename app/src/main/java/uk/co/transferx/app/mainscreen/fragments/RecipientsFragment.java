@@ -21,6 +21,7 @@ import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
+import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.mainscreen.adapters.RecipientVerticalRecyclerAdapter;
 import uk.co.transferx.app.mainscreen.adapters.SwipeHelper;
 import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
@@ -92,12 +93,12 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
                 underlayButtons.add(new SwipeHelper.UnderlayButton(
                         getString(R.string.transfer),
                         ContextCompat.getColor(getContext(), R.color.green),
-                        pos -> Toast.makeText(getContext(), "Transfer clicked", Toast.LENGTH_SHORT).show()
+                        pos -> presenter.goToTransfer(pos)
                 ));
                 underlayButtons.add(new SwipeHelper.UnderlayButton(
                         getString(R.string.edit),
                         ContextCompat.getColor(getContext(), R.color.gray),
-                        pos -> Toast.makeText(getContext(), "Edit clicked", Toast.LENGTH_SHORT).show()
+                        pos -> presenter.editRecipient(Mode.EDIT, pos)
                 ));
             }
         };
@@ -148,14 +149,17 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     }
 
     @Override
-    public void addToFavorite(RecipientDto recipientDto) {
+    public void goToTransfer(RecipientDto recipientDto) {
+        final Bundle bundle = new Bundle();
+        bundle.putParcelable(RECIPIENT, recipientDto);
+        ((MainActivity) getActivity()).selectScreen(R.id.transfer, bundle);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_CHANGE_RECIPIENT && resultCode == RESULT_OK) {
-           presenter.attachUI(this);
+            presenter.attachUI(this);
             Log.d("Serge", "onResult");
         }
         if (requestCode == DELETE_USER) {
@@ -164,11 +168,6 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
                 presenter.deleteRecipient(verticalRecyclerAdapter.getRecipient(position));
             }
         }
-    }
-
-    @Override
-    public void updateFavoriteRecipients() {
-
     }
 
     @Override

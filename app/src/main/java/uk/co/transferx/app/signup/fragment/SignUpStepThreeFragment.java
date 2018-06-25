@@ -40,12 +40,11 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
 
     @Inject
     SignUpStepThreePresenter presenter;
-    @Inject
-    SharedPreferences sharedPreferences;
     private PinView firstPinView, secondPinView;
     private TextView firsLabelPin, secondLabelPin;
     private ImageView backButton;
     private TextWatcher firstPinWatcher, secondPinWatcher;
+    private boolean reEnterPin;
 
     @Override
     public String tagName() {
@@ -60,6 +59,7 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
         Bundle bundle = getArguments();
         if (bundle != null) {
             presenter.setCredential(bundle.getString(U_NAME), bundle.getString(EMAIL), bundle.getString(PASSWORD));
+            reEnterPin = bundle.getBoolean(PIN_SHOULD_BE_INPUT, false);
         }
     }
 
@@ -82,7 +82,7 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
             getActivity().onBackPressed();
         });
         buttonNext = view.findViewById(R.id.sign_in);
-        buttonNext.setText(sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) ? R.string.sign_in : R.string.register);
+        buttonNext.setText(reEnterPin ? R.string.sign_in : R.string.register);
         buttonNext.setOnClickListener(v -> presenter.validatePin());
         firstPinView.setAnimationEnable(true);
         secondPinView.setAnimationEnable(true);
@@ -105,7 +105,7 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
     public void goToMainScreen() {
         Activity activity = getActivity();
         if (activity != null) {
-            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)) {
+            if (reEnterPin) {
                 MainActivity.startMainActivity(activity);
                 activity.finish();
                 return;

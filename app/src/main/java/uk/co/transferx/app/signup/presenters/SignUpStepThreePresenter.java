@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
 
-import io.reactivex.Completable;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -24,8 +22,6 @@ import static uk.co.transferx.app.util.Constants.CREDENTIAL;
 import static uk.co.transferx.app.util.Constants.EMAIL;
 import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
 import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
-import static uk.co.transferx.app.util.Constants.SPACE;
-import static uk.co.transferx.app.util.Constants.TOKEN;
 import static uk.co.transferx.app.util.Constants.UNDERSCORE;
 
 /**
@@ -130,8 +126,8 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
                             .upass(password).build())
                     .doOnSuccess(resp -> {
                         if (resp.code() == HttpsURLConnection.HTTP_OK) {
-                           final String encCred = cryptoManager.getEncryptedCredential(email + UNDERSCORE + password, firstPin);
-                           sharedPreferences.edit().putString(CREDENTIAL, encCred).apply();
+                            final String encryptedCredential = cryptoManager.getEncryptedCredential(email + UNDERSCORE + password, firstPin);
+                            sharedPreferences.edit().putString(CREDENTIAL, encryptedCredential).apply();
                         }
                     })
                     .subscribeOn(Schedulers.io())

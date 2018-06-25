@@ -47,6 +47,7 @@ public class SignUpActivity extends BaseActivity {
         final Bundle bundle = new Bundle();
         bundle.putString(EMAIL, email);
         bundle.putString(PASSWORD, password);
+        bundle.putBoolean(PIN_SHOULD_BE_INPUT, true);
         currentFragment = fragmentNumber;
         startSignUp(activity, bundle);
 

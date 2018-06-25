@@ -79,11 +79,21 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                         recipientDtos.addAll(recip);
                         if (ui != null) {
                             ui.setRecipients(recipientDtos);
+                            setChoosetRecipient();
+
                         }
                     }, throwable -> Log.e(TransferFragmentPresenter.class.getSimpleName(), "Error ", throwable)));
             return;
         }
-        ui.setRecipients(recipientDtos);
+        this.ui.setRecipients(recipientDtos);
+    }
+
+    private void setChoosetRecipient(){
+        if(recipient == null){
+            return;
+        }
+        ui.showChoosenRecipient(recipient, recipientDtos.indexOf(recipient));
+
     }
 
     private boolean isDataValid() {
@@ -197,9 +207,6 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
 
     public void setRecipient(RecipientDto recipient) {
         recipientDto = recipient;
-        if (ui != null) {
-            ui.showChoosenRecipient(recipientDto);
-        }
     }
 
     public void goToTrasferSummary() {
@@ -230,7 +237,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
 
         void showDialogRecipients();
 
-        void showChoosenRecipient(RecipientDto recipientDto);
+        void showChoosenRecipient(RecipientDto recipientDto, int position);
 
         void setCalculatedValueForTransfer(String value);
 

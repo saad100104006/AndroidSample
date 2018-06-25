@@ -98,6 +98,18 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
         }
     }
 
+    public void editRecipient(Mode mode, int position) {
+        if (ui != null) {
+            ui.addRecipient(mode, recipientDtoList.get(position));
+        }
+    }
+
+    public void goToTransfer(int position) {
+        if (ui != null) {
+            ui.goToTransfer(recipientDtoList.get(position));
+        }
+    }
+
     @Override
     public void detachUI() {
         super.detachUI();
@@ -116,9 +128,7 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
 
         void setRecipients(List<RecipientDto> recipientDtos);
 
-        void addToFavorite(RecipientDto recipientDto);
-
-        void updateFavoriteRecipients();
+        void goToTransfer(RecipientDto recipientDto);
 
         void showError();
 

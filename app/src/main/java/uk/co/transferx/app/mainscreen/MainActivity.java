@@ -29,6 +29,7 @@ public class MainActivity extends BaseActivity {
 
     private final SparseArray<BaseFragment> fragments = new SparseArray<>(4);
     private static short CURRENT_ITEM = 0;
+    private BottomNavigationViewEx bottomNavigationViewEx;
 
     public static void startMainActivity(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -45,25 +46,30 @@ public class MainActivity extends BaseActivity {
         fragments.put(1, new TransferFragment());
         fragments.put(2, new RecipientsFragment());
         fragments.put(3, new SettingsFragment());
-        final BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_navigation);
+        bottomNavigationViewEx = findViewById(R.id.bottom_navigation);
         bottomNavigationViewEx.setTypeface(ResourcesCompat.getFont(this, R.font.montserrat));
-        selectScreen(R.id.activity);
+        selectScreen(R.id.activity, null);
         bottomNavigationViewEx.enableShiftingMode(false);
         bottomNavigationViewEx.enableItemShiftingMode(false);
         bottomNavigationViewEx.setOnNavigationItemSelectedListener(item -> {
-            selectScreen(item.getItemId());
+            selectScreen(item.getItemId(), null);
             return true;
         });
     }
 
-    private void selectScreen(@IdRes int item) {
+    public void selectScreen(@IdRes int item, Bundle bundle) {
         switch (item) {
             case R.id.activity:
                 replaceFragment(fragments.get(0), CURRENT_ITEM, R.id.container_main);
                 CURRENT_ITEM = 0;
                 break;
             case R.id.transfer:
-                replaceFragment(fragments.get(1), CURRENT_ITEM - 1, R.id.container_main);
+                final BaseFragment transferFragment = fragments.get(1);
+                if (bundle != null) {
+                    transferFragment.setArguments(bundle);
+                    bottomNavigationViewEx.setCurrentItem(1);
+                }
+                replaceFragment(transferFragment, CURRENT_ITEM - 1, R.id.container_main);
                 CURRENT_ITEM = 1;
                 break;
             case R.id.recipients:
@@ -75,10 +81,10 @@ public class MainActivity extends BaseActivity {
                 CURRENT_ITEM = 3;
                 break;
             default:
-                throw new IllegalStateException(MainActivity.class.getSimpleName() + " Error state number " + item );
+                throw new IllegalStateException(MainActivity.class.getSimpleName() + " Error state number " + item);
         }
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
