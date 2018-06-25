@@ -24,7 +24,7 @@ abstract class SwipeHelper(private var recyclerView: RecyclerView?) :
     private var swipeThreshold = 0.5f
     private val buttonsBuffer: MutableMap<Int, MutableList<UnderlayButton>?>
     private lateinit var recoverQueue: Queue<Int>
-    private val displayMetrics: DisplayMetrics = recyclerView?.context?.resources!!.displayMetrics
+    private val displayMetrics: DisplayMetrics? = recyclerView?.context?.resources?.displayMetrics
     private val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
         override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
             for (button in buttons!!) {
@@ -39,10 +39,11 @@ abstract class SwipeHelper(private var recyclerView: RecyclerView?) :
         if (swipedPos < 0) return@OnTouchListener false
         val point = Point(e.rawX.toInt(), e.rawY.toInt())
 
-        val swipedViewHolder = recyclerView!!.findViewHolderForAdapterPosition(swipedPos)
-        val swipedItem = swipedViewHolder.itemView
+        val swipedViewHolder = recyclerView?.findViewHolderForAdapterPosition(swipedPos)
+        val swipedItem = swipedViewHolder?.itemView ?: return@OnTouchListener false
+
         val rect = Rect()
-        swipedItem.getGlobalVisibleRect(rect)
+        swipedItem?.getGlobalVisibleRect(rect)
 
         if (e.action == MotionEvent.ACTION_DOWN || e.action == MotionEvent.ACTION_UP || e.action == MotionEvent.ACTION_MOVE) {
             if (rect.top < point.y && rect.bottom > point.y)
@@ -149,7 +150,8 @@ abstract class SwipeHelper(private var recyclerView: RecyclerView?) :
                     buffer = buttonsBuffer[pos]
                 }
 
-                translationX = dX * buffer?.size!!.toFloat() * buttonWidth.toFloat() / itemView.width
+                translationX = dX * buffer?.size!!.toFloat() * buttonWidth.toFloat() /
+                        itemView.width
                 drawButtons(c, itemView, buffer, pos, translationX)
             }
         }

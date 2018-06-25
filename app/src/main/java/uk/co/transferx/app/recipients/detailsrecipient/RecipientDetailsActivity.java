@@ -1,7 +1,6 @@
 package uk.co.transferx.app.recipients.detailsrecipient;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -10,10 +9,7 @@ import android.view.MenuItem;
 
 import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.R;
-import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.recipients.detailsrecipient.fragment.RecipientDetailsFragment;
-
-import static uk.co.transferx.app.mainscreen.fragments.RecipientsFragment.ADD_CHANGE_RECIPIENT;
 
 /**
  * Created by sergey on 03/01/2018.
@@ -44,7 +40,6 @@ public class RecipientDetailsActivity extends BaseActivity {
         ft.commit();
 
     }
-
 
     @Override
     public void onBackPressed() {

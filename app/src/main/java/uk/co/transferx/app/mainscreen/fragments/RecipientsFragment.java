@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -33,7 +32,6 @@ import static android.app.Activity.RESULT_OK;
 import static uk.co.transferx.app.util.Constants.MODE;
 import static uk.co.transferx.app.util.Constants.RECIPIENT;
 import static uk.co.transferx.app.view.ConfirmationDialogFragment.MESSAGE;
-import static uk.co.transferx.app.view.ConfirmationDialogFragment.ADDITIONAL_DATA;
 import static uk.co.transferx.app.view.ConfirmationDialogFragment.POSITION;
 
 /**
@@ -42,7 +40,8 @@ import static uk.co.transferx.app.view.ConfirmationDialogFragment.POSITION;
 
 public class RecipientsFragment extends BaseFragment implements RecipientsFragmentPresenter.RecipientsFragmentUI {
 
-    public static final int ADD_CHANGE_RECIPIENT = 333;
+    public static final int ADD_RECIPIENT = 333;
+    public static final int CHANGE_RECIPIENT = 444;
     public static final int DELETE_USER = 234;
     private RecipientVerticalRecyclerAdapter verticalRecyclerAdapter;
     private RecyclerView recipientRecyclerView;
@@ -158,9 +157,14 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_CHANGE_RECIPIENT && resultCode == RESULT_OK) {
+        if (requestCode == ADD_RECIPIENT && resultCode == RESULT_OK) {
             presenter.attachUI(this);
             Log.d("Serge", "onResult");
+        } else if (requestCode == CHANGE_RECIPIENT) {
+            presenter.attachUI(this);
+            if (data != null) {
+                presenter.goToTransfer(data.getParcelableExtra(RECIPIENT));
+            }
         }
         if (requestCode == DELETE_USER) {
             int position = data.getIntExtra(POSITION, DEFAULT_VALUE);
@@ -177,7 +181,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
         if (recipientDto != null) {
             intent.putExtra(RECIPIENT, recipientDto);
         }
-        startActivityForResult(intent, ADD_CHANGE_RECIPIENT);
+        startActivityForResult(intent, mode == Mode.ADD ? ADD_RECIPIENT : CHANGE_RECIPIENT);
     }
 
     @Override

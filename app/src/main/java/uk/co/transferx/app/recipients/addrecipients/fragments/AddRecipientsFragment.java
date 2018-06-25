@@ -85,7 +85,7 @@ public class AddRecipientsFragment extends BaseFragment implements AddRecipients
         firstName = view.findViewById(R.id.firstName);
         lastName = view.findViewById(R.id.lastName);
         phoneNumber = view.findViewById(R.id.phoneInput);
-        newTransfer = view.findViewById(R.id.edit_recipient);
+        newTransfer = view.findViewById(R.id.transfer_button);
         deleteRecipient = view.findViewById(R.id.delete_recipient);
         view.findViewById(R.id.button_back).setOnClickListener(v -> getActivity().onBackPressed());
         countrySpinner.setOnItemSelectedListener((position, object) -> presenter.setCountry(object.toString()));
@@ -107,6 +107,7 @@ public class AddRecipientsFragment extends BaseFragment implements AddRecipients
         deleteRecipient.setVisibility(View.VISIBLE);
         buttonNext.setOnClickListener(v -> setEditMode());
         deleteRecipient.setOnClickListener(v -> showDialogConfirmation(presenter.getRecipient()));
+        newTransfer.setOnClickListener(v -> presenter.sendTransfer());
     }
 
     private void setEditMode() {
@@ -207,5 +208,13 @@ public class AddRecipientsFragment extends BaseFragment implements AddRecipients
         int position = getItemPosition(recipientDto.getCountry());
         countrySpinner.getAdapter().setItemSelected(position);
         countrySpinner.setSelection(position);
+    }
+
+    @Override
+    public void sendTransfer(RecipientDto recipientDto) {
+        final Intent intent = new Intent();
+        intent.putExtra(RECIPIENT, recipientDto);
+        getActivity().setResult(Activity.RESULT_OK, intent);
+        getActivity().finish();
     }
 }

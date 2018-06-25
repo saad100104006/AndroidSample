@@ -110,6 +110,12 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
         }
     }
 
+    public void goToTransfer(RecipientDto recipientDto) {
+        if (ui != null) {
+            ui.goToTransfer(recipientDto);
+        }
+    }
+
     @Override
     public void detachUI() {
         super.detachUI();

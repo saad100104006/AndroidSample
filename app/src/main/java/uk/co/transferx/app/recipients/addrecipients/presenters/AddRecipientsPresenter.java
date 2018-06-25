@@ -96,7 +96,12 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
                         ui.userActionPerformed();
                     }
                 });
+    }
 
+    public void sendTransfer(){
+        if(ui != null){
+            ui.sendTransfer(recipientDto);
+        }
     }
 
     public void setFirstName(String firstName) {
@@ -183,5 +188,7 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
         void setData(RecipientDto recipientDto);
 
         void setEnabledButton(boolean enabled);
+
+        void sendTransfer(RecipientDto recipientDto);
     }
 }

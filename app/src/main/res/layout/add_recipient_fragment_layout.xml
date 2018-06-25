@@ -188,7 +188,7 @@
 
 
     <Button
-        android:id="@+id/edit_recipient"
+        android:id="@+id/transfer_button"
         style="@style/CommonButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="36dp"
