@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="179dp"
+        android:layout_marginBottom="144dp"
         android:padding="4dp"
         attrs:piv_animationDuration="500"
         attrs:piv_animationType="fill"

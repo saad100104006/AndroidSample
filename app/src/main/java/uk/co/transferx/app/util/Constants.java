@@ -21,6 +21,7 @@ public final class Constants {
 
     public static final String LAYOUT = "layout";
     public static final String TUTORIAL_IMG = "tutorial_img";
+    public static final String BUTTON_TEXT = "button_text";
     public static final String DESCRIPTION_ONE = "description_one";
     public static final String DESCRIPTION_TWO = "descritption_two";
     public static final String PIN_SHOULD_BE_INPUT = "pin_should_be_input";

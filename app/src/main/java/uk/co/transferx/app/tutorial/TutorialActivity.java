@@ -16,6 +16,7 @@ import uk.co.transferx.app.tutorial.adapter.TutorialAdapter;
 
 public class TutorialActivity extends BaseActivity {
 
+    private ViewPager viewPager;
 
     public static void startTutorialActivity(Activity activity) {
         Intent intent = new Intent(activity, TutorialActivity.class);
@@ -28,8 +29,12 @@ public class TutorialActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tutorial_activity_layout);
-        final ViewPager viewPager = findViewById(R.id.pager);
+        viewPager = findViewById(R.id.pager);
         final TutorialAdapter tutorialAdapter = new TutorialAdapter(getSupportFragmentManager());
         viewPager.setAdapter(tutorialAdapter);
+    }
+
+    public void skipStep() {
+        viewPager.setCurrentItem((viewPager.getCurrentItem() + 1), true);
     }
 }

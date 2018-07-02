@@ -1,5 +1,6 @@
 package uk.co.transferx.app.tutorial.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
@@ -10,16 +11,24 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.mainscreen.MainActivity;
+import uk.co.transferx.app.recipients.addrecipients.AddRecipientsActivity;
+import uk.co.transferx.app.recipients.addrecipients.Mode;
+import uk.co.transferx.app.settings.profile.wallet.AddCardActivity;
+import uk.co.transferx.app.settings.profile.wallet.CardMode;
+import uk.co.transferx.app.tutorial.TutorialActivity;
 
+import static uk.co.transferx.app.util.Constants.BUTTON_TEXT;
 import static uk.co.transferx.app.util.Constants.DESCRIPTION_ONE;
 import static uk.co.transferx.app.util.Constants.DESCRIPTION_TWO;
 import static uk.co.transferx.app.util.Constants.LAYOUT;
+import static uk.co.transferx.app.util.Constants.MODE;
 import static uk.co.transferx.app.util.Constants.TUTORIAL_IMG;
 
 /**
@@ -38,7 +47,7 @@ public class TutorialFragment extends BaseFragment {
     @LayoutRes
     private int layout;
     @StringRes
-    private int descriptionOne, descriptionTwo;
+    private int descriptionOne, descriptionTwo, buttonText;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +58,7 @@ public class TutorialFragment extends BaseFragment {
             image = bundle.getInt(TUTORIAL_IMG);
             descriptionOne = bundle.getInt(DESCRIPTION_ONE);
             descriptionTwo = bundle.getInt(DESCRIPTION_TWO);
+            buttonText = bundle.getInt(BUTTON_TEXT);
         }
     }
 
@@ -63,10 +73,31 @@ public class TutorialFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         if (layout == R.layout.tutorial_fragment_layout) {
             ((ImageView) view.findViewById(R.id.tutorial_img)).setImageDrawable(ContextCompat.getDrawable(getContext(), image));
-            ((TextView) view.findViewById(R.id.description_one)).setText(descriptionOne);
-            ((TextView) view.findViewById(R.id.description_two)).setText(descriptionTwo);
+            ((TextView) view.findViewById(R.id.title)).setText(descriptionOne);
+            ((TextView) view.findViewById(R.id.description)).setText(descriptionTwo);
             return;
         }
-        view.findViewById(R.id.get_started).setOnClickListener(v -> MainActivity.startMainActivity(getActivity()));
+        if (layout == R.layout.tutorial_fragment_layout_last) {
+            ((ImageView) view.findViewById(R.id.tutorial_img)).setImageDrawable(ContextCompat.getDrawable(getContext(), image));
+            ((TextView) view.findViewById(R.id.title)).setText(descriptionOne);
+            ((TextView) view.findViewById(R.id.description)).setText(descriptionTwo);
+            ((Button) view.findViewById(R.id.action_button)).setText(buttonText);
+            if (buttonText == R.string.add_recipientss) {
+                view.findViewById(R.id.action_button).setOnClickListener(v -> {
+                    final Intent intent = new Intent(getContext(), AddRecipientsActivity.class);
+                    intent.putExtra(MODE, Mode.ADD.ordinal());
+                    startActivity(intent);
+                });
+                view.findViewById(R.id.skip).setOnClickListener(v -> ((TutorialActivity) getActivity()).skipStep());
+                return;
+            }
+            view.findViewById(R.id.action_button).setOnClickListener(v -> {
+                final Intent intent = new Intent(getContext(), AddCardActivity.class);
+                intent.putExtra(MODE, CardMode.ADD.ordinal());
+                startActivity(intent);
+            });
+            view.findViewById(R.id.skip).setOnClickListener(v -> MainActivity.startMainActivity(getActivity()));
+
+        }
     }
 }

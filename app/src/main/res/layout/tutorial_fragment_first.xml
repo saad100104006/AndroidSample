@@ -5,15 +5,12 @@
     android:layout_height="match_parent"
     android:background="@color/green">
 
-
-
-
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:src="@drawable/tutorial_background" />
+
 
     <TextView
         android:id="@+id/description"
@@ -22,37 +19,24 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
+        android:gravity="center_horizontal"
         android:lineSpacingExtra="6sp"
         android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
         android:text="@string/description"
         android:textColor="@color/white"
         android:textSize="14sp" />
-
 
     <TextView
         android:id="@+id/title"
         style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_above="@id/description"
         android:layout_marginBottom="16dp"
-        android:text="@string/security"
+        android:gravity="center_horizontal"
         android:lineSpacingExtra="12sp"
+        android:text="@string/welcome"
         android:textColor="@color/white"
         android:textSize="24sp" />
-
-
-    <ImageView
-        android:id="@+id/tutorial_img"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:layout_above="@id/title"
-        android:src="@drawable/ic_security" />
-
-
 
 </RelativeLayout>
