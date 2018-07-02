@@ -29,4 +29,5 @@ public final class Constants {
     public static final String CARDS = "cards";
     public static final String TRANSACTION = "transaction";
     public static final String CARD = "card";
+    public static final String PIN_REQUIRED = "pin_required";
 }

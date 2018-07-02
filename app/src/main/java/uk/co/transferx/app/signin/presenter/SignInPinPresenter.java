@@ -22,6 +22,7 @@ import uk.co.transferx.app.tokenmanager.TokenManager;
 
 import static uk.co.transferx.app.util.Constants.CREDENTIAL;
 import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
+import static uk.co.transferx.app.util.Constants.PIN_REQUIRED;
 import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
 import static uk.co.transferx.app.util.Constants.UNDERSCORE;
 
@@ -55,6 +56,9 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
     @Override
     public void attachUI(SignInPinUI ui) {
         super.attachUI(ui);
+        if (sharedPreferences.getBoolean(PIN_REQUIRED, false)) {
+            sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply();
+        }
     }
 
     @Override
@@ -72,7 +76,21 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
 
         final String credential = sharedPreferences.getString(CREDENTIAL, null);
         if (credential == null) {
-            Timber.d(getClass().getSimpleName()+" Credential is null");
+            Timber.d(getClass().getSimpleName() + " Credential is null");
+            return;
+        }
+
+        if (tokenManager.getToken() != null) {
+            compositeDisposable.add(getObservableWithCrypto(credential, pin)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(res -> {
+                        if (ui != null && !res.isEmpty()) {
+                            ui.pinChecked();
+                            return;
+                        }
+                        handleError(new ErrorPinException());
+                    }));
             return;
         }
         compositeDisposable.add(getObservableWithCrypto(credential, pin)
@@ -84,6 +102,7 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
                     final String email = emailAndPass[0];
                     final String password = emailAndPass[1];
                     UserSignIn.Builder request = new UserSignIn.Builder();
+                    Log.d("Serge", "initialToken " + tokenManager.getInitialToken());
                     return signInOutApi.signIn(tokenManager.getInitialToken(), request.uname(email).upass(password).build());
                 })
                 .subscribeOn(Schedulers.io())
@@ -91,7 +110,12 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
                 .subscribe(resp -> {
                     if (ui != null && resp.code() == HttpsURLConnection.HTTP_OK) {
                         tokenManager.setToken(resp.body().getToken());
+                        sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply();
                         ui.goToMainScree();
+                        return;
+                    }
+                    if (ui != null) {
+                        ui.showError(resp.message());
                     }
                 }, this::handleError));
 
@@ -111,7 +135,7 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
             if (throwable instanceof ErrorPinException) {
                 ui.showErrorPin();
             }
-            ui.showError();
+            ui.showError(throwable.getMessage());
         }
     }
 
@@ -121,8 +145,10 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
 
         void goToWelcomeScreen();
 
-        void showError();
+        void showError(String message);
 
         void showErrorPin();
+
+        void pinChecked();
     }
 }

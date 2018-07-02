@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chaos.view.PinView;
 
@@ -104,13 +105,18 @@ public class SignInPinFragment extends BaseFragment implements SignInPinPresente
         }
     }
 
+    @Override
+    public void pinChecked() {
+        getActivity().finish();
+    }
+
     private void setLinesColor(@ColorRes int color) {
         pinView.setLineColor(ContextCompat.getColor(pinView.getContext(), color));
     }
 
     @Override
-    public void showError() {
-
+    public void showError(String message) {
+        Toast.makeText(getContext(), "Somthing went wrong ", Toast.LENGTH_SHORT).show();
     }
 
     @Override

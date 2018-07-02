@@ -1,5 +1,7 @@
 package uk.co.transferx.app;
 
+import android.arch.lifecycle.ProcessLifecycleOwner;
+import android.content.SharedPreferences;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
@@ -24,6 +26,8 @@ public class TransferXApplication extends MultiDexApplication {
 
     @Inject
     RecipientRepository recipientRepository;
+    @Inject
+    ApplicationObserver applicationObserver;
 
     @Override
     public void onCreate() {
@@ -33,6 +37,9 @@ public class TransferXApplication extends MultiDexApplication {
                 .networkModule(new NetworkModule("http://transferx.ddns.net:3001"))
                 .build();
         appComponent.inject(this);
+        ProcessLifecycleOwner.get()
+                .getLifecycle()
+                .addObserver(applicationObserver);
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.

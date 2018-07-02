@@ -3,6 +3,7 @@ package uk.co.transferx.app.dagger.component;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dagger.module.AppModule;
 import uk.co.transferx.app.dagger.module.NetworkModule;
@@ -95,4 +96,6 @@ public interface AppComponent {
     void inject(AddCardActivity addCardActivity);
 
     void inject(TransferSummaryActivity transferSummaryActivity);
+
+    void inject(BaseActivity baseActivity);
 }

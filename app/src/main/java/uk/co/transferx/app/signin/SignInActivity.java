@@ -27,7 +27,7 @@ public class SignInActivity extends BaseActivity {
         intent.putExtra(TYPE_SIGNIN, signInType.ordinal());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
-        activity.finish();
+     //   activity.finish();
 
     }
 
@@ -46,5 +46,7 @@ public class SignInActivity extends BaseActivity {
         ft.replace(R.id.container, signInFragment, signInFragment.getTag());
         ft.commit();
     }
+
+
 
 }
