@@ -27,7 +27,6 @@ public class TutorialAdapter extends FragmentStatePagerAdapter {
     private final static int FORTH_PAGE = 3;
     private final static int FIVE_PAGE = 4;
 
-
     public TutorialAdapter(FragmentManager fm) {
         super(fm);
     }

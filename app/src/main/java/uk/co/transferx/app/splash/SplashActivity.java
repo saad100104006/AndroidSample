@@ -51,7 +51,7 @@ public class SplashActivity extends BaseActivity implements SplashPresenter.Spla
 
     @Override
     public void goToPinScreen() {
-        SignInActivity.starSignInActivity(SplashActivity.this, SignInType.PIN);
+        SignInActivity.starSignInActivity(SplashActivity.this);
         finish();
     }
 }

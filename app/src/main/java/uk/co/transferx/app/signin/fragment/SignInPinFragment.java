@@ -107,6 +107,7 @@ public class SignInPinFragment extends BaseFragment implements SignInPinPresente
 
     @Override
     public void pinChecked() {
+        hideKeyboard(pinView);
         getActivity().finish();
     }
 

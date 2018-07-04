@@ -134,6 +134,7 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
         if (ui != null) {
             if (throwable instanceof ErrorPinException) {
                 ui.showErrorPin();
+                return;
             }
             ui.showError(throwable.getMessage());
         }

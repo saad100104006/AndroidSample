@@ -21,32 +21,26 @@ public class SignInActivity extends BaseActivity {
     private final static String TYPE_SIGNIN = "type_signin";
 
 
-    public static void starSignInActivity(Activity activity, SignInType signInType) {
+    public static void starSignInActivity(Activity activity) {
 
         Intent intent = new Intent(activity, SignInActivity.class);
-        intent.putExtra(TYPE_SIGNIN, signInType.ordinal());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
-     //   activity.finish();
+        //   activity.finish();
 
     }
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin_activity_layout);
-        SignInType signInType = SignInType.EMAIL;
-        Intent intent = getIntent();
-        if (intent != null) {
-            signInType = SignInType.values()[intent.getIntExtra(TYPE_SIGNIN, 0)];
-        }
-        BaseFragment signInFragment = signInType == SignInType.PIN ? new SignInPinFragment() : new SignInEmailFragment();
+        BaseFragment signInFragment = new SignInPinFragment();
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, signInFragment, signInFragment.getTag());
         ft.commit();
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+    }
 }

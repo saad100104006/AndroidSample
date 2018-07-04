@@ -39,7 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (isShouldStartPinCheck()) {
-            SignInActivity.starSignInActivity(this, SignInType.PIN);
+            SignInActivity.starSignInActivity(this);
             sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply();
             Log.d("Serge", "pin required false");
         }
