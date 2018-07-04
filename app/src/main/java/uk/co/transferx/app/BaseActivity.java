@@ -40,12 +40,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onResume();
         if (isShouldStartPinCheck()) {
             SignInActivity.starSignInActivity(this);
-            sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply();
-            Log.d("Serge", "pin required false");
         }
     }
 
-    private boolean isShouldStartPinCheck(){
+    private boolean isShouldStartPinCheck() {
         return sharedPreferences.getBoolean(PIN_REQUIRED, false) && !(this instanceof SignInActivity) &&
                 tokenManager.getInitialToken() != null;
     }

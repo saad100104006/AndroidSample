@@ -37,7 +37,7 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
     private final SharedPreferences sharedPreferences;
     private final TokenManager tokenManager;
     private final RecipientRepository recipientRepository;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable;
 
 
     @Inject
@@ -56,6 +56,7 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
     @Override
     public void attachUI(SignInPinUI ui) {
         super.attachUI(ui);
+        compositeDisposable = new CompositeDisposable();
         if (sharedPreferences.getBoolean(PIN_REQUIRED, false)) {
             sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply();
         }
@@ -80,12 +81,14 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
             return;
         }
 
+
         if (tokenManager.getToken() != null) {
             compositeDisposable.add(getObservableWithCrypto(credential, pin)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(res -> {
                         if (ui != null && !res.isEmpty()) {
+                            sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply();
                             ui.pinChecked();
                             return;
                         }
@@ -102,7 +105,6 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
                     final String email = emailAndPass[0];
                     final String password = emailAndPass[1];
                     UserSignIn.Builder request = new UserSignIn.Builder();
-                    Log.d("Serge", "initialToken " + tokenManager.getInitialToken());
                     return signInOutApi.signIn(tokenManager.getInitialToken(), request.uname(email).upass(password).build());
                 })
                 .subscribeOn(Schedulers.io())
