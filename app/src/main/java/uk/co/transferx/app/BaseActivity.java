@@ -13,8 +13,10 @@ import javax.inject.Inject;
 import uk.co.transferx.app.signin.SignInActivity;
 import uk.co.transferx.app.signin.SignInType;
 import uk.co.transferx.app.signin.fragment.SignInPinFragment;
+import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
+import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
 import static uk.co.transferx.app.util.Constants.PIN_REQUIRED;
 
 /**
@@ -45,7 +47,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private boolean isShouldStartPinCheck() {
         return sharedPreferences.getBoolean(PIN_REQUIRED, false) && !(this instanceof SignInActivity) &&
-                tokenManager.getInitialToken() != null;
+                tokenManager.getInitialToken() != null && sharedPreferences.getBoolean(LOGGED_IN_STATUS,false) &&
+                !(this instanceof SignUpActivity);
     }
 
     protected void replaceFragment(BaseFragment baseFragment, int current, int container) {
