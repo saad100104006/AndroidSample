@@ -45,12 +45,13 @@ public class RecipientRepositoryImpl implements RecipientRepository {
     }
 
     private Single<List<RecipientDto>> getFromServer() {
-        return recipientsApi.getRecipients(tokenManager.getToken())
+        return tokenManager.getToken()
+                .flatMap(token -> recipientsApi.getRecipients(token.getAccessToken()))
                 .filter(resp -> resp.code() == HttpsURLConnection.HTTP_OK)
-                .flatMap(resp -> Observable.fromIterable(resp.body().getResipients()))
+                .flatMapObservable(res -> Observable.fromIterable(res.body().getResipients()))
                 .map(RecipientDto::new)
                 .toList()
-                .doAfterSuccess(list -> this.recipientDtos.addAll(list));
+                .doAfterSuccess(recipients -> this.recipientDtos.addAll(recipients));
     }
 
     @Override

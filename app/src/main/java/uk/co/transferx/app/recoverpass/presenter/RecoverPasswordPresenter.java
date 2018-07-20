@@ -47,7 +47,8 @@ public class RecoverPasswordPresenter extends BasePresenter<RecoverPasswordPrese
     }
 
     public void sendEmail() {
-        disposable = signInOutApi.forgotEmail(tokenManager.getInitialToken(), validEmail)
+        disposable = tokenManager.getToken()
+                .flatMap(token -> signInOutApi.forgotEmail(token.getAccessToken(), validEmail))
                 .subscribeOn(Schedulers.io())
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {

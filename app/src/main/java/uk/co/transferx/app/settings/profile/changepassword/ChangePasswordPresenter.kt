@@ -13,9 +13,11 @@ import uk.co.transferx.app.util.Util
 import javax.inject.Inject
 
 class ChangePasswordPresenter
-@Inject constructor(private val tokenManager: TokenManager,
-                    private val profileApi: ProfileApi) :
-        BasePresenter<ChangePasswordPresenter.ChangePasswordUI>() {
+@Inject constructor(
+    private val tokenManager: TokenManager,
+    private val profileApi: ProfileApi
+) :
+    BasePresenter<ChangePasswordPresenter.ChangePasswordUI>() {
 
     private var currentPass: String = EMPTY
     private var newPass: String = EMPTY
@@ -49,11 +51,14 @@ class ChangePasswordPresenter
     }
 
     fun saveNewPassword() {
-        disposable = profileApi.changePassword(tokenManager.token,
-                changePassword = ChangePassword(currentPass, newPass))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ _ -> ui?.goBackToSettings() }, { throwable -> handleError(throwable) })
+        disposable = tokenManager.token
+            .flatMap {
+                profileApi.changePassword(it.accessToken,
+                    changePassword = ChangePassword(currentPass, newPass))
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ _ -> ui?.goBackToSettings() }, { throwable -> handleError(throwable) })
     }
 
     private fun handleError(throwable: Throwable) {

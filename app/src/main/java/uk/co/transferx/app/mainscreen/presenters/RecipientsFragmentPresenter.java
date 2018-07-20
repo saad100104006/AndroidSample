@@ -80,7 +80,8 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
     }
 
     public void deleteRecipient(final RecipientDto recipientDto) {
-        deleteDisposable = recipientsApi.deleteRecipient(tokenManager.getToken(), recipientDto.getId())
+        deleteDisposable = tokenManager.getToken()
+                .flatMap(token -> recipientsApi.deleteRecipient(token.getAccessToken(), recipientDto.getId()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(responseBodyResponse -> {

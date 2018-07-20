@@ -15,6 +15,7 @@ import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.SignUpApi;
 import uk.co.transferx.app.firebase.SubscriptionManager;
 import uk.co.transferx.app.tokenmanager.TokenManager;
+import uk.co.transferx.app.tokenmanager.TokenRepository;
 
 import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
 
@@ -32,15 +33,18 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
     private final SignUpApi signUpApi;
     private final TokenManager tokenManager;
     private final SharedPreferences sharedPreferences;
+    private final TokenRepository tokenRepository;
 
 
     @Inject
-    public SplashPresenter(final SignUpApi signUpApi, final TokenManager tokenManager, final SubscriptionManager subscriptionManager, final SharedPreferences sharedPreferences) {
+    public SplashPresenter(final SignUpApi signUpApi, final TokenManager tokenManager,
+                           final SubscriptionManager subscriptionManager,
+                           final SharedPreferences sharedPreferences,
+                           final TokenRepository tokenRepository) {
         this.signUpApi = signUpApi;
         this.tokenManager = tokenManager;
-        this.tokenManager.clearToken();
-        this.tokenManager.clearInitToken();
         this.sharedPreferences = sharedPreferences;
+        this.tokenRepository = tokenRepository;
         subscriptionManager.initSubscribtions();
     }
 
@@ -55,7 +59,9 @@ public class SplashPresenter extends BasePresenter<SplashPresenter.SplashUI> {
                 .subscribe(res -> {
                     boolean loggedInStatus = sharedPreferences.getBoolean(LOGGED_IN_STATUS, false);
                     if (res.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        tokenManager.setInitialToken(res.body().getToken());
+                        if (tokenManager.shouldSaveGenesis()) {
+                            tokenManager.saveToken(res.body());
+                        }
                         if (loggedInStatus) {
                             ui.goToPinScreen();
                             return;

@@ -8,9 +8,11 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import uk.co.transferx.app.api.SignUpApi;
 import uk.co.transferx.app.crypto.CryptoManager;
 import uk.co.transferx.app.firebase.SubscriptionManager;
 import uk.co.transferx.app.tokenmanager.TokenManager;
+import uk.co.transferx.app.tokenmanager.TokenRepository;
 
 /**
  * Created by smilevkiy on 13.11.17.
@@ -39,8 +41,8 @@ public class AppModule {
 
     @Singleton
     @Provides
-    TokenManager providesTokenManager(SharedPreferences sharedPreferences) {
-        return new TokenManager(sharedPreferences);
+    TokenManager providesTokenManager(TokenRepository tokenRepository, SignUpApi signUpApi) {
+        return new TokenManager(tokenRepository, signUpApi);
     }
 
     @Singleton

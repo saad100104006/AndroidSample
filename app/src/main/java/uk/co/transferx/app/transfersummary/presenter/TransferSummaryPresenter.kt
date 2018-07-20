@@ -43,13 +43,14 @@ class TransferSummaryPresenter @Inject constructor(
 
 
     fun sendTransfer() {
-        disposable = transactionApi.createTransaction(tokenManager.token, transactionCreate)
+        disposable = tokenManager.token
+            .flatMap { transactionApi.createTransaction(it.accessToken, transactionCreate) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ resp ->
+            .subscribe { resp ->
                 if (resp.code() == HttpURLConnection.HTTP_OK)
                     ui?.goBack()
-            })
+            }
     }
 
     interface TransferSummaryUI : UI {

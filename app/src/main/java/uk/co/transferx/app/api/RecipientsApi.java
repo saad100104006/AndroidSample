@@ -1,6 +1,6 @@
 package uk.co.transferx.app.api;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -22,18 +22,18 @@ public interface RecipientsApi {
 
 
     @GET("/v1/recipients")
-    Observable<Response<Recipients>> getRecipients(@Header("Authorization") String token);
+    Single<Response<Recipients>> getRecipients(@Header("Authorization") String token);
 
 
     @POST("/v1/recipients")
-    Observable<Response<AddedRecipientResponce>> addRecipient(@Header("Authorization") String token, @Body Recipient request);
+    Single<Response<AddedRecipientResponce>> addRecipient(@Header("Authorization") String token, @Body Recipient request);
 
 
     @DELETE("/v1/recipients/{id}")
-    Observable<Response<ResponseBody>> deleteRecipient(@Header("Authorization") String token, @Path("id") String id);
+    Single<Response<ResponseBody>> deleteRecipient(@Header("Authorization") String token, @Path("id") String id);
 
     @PUT("/v1/recipients/{id}")
-    Observable<Response<ResponseBody>> updateRecipient(@Header("Authorization") String token, @Path("id") String id, @Body Recipient recipient);
+    Single<Response<ResponseBody>> updateRecipient(@Header("Authorization") String token, @Path("id") String id, @Body Recipient recipient);
 
 
 }

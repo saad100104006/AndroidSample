@@ -12,6 +12,7 @@ import java.util.List;
 
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.dto.TransactionDto;
+import uk.co.transferx.app.pojo.Transaction;
 
 /**
  * Created by sergey on 02/02/2018.
@@ -20,13 +21,13 @@ import uk.co.transferx.app.dto.TransactionDto;
 public class ActivityRecylerViewAdapter extends RecyclerView.Adapter<ActivityRecylerViewAdapter.ActivityRecyclerHolder> {
 
 
-    private List<TransactionDto> transactionDtos;
+    private List<Transaction> transactions;
     private Context context;
 
 
     private interface ItemClickListener {
 
-        void onClickItem(final TransactionDto transactionDto);
+        void onClickItem(final Transaction transaction);
     }
 
     public ActivityRecylerViewAdapter(Context context) {
@@ -41,31 +42,36 @@ public class ActivityRecylerViewAdapter extends RecyclerView.Adapter<ActivityRec
 
     @Override
     public void onBindViewHolder(ActivityRecyclerHolder holder, int position) {
-        final TransactionDto transactionDto = transactionDtos.get(position);
-        holder.amount.setText(context.getString(R.string.amount_with_currency, transactionDto.getAmount().toPlainString(), transactionDto.getCurrency()));
-        holder.name.setText(transactionDto.getRecipientName());
-        holder.amount.setCompoundDrawablesWithIntrinsicBounds(0,0, "PAYIN-SUCCESS".equals(transactionDto.getStatus()) ?  R.drawable.ic_complete : R.drawable.ic_in_progress, 0);
+        final Transaction transaction = transactions.get(position);
+        holder.amount.setText(context.getString(R.string.amount_with_currency, transaction.getAmount(), transaction.getCurrency()));
+        if(transaction.getMeta().getRecipientInfo() != null){
+            holder.name.setText(String.format("%s %s", transaction.getMeta().getRecipientInfo().getFirstName(),
+                    transaction.getMeta().getRecipientInfo().getLastName()));
+        }else {
+            holder.name.setText("");
+        }
+        holder.amount.setCompoundDrawablesWithIntrinsicBounds(0,0, "PAYIN-SUCCESS".equals(transaction.getStatus()) ?  R.drawable.ic_complete : R.drawable.ic_in_progress, 0);
 
     }
 
     @Override
     public int getItemCount() {
-        return transactionDtos == null ? 0 : transactionDtos.size();
+        return transactions == null ? 0 : transactions.size();
     }
 
-    public void setRecipients(List<TransactionDto> transactionDtos) {
-        if (this.transactionDtos == null) {
-            this.transactionDtos = transactionDtos;
+    public void setRecipients(List<Transaction> transactions) {
+        if (this.transactions == null) {
+            this.transactions = transactions;
             notifyDataSetChanged();
             return;
         }
-        if (transactionDtos.isEmpty()) {
+        if (transactions.isEmpty()) {
             return;
         }
-        final TransactionDiffCallback transactionDiffCallback = new TransactionDiffCallback(this.transactionDtos, transactionDtos);
+        final TransactionDiffCallback transactionDiffCallback = new TransactionDiffCallback(this.transactions, transactions);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(transactionDiffCallback);
-        this.transactionDtos.clear();
-        this.transactionDtos.addAll(transactionDtos);
+        this.transactions.clear();
+        this.transactions.addAll(transactions);
         diffResult.dispatchUpdatesTo(this);
     }
 
@@ -85,7 +91,7 @@ public class ActivityRecylerViewAdapter extends RecyclerView.Adapter<ActivityRec
         @Override
         public void onClick(View view) {
             if (itemClickListener != null) {
-                itemClickListener.onClickItem(transactionDtos.get(getAdapterPosition()));
+                itemClickListener.onClickItem(transactions.get(getAdapterPosition()));
             }
         }
 

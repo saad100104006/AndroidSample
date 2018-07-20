@@ -88,8 +88,8 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         this.ui.setRecipients(recipientDtos);
     }
 
-    private void setChoosetRecipient(){
-        if(recipient == null){
+    private void setChoosetRecipient() {
+        if (recipient == null) {
             return;
         }
         ui.showChoosenRecipient(recipient, recipientDtos.indexOf(recipient));
@@ -117,7 +117,8 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         if (currencyTo.equals(currencyFrom)) {
             return;
         }
-        Disposable disposable = transactionApi.getRats(tokenManager.getToken(), currencyFrom, currencyTo)
+        Disposable disposable = tokenManager.getToken()
+                .flatMap(token -> transactionApi.getRats(token.getAccessToken(), currencyFrom, currencyTo))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
@@ -165,7 +166,8 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     }
 
     private void setCards() {
-        compositeDisposable.add(cardsApi.getCards(tokenManager.getToken())
+        compositeDisposable.add(tokenManager.getToken()
+                .flatMap(token -> cardsApi.getCards(token.getAccessToken()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(cards ->

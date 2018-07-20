@@ -41,12 +41,13 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
     }
 
     public void saveUserToApi() {
-        disposable = recipientsApi.addRecipient(tokenManager.getToken(), new Recipient.Builder()
-                .firstname(firstName)
-                .lastname(lastName)
-                .country(country)
-                .phone(phone)
-                .build())
+        disposable = tokenManager.getToken()
+                .flatMap(token -> recipientsApi.addRecipient(token.getAccessToken(), new Recipient.Builder()
+                        .firstname(firstName)
+                        .lastname(lastName)
+                        .country(country)
+                        .phone(phone)
+                        .build()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
@@ -58,14 +59,15 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
     }
 
     public void refreshUserData() {
-        disposable = recipientsApi.updateRecipient(tokenManager.getToken(),
-                recipientDto.getId(),
-                new Recipient.Builder()
-                        .firstname(recipientDto.getFirstName())
-                        .lastname(recipientDto.getLastName())
-                        .country(recipientDto.getCountry())
-                        .phone(recipientDto.getPhone())
-                        .build())
+        disposable = tokenManager.getToken()
+                .flatMap(token -> recipientsApi.updateRecipient(token.getAccessToken(),
+                        recipientDto.getId(),
+                        new Recipient.Builder()
+                                .firstname(recipientDto.getFirstName())
+                                .lastname(recipientDto.getLastName())
+                                .country(recipientDto.getCountry())
+                                .phone(recipientDto.getPhone())
+                                .build()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
@@ -87,7 +89,8 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
             handleError(new Throwable("Error id is null"));
             return;
         }
-        disposable = recipientsApi.deleteRecipient(tokenManager.getToken(), id)
+        disposable = tokenManager.getToken()
+                .flatMap(token -> recipientsApi.deleteRecipient(token.getAccessToken(), id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(responseBodyResponse -> {
@@ -98,8 +101,8 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
                 });
     }
 
-    public void sendTransfer(){
-        if(ui != null){
+    public void sendTransfer() {
+        if (ui != null) {
             ui.sendTransfer(recipientDto);
         }
     }

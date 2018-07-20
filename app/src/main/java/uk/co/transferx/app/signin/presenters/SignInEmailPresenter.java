@@ -11,6 +11,7 @@ import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.SignInOutApi;
 import uk.co.transferx.app.pojo.UserSignIn;
 import uk.co.transferx.app.tokenmanager.TokenManager;
+import uk.co.transferx.app.tokenmanager.TokenRepository;
 import uk.co.transferx.app.util.Util;
 
 /**
@@ -22,6 +23,7 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
     private final SignInOutApi signInOutApi;
     private Disposable disposable;
     private final TokenManager tokenManager;
+    private final TokenRepository tokenRepository;
 
     @Override
     public void attachUI(SignInEmailUI ui) {
@@ -37,15 +39,17 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
     }
 
     @Inject
-    public SignInEmailPresenter(final SignInOutApi signInOutApi, final TokenManager tokenManager) {
+    public SignInEmailPresenter(final SignInOutApi signInOutApi, final TokenManager tokenManager,
+                                final TokenRepository tokenRepository) {
         this.signInOutApi = signInOutApi;
         this.tokenManager = tokenManager;
+        this.tokenRepository = tokenRepository;
     }
 
 
     public void validateInput(String email, String password) {
 
-        if (!tokenManager.isInitialTokenExist()) {
+        if (tokenRepository.getToken().getAccessToken().isEmpty()) {
             ui.showError();
             return;
         }
@@ -58,17 +62,18 @@ public class SignInEmailPresenter extends BasePresenter<SignInEmailPresenter.Sig
             return;
         }
 
-        signIn(email, password, tokenManager.getInitialToken());
+        signIn(email, password);
     }
 
-    private void signIn(String email, String password, String token) {
+    private void signIn(String email, String password) {
         UserSignIn.Builder signIn = new UserSignIn.Builder();
-        disposable = signInOutApi.signIn(token, signIn.uname(email).upass(password).build())
+        disposable = tokenManager.getToken()
+                .flatMap(token -> signInOutApi.signIn(token.getAccessToken(), signIn.uname(email).upass(password).build()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        tokenManager.setToken(resp.body().getToken());
+                        tokenManager.saveToken(resp.body());
                         ui.goToMainScreen();
                         return;
                     }

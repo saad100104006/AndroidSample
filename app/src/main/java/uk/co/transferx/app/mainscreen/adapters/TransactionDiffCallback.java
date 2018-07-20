@@ -5,6 +5,7 @@ import android.support.v7.util.DiffUtil;
 import java.util.List;
 
 import uk.co.transferx.app.dto.TransactionDto;
+import uk.co.transferx.app.pojo.Transaction;
 
 /**
  * Created by sergey on 07/02/2018.
@@ -12,32 +13,32 @@ import uk.co.transferx.app.dto.TransactionDto;
 
 public class TransactionDiffCallback extends DiffUtil.Callback {
 
-    private List<TransactionDto> oldTransactionDto;
-    private List<TransactionDto> newTransactionDto;
+    private List<Transaction> oldTransactions;
+    private List<Transaction> newTransactions;
 
 
-    public TransactionDiffCallback(List<TransactionDto> oldTransactionDto, List<TransactionDto> newTransactionDto) {
-        this.oldTransactionDto = oldTransactionDto;
-        this.newTransactionDto = newTransactionDto;
+    public TransactionDiffCallback(List<Transaction> oldTransactions, List<Transaction> newTransactions) {
+        this.oldTransactions = oldTransactions;
+        this.newTransactions = newTransactions;
     }
 
     @Override
     public int getOldListSize() {
-        return oldTransactionDto.size();
+        return oldTransactions.size();
     }
 
     @Override
     public int getNewListSize() {
-        return newTransactionDto.size();
+        return newTransactions.size();
     }
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return oldTransactionDto.get(oldItemPosition).getId() == newTransactionDto.get(newItemPosition).getId();
+        return oldTransactions.get(oldItemPosition).getId().equals(newTransactions.get(newItemPosition).getId());
     }
 
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-        return oldTransactionDto.get(oldItemPosition).equals(newTransactionDto.get(newItemPosition));
+        return oldTransactions.get(oldItemPosition).equals(newTransactions.get(newItemPosition));
     }
 }

@@ -13,7 +13,7 @@ data class Card(
     @Expose(serialize = false, deserialize = true) @SerializedName("number") val number: String,
     @Expose(serialize = false, deserialize = true) @SerializedName("type") val type: String,
     @Expose(serialize = false, deserialize = true) @SerializedName("expDate") val expDate: String,
-    @Expose(serialize = false, deserialize = true) @SerializedName("cvc") val cvc: String
+    @Expose(serialize = false, deserialize = true) @SerializedName("cvc") val cvc: String?
 ) : Parcelable {
     override fun toString(): String {
         return "Ending in ${(number.takeLast(4))}"

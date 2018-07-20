@@ -188,7 +188,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
     public void showConnectionError() {
         snackbar = Snackbar.make(coordinatorLayout, getString(R.string.connection_error), Snackbar.LENGTH_INDEFINITE)
                 .setAction(getString(R.string.try_again), v -> {
-                    presenter.refreshToken();
+                    presenter.refreshGenesisToken();
                     snackbar.dismiss();
                 });
         snackbar.show();

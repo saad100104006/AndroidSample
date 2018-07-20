@@ -19,7 +19,7 @@ class PersonalDetailsPresenterTwo @Inject constructor(private val profileReposit
         compositeDisposable = CompositeDisposable()
         val disposable: Disposable = profileRepository.getUserProfile()
                 .subscribeBy(
-                        onNext = { ui?.setData(it) },
+                        onSuccess = { ui?.setData(it) },
                         onError = { ui?.setError() }
                 )
         compositeDisposable?.add(disposable)

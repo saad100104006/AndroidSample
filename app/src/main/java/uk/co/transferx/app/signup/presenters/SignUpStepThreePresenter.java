@@ -74,7 +74,8 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
         if (compositeDisposable == null) {
             compositeDisposable = new CompositeDisposable();
         }
-        compositeDisposable.add(Single.fromCallable(() -> cryptoManager.getEncryptedCredential(email + UNDERSCORE + password, pin))
+        compositeDisposable.add(tokenManager.getToken()
+                .map(token -> cryptoManager.getEncryptedCredential(token.getAccessToken(),pin))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sec -> {
@@ -110,7 +111,14 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
     }
 
     public void validatePin() {
-        UserRequest.Builder request = new UserRequest.Builder();
+        if (firstPin.equals(secondPin)) {
+            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) ||
+                    !sharedPreferences.getBoolean(LOGGED_IN_STATUS, false)) {
+                saveTokenWithNewPin(firstPin);
+                return;
+            }
+        }
+     /*   UserRequest.Builder request = new UserRequest.Builder();
         if (firstPin.equals(secondPin)) {
             if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) ||
                     !sharedPreferences.getBoolean(LOGGED_IN_STATUS, false) &&
@@ -158,7 +166,7 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
         }
         if (ui != null) {
             ui.showErrorPin();
-        }
+        }  */
     }
 
     private void handleErrorFromBackend(Throwable throwable) {

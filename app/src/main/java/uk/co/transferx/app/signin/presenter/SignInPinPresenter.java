@@ -16,6 +16,7 @@ import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.SignInOutApi;
 import uk.co.transferx.app.crypto.CryptoManager;
 import uk.co.transferx.app.errors.ErrorPinException;
+import uk.co.transferx.app.pojo.TokenEntity;
 import uk.co.transferx.app.pojo.UserSignIn;
 import uk.co.transferx.app.recipientsrepository.RecipientRepository;
 import uk.co.transferx.app.tokenmanager.TokenManager;
@@ -74,13 +75,28 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
 
 
     public void checkPingAndLogIn(final String pin) {
-
         final String credential = sharedPreferences.getString(CREDENTIAL, null);
         if (credential == null) {
             Timber.d(getClass().getSimpleName() + " Credential is null");
             return;
         }
+        compositeDisposable.add(getObservableWithCrypto(credential, pin)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(res -> {
+                    if (ui != null && !res.isEmpty()) {
+                        sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply();
+                        ui.goToMainScree();
+                        return;
+                    }
+                    handleError(new ErrorPinException());
+                }));
 
+     /*   final String credential = sharedPreferences.getString(CREDENTIAL, null);
+        if (credential == null) {
+            Timber.d(getClass().getSimpleName() + " Credential is null");
+            return;
+        }
 
         if (tokenManager.getToken() != null) {
             compositeDisposable.add(getObservableWithCrypto(credential, pin)
@@ -120,7 +136,7 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
                         ui.showError(resp.message());
                     }
                 }, this::handleError));
-
+*/
     }
 
     public void resetPassword() {

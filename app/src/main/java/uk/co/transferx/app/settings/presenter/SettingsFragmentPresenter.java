@@ -42,7 +42,7 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentPre
     }
 
     public void logOut() {
-        if (ui != null && !tokenManager.isTokenExist()) {
+     /*   if (ui != null && !tokenManager.isTokenExist()) {
             tokenManager.clearInitToken();
             sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, false).apply();
             ui.goToWelcome();
@@ -59,7 +59,7 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentPre
                         ui.goToWelcome();
                     }
                 });
-
+*/
 
     }
 

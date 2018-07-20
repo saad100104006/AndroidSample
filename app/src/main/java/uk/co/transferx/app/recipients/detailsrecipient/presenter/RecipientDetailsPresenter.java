@@ -52,7 +52,7 @@ public class RecipientDetailsPresenter extends BasePresenter<RecipientDetailsPre
         compositeDisposable.dispose();
     }
 
-    public void deleteRecipient() {
+  /*  public void deleteRecipient() {
         if (recipientDto != null) {
             Disposable disposable = recipientsApi.deleteRecipient(tokenManager.getToken(), recipientDto.getId())
                     .subscribeOn(Schedulers.io())
@@ -66,9 +66,9 @@ public class RecipientDetailsPresenter extends BasePresenter<RecipientDetailsPre
                     });
             compositeDisposable.add(disposable);
         }
-    }
+    } */
 
-    private void saveRecipient(RecipientDto recipientDtoChanged) {
+  /*  private void saveRecipient(RecipientDto recipientDtoChanged) {
         if (recipientDto.equals(recipientDtoChanged)) {
             ui.goBackToList();
             return;
@@ -91,9 +91,9 @@ public class RecipientDetailsPresenter extends BasePresenter<RecipientDetailsPre
                     }
                 });
         compositeDisposable.add(updateDisposable);
-    }
+    } */
 
-    public void validateInput(String firstName, String lastName, String country, String phone) {
+  /*  public void validateInput(String firstName, String lastName, String country, String phone) {
         if (!Util.validateName(firstName)) {
             ui.nameError();
             return;
@@ -115,7 +115,7 @@ public class RecipientDetailsPresenter extends BasePresenter<RecipientDetailsPre
      //   RecipientDto recipientDtoChanged = new RecipientDto(recipientDto.getId(), firstName + " " + lastName, recipientDto.getImgUrl(), country, phone);
      //   saveRecipient(recipientDtoChanged);
 
-    }
+    } */
 
     public void setData(RecipientDto recipientDto) {
         this.recipientDto = recipientDto;

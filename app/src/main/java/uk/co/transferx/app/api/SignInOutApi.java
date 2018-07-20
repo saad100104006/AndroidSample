@@ -7,7 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import uk.co.transferx.app.pojo.Token;
+import uk.co.transferx.app.pojo.TokenEntity;
 import uk.co.transferx.app.pojo.UserSignIn;
 
 /**
@@ -18,7 +18,7 @@ public interface SignInOutApi {
 
 
     @POST("/v1/auth/user/login")
-    Single<Response<Token>> signIn(@Header("Authorization") String token, @Body UserSignIn request);
+    Single<Response<TokenEntity>> signIn(@Header("Authorization") String token, @Body UserSignIn request);
 
 
     @POST("/v1/auth/user/logout")

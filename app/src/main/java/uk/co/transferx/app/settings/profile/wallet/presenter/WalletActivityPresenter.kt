@@ -30,17 +30,20 @@ class WalletActivityPresenter @Inject constructor(
     }
 
     private fun setCards() {
-        compositeDisposable?.add(cardsApi.getCards(tokenManager.token)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ resp -> ui?.fillCardsOnUI(resp.cards) }, { ui?.error(it) })
+        compositeDisposable?.add(
+            tokenManager.token
+                .flatMap { cardsApi.getCards(it.accessToken) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ resp -> ui?.fillCardsOnUI(resp.cards) }, { ui?.error(it) })
         )
 
     }
 
     fun deleteCard(card: Card) {
         compositeDisposable?.add(
-            cardsApi.deleteCard(tokenManager.token, card.id)
+            tokenManager.token
+                .flatMap { cardsApi.deleteCard(it.accessToken, card.id) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

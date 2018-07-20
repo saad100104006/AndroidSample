@@ -1,14 +1,8 @@
 package uk.co.transferx.app.dto;
 
-import com.annimon.stream.Optional;
-import com.annimon.stream.Stream;
-
 import java.math.BigDecimal;
-import java.util.List;
 
-import uk.co.transferx.app.pojo.TransactionHistory;
-
-import static uk.co.transferx.app.util.Constants.EMPTY;
+import uk.co.transferx.app.pojo.Transaction;
 
 /**
  * Created by sergey on 07/02/2018.
@@ -16,19 +10,20 @@ import static uk.co.transferx.app.util.Constants.EMPTY;
 
 public class TransactionDto {
 
-    public TransactionDto(TransactionHistory transactionHistory, List<RecipientDto> recipients) {
-        id = transactionHistory.getId();
-        recipientId = transactionHistory.getTo();
-        currency = transactionHistory.getCurrency();
-        amount = new BigDecimal(transactionHistory.getAmount());
-        created = transactionHistory.getCreated();
-        updated = transactionHistory.getUpdated();
-        status = transactionHistory.getStatus();
-        Optional<RecipientDto> recipient = Stream.of(recipients).filter(recip -> recip.getId().equals(recipientId)).findFirst();
-        recipientName = recipient.isPresent() ? recipient.get().getFullName() : EMPTY;
+    public TransactionDto(Transaction transaction) {
+        this.id = transaction.getId();
+        this.recipientId = transaction.getTo();
+        this.recipientName = String.format("%s %s", transaction.getMeta().getRecipientInfo().getFirstName(),
+                transaction.getMeta().getRecipientInfo().getLastName());
+        this.currency = transaction.getCurrency();
+        this.amount = new BigDecimal(transaction.getAmount());
+        this.created = transaction.getCreated();
+        this.updated = transaction.getUpdated();
+        this.status = transaction.getStatus();
+
     }
 
-    public TransactionDto(int id, String recipientId, String recipientName, String currency, BigDecimal amount, String created, String updated, String status) {
+    public TransactionDto(String id, String recipientId, String recipientName, String currency, BigDecimal amount, String created, String updated, String status) {
         this.id = id;
         this.recipientId = recipientId;
         this.recipientName = recipientName;
@@ -39,7 +34,7 @@ public class TransactionDto {
         this.status = status;
     }
 
-    private final int id;
+    private final String id;
     private final String recipientId;
     private final String recipientName;
     private final String currency;
@@ -49,7 +44,7 @@ public class TransactionDto {
     private final String status;
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

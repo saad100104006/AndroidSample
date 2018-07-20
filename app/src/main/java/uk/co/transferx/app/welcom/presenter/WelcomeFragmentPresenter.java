@@ -14,6 +14,7 @@ import uk.co.transferx.app.api.SignInOutApi;
 import uk.co.transferx.app.api.SignUpApi;
 import uk.co.transferx.app.pojo.UserSignIn;
 import uk.co.transferx.app.tokenmanager.TokenManager;
+import uk.co.transferx.app.tokenmanager.TokenRepository;
 import uk.co.transferx.app.util.Util;
 
 import static uk.co.transferx.app.util.Constants.CREDENTIAL;
@@ -31,15 +32,20 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
     private Disposable disposable;
     private final TokenManager tokenManager;
     private final SharedPreferences sharedPreferences;
+    private final TokenRepository tokenRepository;
     private String email;
     private String password;
 
     @Inject
-    public WelcomeFragmentPresenter(final SignInOutApi signInOutApi, final SignUpApi signUpApi, final TokenManager tokenManager, final SharedPreferences sharedPreferences) {
+    public WelcomeFragmentPresenter(final SignInOutApi signInOutApi, final SignUpApi signUpApi,
+                                    final TokenManager tokenManager,
+                                    final SharedPreferences sharedPreferences,
+                                    final TokenRepository tokenRepository) {
         this.signInOutApi = signInOutApi;
         this.tokenManager = tokenManager;
         this.signUpApi = signUpApi;
         this.sharedPreferences = sharedPreferences;
+        this.tokenRepository = tokenRepository;
     }
 
     @Override
@@ -51,11 +57,11 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
     }
 
     public void signInClicked() {
-        if (!tokenManager.isInitialTokenExist() && ui != null) {
+        if (tokenRepository.getToken().getAccessToken().isEmpty() && ui != null) {
             ui.showConnectionError();
             return;
         }
-        signIn(email, password, tokenManager.getInitialToken());
+        signIn(email, password);
     }
 
     public void validateEmail(String email) {
@@ -76,14 +82,15 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
         return Util.validateEmail(email) && Util.validatePassword(password);
     }
 
-    private void signIn(String email, String password, String token) {
+    private void signIn(String email, String password) {
         UserSignIn.Builder request = new UserSignIn.Builder();
-        disposable = signInOutApi.signIn(token, request.uname(email).upass(password).build())
+        disposable = tokenManager.getToken()
+                .flatMap(token -> signInOutApi.signIn(token.getAccessToken(), request.uname(email).upass(password).build()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        tokenManager.setToken(resp.body().getToken());
+                        tokenManager.saveToken(resp.body());
                         if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) ||
                                 !sharedPreferences.getBoolean(LOGGED_IN_STATUS, false)) {
                             ui.goToPinView(email, password);
@@ -109,7 +116,7 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
     }
 
     public void signUpClicked() {
-        if (tokenManager.isInitialTokenExist()) {
+        if (!tokenRepository.getToken().getAccessToken().isEmpty()) {
             sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply();
             sharedPreferences.edit().remove(CREDENTIAL).apply();
             ui.goToSignUp();
@@ -118,14 +125,14 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
         ui.showConnectionError();
     }
 
-    public void refreshToken() {
+    public void refreshGenesisToken() {
         disposable = signUpApi.getInitialToken()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (ui != null) {
                         if (resp.code() == HttpsURLConnection.HTTP_OK) {
-                            tokenManager.setInitialToken(resp.body().getToken());
+                            tokenManager.saveToken(resp.body());
                             return;
                         }
                         ui.showConnectionError();

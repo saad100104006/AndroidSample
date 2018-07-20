@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.net.ssl.HttpsURLConnection;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -18,6 +20,7 @@ import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.TransactionApi;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.dto.TransactionDto;
+import uk.co.transferx.app.pojo.Transaction;
 import uk.co.transferx.app.recipientsrepository.RecipientRepository;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
@@ -32,7 +35,7 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
     private final TokenManager tokenManager;
     private CompositeDisposable compositeDisposable;
     private List<RecipientDto> recipientDtos;
-    private List<TransactionDto> transactionDtos = new ArrayList<>();
+    private List<Transaction> transactionDtos = new ArrayList<>();
 
     @Inject
     public ActivityFragmentPresenter(final RecipientRepository recipientRepository, final TransactionApi transactionApi, final TokenManager tokenManager) {
@@ -93,24 +96,20 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
         if (compositeDisposable == null) {
             compositeDisposable = new CompositeDisposable();
         }
-        final Disposable dis = transactionApi.getHistory(tokenManager.getToken())
-                .flatMap(trans -> Observable.fromIterable(trans.body().getTransactions()))
-                .map(history -> new TransactionDto(history, recipientDtos))
-                .doOnNext(trans -> {
-                    if (!transactionDtos.contains(trans)) {
-                        transactionDtos.add(trans);
-                    }
-                })
-                .toList()
+
+        final Disposable historyDis = tokenManager.getToken()
+                .flatMap(token -> transactionApi.getHistory(token.getAccessToken()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(transactionDtos -> {
-                    if (ui != null) {
-                        ui.setData(transactionDtos);
+                .subscribe(resp -> {
+                    if(resp.code() == HttpsURLConnection.HTTP_OK && ui != null){
+                        ui.setData(resp.body().getTransactions());
+                        return;
                     }
-                }, this::handleError);
-        compositeDisposable.add(dis);
+                    handleError(new Throwable("Error " + resp.code()));
 
+                });
+        compositeDisposable.add(historyDis);
     }
 
     private void handleError(Throwable throwable) {
@@ -122,7 +121,7 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
 
     public interface ActivityFragmentUI extends UI {
 
-        void setData(List<TransactionDto> transactionDtos);
+        void setData(List<Transaction> transactions);
 
         void setError();
 

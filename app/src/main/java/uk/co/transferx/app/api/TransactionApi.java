@@ -1,6 +1,5 @@
 package uk.co.transferx.app.api;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -20,10 +19,10 @@ import uk.co.transferx.app.pojo.Transactions;
 public interface TransactionApi {
 
     @GET("/v1/transactions")
-    Observable<Response<Transactions>> getHistory(@Header("Authorization") String token);
+    Single<Response<Transactions>> getHistory(@Header("Authorization") String token);
 
     @GET("/v1/transactions/rates")
-    Observable<Response<Rates>> getRats(@Header("Authorization") String token, @Query("from") String from, @Query("to") String to);
+    Single<Response<Rates>> getRats(@Header("Authorization") String token, @Query("from") String from, @Query("to") String to);
 
     @POST("/v1/transactions")
     Single<Response<CardTokenId>> createTransaction(@Header("Authorization") String token, @Body TransactionCreate transactionCreate);

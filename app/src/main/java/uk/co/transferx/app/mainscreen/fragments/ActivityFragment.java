@@ -20,6 +20,7 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.TransactionDto;
 import uk.co.transferx.app.mainscreen.adapters.ActivityRecylerViewAdapter;
 import uk.co.transferx.app.mainscreen.presenters.ActivityFragmentPresenter;
+import uk.co.transferx.app.pojo.Transaction;
 
 /**
  * Created by sergey on 17.12.17.
@@ -76,11 +77,11 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
     }
 
     @Override
-    public void setData(List<TransactionDto> transactionDtos) {
-        boolean isEmpty = transactionDtos.isEmpty();
+    public void setData(List<Transaction> transactions) {
+        boolean isEmpty = transactions.isEmpty();
         historyView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
         emptyDescription.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
-        adapter.setRecipients(transactionDtos);
+        adapter.setRecipients(transactions);
     }
 
     @Override

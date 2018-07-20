@@ -1,11 +1,8 @@
 package uk.co.transferx.app.settings.profile.wallet.presenter
 
-import android.content.SharedPreferences
-import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 import uk.co.transferx.app.BasePresenter
 import uk.co.transferx.app.UI
 import uk.co.transferx.app.api.CardsApi
@@ -13,13 +10,10 @@ import uk.co.transferx.app.pojo.Card
 import uk.co.transferx.app.settings.profile.wallet.CardMode
 import uk.co.transferx.app.settings.profile.wallet.CardType
 import uk.co.transferx.app.tokenmanager.TokenManager
-import uk.co.transferx.app.util.Constants.CARDS
 import uk.co.transferx.app.util.Constants.EMPTY
-import uk.co.transferx.app.util.Util
 import javax.inject.Inject
 
 class AddCardPresenter @Inject constructor(
-    private val sharedPreferences: SharedPreferences,
     private val cardsApi: CardsApi,
     private val tokenManager: TokenManager
 ) :
@@ -35,6 +29,9 @@ class AddCardPresenter @Inject constructor(
     private var disposable: Disposable? = null
     private var cardMode = CardMode.ADD
     private var card: Card? = null
+    private val visaRegEx = "^4[0-9]{12}(?:[0-9]{3})?$".toRegex()
+    private val masterCardRegEx = "^5[1-5][0-9]{14}\$".toRegex()
+    private val expDateRegEx = "^(0[1-9]|1[0-2])\\/?([0-9]{4}|[0-9]{2})$".toRegex()
 
 
     override fun attachUI(ui: AddCardUI?) {
@@ -42,7 +39,6 @@ class AddCardPresenter @Inject constructor(
         if (cardMode == CardMode.EDIT) {
             ui?.setCard(card)
         }
-
     }
 
     override fun detachUI() {
@@ -52,10 +48,9 @@ class AddCardPresenter @Inject constructor(
 
     fun setCardNumber(number: String) {
         cardNumber = number
-        isVisa = "^4[0-9]{12}(?:[0-9]{3})?$".toRegex().matches(cardNumber)
-        isMasterCard = "^5[1-5][0-9]{14}\$".toRegex().matches(cardNumber)
+        isVisa = visaRegEx.matches(cardNumber)
+        isMasterCard = masterCardRegEx.matches(cardNumber)
         validateData()
-
     }
 
     fun setMode(cardMode: CardMode) {
@@ -67,9 +62,9 @@ class AddCardPresenter @Inject constructor(
         nameOfCard = card.name
         expDate = card.expDate
         cardNumber = card.number
-        isVisa = "^4[0-9]{12}(?:[0-9]{3})?$".toRegex().matches(card.number)
-        isMasterCard = "^5[1-5][0-9]{14}\$".toRegex().matches(card.number)
-        cvc = card.cvc
+        isVisa = visaRegEx.matches(card.number)
+        isMasterCard = masterCardRegEx.matches(card.number)
+        cvc = card.cvc ?: EMPTY
     }
 
     fun setNameOfCard(nameOfCard: String) {
@@ -103,10 +98,13 @@ class AddCardPresenter @Inject constructor(
     }
 
     fun saveCard() {
-        disposable = cardsApi.addCards(
-            tokenManager.token,
-            Card(null, nameOfCard, cardNumber, cardType.name, expDate, cvc)
-        )
+        disposable = tokenManager.token
+            .flatMap {
+                cardsApi.addCards(
+                    it.accessToken,
+                    Card(null, nameOfCard, cardNumber, cardType.name, expDate, cvc)
+                )
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ ui?.goBack() }, { ui?.error() })
@@ -118,7 +116,8 @@ class AddCardPresenter @Inject constructor(
             ui?.goBack()
             return
         }
-        disposable = cardsApi.saveEditedCard(tokenManager.token, card?.id, editedCard)
+        disposable = tokenManager.token
+            .flatMap { cardsApi.saveEditedCard(it.accessToken, card?.id, editedCard) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ ui?.goBack() }, { ui?.error() })
@@ -131,9 +130,10 @@ class AddCardPresenter @Inject constructor(
     }
 
     private fun isValid(): Boolean {
-        return cardNumber.length == 16 && (isVisa || isMasterCard) && cvc.length == 3 && "^(0[1-9]|1[0-2])\\/?([0-9]{4}|[0-9]{2})$".toRegex().matches(expDate)
+        return cardNumber.length == 16 && (isVisa || isMasterCard) && cvc.length == 3 && expDateRegEx.matches(
+            expDate
+        )
     }
-
 
     interface AddCardUI : UI {
         fun setButtonEnabled(isEnabled: Boolean)
