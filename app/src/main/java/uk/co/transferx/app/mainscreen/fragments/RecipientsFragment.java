@@ -27,6 +27,7 @@ import uk.co.transferx.app.mainscreen.presenters.RecipientsFragmentPresenter;
 import uk.co.transferx.app.recipients.addrecipients.AddRecipientsActivity;
 import uk.co.transferx.app.recipients.addrecipients.Mode;
 import uk.co.transferx.app.view.ConfirmationDialogFragment;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 import static android.app.Activity.RESULT_OK;
 import static uk.co.transferx.app.util.Constants.MODE;
@@ -187,5 +188,10 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     @Override
     public void deleteRecipient(RecipientDto recipientDto) {
         verticalRecyclerAdapter.removeItem(recipientDto);
+    }
+
+    @Override
+    public void goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(getActivity());
     }
 }

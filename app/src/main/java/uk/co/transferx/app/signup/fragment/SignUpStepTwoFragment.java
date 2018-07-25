@@ -20,6 +20,7 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.signup.presenters.SignUpStepTwoPresenter;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 import static uk.co.transferx.app.util.Constants.EMAIL;
 import static uk.co.transferx.app.util.Constants.PASSWORD;
@@ -172,5 +173,10 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
     @Override
     public void setStateButton(boolean isEnabled) {
         setButtonStatus(isEnabled);
+    }
+
+    @Override
+    public void goToWelcome() {
+       //no op
     }
 }

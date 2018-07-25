@@ -9,6 +9,7 @@ import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.pojo.TransactionCreate
 import uk.co.transferx.app.transfersummary.presenter.TransferSummaryPresenter
 import uk.co.transferx.app.util.Constants.TRANSACTION
+import uk.co.transferx.app.welcom.WelcomeActivity
 import javax.inject.Inject
 
 class TransferSummaryActivity : BaseActivity(), TransferSummaryPresenter.TransferSummaryUI {
@@ -41,10 +42,15 @@ class TransferSummaryActivity : BaseActivity(), TransferSummaryPresenter.Transfe
 
     override fun fillUser(transactionCreate: TransactionCreate?) {
         SendToRecipient.text = transactionCreate?.recipientDto?.fullName
-        sendInput.text = "${transactionCreate?.baseAmount.toString()} - ${transactionCreate?.currencyInput}"
-        receiveInput.text = "${transactionCreate?.amount.toString()} - ${transactionCreate?.currency}"
+        sendInput.text =
+                "${transactionCreate?.baseAmount.toString()} - ${transactionCreate?.currencyInput}"
+        receiveInput.text =
+                "${transactionCreate?.amount.toString()} - ${transactionCreate?.currency}"
         paymentCard.text = transactionCreate?.card.toString()
         messageInput.text = transactionCreate?.message.orEmpty()
+    }
 
+    override fun goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(this@TransferSummaryActivity)
     }
 }

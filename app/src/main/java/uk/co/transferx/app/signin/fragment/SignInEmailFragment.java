@@ -24,6 +24,7 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.recoverpass.RecoverPasswordActivity;
 import uk.co.transferx.app.signin.presenters.SignInEmailPresenter;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 /**
  * Created by sergey on 19.11.17.
@@ -146,5 +147,10 @@ public class SignInEmailFragment extends BaseFragment implements SignInEmailPres
     public void onPause() {
         presenter.detachUI();
         super.onPause();
+    }
+
+    @Override
+    public void goToWelcome() {
+        //no op
     }
 }

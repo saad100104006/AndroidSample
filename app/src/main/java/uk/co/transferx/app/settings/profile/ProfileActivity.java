@@ -15,6 +15,7 @@ import uk.co.transferx.app.settings.profile.changepassword.ChangePasswordActivit
 import uk.co.transferx.app.settings.profile.personaldetails.PersonalDetailsActivity;
 import uk.co.transferx.app.settings.profile.presenter.ProfileActivityPresenter;
 import uk.co.transferx.app.settings.profile.wallet.WalletActivity;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 /**
  * Created by sergey on 30/01/2018.
@@ -61,5 +62,9 @@ public class ProfileActivity extends BaseActivity implements ProfileActivityPres
         super.onPause();
     }
 
+    @Override
+    public void goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(ProfileActivity.this);
+    }
 
 }

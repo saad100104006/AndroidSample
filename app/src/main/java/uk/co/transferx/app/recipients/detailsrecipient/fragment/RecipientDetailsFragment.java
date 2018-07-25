@@ -20,6 +20,7 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.recipients.BaseRecipientFragment;
 import uk.co.transferx.app.recipients.detailsrecipient.presenter.RecipientDetailsPresenter;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 import static uk.co.transferx.app.recipients.detailsrecipient.RecipientDetailsActivity.RECIPIENT;
 
@@ -142,5 +143,10 @@ public class RecipientDetailsFragment extends BaseRecipientFragment implements R
         Activity activity = getActivity();
         activity.setResult(Activity.RESULT_CANCELED);
         activity.finish();
+    }
+
+    @Override
+    public void goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(getActivity());
     }
 }

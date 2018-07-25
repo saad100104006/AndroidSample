@@ -22,6 +22,7 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.recoverpass.RecoverPasswordActivity;
 import uk.co.transferx.app.recoverpass.presenter.RecoverPasswordPresenter;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 /**
  * Created by sergey on 23.11.17.
@@ -124,5 +125,10 @@ public class RecoverPasswordFragment extends BaseFragment implements RecoverPass
     @Override
     public void error() {
         Toast.makeText(getContext(), "Error occurred", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void goToWelcome() {
+        // no op
     }
 }

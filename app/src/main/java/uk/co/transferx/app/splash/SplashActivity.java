@@ -54,4 +54,9 @@ public class SplashActivity extends BaseActivity implements SplashPresenter.Spla
         SignInActivity.starSignInActivity(SplashActivity.this);
         finish();
     }
+
+    @Override
+    public void goToWelcome() {
+        //no op
+    }
 }

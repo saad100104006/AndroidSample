@@ -18,6 +18,7 @@ import uk.co.transferx.app.util.Constants.CARD
 import uk.co.transferx.app.util.Constants.MODE
 import uk.co.transferx.app.util.CreditCardNumberFormattingTextWatcher
 import uk.co.transferx.app.util.DataCardFormatter
+import uk.co.transferx.app.welcom.WelcomeActivity
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -100,5 +101,9 @@ class AddCardActivity : BaseActivity(), AddCardPresenter.AddCardUI {
 
     override fun error() {
         toast("Error occurred. Card not added")
+    }
+
+    override fun goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(this@AddCardActivity)
     }
 }

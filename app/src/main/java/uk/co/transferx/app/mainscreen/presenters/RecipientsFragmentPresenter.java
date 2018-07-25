@@ -1,5 +1,6 @@
 package uk.co.transferx.app.mainscreen.presenters;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.net.HttpURLConnection;
@@ -37,7 +38,9 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
     @Inject
     public RecipientsFragmentPresenter(final RecipientRepository recipientRepository,
                                        final RecipientsApi recipientsApi,
-                                       final TokenManager tokenManager) {
+                                       final TokenManager tokenManager,
+                                       final SharedPreferences sharedPreferences) {
+        super(sharedPreferences);
         this.recipientRepository = recipientRepository;
         this.recipientsApi = recipientsApi;
         this.tokenManager = tokenManager;
@@ -76,6 +79,7 @@ public class RecipientsFragmentPresenter extends BasePresenter<RecipientsFragmen
     }
 
     private void handleError(Throwable throwable) {
+        globalErrorHandler(throwable);
         isReqested = false;
     }
 

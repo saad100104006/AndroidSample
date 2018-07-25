@@ -1,5 +1,6 @@
 package uk.co.transferx.app.mainscreen.presenters;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.math.BigDecimal;
@@ -38,7 +39,11 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
     private List<Transaction> transactionDtos = new ArrayList<>();
 
     @Inject
-    public ActivityFragmentPresenter(final RecipientRepository recipientRepository, final TransactionApi transactionApi, final TokenManager tokenManager) {
+    public ActivityFragmentPresenter(final RecipientRepository recipientRepository,
+                                     final TransactionApi transactionApi,
+                                     final TokenManager tokenManager,
+                                     final SharedPreferences sharedPreferences) {
+        super(sharedPreferences);
         this.recipientRepository = recipientRepository;
         this.transactionApi = transactionApi;
         this.tokenManager = tokenManager;
@@ -87,7 +92,7 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
                 .subscribe(recipients -> {
                     recipientDtos = recipients;
                     fetchHistory();
-                }, this::handleError);
+                }, this::globalErrorHandler);
         compositeDisposable.add(dis);
 
     }
@@ -106,17 +111,18 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
                         ui.setData(resp.body().getTransactions());
                         return;
                     }
-                    handleError(new Throwable("Error " + resp.code()));
+                    globalErrorHandler(resp.code());
 
                 });
         compositeDisposable.add(historyDis);
     }
 
-    private void handleError(Throwable throwable) {
-        Log.e(ActivityFragmentPresenter.class.getSimpleName(), "error", throwable);
-        if (ui != null) {
-            ui.setError();
-        }
+    @Override
+    protected void globalErrorHandler(Throwable throwable) {
+        super.globalErrorHandler(throwable);
+     //   if (ui != null) {
+    //        ui.setError();
+    //    }
     }
 
     public interface ActivityFragmentUI extends UI {

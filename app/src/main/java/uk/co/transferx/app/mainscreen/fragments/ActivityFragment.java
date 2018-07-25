@@ -21,6 +21,7 @@ import uk.co.transferx.app.dto.TransactionDto;
 import uk.co.transferx.app.mainscreen.adapters.ActivityRecylerViewAdapter;
 import uk.co.transferx.app.mainscreen.presenters.ActivityFragmentPresenter;
 import uk.co.transferx.app.pojo.Transaction;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 /**
  * Created by sergey on 17.12.17.
@@ -82,6 +83,11 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
         historyView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
         emptyDescription.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         adapter.setRecipients(transactions);
+    }
+
+    @Override
+    public void goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(getActivity());
     }
 
     @Override

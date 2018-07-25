@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.schedule_activity_layout.*
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.welcom.WelcomeActivity
 import java.util.*
 import javax.inject.Inject
 
@@ -59,6 +60,10 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
         }
         (markersOfcurrentDay[currentDayOfWeek.dec()]).visibility = View.VISIBLE
 
+    }
+
+    override fun goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(this@ScheduleActivity)
     }
 
     private fun setChoosenDate() {

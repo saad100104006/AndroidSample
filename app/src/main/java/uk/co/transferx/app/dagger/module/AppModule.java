@@ -41,8 +41,8 @@ public class AppModule {
 
     @Singleton
     @Provides
-    TokenManager providesTokenManager(TokenRepository tokenRepository, SignUpApi signUpApi) {
-        return new TokenManager(tokenRepository, signUpApi);
+    TokenManager providesTokenManager(TokenRepository tokenRepository, SignUpApi signUpApi, SharedPreferences sharedPreferences) {
+        return new TokenManager(tokenRepository, signUpApi, sharedPreferences);
     }
 
     @Singleton

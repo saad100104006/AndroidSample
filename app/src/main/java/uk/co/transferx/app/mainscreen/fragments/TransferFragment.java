@@ -37,6 +37,7 @@ import uk.co.transferx.app.pojo.Card;
 import uk.co.transferx.app.pojo.TransactionCreate;
 import uk.co.transferx.app.transfersummary.TransferSummaryActivity;
 import uk.co.transferx.app.view.CustomSpinner;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 import static uk.co.transferx.app.util.Constants.EMPTY;
 import static uk.co.transferx.app.util.Constants.TRANSACTION;
@@ -47,12 +48,8 @@ import static uk.co.transferx.app.util.Constants.TRANSACTION;
 
 public class TransferFragment extends BaseFragment implements TransferFragmentPresenter.SendFragmentUI {
 
-    private static final String CURRENCY_PICKER = "currency_picker";
-    private View view;
-    private final static String INITIAL_VALUE = "50";
     public final static int REQUEST_RECIPIENT = 321;
     public static final String RECIPIENT = "recipient";
-    private ImageView photo;
     private TextView name, rate, country, currencyCodeFirst, currencyCodeSecond, calculatedValue;
     private RecipientDialogFragment recipientDialogFragment;
     private final static String GBP = "GBP";
@@ -215,5 +212,10 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
         final Intent intent = new Intent(getContext(), TransferSummaryActivity.class);
         intent.putExtra(TRANSACTION, transactionCreate);
         startActivity(intent);
+    }
+
+    @Override
+    public void goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(getActivity());
     }
 }

@@ -25,6 +25,7 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.signup.presenters.SignUpStepThreePresenter;
 import uk.co.transferx.app.tutorial.TutorialActivity;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 import static uk.co.transferx.app.util.Constants.EMAIL;
 import static uk.co.transferx.app.util.Constants.EMPTY;
@@ -173,6 +174,11 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
     @Override
     public void showErrorFromBackend() {
 
+    }
+
+    @Override
+    public void goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(getActivity());
     }
 
     @Override

@@ -4,17 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.SwitchCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 
 import javax.inject.Inject;
 
 import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 /**
  * Created by sergey on 26/01/2018.
@@ -26,7 +24,6 @@ public class NotificationSettingsActivity extends BaseActivity implements Notifi
     NotificationSettingsPresenter presenter;
 
     private CheckBox newsSwitch, alertSwitch, notificationSwitch, paymentsSwitch;
-
 
 
     public static void startNotificationSettingsActivity(final Context context) {
@@ -104,5 +101,10 @@ public class NotificationSettingsActivity extends BaseActivity implements Notifi
         notificationSwitch.setOnCheckedChangeListener(null);
         notificationSwitch.setChecked(true);
         notificationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setNotificationSubscribtion(isChecked));
+    }
+
+    @Override
+    public void goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(NotificationSettingsActivity.this);
     }
 }

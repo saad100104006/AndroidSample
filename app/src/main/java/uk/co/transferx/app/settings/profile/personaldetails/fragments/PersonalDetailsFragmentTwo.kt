@@ -10,6 +10,7 @@ import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.pojo.Profile
 import uk.co.transferx.app.settings.profile.personaldetails.presenter.PersonalDetailsPresenterTwo
+import uk.co.transferx.app.welcom.WelcomeActivity
 import javax.inject.Inject
 
 class PersonalDetailsFragmentTwo : BaseFragment(), PersonalDetailsPresenterTwo.PersonalDetailsUITwo {
@@ -50,5 +51,9 @@ class PersonalDetailsFragmentTwo : BaseFragment(), PersonalDetailsPresenterTwo.P
 
     override fun setError() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(activity)
     }
 }

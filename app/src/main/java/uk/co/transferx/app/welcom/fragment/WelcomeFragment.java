@@ -212,4 +212,9 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
     public void changeButtonState(boolean isEnabled) {
         setButtonStatus(isEnabled);
     }
+
+    @Override
+    public void goToWelcome() {
+        //no op
+    }
 }

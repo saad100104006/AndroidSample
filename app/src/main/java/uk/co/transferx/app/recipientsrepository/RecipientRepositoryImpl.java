@@ -1,6 +1,5 @@
 package uk.co.transferx.app.recipientsrepository;
 
-import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import uk.co.transferx.app.api.RecipientsApi;
 import uk.co.transferx.app.dto.RecipientDto;
+import uk.co.transferx.app.errors.UnauthorizedException;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
 /**
@@ -47,8 +47,12 @@ public class RecipientRepositoryImpl implements RecipientRepository {
     private Single<List<RecipientDto>> getFromServer() {
         return tokenManager.getToken()
                 .flatMap(token -> recipientsApi.getRecipients(token.getAccessToken()))
-                .filter(resp -> resp.code() == HttpsURLConnection.HTTP_OK)
-                .flatMapObservable(res -> Observable.fromIterable(res.body().getResipients()))
+                .flatMapObservable(res -> {
+                    if (res.code() == HttpsURLConnection.HTTP_OK) {
+                        return Observable.fromIterable(res.body().getResipients());
+                    }
+                    return Observable.error(new UnauthorizedException());
+                })
                 .map(RecipientDto::new)
                 .toList()
                 .doAfterSuccess(recipients -> this.recipientDtos.addAll(recipients));

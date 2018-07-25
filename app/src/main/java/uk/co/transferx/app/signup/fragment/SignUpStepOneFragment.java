@@ -23,6 +23,7 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.signup.presenters.SignUpStepOnePresenter;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 import static uk.co.transferx.app.util.Constants.U_NAME;
 
@@ -174,5 +175,10 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
         setStatusOfError(secondInput, secondLabel, R.color.red);
         secondError.setText(R.string.last_name_error);
         secondError.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void goToWelcome() {
+        //no op
     }
 }

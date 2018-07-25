@@ -130,4 +130,9 @@ public class SignInPinFragment extends BaseFragment implements SignInPinPresente
         setStatusOfError(pinView, label, R.color.red);
         setLinesColor(R.color.red);
     }
+
+    @Override
+    public void goToWelcome() {
+        //no op
+    }
 }

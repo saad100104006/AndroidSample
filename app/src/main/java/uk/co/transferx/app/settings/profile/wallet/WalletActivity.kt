@@ -23,6 +23,7 @@ import uk.co.transferx.app.util.Constants.MODE
 import uk.co.transferx.app.view.ConfirmationDialogFragment
 import uk.co.transferx.app.view.ConfirmationDialogFragment.MESSAGE
 import uk.co.transferx.app.view.ConfirmationDialogFragment.POSITION
+import uk.co.transferx.app.welcom.WelcomeActivity
 import javax.inject.Inject
 
 class WalletActivity : BaseActivity(), WalletActivityPresenter.WalletActivityUI {
@@ -141,6 +142,10 @@ class WalletActivity : BaseActivity(), WalletActivityPresenter.WalletActivityUI 
 
     override fun error(throwable: Throwable) {
         toast("Error occurred ${throwable.message}")
+    }
+
+    override fun goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(this@WalletActivity)
     }
 
     companion object {

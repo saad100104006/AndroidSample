@@ -26,6 +26,7 @@ import uk.co.transferx.app.recipients.addrecipients.Mode;
 import uk.co.transferx.app.recipients.addrecipients.presenters.AddRecipientsPresenter;
 import uk.co.transferx.app.view.ConfirmationDialogFragment;
 import uk.co.transferx.app.view.CustomSpinner;
+import uk.co.transferx.app.welcom.WelcomeActivity;
 
 import static android.view.Gravity.CENTER;
 import static uk.co.transferx.app.mainscreen.fragments.RecipientsFragment.DELETE_USER;
@@ -216,5 +217,10 @@ public class AddRecipientsFragment extends BaseFragment implements AddRecipients
         intent.putExtra(RECIPIENT, recipientDto);
         getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().finish();
+    }
+
+    @Override
+    public void goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(getActivity());
     }
 }

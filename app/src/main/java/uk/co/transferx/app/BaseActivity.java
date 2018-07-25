@@ -39,14 +39,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-     /*   if (isShouldStartPinCheck()) {
+        if (isShouldStartPinCheck()) {
             SignInActivity.starSignInActivity(this);
-        } */
+        }
     }
 
     private boolean isShouldStartPinCheck() {
         return sharedPreferences.getBoolean(PIN_REQUIRED, false) && !(this instanceof SignInActivity) &&
-                !tokenRepository.getToken().getAccessToken().isEmpty() && sharedPreferences.getBoolean(LOGGED_IN_STATUS,false) &&
+                tokenRepository.getToken().getRefreshToken() != null && sharedPreferences.getBoolean(LOGGED_IN_STATUS,false) &&
                 !(this instanceof SignUpActivity);
     }
 

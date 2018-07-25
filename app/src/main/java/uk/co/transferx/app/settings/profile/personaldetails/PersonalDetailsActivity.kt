@@ -8,6 +8,7 @@ import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.pojo.Profile
 import uk.co.transferx.app.settings.profile.personaldetails.adapter.PersonalDetailsAdapter
 import uk.co.transferx.app.settings.profile.personaldetails.presenter.PersonalDetailsPresenter
+import uk.co.transferx.app.welcom.WelcomeActivity
 import javax.inject.Inject
 
 class PersonalDetailsActivity : BaseActivity(), PersonalDetailsPresenter.PersonalDetailsUI {
@@ -34,5 +35,9 @@ class PersonalDetailsActivity : BaseActivity(), PersonalDetailsPresenter.Persona
     override fun onPause() {
         presenter.detachUI()
         super.onPause()
+    }
+
+    override fun goToWelcome() {
+        WelcomeActivity.startWelcomeActivity(this@PersonalDetailsActivity)
     }
 }

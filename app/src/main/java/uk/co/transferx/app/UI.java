@@ -5,4 +5,6 @@ package uk.co.transferx.app;
  */
 
 public interface UI {
+
+    void goToWelcome();
 }
