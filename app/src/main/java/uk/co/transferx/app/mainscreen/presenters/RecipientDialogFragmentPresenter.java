@@ -1,5 +1,7 @@
 package uk.co.transferx.app.mainscreen.presenters;
 
+import android.content.SharedPreferences;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,7 +26,9 @@ public class RecipientDialogFragmentPresenter extends BasePresenter<RecipientDia
     private CompositeDisposable compositeDisposable;
 
     @Inject
-    public RecipientDialogFragmentPresenter(final RecipientRepository recipientRepository) {
+    public RecipientDialogFragmentPresenter(final RecipientRepository recipientRepository,
+                                            final SharedPreferences sharedPreferences) {
+        super(sharedPreferences);
         this.recipientRepository = recipientRepository;
     }
 

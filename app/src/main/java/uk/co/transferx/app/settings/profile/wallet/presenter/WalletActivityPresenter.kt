@@ -1,5 +1,6 @@
 package uk.co.transferx.app.settings.profile.wallet.presenter
 
+import android.content.SharedPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -13,8 +14,9 @@ import javax.inject.Inject
 
 class WalletActivityPresenter @Inject constructor(
     private val tokenManager: TokenManager,
-    private val cardsApi: CardsApi
-) : BasePresenter<WalletActivityPresenter.WalletActivityUI>() {
+    private val cardsApi: CardsApi,
+    sharedPreferences: SharedPreferences
+) : BasePresenter<WalletActivityPresenter.WalletActivityUI>(sharedPreferences) {
 
     private var compositeDisposable: CompositeDisposable? = null
 

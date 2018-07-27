@@ -1,17 +1,13 @@
 package uk.co.transferx.app.mainscreen.presenters;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
 
-import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -20,7 +16,6 @@ import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.TransactionApi;
 import uk.co.transferx.app.dto.RecipientDto;
-import uk.co.transferx.app.dto.TransactionDto;
 import uk.co.transferx.app.pojo.Transaction;
 import uk.co.transferx.app.recipientsrepository.RecipientRepository;
 import uk.co.transferx.app.tokenmanager.TokenManager;
@@ -107,7 +102,7 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
-                    if(resp.code() == HttpsURLConnection.HTTP_OK && ui != null){
+                    if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         ui.setData(resp.body().getTransactions());
                         return;
                     }
@@ -120,9 +115,9 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
     @Override
     protected void globalErrorHandler(Throwable throwable) {
         super.globalErrorHandler(throwable);
-     //   if (ui != null) {
-    //        ui.setError();
-    //    }
+        //   if (ui != null) {
+        //        ui.setError();
+        //    }
     }
 
     public interface ActivityFragmentUI extends UI {

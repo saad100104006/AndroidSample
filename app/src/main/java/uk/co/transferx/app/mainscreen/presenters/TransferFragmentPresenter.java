@@ -51,8 +51,12 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     private String message;
 
     @Inject
-    public TransferFragmentPresenter(final TransactionApi transactionApi, final TokenManager tokenManager, final RecipientRepository recipientRepository,
-                                     final CardsApi cardsApi) {
+    public TransferFragmentPresenter(final TransactionApi transactionApi,
+                                     final TokenManager tokenManager,
+                                     final RecipientRepository recipientRepository,
+                                     final CardsApi cardsApi,
+                                     final SharedPreferences sharedPreferences) {
+        super(sharedPreferences);
         this.transactionApi = transactionApi;
         this.tokenManager = tokenManager;
         this.recipientRepository = recipientRepository;
@@ -128,7 +132,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                         ui.showRates(String.format("%s %s = %s %s", "1", currencyFrom, rates.toPlainString(), currencyTo));
                         calculateValue();
                     }
-                }, throwable -> Log.e(TransferFragmentPresenter.class.getSimpleName(), "Error ", throwable));
+                }, this::globalErrorHandler);
         compositeDisposable.add(disposable);
     }
 

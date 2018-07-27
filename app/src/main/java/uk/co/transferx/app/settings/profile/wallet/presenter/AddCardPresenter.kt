@@ -1,5 +1,6 @@
 package uk.co.transferx.app.settings.profile.wallet.presenter
 
+import android.content.SharedPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -15,9 +16,10 @@ import javax.inject.Inject
 
 class AddCardPresenter @Inject constructor(
     private val cardsApi: CardsApi,
-    private val tokenManager: TokenManager
+    private val tokenManager: TokenManager,
+    sharedPreferences: SharedPreferences
 ) :
-    BasePresenter<AddCardPresenter.AddCardUI>() {
+    BasePresenter<AddCardPresenter.AddCardUI>(sharedPreferences) {
 
     private var cardNumber: String = EMPTY
     private var expDate: String = EMPTY

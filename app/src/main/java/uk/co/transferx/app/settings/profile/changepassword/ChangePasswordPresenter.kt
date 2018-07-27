@@ -1,5 +1,6 @@
 package uk.co.transferx.app.settings.profile.changepassword
 
+import android.content.SharedPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -15,9 +16,10 @@ import javax.inject.Inject
 class ChangePasswordPresenter
 @Inject constructor(
     private val tokenManager: TokenManager,
-    private val profileApi: ProfileApi
+    private val profileApi: ProfileApi,
+    sharedPreferences: SharedPreferences
 ) :
-    BasePresenter<ChangePasswordPresenter.ChangePasswordUI>() {
+    BasePresenter<ChangePasswordPresenter.ChangePasswordUI>(sharedPreferences) {
 
     private var currentPass: String = EMPTY
     private var newPass: String = EMPTY
@@ -53,21 +55,19 @@ class ChangePasswordPresenter
     fun saveNewPassword() {
         disposable = tokenManager.token
             .flatMap {
-                profileApi.changePassword(it.accessToken,
-                    changePassword = ChangePassword(currentPass, newPass))
+                profileApi.changePassword(
+                    it.accessToken,
+                    changePassword = ChangePassword(currentPass, newPass)
+                )
             }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ _ -> ui?.goBackToSettings() }, { throwable -> handleError(throwable) })
+            .subscribe({ ui?.goBackToSettings() }, { globalErrorHandler(it) })
     }
 
-    private fun handleError(throwable: Throwable) {
-
-    }
 
     interface ChangePasswordUI : UI {
         fun setButtonEnabled(enabled: Boolean)
-
         fun goBackToSettings()
     }
 }

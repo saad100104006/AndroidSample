@@ -1,5 +1,6 @@
 package uk.co.transferx.app.transfersummary.presenter
 
+import android.content.SharedPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -13,9 +14,10 @@ import javax.inject.Inject
 
 class TransferSummaryPresenter @Inject constructor(
     private val transactionApi: TransactionApi,
-    private val tokenManager: TokenManager
+    private val tokenManager: TokenManager,
+    sharedPreferences: SharedPreferences
 ) :
-    BasePresenter<TransferSummaryPresenter.TransferSummaryUI>() {
+    BasePresenter<TransferSummaryPresenter.TransferSummaryUI>(sharedPreferences) {
 
     private var transactionCreate: TransactionCreate? = null
     private var disposable: Disposable? = null
@@ -47,10 +49,11 @@ class TransferSummaryPresenter @Inject constructor(
             .flatMap { transactionApi.createTransaction(it.accessToken, transactionCreate) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { resp ->
-                if (resp.code() == HttpURLConnection.HTTP_OK)
+            .subscribe({
+                if (it.code() == HttpURLConnection.HTTP_OK) {
                     ui?.goBack()
-            }
+                }
+            }, { globalErrorHandler(it) })
     }
 
     interface TransferSummaryUI : UI {

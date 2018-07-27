@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
 
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -41,6 +42,7 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
                                     final TokenManager tokenManager,
                                     final SharedPreferences sharedPreferences,
                                     final TokenRepository tokenRepository) {
+        super(sharedPreferences);
         this.signInOutApi = signInOutApi;
         this.tokenManager = tokenManager;
         this.signUpApi = signUpApi;
@@ -84,8 +86,13 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
 
     private void signIn(String email, String password) {
         UserSignIn.Builder request = new UserSignIn.Builder();
-        disposable = tokenManager.getToken()
-                .flatMap(token -> signInOutApi.signIn(token.getAccessToken(), request.uname(email).upass(password).build()))
+        disposable = signUpApi.getInitialToken()
+                .flatMap(resp -> {
+                    if (resp.code() == HttpsURLConnection.HTTP_OK) {
+                        return signInOutApi.signIn(resp.body().getAccessToken(), request.uname(email).upass(password).build());
+                    }
+                    return Single.just(resp);
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {

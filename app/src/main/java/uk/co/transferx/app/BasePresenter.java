@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import timber.log.Timber;
 import uk.co.transferx.app.errors.UnauthorizedException;
 
 import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
@@ -44,7 +45,9 @@ public abstract class BasePresenter<T extends UI> {
     protected void globalErrorHandler(Throwable throwable) {
         if (throwable instanceof UnauthorizedException) {
             handleErrorToken();
+            return;
         }
+        Timber.e(throwable);
     }
 
     private void handleErrorToken() {

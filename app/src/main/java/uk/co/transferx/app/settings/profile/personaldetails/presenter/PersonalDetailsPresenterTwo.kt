@@ -1,5 +1,6 @@
 package uk.co.transferx.app.settings.profile.personaldetails.presenter
 
+import android.content.SharedPreferences
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -9,7 +10,11 @@ import uk.co.transferx.app.pojo.Profile
 import uk.co.transferx.app.repository.ProfileRepository
 import javax.inject.Inject
 
-class PersonalDetailsPresenterTwo @Inject constructor(private val profileRepository: ProfileRepository) : BasePresenter<PersonalDetailsPresenterTwo.PersonalDetailsUITwo>() {
+class PersonalDetailsPresenterTwo @Inject constructor(
+    private val profileRepository: ProfileRepository,
+    sharedPreferences: SharedPreferences
+) :
+    BasePresenter<PersonalDetailsPresenterTwo.PersonalDetailsUITwo>(sharedPreferences) {
 
 
     private var compositeDisposable: CompositeDisposable? = null
@@ -18,10 +23,10 @@ class PersonalDetailsPresenterTwo @Inject constructor(private val profileReposit
         super.attachUI(ui)
         compositeDisposable = CompositeDisposable()
         val disposable: Disposable = profileRepository.getUserProfile()
-                .subscribeBy(
-                        onSuccess = { ui?.setData(it) },
-                        onError = { ui?.setError() }
-                )
+            .subscribeBy(
+                onSuccess = { ui?.setData(it) },
+                onError = { globalErrorHandler(it) }
+            )
         compositeDisposable?.add(disposable)
     }
 

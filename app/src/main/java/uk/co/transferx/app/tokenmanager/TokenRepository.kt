@@ -27,7 +27,6 @@ class TokenRepository @Inject constructor(private val sharedPreferences: SharedP
             sharedPreferences.getLong(KEY_EXPIRES_IN, DEFAULT_TIMESTAMP),
             sharedPreferences.getLong(KEY_CREATED, DEFAULT_TIMESTAMP),
             sharedPreferences.getString(KEY_REFRESH_TOKEN, "")
-
         )
     }
 

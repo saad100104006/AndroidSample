@@ -1,5 +1,7 @@
 package uk.co.transferx.app.recipients.addrecipients.presenters;
 
+import android.content.SharedPreferences;
+
 import java.net.HttpURLConnection;
 
 import javax.inject.Inject;
@@ -34,7 +36,9 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
     @Inject
     public AddRecipientsPresenter(final RecipientsApi recipientsApi,
                                   final TokenManager tokenManager,
-                                  final RecipientRepository recipientRepository) {
+                                  final RecipientRepository recipientRepository,
+                                  final SharedPreferences sharedPreferences) {
+        super(sharedPreferences);
         this.recipientsApi = recipientsApi;
         this.tokenManager = tokenManager;
         this.recipientRepository = recipientRepository;
