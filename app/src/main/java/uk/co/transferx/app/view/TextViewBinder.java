@@ -8,12 +8,13 @@ import android.support.annotation.IdRes;
 
 class TextViewBinder {
     @IdRes
-    int textViewId;
+    int textViewId, imageId;
     StringProvider textProvider;
 
-    TextViewBinder(int textViewId, StringProvider textProvider) {
+    TextViewBinder(int textViewId, StringProvider textProvider, int imageId) {
         this.textViewId = textViewId;
         this.textProvider = textProvider;
+        this.imageId = imageId;
     }
 
     public interface StringProvider {

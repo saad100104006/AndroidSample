@@ -64,6 +64,7 @@
                 android:layout_marginRight="@dimen/left_right_main_screen"
                 android:layout_toRightOf="@id/recipient_img"
                 android:background="@android:color/transparent"
+                app:headerRes="@layout/header_spinner_recipient_dark"
                 android:theme="@style/ThemeSpinner">
 
             </uk.co.transferx.app.view.CustomSpinner>

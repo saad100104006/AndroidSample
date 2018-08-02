@@ -6,5 +6,6 @@
         <attr name="dropDownItemRes" format="reference"/>
         <attr name="dropDownLabelId" format="reference"/>
         <attr name="dropDownSelectionImageId" format="reference"/>
+        <attr name="iconVisible" format="boolean"/>
     </declare-styleable>
 </resources>

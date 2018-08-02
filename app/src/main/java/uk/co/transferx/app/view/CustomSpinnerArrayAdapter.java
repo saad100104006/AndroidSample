@@ -9,6 +9,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import timber.log.Timber;
 import uk.co.transferx.app.R;
+import uk.co.transferx.app.pojo.Card;
 
 /**
  * Created by sergey on 04/04/2018.
@@ -34,16 +37,19 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
     private CharSequence hint;
     private boolean hintVisible = false;
     private SparseArray<TextViewBinder> labelsToBind;
+    private Object[] objects;
 
-    public CustomSpinnerArrayAdapter(Context context, @LayoutRes int resource, @IdRes int textViewResourceId, Object[] objects) {
+    public CustomSpinnerArrayAdapter(Context context, @LayoutRes int resource, @IdRes int textViewResourceId, Object[] objects, boolean iconVisible) {
         super(context, resource, textViewResourceId, objects);
+        this.objects = objects;
         headerView = resource;
         mContext = context;
         labelsToBind = new SparseArray<>();
         selectionImageId = CustomSpinner.DEFAULT_SELECTION_IMAGE_ID;
         itemLabelId = CustomSpinner.DEFAULT_ITEM_ID;
+        imagePhotoId = CustomSpinner.DEFAULT_ITEM_IMG;
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        bind(itemLabelId, Object::toString);
+        bind(itemLabelId, imagePhotoId, Object::toString);
     }
 
     @Override
@@ -66,6 +72,11 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
     private View getHeaderView(int position, View convertView, ViewGroup parent) {
         convertView = super.getView(position, convertView, parent);
         bindLabels(convertView, position);
+        Object item = objects[position];
+        if (position != hintItemIndex && objects[position] instanceof Card) {
+            Card card = (Card) item;
+            ((ImageView) convertView.findViewById(R.id.image_recip)).setImageDrawable(card.getType().equals("VISA") ? ContextCompat.getDrawable(getContext(), R.drawable.ic_visa) : ContextCompat.getDrawable(getContext(), R.drawable.ic_master_card));
+        }
         return convertView;
     }
 
@@ -97,14 +108,15 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
         hintVisible = false;
     }
 
-    void bind(@IdRes int textViewId, TextViewBinder.StringProvider textProvider) {
-        labelsToBind.append(textViewId, new TextViewBinder(textViewId, textProvider));
+    void bind(@IdRes int textViewId, int imageId, TextViewBinder.StringProvider textProvider) {
+        labelsToBind.append(textViewId, new TextViewBinder(textViewId, textProvider, imageId));
     }
 
     private View getCustomView(int position, View convertView) {
         TextView textView = convertView.findViewById(itemLabelId);
         ImageView imageView = convertView.findViewById(selectionImageId);
-
+        ImageView itemImg = convertView.findViewById(imagePhotoId);
+        Object item = objects[position];
         if (position == currentSelection) {
             imageView.setVisibility(View.VISIBLE);
         } else {
@@ -115,6 +127,10 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
         if (position != hintItemIndex) {
             bindLabels(convertView, position);
         }
+        if (position != hintItemIndex && item instanceof Card) {
+            Card card = (Card) item;
+            itemImg.setImageDrawable(card.getType().equals("VISA") ? ContextCompat.getDrawable(getContext(), R.drawable.ic_visa) : ContextCompat.getDrawable(getContext(), R.drawable.ic_master_card));
+        }
         return convertView;
     }
 
@@ -123,6 +139,7 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
             TextViewBinder binder = labelsToBind.get(labelsToBind.keyAt(i));
             ((TextView) convertView.findViewById(binder.textViewId))
                     .setText(binder.textProvider.provide(getItem(position)));
+
         }
     }
 

@@ -24,14 +24,16 @@ public class CustomSpinner extends AppCompatSpinner {
     static final int
             DEFAULT_HEADER_LABEL_ID = R.id.tv_spinner_item_title,
             DEFAULT_ITEM_ID = R.id.tv_spinner_item_title,
-            DEFAULT_SELECTION_IMAGE_ID = R.id.iv_spinner_selection;
+            DEFAULT_SELECTION_IMAGE_ID = R.id.iv_spinner_selection,
+            DEFAULT_ITEM_IMG = R.id.image_recip;
     @LayoutRes
     private int headerRes, itemRes;
     @IdRes
-    private int headerLabelId, itemLabelId, selectionImageId;
+    private int headerLabelId, itemLabelId, selectionImageId, itemImageId;
 
     private CustomSpinnerArrayAdapter adapter;
     private int hintItemIndex = -1;
+    private boolean iconVisible;
 
     public interface ListenerExecutable {
         void execute(int position, Object object);
@@ -54,6 +56,8 @@ public class CustomSpinner extends AppCompatSpinner {
         itemRes = typedArray.getResourceId(R.styleable.CustomSpinner_dropDownItemRes, DEFAULT_ITEM_RES);
         itemLabelId = typedArray.getInteger(R.styleable.CustomSpinner_dropDownLabelId, DEFAULT_ITEM_ID);
         selectionImageId = typedArray.getInteger(R.styleable.CustomSpinner_dropDownSelectionImageId, DEFAULT_SELECTION_IMAGE_ID);
+        iconVisible = typedArray.getBoolean(R.styleable.CustomSpinner_iconVisible, false);
+        itemImageId = DEFAULT_ITEM_IMG;
         typedArray.recycle();
     }
 
@@ -81,10 +85,11 @@ public class CustomSpinner extends AppCompatSpinner {
     }
 
     public void setData(Object[] data) {
-        adapter = new CustomSpinnerArrayAdapter(getContext(), headerRes, headerLabelId, data);
+        adapter = new CustomSpinnerArrayAdapter(getContext(), headerRes, headerLabelId, data, iconVisible);
         adapter.setDropDownViewResource(itemRes);
         adapter.setItemLabelId(itemLabelId);
         adapter.setSelectionImageId(selectionImageId);
+        adapter.setImageId(itemImageId);
         this.setAdapter(adapter);
     }
 
@@ -101,8 +106,8 @@ public class CustomSpinner extends AppCompatSpinner {
         super.setSelection(hintItemIndex);
     }
 
-    public void bindDataLine(@IdRes int textViewId, TextViewBinder.StringProvider textProvider) {
-        adapter.bind(textViewId, textProvider);
+    public void bindDataLine(@IdRes int textViewId, int imageId, TextViewBinder.StringProvider textProvider) {
+        adapter.bind(textViewId, imageId, textProvider);
     }
 
     @Override

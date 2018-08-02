@@ -10,40 +10,39 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/white"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:background="@color/white" />
 
     <ImageView
         android:id="@+id/image_recip"
-        android:layout_width="40dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="6dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_centerVertical="true"
-        android:src="@drawable/payment_placeholder" />
+        android:src="@drawable/placeholder" />
 
     <TextView
         android:id="@+id/tv_spinner_item_title"
         style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/white"
-        android:lineSpacingExtra="6sp"
         android:layout_centerVertical="true"
-        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="8dp"
         android:layout_toRightOf="@id/image_recip"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="6sp"
+        android:textColor="@color/white"
         android:textSize="14sp"
         tools:text="testsdfasdf" />
 
     <ImageView
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
         android:id="@+id/iv_spinner_selection"
         style="@style/indicator_style"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
-        android:src="@drawable/ic_complete"
-        android:visibility="invisible"
-        tools:visibility="visible"/>
+        android:tint="@color/white"
+        android:src="@drawable/arrow"
+        tools:visibility="visible" />
 
 </RelativeLayout>
