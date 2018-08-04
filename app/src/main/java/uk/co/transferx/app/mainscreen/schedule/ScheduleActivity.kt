@@ -1,14 +1,16 @@
 package uk.co.transferx.app.mainscreen.schedule
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import kotlinx.android.synthetic.main.schedule_activity_layout.*
+import org.jetbrains.anko.startActivityForResult
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.mainscreen.schedule.presenter.ScheduleActivityPresenter
 import uk.co.transferx.app.welcom.WelcomeActivity
 import java.util.*
 import javax.inject.Inject
@@ -27,11 +29,11 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
         (application as TransferXApplication).appComponent.inject(this)
         setContentView(R.layout.schedule_activity_layout)
         dayOfWeek = arrayOf(One, Two, Tree, Four, Five, Six, Seven)
-        markersOfcurrentDay = arrayOf(oneToday, twoToday, treeToday, fourToday, fiveToday, sixToday, sevenToday)
-        arrow.setOnClickListener { Toast.makeText(this, "Calendar clicked", Toast.LENGTH_SHORT).show() }
+        markersOfcurrentDay =
+                arrayOf(oneToday, twoToday, treeToday, fourToday, fiveToday, sixToday, sevenToday)
+        arrow.setOnClickListener { startActivityForResult<CalendarActivity>(CALENDAR) }
         buttonBackSchedule.setOnClickListener { onBackPressed() }
         setInitialDate(Date())
-
     }
 
     override fun onResume() {
@@ -44,9 +46,14 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
         presenter.detachUI()
     }
 
-    private fun setInitialDate(date: Date) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        setChoosenDate()
+    }
+
+    private fun setInitialDate(dat: Date) {
         val calendar: Calendar = Calendar.getInstance()
-        calendar.time = date
+        calendar.time = dat
         val currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
         calendar.add(Calendar.DATE, 0 - currentDayOfWeek)
 
@@ -59,6 +66,7 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
             markersOfcurrentDay[i].visibility = View.INVISIBLE
         }
         (markersOfcurrentDay[currentDayOfWeek.dec()]).visibility = View.VISIBLE
+        date.text = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
 
     }
 
@@ -68,5 +76,9 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
 
     private fun setChoosenDate() {
 
+    }
+
+    companion object {
+        const val CALENDAR: Int = 888
     }
 }

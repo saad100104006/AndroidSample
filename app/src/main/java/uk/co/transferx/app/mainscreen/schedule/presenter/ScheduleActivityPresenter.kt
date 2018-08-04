@@ -1,4 +1,4 @@
-package uk.co.transferx.app.mainscreen.schedule
+package uk.co.transferx.app.mainscreen.schedule.presenter
 
 import android.content.SharedPreferences
 import uk.co.transferx.app.BasePresenter

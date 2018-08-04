@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/buttonBackSchedule"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/left_right_main_screen"
+        android:layout_marginTop="52dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_back" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/big_title"
+                style="@style/CommonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/left_right_main_screen"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="32dp"
+                android:gravity="center"
+                android:text="@string/set_transfer_date"
+                android:textColor="@color/black"
+                android:textSize="24sp"/>
+
+            <TextView
+
+                style="@style/CommonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/left_right_main_screen"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:text="@string/date"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/black"
+                android:textSize="10sp"/>
+
+
+            <uk.co.transferx.app.view.CustomCalendar
+                android:id="@+id/customCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/left_right_main_screen"
+                android:layout_marginStart="@dimen/left_right_main_screen">
+
+            </uk.co.transferx.app.view.CustomCalendar>
+
+            <Button
+                android:id="@+id/buttonSubmite"
+                style="@style/CommonButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="48dp"
+                android:background="@drawable/oval_button_gray"
+                android:enabled="false"
+                android:letterSpacing="0.17"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/next"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:theme="@style/Button.Black"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="36dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
