@@ -4,7 +4,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 
 import javax.inject.Inject;
 
@@ -58,5 +60,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             fragmentTransaction.setCustomAnimations(animationEnter, animationExit, 0, 0);
         }
         fragmentTransaction.replace(container, baseFragment, baseFragment.getTag()).commit();
+    }
+
+    protected void setButtonStatus(Button button, boolean isEnabled){
+        button.setEnabled(isEnabled);
+        button.setBackground(isEnabled ?
+                ContextCompat.getDrawable(this, R.drawable.oval_button_black) :
+                ContextCompat.getDrawable(this, R.drawable.oval_button_gray));
     }
 }
