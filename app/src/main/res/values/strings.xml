@@ -170,6 +170,9 @@
     <string name="cancel">Cancel</string>
     <string name="edit_card">Edit this card</string>
     <string name="set_transfer_date">Set transfer date</string>
+    <string name="set_transfer_time">Set transfer time</string>
+    <string name="hour">Hour</string>
+    <string name="minutr">Minute</string>
 
     <!-- Calendar -->
     <string name="monday">M</string>

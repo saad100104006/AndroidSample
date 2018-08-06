@@ -1,10 +1,13 @@
 package uk.co.transferx.app.mainscreen.schedule
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_calendar_layout.*
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.mainscreen.schedule.ScheduleActivity.Companion.SETTLED_DATA
 import uk.co.transferx.app.mainscreen.schedule.presenter.CalendarPresenter
 import java.util.*
 import javax.inject.Inject
@@ -39,7 +42,9 @@ class CalendarActivity : BaseActivity(), CalendarPresenter.CalendarUI {
     }
 
     override fun goBackWithData(date: Date) {
-        // onActivityResult()
+        val intent = Intent()
+        intent.putExtra(SETTLED_DATA, date.time)
+        setResult(Activity.RESULT_OK, intent)
         finish()
     }
 

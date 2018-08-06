@@ -237,7 +237,7 @@
         <TextView
             android:id="@+id/date"
             style="@style/CommonStyle"
-            android:layout_width="70dp"
+            android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_marginStart="@dimen/left_right_main_screen"
             android:gravity="center"
@@ -676,13 +676,13 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/barrier_six"
             app:layout_constraintLeft_toRightOf="@id/time_img"
-            app:layout_constraintRight_toLeftOf="@id/time_arrow"
+            app:layout_constraintRight_toLeftOf="@id/timeArrow"
             app:layout_constraintTop_toBottomOf="@id/time"
             app:layout_constraintTop_toTopOf="@id/barrier_seven" />
 
 
         <ImageView
-            android:id="@+id/time_arrow"
+            android:id="@+id/timeArrow"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:clickable="true"
@@ -704,7 +704,7 @@
             android:layout_marginTop="6dp"
             android:background="@color/black"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="@id/time_arrow"
+            app:layout_constraintRight_toRightOf="@id/timeArrow"
             app:layout_constraintTop_toBottomOf="@id/barrier_seven" />
 
         <Button

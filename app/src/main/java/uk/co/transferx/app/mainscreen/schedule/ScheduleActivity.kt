@@ -1,5 +1,6 @@
 package uk.co.transferx.app.mainscreen.schedule
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -32,6 +33,7 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
         markersOfcurrentDay =
                 arrayOf(oneToday, twoToday, treeToday, fourToday, fiveToday, sixToday, sevenToday)
         arrow.setOnClickListener { startActivityForResult<CalendarActivity>(CALENDAR) }
+        timeArrow.setOnClickListener { startActivityForResult<TimeActivity>(TIME) }
         buttonBackSchedule.setOnClickListener { onBackPressed() }
         setInitialDate(Date())
     }
@@ -48,7 +50,9 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        setChoosenDate()
+        if (requestCode == CALENDAR && resultCode == Activity.RESULT_OK) {
+            setChoosenDate(Date(data!!.getLongExtra(SETTLED_DATA, -1)))
+        }
     }
 
     private fun setInitialDate(dat: Date) {
@@ -74,11 +78,30 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
         WelcomeActivity.startWelcomeActivity(this@ScheduleActivity)
     }
 
-    private fun setChoosenDate() {
+    private fun setChoosenDate(settledDate: Date) {
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.time = settledDate
+        date.text = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+        val settledDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+        calendar.add(Calendar.DATE, 0 - settledDayOfWeek)
+        for (i: Int in 0 until dayOfWeek.size) {
+            val day = dayOfWeek[i]
+            day.setTextColor(ContextCompat.getColor(this, R.color.black))
+            day.background = ContextCompat.getDrawable(this, R.drawable.circle_calendar)
+            if (i == settledDayOfWeek - 1) {
+                day.setTextColor(ContextCompat.getColor(this, R.color.white))
+                day.background = ContextCompat.getDrawable(this, R.drawable.circle_calendar_green)
+            }
+            calendar.add(Calendar.DATE, 1)
+            day.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
+            markersOfcurrentDay[i].visibility = View.INVISIBLE
+        }
 
     }
 
     companion object {
         const val CALENDAR: Int = 888
+        const val TIME: Int = 777
+        const val SETTLED_DATA = "settled_data"
     }
 }
