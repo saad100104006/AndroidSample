@@ -664,7 +664,7 @@
             app:constraint_referenced_ids="time_img" />
 
         <TextView
-            android:id="@+id/time_input"
+            android:id="@+id/timeInput"
             style="@style/CommonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -691,7 +691,7 @@
             android:scaleType="center"
             android:src="@drawable/arrow"
             app:layout_constraintBottom_toBottomOf="@id/barrier_six"
-            app:layout_constraintLeft_toRightOf="@id/time_input"
+            app:layout_constraintLeft_toRightOf="@id/timeInput"
             app:layout_constraintTop_toBottomOf="@id/time"
             app:layout_constraintTop_toTopOf="@id/barrier_seven" />
 

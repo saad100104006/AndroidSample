@@ -1,26 +1,62 @@
 package uk.co.transferx.app.mainscreen.schedule
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.GridLayout
 import android.view.Gravity
 import android.view.View
+import android.widget.Button
 import kotlinx.android.synthetic.main.activity_time_layout.*
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.mainscreen.schedule.ScheduleActivity.Companion.SETTLED_TIME
 import uk.co.transferx.app.mainscreen.schedule.presenter.TimePresenter
+import javax.inject.Inject
 
-class TimeActivity :BaseActivity(), View.OnClickListener, TimePresenter.TimeUI{
+class TimeActivity : BaseActivity(), View.OnClickListener, TimePresenter.TimeUI {
 
     private val listHours: ArrayList<AppCompatButton?> = ArrayList(12)
+    private val listMinutes: ArrayList<Button> = ArrayList(4)
+
+    @Inject
+    lateinit var presenter: TimePresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as TransferXApplication).appComponent.inject(this)
         setContentView(R.layout.activity_time_layout)
+        buttonBackClock.setOnClickListener { onBackPressed() }
+        listMinutes.add(zMinutes)
+        listMinutes.add(fMinutes)
+        listMinutes.add(tMinutes)
+        listMinutes.add(ffMinutes)
+        zMinutes.setOnClickListener { setMinutes(it as Button) }
+        fMinutes.setOnClickListener { setMinutes(it as Button) }
+        tMinutes.setOnClickListener { setMinutes(it as Button) }
+        ffMinutes.setOnClickListener { setMinutes(it as Button) }
+        radioButtons.setOnCheckedChangeListener { _, checkedId -> setAmPm(checkedId) }
+        saveTime.setOnClickListener { presenter.saveTime() }
         setUpHours()
+    }
+
+    private fun setAmPm(icheckedId: Int) {
+        if (icheckedId == R.id.am) presenter.setAMPM(getString(R.string.am)) else presenter.setAMPM(
+            getString(R.string.pm)
+        )
+    }
+
+    override fun onResume() {
+        presenter.attachUI(this)
+        super.onResume()
+    }
+
+    override fun onPause() {
+        presenter.detachUI()
+        super.onPause()
     }
 
     private fun getButton(position: Int): AppCompatButton {
@@ -28,7 +64,7 @@ class TimeActivity :BaseActivity(), View.OnClickListener, TimePresenter.TimeUI{
         hour.setTextColor(ContextCompat.getColor(this, R.color.black))
         hour.isEnabled = true
         hour.gravity = Gravity.CENTER
-        hour.setPadding(5,5,5,5)
+        hour.setPadding(5, 5, 5, 5)
         hour.layoutParams = getDaysLayoutParams(position)
         hour.setTextAppearance(this, R.style.BlackFontSmall)
         hour.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
@@ -40,20 +76,38 @@ class TimeActivity :BaseActivity(), View.OnClickListener, TimePresenter.TimeUI{
     }
 
     override fun onClick(v: View?) {
-        resetColor()
-        val hour = v as AppCompatButton
-        hour.background = ContextCompat.getDrawable(this, R.drawable.circle_calendar_green)
-        hour.setTextColor(ContextCompat.getColor(this, R.color.white))
+        val button = v as Button
+        resetColorHours()
+        setMarked(button)
+        presenter.setHour(button.text.toString())
     }
 
-    private fun resetColor(){
-        for (hour in listHours){
+    private fun setMarked(button: Button) {
+        button.background = ContextCompat.getDrawable(this, R.drawable.circle_calendar_green)
+        button.setTextColor(ContextCompat.getColor(this, R.color.white))
+    }
+
+    private fun resetColorMinutes() {
+        for (minutes in listMinutes) {
+            minutes.background = ContextCompat.getDrawable(this, R.drawable.circle_calendar)
+            minutes.setTextColor(ContextCompat.getColor(this, R.color.black))
+        }
+    }
+
+    private fun setMinutes(button: Button) {
+        resetColorMinutes()
+        setMarked(button)
+        presenter.setMinutes(button.text.toString())
+    }
+
+    private fun resetColorHours() {
+        for (hour in listHours) {
             hour?.background = ContextCompat.getDrawable(this, R.drawable.circle_calendar)
             hour?.setTextColor(ContextCompat.getColor(this, R.color.black))
         }
     }
 
-    private fun setUpHours(){
+    private fun setUpHours() {
         for (i: Int in 1 until 13) {
             val hour = getButton(i)
             hour.text = i.toString()
@@ -91,6 +145,17 @@ class TimeActivity :BaseActivity(), View.OnClickListener, TimePresenter.TimeUI{
     private fun getHeightForButton(): Int {
         val metrics = resources.displayMetrics
         return ((metrics.widthPixels - 2 * resources.getDimensionPixelSize(R.dimen.left_right_main_screen) - 6 * 50) / 6)
+    }
+
+    override fun setButtonEnabled(isEnabled: Boolean) {
+        setButtonStatus(saveTime, isEnabled)
+    }
+
+    override fun saveTime(time: String) {
+        val intent = Intent()
+        intent.putExtra(SETTLED_TIME, time)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
     override fun goToWelcome() {

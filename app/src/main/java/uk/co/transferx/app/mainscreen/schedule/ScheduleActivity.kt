@@ -12,6 +12,7 @@ import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.mainscreen.schedule.presenter.ScheduleActivityPresenter
+import uk.co.transferx.app.util.Constants.EMPTY
 import uk.co.transferx.app.welcom.WelcomeActivity
 import java.util.*
 import javax.inject.Inject
@@ -51,7 +52,14 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CALENDAR && resultCode == Activity.RESULT_OK) {
-            setChoosenDate(Date(data!!.getLongExtra(SETTLED_DATA, -1)))
+            val date = Date(data!!.getLongExtra(SETTLED_DATA, -1))
+            setChoosenDate(date)
+            presenter.setDate(date = date)
+        }
+        if (requestCode == TIME && resultCode == Activity.RESULT_OK) {
+            val time = data?.getStringExtra(SETTLED_TIME)
+            timeInput.text = time
+            presenter.setTime(time ?: EMPTY)
         }
     }
 
@@ -96,12 +104,16 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
             day.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
             markersOfcurrentDay[i].visibility = View.INVISIBLE
         }
+    }
 
+    override fun setButton(isEnabled: Boolean) {
+        setButtonStatus(buttonSubmite, isEnabled)
     }
 
     companion object {
         const val CALENDAR: Int = 888
         const val TIME: Int = 777
         const val SETTLED_DATA = "settled_data"
+        const val SETTLED_TIME = "settled_time"
     }
 }

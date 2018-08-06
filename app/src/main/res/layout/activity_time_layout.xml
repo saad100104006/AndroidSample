@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:grid="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white">
 
     <ImageView
@@ -12,53 +13,55 @@
         android:layout_height="24dp"
         android:layout_marginStart="@dimen/left_right_main_screen"
         android:layout_marginTop="52dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_back" />
+        android:src="@drawable/ic_back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/big_title"
-                style="@style/CommonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/left_right_main_screen"
-                android:layout_marginTop="28dp"
-                app:layout_constraintTop_toBottomOf="@id/buttonBackClock"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:gravity="center"
-                android:text="@string/set_transfer_time"
-                android:textColor="@color/black"
-                android:textSize="24sp"/>
+    <TextView
+        android:id="@+id/big_title"
+        style="@style/CommonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_right_main_screen"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:text="@string/set_transfer_time"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonBackClock" />
 
-            <TextView
-                android:id="@+id/hourLabel"
-                style="@style/CommonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/left_right_main_screen"
-                android:gravity="center"
-                android:layout_marginTop="32dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/big_title"
-                android:textAllCaps="true"
-                android:text="@string/hour"
-                android:layout_marginBottom="8dp"
-                android:textColor="@color/black"
-                android:textSize="10sp"/>
+    <TextView
+        android:id="@+id/hourLabel"
+        style="@style/CommonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="@dimen/left_right_main_screen"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/hour"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/big_title" />
 
     <android.support.v7.widget.GridLayout
         android:id="@+id/hoursContainer"
         android:layout_width="match_parent"
-        android:layout_marginStart="@dimen/left_right_main_screen"
-        android:layout_marginEnd="@dimen/left_right_main_screen"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/hourLabel"
-        app:layout_constraintBottom_toTopOf="@id/saveDate"
+        android:layout_marginEnd="@dimen/left_right_main_screen"
+        android:layout_marginStart="@dimen/left_right_main_screen"
         android:background="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hourLabel"
         grid:columnCount="6"
-        grid:rowCount="2">
+        grid:rowCount="2"
+        tools:layout_editor_absoluteX="32dp">
 
     </android.support.v7.widget.GridLayout>
 
@@ -68,38 +71,144 @@
         style="@style/CommonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/left_right_main_screen"
-        android:gravity="center"
-        android:layout_marginTop="32dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/big_title"
-        android:textAllCaps="true"
-        android:text="@string/hour"
         android:layout_marginBottom="8dp"
+        android:layout_marginStart="@dimen/left_right_main_screen"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/minute"
+        android:textAllCaps="true"
         android:textColor="@color/black"
-        android:textSize="10sp"/>
+        android:textSize="10sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hoursContainer" />
 
-            <Button
-                android:id="@+id/saveDate"
-                style="@style/CommonButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"
-                android:layout_marginTop="32dp"
-                app:layout_constraintTop_toBottomOf="@id/hoursContainer"
-                android:background="@drawable/oval_button_gray"
-                android:enabled="false"
-                android:letterSpacing="0.17"
-                android:lineSpacingExtra="2sp"
-                android:text="@string/save"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:theme="@style/Button.Black"/>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="36dp" />
-    
+    <Button
+        android:id="@+id/zMinutes"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/left_right_main_screen"
+        android:background="@drawable/circle_calendar"
+        android:padding="2dp"
+        android:text="@string/z_minutes"
+        android:textAppearance="@style/BlackFontSmall"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/fMinutes"
+        app:layout_constraintTop_toBottomOf="@id/minuteLabel" />
+
+    <Button
+        android:id="@+id/fMinutes"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/circle_calendar"
+        android:padding="2dp"
+        android:text="@string/f_minutes"
+        android:textAppearance="@style/BlackFontSmall"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toRightOf="@id/zMinutes"
+        app:layout_constraintRight_toLeftOf="@id/tMinutes"
+        app:layout_constraintTop_toBottomOf="@id/minuteLabel" />
+
+    <Button
+        android:id="@+id/tMinutes"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/circle_calendar"
+        android:padding="2dp"
+        android:text="@string/t_minutes"
+        android:textAppearance="@style/BlackFontSmall"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toRightOf="@id/fMinutes"
+        app:layout_constraintRight_toLeftOf="@id/ffMinutes"
+        app:layout_constraintTop_toBottomOf="@id/minuteLabel" />
+
+    <Button
+        android:id="@+id/ffMinutes"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/left_right_main_screen"
+        android:background="@drawable/circle_calendar"
+        android:padding="2dp"
+        android:text="@string/ff_minutes"
+        android:textAppearance="@style/BlackFontSmall"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toRightOf="@id/tMinutes"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/minuteLabel" />
+
+    <TextView
+        android:id="@+id/amPmLabel"
+        style="@style/CommonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="@dimen/left_right_main_screen"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/am_pm"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/zMinutes" />
+
+
+    <RadioGroup
+        android:id="@+id/radioButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/left_right_main_screen"
+        android:orientation="horizontal"
+        android:layout_marginBottom="48dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/amPmLabel">
+
+        <RadioButton
+            android:id="@+id/am"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="@string/am"
+            android:textAllCaps="true"
+            style="@style/CommonStyle"
+            android:buttonTint="@color/black" />
+
+        <RadioButton
+            android:id="@+id/pm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:text="@string/pm"
+            android:textAllCaps="true"
+            style="@style/CommonStyle"
+            android:buttonTint="@color/black" />
+
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/saveTime"
+        style="@style/CommonButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/oval_button_gray"
+        android:enabled="false"
+        android:letterSpacing="0.17"
+        android:lineSpacingExtra="2sp"
+        android:text="@string/save"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:theme="@style/Button.Black"
+        app:layout_constraintTop_toBottomOf="@id/radioButtons" />
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="36dp" />
+
 
 </android.support.constraint.ConstraintLayout>
