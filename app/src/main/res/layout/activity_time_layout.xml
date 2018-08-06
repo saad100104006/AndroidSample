@@ -36,6 +36,7 @@
     <TextView
         android:id="@+id/hourLabel"
         style="@style/CommonStyle"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -77,6 +78,7 @@
         android:gravity="center"
         android:text="@string/minute"
         android:textAllCaps="true"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="10sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -146,6 +148,7 @@
         android:layout_marginStart="@dimen/left_right_main_screen"
         android:layout_marginTop="32dp"
         android:gravity="center"
+        android:textStyle="bold"
         android:text="@string/am_pm"
         android:textAllCaps="true"
         android:textColor="@color/black"

@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.TextView
 import kotlinx.android.synthetic.main.schedule_activity_layout.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
@@ -36,6 +37,7 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
         arrow.setOnClickListener { startActivityForResult<CalendarActivity>(CALENDAR) }
         timeArrow.setOnClickListener { startActivityForResult<TimeActivity>(TIME) }
         buttonBackSchedule.setOnClickListener { onBackPressed() }
+        buttonSubmite.setOnClickListener { presenter.goToNextScreen() }
         setInitialDate(Date())
     }
 
@@ -110,10 +112,15 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
         setButtonStatus(buttonSubmite, isEnabled)
     }
 
+    override fun goToNext(time: Long) {
+        startActivity<RepeatTransferActivity>(SETTLED_DATA_SUMMARY to time)
+    }
+
     companion object {
         const val CALENDAR: Int = 888
         const val TIME: Int = 777
         const val SETTLED_DATA = "settled_data"
         const val SETTLED_TIME = "settled_time"
+        const val SETTLED_DATA_SUMMARY = "settled_data_summary"
     }
 }
