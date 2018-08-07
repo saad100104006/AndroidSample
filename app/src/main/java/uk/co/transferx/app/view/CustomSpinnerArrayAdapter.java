@@ -38,12 +38,14 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
     private boolean hintVisible = false;
     private SparseArray<TextViewBinder> labelsToBind;
     private Object[] objects;
+    private final int hintColor;
 
-    public CustomSpinnerArrayAdapter(Context context, @LayoutRes int resource, @IdRes int textViewResourceId, Object[] objects, boolean iconVisible) {
+    public CustomSpinnerArrayAdapter(Context context, @LayoutRes int resource, @IdRes int textViewResourceId, Object[] objects, boolean iconVisible, int hintColor) {
         super(context, resource, textViewResourceId, objects);
         this.objects = objects;
         headerView = resource;
         mContext = context;
+        this.hintColor = hintColor;
         labelsToBind = new SparseArray<>();
         selectionImageId = CustomSpinner.DEFAULT_SELECTION_IMAGE_ID;
         itemLabelId = CustomSpinner.DEFAULT_ITEM_ID;
@@ -100,7 +102,7 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
 
     private CharSequence setColor(CharSequence hint) {
         SpannableStringBuilder str = new SpannableStringBuilder(hint);
-        str.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.hint)), 0, hint.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mContext, hintColor)), 0, hint.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return str;
     }
 

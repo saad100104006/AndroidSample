@@ -159,6 +159,8 @@ dependencies {
 
     //bottomBar
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+    //img picker
+    implementation 'com.github.Mariovc:ImagePicker:1.2.2'
 
     //tests
     testImplementation 'junit:junit:4.12'

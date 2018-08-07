@@ -8,7 +8,7 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tv_spinner_item_title"
         style="@style/CommonStyle"
-        android:textColor="@color/black"
+        android:textColor="@color/not_active"
         android:layout_width="0dp"
         android:drawablePadding="10dp"
         android:drawableStart="@drawable/ic_auto_transfers_not_active"
@@ -20,6 +20,7 @@
         style="@style/indicator_style"
         android:layout_gravity="right"
         android:layout_marginLeft="5dp"
-        android:src="@drawable/arrow" />
+        android:src="@drawable/arrow"
+        android:tint="@color/not_active"/>
 
 </LinearLayout>

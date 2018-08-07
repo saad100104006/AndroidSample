@@ -2,7 +2,6 @@ package uk.co.transferx.app.mainscreen.schedule
 
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_repeate_transfer_layout.*
-import org.jetbrains.anko.toast
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
@@ -10,7 +9,6 @@ import uk.co.transferx.app.mainscreen.schedule.presenter.RepeatTransferPresenter
 import javax.inject.Inject
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.widget.TextView
 
@@ -38,8 +36,6 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
     override fun onResume() {
         super.onResume()
         presenter.attachUI(this)
-        setRepeatState(buttonsRepeat.checkedRadioButtonId)
-
     }
 
     override fun onPause() {
@@ -47,15 +43,42 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
         super.onPause()
     }
 
+
     private fun setRepeatState(buttonId: Int) {
         when (buttonId) {
             R.id.noRepeat -> {
                 setTextViewDrawableColor(endInput, R.color.not_active)
+                setColorForState(R.color.not_active)
             }
             R.id.yesRepeat -> {
                 setTextViewDrawableColor(endInput, R.color.black)
+                setColorForState(R.color.black)
             }
         }
+    }
+
+    private fun setColorForState(color: Int) {
+        val resolvedColor = ContextCompat.getColor(this, color)
+        frequencyTitle.setTextColor(resolvedColor)
+        underLineFrequency.setBackgroundColor(resolvedColor)
+        endTitle.setTextColor(resolvedColor)
+        endInput.setHintTextColor(resolveHintColor(color))
+        endInput.setBackgroundResource(resolveBackground(color))
+    }
+
+    private fun resolveHintColor(color: Int): Int {
+        if (color == R.color.not_active) {
+            return ContextCompat.getColor(this, color)
+        }
+        return ContextCompat.getColor(this, R.color.hint)
+    }
+
+    private fun resolveBackground(color: Int): Int {
+        var backgroundDrawable = R.drawable.underline_normal
+        if (color == R.color.not_active) {
+            backgroundDrawable = R.drawable.underline_not_active
+        }
+        return backgroundDrawable
     }
 
     private fun setTextViewDrawableColor(textView: TextView, color: Int) {

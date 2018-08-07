@@ -2,8 +2,10 @@ package uk.co.transferx.app.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.ColorRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.AttributeSet;
 import android.view.View;
@@ -26,10 +28,13 @@ public class CustomSpinner extends AppCompatSpinner {
             DEFAULT_ITEM_ID = R.id.tv_spinner_item_title,
             DEFAULT_SELECTION_IMAGE_ID = R.id.iv_spinner_selection,
             DEFAULT_ITEM_IMG = R.id.image_recip;
+    static final int
+            DEFAULT_COLOR_OF_HINT = R.color.hint;
     @LayoutRes
     private int headerRes, itemRes;
     @IdRes
     private int headerLabelId, itemLabelId, selectionImageId, itemImageId;
+    private int hintColor;
 
     private CustomSpinnerArrayAdapter adapter;
     private int hintItemIndex = -1;
@@ -57,6 +62,7 @@ public class CustomSpinner extends AppCompatSpinner {
         itemLabelId = typedArray.getInteger(R.styleable.CustomSpinner_dropDownLabelId, DEFAULT_ITEM_ID);
         selectionImageId = typedArray.getInteger(R.styleable.CustomSpinner_dropDownSelectionImageId, DEFAULT_SELECTION_IMAGE_ID);
         iconVisible = typedArray.getBoolean(R.styleable.CustomSpinner_iconVisible, false);
+        hintColor = typedArray.getResourceId(R.styleable.CustomSpinner_hintColor, DEFAULT_COLOR_OF_HINT);
         itemImageId = DEFAULT_ITEM_IMG;
         typedArray.recycle();
     }
@@ -66,6 +72,7 @@ public class CustomSpinner extends AppCompatSpinner {
         adapter.hideHintItem();
         return super.performClick();
     }
+    
 
     public void setOnItemSelectedListener(ListenerExecutable executable) {
         this.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -85,7 +92,7 @@ public class CustomSpinner extends AppCompatSpinner {
     }
 
     public void setData(Object[] data) {
-        adapter = new CustomSpinnerArrayAdapter(getContext(), headerRes, headerLabelId, data, iconVisible);
+        adapter = new CustomSpinnerArrayAdapter(getContext(), headerRes, headerLabelId, data, iconVisible, hintColor);
         adapter.setDropDownViewResource(itemRes);
         adapter.setItemLabelId(itemLabelId);
         adapter.setSelectionImageId(selectionImageId);
