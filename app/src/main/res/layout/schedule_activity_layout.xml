@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/buttonBackSchedule"
+            android:id="@+id/buttonBackRepeat"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="@dimen/left_right_main_screen"
@@ -39,7 +39,7 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/stage_two"
-            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule" />
+            app:layout_constraintTop_toBottomOf="@id/buttonBackRepeat" />
 
 
         <TextView
@@ -55,7 +55,7 @@
             android:textColor="@color/black"
             app:layout_constraintLeft_toRightOf="@id/stage_one"
             app:layout_constraintRight_toLeftOf="@id/stage_three"
-            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule" />
+            app:layout_constraintTop_toBottomOf="@id/buttonBackRepeat" />
 
         <TextView
             android:id="@+id/stage_three"
@@ -70,7 +70,7 @@
             android:textColor="@color/white"
             app:layout_constraintLeft_toRightOf="@id/stage_two"
             app:layout_constraintRight_toLeftOf="@id/stage_four"
-            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule" />
+            app:layout_constraintTop_toBottomOf="@id/buttonBackRepeat" />
 
         <TextView
             android:id="@+id/stage_four"
@@ -84,7 +84,7 @@
             android:textColor="@color/white"
             app:layout_constraintLeft_toRightOf="@id/stage_three"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule" />
+            app:layout_constraintTop_toBottomOf="@id/buttonBackRepeat" />
 
         <android.support.constraint.Barrier
             android:id="@+id/barrier_one"
@@ -108,7 +108,7 @@
             app:layout_constraintBottom_toBottomOf="@id/barrier_two"
             app:layout_constraintLeft_toRightOf="@id/stage_one"
             app:layout_constraintRight_toLeftOf="@id/stage_two"
-            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule"
+            app:layout_constraintTop_toBottomOf="@id/buttonBackRepeat"
             app:layout_constraintTop_toTopOf="@id/barrier_one" />
 
         <View
@@ -119,7 +119,7 @@
             app:layout_constraintBottom_toBottomOf="@id/barrier_two"
             app:layout_constraintLeft_toRightOf="@id/stage_two"
             app:layout_constraintRight_toLeftOf="@id/stage_three"
-            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule"
+            app:layout_constraintTop_toBottomOf="@id/buttonBackRepeat"
             app:layout_constraintTop_toTopOf="@id/barrier_one" />
 
         <View
@@ -130,7 +130,7 @@
             app:layout_constraintBottom_toBottomOf="@id/barrier_two"
             app:layout_constraintLeft_toRightOf="@id/stage_three"
             app:layout_constraintRight_toLeftOf="@id/stage_four"
-            app:layout_constraintTop_toBottomOf="@id/buttonBackSchedule"
+            app:layout_constraintTop_toBottomOf="@id/buttonBackRepeat"
             app:layout_constraintTop_toTopOf="@id/barrier_one" />
 
 

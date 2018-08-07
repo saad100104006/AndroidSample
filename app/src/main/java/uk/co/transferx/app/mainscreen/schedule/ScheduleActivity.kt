@@ -36,7 +36,7 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
                 arrayOf(oneToday, twoToday, treeToday, fourToday, fiveToday, sixToday, sevenToday)
         arrow.setOnClickListener { startActivityForResult<CalendarActivity>(CALENDAR) }
         timeArrow.setOnClickListener { startActivityForResult<TimeActivity>(TIME) }
-        buttonBackSchedule.setOnClickListener { onBackPressed() }
+        buttonBackRepeat.setOnClickListener { onBackPressed() }
         buttonSubmite.setOnClickListener { presenter.goToNextScreen() }
         setInitialDate(Date())
     }

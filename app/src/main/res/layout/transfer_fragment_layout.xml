@@ -313,6 +313,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/oval_button_transparent_gray"
                 android:letterSpacing="0.17"
+                android:enabled="false"
                 android:lineSpacingExtra="2sp"
                 android:text="@string/send_later"
                 android:textColor="@color/hint"

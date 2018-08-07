@@ -205,6 +205,12 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
         sendNowButton.setBackground(isEnabled ?
                 ContextCompat.getDrawable(getContext(), R.drawable.oval_button_white) :
                 ContextCompat.getDrawable(getContext(), R.drawable.oval_button_gray));
+        sendLaterButton.setEnabled(isEnabled);
+        sendLaterButton.setBackground(isEnabled ?
+                ContextCompat.getDrawable(getContext(), R.drawable.oval_button_transparent_white) :
+                ContextCompat.getDrawable(getContext(), R.drawable.oval_button_transparent_gray));
+        sendLaterButton.setTextColor(isEnabled ? ContextCompat.getColor(getContext(), R.color.white) :
+                ContextCompat.getColor(getContext(), R.color.hint));
     }
 
     @Override

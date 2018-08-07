@@ -206,6 +206,13 @@
         <item name="saturday">@string/saturday</item>
     </string-array>
 
+    <string-array name="frequency_transfer">
+        <item>Yearly</item>
+        <item>Monthly</item>
+        <item>Weekly</item>
+        <item>Daily</item>
+    </string-array>
+
     <string-array name="tabs">
         <item>Send</item>
         <item>Activity</item>

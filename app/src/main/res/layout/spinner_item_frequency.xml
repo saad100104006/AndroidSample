@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_spinner_item_title"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="8dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="6sp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        tools:text="testsdfasdf" />
+
+    <ImageView
+        android:id="@+id/iv_spinner_selection"
+        style="@style/indicator_style"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_complete"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
+</RelativeLayout>

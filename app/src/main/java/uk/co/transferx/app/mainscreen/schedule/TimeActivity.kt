@@ -38,7 +38,7 @@ class TimeActivity : BaseActivity(), View.OnClickListener, TimePresenter.TimeUI 
         fMinutes.setOnClickListener { setMinutes(it as Button) }
         tMinutes.setOnClickListener { setMinutes(it as Button) }
         ffMinutes.setOnClickListener { setMinutes(it as Button) }
-        radioButtons.setOnCheckedChangeListener { _, checkedId -> setAmPm(checkedId) }
+        buttonsRepeat.setOnCheckedChangeListener { _, checkedId -> setAmPm(checkedId) }
         saveTime.setOnClickListener { presenter.saveTime() }
         setUpHours()
     }
