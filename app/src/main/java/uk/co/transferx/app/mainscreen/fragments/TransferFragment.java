@@ -11,14 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
-import com.mynameismidori.currencypicker.CurrencyPicker;
 import com.mynameismidori.currencypicker.ExtendedCurrency;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -136,7 +133,6 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
         sendLaterButton = view.findViewById(R.id.sendLater);
         sendNowButton.setOnClickListener(v -> presenter.goToTrasferSummary());
         sendLaterButton.setOnClickListener(v -> startActivity(new Intent(getContext(), ScheduleActivity.class)));
-        paymentMethod.setDataWithHintItem(getResources().getStringArray(R.array.payment_method), getString(R.string.select_a_payment_method));
         paymentMethod.setOnItemSelectedListener((position, object) -> {
             if (object == null || !(object instanceof Card)) {
                 return;

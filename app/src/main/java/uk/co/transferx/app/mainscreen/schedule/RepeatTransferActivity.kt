@@ -10,6 +10,9 @@ import javax.inject.Inject
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.support.v4.content.ContextCompat
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.TextView
 
 
@@ -49,10 +52,17 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
             R.id.noRepeat -> {
                 setTextViewDrawableColor(endInput, R.color.not_active)
                 setColorForState(R.color.not_active)
+                setButtonStatus(buttonFinish, true)
+                frequencyLabel.visibility = INVISIBLE
+                notActive.visibility = VISIBLE
             }
             R.id.yesRepeat -> {
                 setTextViewDrawableColor(endInput, R.color.black)
                 setColorForState(R.color.black)
+                setButtonStatus(buttonFinish, false)
+                notActive.visibility = GONE
+                frequencyLabel.visibility = VISIBLE
+
             }
         }
     }

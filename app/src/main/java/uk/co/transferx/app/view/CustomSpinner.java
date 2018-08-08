@@ -2,10 +2,8 @@ package uk.co.transferx.app.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.ColorRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.AttributeSet;
 import android.view.View;
@@ -69,10 +67,12 @@ public class CustomSpinner extends AppCompatSpinner {
 
     @Override
     public boolean performClick() {
+        if (adapter == null) {
+            return false;
+        }
         adapter.hideHintItem();
         return super.performClick();
     }
-    
 
     public void setOnItemSelectedListener(ListenerExecutable executable) {
         this.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
