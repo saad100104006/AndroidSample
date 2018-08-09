@@ -171,6 +171,7 @@
     <string name="edit_card">Edit this card</string>
     <string name="set_transfer_date">Set transfer date</string>
     <string name="set_transfer_time">Set transfer time</string>
+    <string name="set_end_date">Set end date</string>
     <string name="hour">Hour</string>
     <string name="minute">Minute</string>
     <string name="z_minutes">:00</string>
@@ -185,6 +186,11 @@
     <string name="none">None</string>
     <string name="end">end</string>
     <string name="end_date">End date</string>
+    <string name="on">On:</string>
+    <string name="year">year</string>
+    <string name="month">Month</string>
+    <string name="never">Never</string>
+    <string name="yyyy">YYYY</string>
 
     <!-- Calendar -->
     <string name="monday">M</string>

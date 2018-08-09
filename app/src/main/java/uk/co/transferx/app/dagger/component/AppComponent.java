@@ -12,6 +12,7 @@ import uk.co.transferx.app.mainscreen.fragments.RecipientDialogFragment;
 import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
 import uk.co.transferx.app.mainscreen.fragments.TransferFragment;
 import uk.co.transferx.app.mainscreen.schedule.CalendarActivity;
+import uk.co.transferx.app.mainscreen.schedule.EndTransferActivity;
 import uk.co.transferx.app.mainscreen.schedule.RepeatTransferActivity;
 import uk.co.transferx.app.mainscreen.schedule.ScheduleActivity;
 import uk.co.transferx.app.mainscreen.schedule.TimeActivity;
@@ -105,6 +106,8 @@ public interface AppComponent {
     void inject(TimeActivity timeActivity);
 
     void inject(RepeatTransferActivity repeatTransferActivity);
+
+    void inject(EndTransferActivity endTransferActivity);
 
     void inject(BaseActivity baseActivity);
 }

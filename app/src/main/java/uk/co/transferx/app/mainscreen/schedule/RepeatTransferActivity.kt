@@ -1,19 +1,21 @@
 package uk.co.transferx.app.mainscreen.schedule
 
-import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_repeate_transfer_layout.*
-import uk.co.transferx.app.BaseActivity
-import uk.co.transferx.app.R
-import uk.co.transferx.app.TransferXApplication
-import uk.co.transferx.app.mainscreen.schedule.presenter.RepeatTransferPresenter
-import javax.inject.Inject
+import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_repeate_transfer_layout.*
+import org.jetbrains.anko.startActivityForResult
+import uk.co.transferx.app.BaseActivity
+import uk.co.transferx.app.R
+import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.mainscreen.schedule.presenter.RepeatTransferPresenter
+import javax.inject.Inject
 
 
 class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTransferUI {
@@ -27,6 +29,7 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
         (application as TransferXApplication).appComponent.inject(this)
         setContentView(R.layout.activity_repeate_transfer_layout)
         setButtonStatus(buttonFinish, true)
+        endInput.setOnClickListener { startActivityForResult<EndTransferActivity>(END_TRANSFER) }
         buttonBackRepeat.setOnClickListener { onBackPressed() }
         buttonsRepeat.setOnCheckedChangeListener { _, checkedId -> setRepeatState(checkedId) }
         frequencyLabel.setOnItemSelectedListener { position, obj -> }
@@ -46,6 +49,9 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
         super.onPause()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 
     private fun setRepeatState(buttonId: Int) {
         when (buttonId) {
@@ -55,6 +61,7 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
                 setButtonStatus(buttonFinish, true)
                 frequencyLabel.visibility = INVISIBLE
                 notActive.visibility = VISIBLE
+                endInput.isEnabled = false
             }
             R.id.yesRepeat -> {
                 setTextViewDrawableColor(endInput, R.color.black)
@@ -62,6 +69,7 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
                 setButtonStatus(buttonFinish, false)
                 notActive.visibility = GONE
                 frequencyLabel.visibility = VISIBLE
+                endInput.isEnabled = true
 
             }
         }
@@ -105,5 +113,10 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
 
     override fun goToWelcome() {
         //no op
+    }
+
+
+    companion object {
+        const val END_TRANSFER = 555
     }
 }

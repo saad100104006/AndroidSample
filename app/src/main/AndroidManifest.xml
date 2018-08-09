@@ -3,7 +3,7 @@
     package="uk.co.transferx.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name="uk.co.transferx.app.TransferXApplication"
@@ -139,6 +139,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".mainscreen.schedule.RepeatTransferActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".mainscreen.schedule.EndTransferActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

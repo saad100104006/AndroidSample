@@ -9,6 +9,7 @@ import android.view.Gravity.CENTER
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.custom_calendar.view.*
 import uk.co.transferx.app.R
@@ -30,9 +31,16 @@ class CustomCalendar @JvmOverloads constructor(
     private var dayOfWeekFirs: Int = 0
     private var dayOfweekLast: Int = 0
     private var dataListener: DataListener? = null
+    private var shouldShowHeader = true
 
     init {
+
         inflate(context, R.layout.custom_calendar, this)
+        if (attrs != null) {
+            val values = context.obtainStyledAttributes(attrs, R.styleable.CustomCalendar)
+            shouldShowHeader = values.getBoolean(R.styleable.CustomCalendar_headerVisible, true)
+            values.recycle()
+        }
         calendar = Calendar.getInstance()
         currentDay = calendar.get(Calendar.DAY_OF_MONTH)
         initializeCalendar()
@@ -110,18 +118,42 @@ class CustomCalendar @JvmOverloads constructor(
     }
 
     private fun previousMonth() {
-        if(isCurrentMonth()){
+        if (isCurrentMonth()) {
             return
         }
         resetColor()
         calendar.add(Calendar.MONTH, -1)
-        if(isCurrentMonth()){
-            val cal = Calendar.getInstance()
-            cal.time = Date()
-            currentDay = cal.get(Calendar.DAY_OF_MONTH)
+        if (isCurrentMonth()) {
+            currentDay = getCurrentDayOfMonth()
         }
         invalidateCalendar()
         dataListener?.onDataSetted(Date())
+    }
+
+    fun setDate(date: Date) {
+        calendar.time = date
+        currentDay = -1
+        if (isCurrentMonth()) {
+            currentDay = getCurrentDayOfMonth()
+        }
+        if (isSettedMonthPassed()) {
+            currentDay = MAX_DAYS
+        }
+        resetColor()
+        invalidateCalendar()
+    }
+
+    private fun isSettedMonthPassed(): Boolean {
+        val currenDateCalendar = Calendar.getInstance()
+        currenDateCalendar.time = Date()
+        return currenDateCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
+                currenDateCalendar.get(Calendar.MONTH) > calendar.get(Calendar.MONTH)
+    }
+
+    private fun getCurrentDayOfMonth(): Int {
+        val cal = Calendar.getInstance()
+        cal.time = Date()
+        return cal.get(Calendar.DAY_OF_MONTH)
     }
 
     private fun isCurrentMonth(): Boolean {
@@ -150,7 +182,8 @@ class CustomCalendar @JvmOverloads constructor(
                 else -> {
                     day?.text = (++dayCount).toString()
                     if (dayCount < currentDay) {
-                        day?.background = ContextCompat.getDrawable(context, R.drawable.circle_calendar)
+                        day?.background =
+                                ContextCompat.getDrawable(context, R.drawable.circle_calendar)
                         day?.setTextColor(ContextCompat.getColor(context, R.color.not_active))
                     } else {
                         day?.background =
@@ -164,6 +197,13 @@ class CustomCalendar @JvmOverloads constructor(
     }
 
     private fun setUpHeader() {
+        if (!shouldShowHeader) {
+            findViewById<TextView>(R.id.monthLabel).visibility = View.GONE
+            findViewById<ImageView>(R.id.previousMonth).visibility = View.GONE
+            findViewById<ImageView>(R.id.nextMonth).visibility = View.GONE
+            return
+        }
+
         findViewById<TextView>(R.id.monthLabel).text = String.format(
             Locale.getDefault(), "%s %d",
             getMonthName(calendar.time),

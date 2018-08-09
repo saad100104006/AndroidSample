@@ -144,7 +144,7 @@ class TimeActivity : BaseActivity(), View.OnClickListener, TimePresenter.TimeUI 
 
     private fun getHeightForButton(): Int {
         val metrics = resources.displayMetrics
-        return ((metrics.widthPixels - 2 * resources.getDimensionPixelSize(R.dimen.left_right_main_screen) - 6 * 50) / 6)
+        return ((metrics.widthPixels - 2 * resources.getDimensionPixelSize(R.dimen.left_right_main_screen) - 6 * 40) / 6)
     }
 
     override fun setButtonEnabled(isEnabled: Boolean) {
