@@ -1,7 +1,6 @@
 package uk.co.transferx.app.mainscreen.presenters;
 
 import android.content.SharedPreferences;
-import android.text.TextUtils;
 import android.util.Log;
 
 import java.math.BigDecimal;
@@ -49,6 +48,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     private int amount;
     private final CardsApi cardsApi;
     private String message;
+    private boolean shouldRepeat;
 
     @Inject
     public TransferFragmentPresenter(final TransactionApi transactionApi,
@@ -190,7 +190,10 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
             ui.setButtonEnabled(isDataValid());
         }
         calculateValue();
+    }
 
+    public void setRepeatStatus(boolean shouldRepeat) {
+        this.shouldRepeat = shouldRepeat;
     }
 
     private void calculateValue() {
@@ -215,9 +218,9 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         recipientDto = recipient;
     }
 
-    public void goToTrasferSummary() {
+    public void goToNextScreen() {
         if (ui != null) {
-            ui.sendNowClick(new TransactionCreate(
+            TransactionCreate transactionCreate = new TransactionCreate(
                     recipient.getId(),
                     calculatedValue == null ? BigDecimal.ZERO.intValue() : calculatedValue.intValue(),
                     currencyTo,
@@ -226,13 +229,18 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                     message,
                     true,
                     amount,
-                    false,
+                    shouldRepeat,
                     null,
                     null,
                     null,
                     card,
                     recipient
-            ));
+            );
+            if (shouldRepeat) {
+                ui.sendWithRepeat(transactionCreate);
+                return;
+            }
+            ui.sendNowClick(transactionCreate);
         }
     }
 
@@ -254,5 +262,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         void setButtonEnabled(boolean isEnabled);
 
         void sendNowClick(TransactionCreate transactionCreate);
+
+        void sendWithRepeat(TransactionCreate transactionCreate);
     }
 }

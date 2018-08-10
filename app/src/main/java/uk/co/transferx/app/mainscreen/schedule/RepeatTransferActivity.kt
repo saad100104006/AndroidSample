@@ -16,7 +16,9 @@ import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.mainscreen.schedule.presenter.RepeatTransferPresenter
+import uk.co.transferx.app.pojo.TransactionCreate
 import uk.co.transferx.app.util.Constants.EMPTY
+import uk.co.transferx.app.util.Constants.TRANSACTION
 import java.util.*
 import javax.inject.Inject
 
@@ -30,12 +32,14 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as TransferXApplication).appComponent.inject(this)
+        presenter.setNeverString(getString(R.string.never))
+        presenter.setTransaction(intent.getParcelableExtra(TRANSACTION))
         setContentView(R.layout.activity_repeate_transfer_layout)
-        setButtonStatus(buttonFinish, true)
+        buttonFinish.setOnClickListener { presenter.goToSummaryScreen() }
         endInput.setOnClickListener { startActivityForResult<EndTransferActivity>(END_TRANSFER) }
         buttonBackRepeat.setOnClickListener { onBackPressed() }
         buttonsRepeat.setOnCheckedChangeListener { _, checkedId -> setRepeatState(checkedId) }
-        frequencyLabel.setOnItemSelectedListener { position, obj -> }
+        frequencyLabel.setOnItemSelectedListener { position, obj -> presenter.setFrequency(obj.toString()) }
         frequencyLabel.setDataWithHintItem(
             resources.getStringArray(R.array.frequency_transfer),
             getString(R.string.none)
@@ -81,16 +85,17 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
         frequencyLabel.visibility = VISIBLE
         endInput.isEnabled = true
         endInput.text = presenter.getDate()
+        presenter.setRepeat(true)
     }
 
     private fun setNotActiveState() {
         setTextViewDrawableColor(endInput, R.color.not_active)
         setColorForState(R.color.not_active)
-        setButtonStatus(buttonFinish, true)
         frequencyLabel.visibility = INVISIBLE
         notActive.visibility = VISIBLE
         endInput.isEnabled = false
         endInput.text = EMPTY
+        presenter.setRepeat(false)
     }
 
     private fun setColorForState(color: Int) {
@@ -133,10 +138,17 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
         endInput.text = date
     }
 
+    override fun goToNextScreen(transaction: TransactionCreate) {
+
+    }
+
+    override fun setButtonEnabled(enabled: Boolean) {
+        setButtonStatus(buttonFinish, enabled)
+    }
+
     override fun goToWelcome() {
         //no op
     }
-
 
     companion object {
         const val END_TRANSFER = 555

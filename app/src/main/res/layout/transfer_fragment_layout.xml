@@ -258,8 +258,8 @@
                 android:background="@color/white" />
 
 
-            <CheckBox
-                android:id="@+id/auto_pay"
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/repeat"
                 android:layout_width="48dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
@@ -289,7 +289,7 @@
                 style="@style/CommonButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:layout_below="@id/auto_pay"
+                android:layout_below="@id/repeat"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
                 android:layout_marginTop="48dp"

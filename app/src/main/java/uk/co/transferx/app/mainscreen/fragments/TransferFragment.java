@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.mainscreen.presenters.TransferFragmentPresenter;
+import uk.co.transferx.app.mainscreen.schedule.RepeatTransferActivity;
 import uk.co.transferx.app.mainscreen.schedule.ScheduleActivity;
 import uk.co.transferx.app.pojo.Card;
 import uk.co.transferx.app.pojo.TransactionCreate;
@@ -58,6 +60,7 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     private CustomSpinner recipientSpinner, paymentMethod;
     private Pattern pattern = Pattern.compile("^(\\d+\\.)?\\d+$");
     private Button sendNowButton, sendLaterButton;
+    private AppCompatCheckBox repeatTransfer;
 
     @Inject
     TransferFragmentPresenter presenter;
@@ -131,7 +134,9 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
         paymentMethod = view.findViewById(R.id.paymentCard);
         sendNowButton = view.findViewById(R.id.sendNow);
         sendLaterButton = view.findViewById(R.id.sendLater);
-        sendNowButton.setOnClickListener(v -> presenter.goToTrasferSummary());
+        repeatTransfer = view.findViewById(R.id.repeat);
+        repeatTransfer.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setRepeatStatus(isChecked));
+        sendNowButton.setOnClickListener(v -> presenter.goToNextScreen());
         sendLaterButton.setOnClickListener(v -> startActivity(new Intent(getContext(), ScheduleActivity.class)));
         paymentMethod.setOnItemSelectedListener((position, object) -> {
             if (object == null || !(object instanceof Card)) {
@@ -211,8 +216,15 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
 
     @Override
     public void sendNowClick(TransactionCreate transactionCreate) {
-        final Intent intent = new Intent(getContext(), TransferSummaryActivity.class);
-        intent.putExtra(TRANSACTION, transactionCreate);
+        startNextScreen(new Intent(getContext(), TransferSummaryActivity.class).putExtra(TRANSACTION, transactionCreate));
+    }
+
+    @Override
+    public void sendWithRepeat(TransactionCreate transactionCreate) {
+        startNextScreen(new Intent(getContext(), RepeatTransferActivity.class).putExtra(TRANSACTION, transactionCreate));
+    }
+
+    private void startNextScreen(final Intent intent){
         startActivity(intent);
     }
 
