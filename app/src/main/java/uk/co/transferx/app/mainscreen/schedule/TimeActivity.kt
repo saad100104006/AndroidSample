@@ -152,9 +152,7 @@ class TimeActivity : BaseActivity(), View.OnClickListener, TimePresenter.TimeUI 
     }
 
     override fun saveTime(time: String) {
-        val intent = Intent()
-        intent.putExtra(SETTLED_TIME, time)
-        setResult(Activity.RESULT_OK, intent)
+        setResult(Activity.RESULT_OK, Intent().putExtra(SETTLED_TIME, time))
         finish()
     }
 

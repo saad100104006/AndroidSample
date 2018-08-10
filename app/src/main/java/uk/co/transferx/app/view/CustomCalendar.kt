@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.GridLayout
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity.CENTER
 import android.view.View
 import android.widget.Button
@@ -14,6 +15,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.custom_calendar.view.*
 import uk.co.transferx.app.R
 import uk.co.transferx.app.util.Constants.EMPTY
+import java.text.DateFormatSymbols
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -54,11 +56,11 @@ class CustomCalendar @JvmOverloads constructor(
     }
 
     private fun initializeCalendar() {
-        val daysOfWeeks = context.resources.getStringArray(R.array.calendar_label)
+        val daysOfWeeks = DateFormatSymbols(Locale.getDefault()).weekdays
         for (i: Int in 0 until MAX_DAYS) {
             val day = getButton()
             if (i < 7) {
-                day.text = daysOfWeeks[i]
+                day.text = daysOfWeeks[i+1].take(1)
                 day.setTextColor(ContextCompat.getColor(context, R.color.hint))
             } else {
                 days.add(day)

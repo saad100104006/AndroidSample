@@ -162,7 +162,6 @@
                 android:layout_below="@id/underline_two"
                 android:layout_marginBottom="32dp"
                 android:layout_marginRight="@dimen/left_right_main_screen"
-                android:text="1 GBP = 4,684.44"
                 android:textColor="@color/white"
                 android:textSize="10sp" />
 

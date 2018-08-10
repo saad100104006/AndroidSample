@@ -201,16 +201,6 @@
     <string name="saturday">S</string>
     <string name="sunday">S</string>
 
-    <!-- Calendar -->
-    <string-array name="calendar_label">
-        <item name="sunday">@string/sunday</item>
-        <item name="monday">@string/monday</item>
-        <item name="tuesday">@string/tuesday</item>
-        <item name="wednesday">@string/wednesday</item>
-        <item name="thursday">@string/thursday</item>
-        <item name="friday">@string/friday</item>
-        <item name="saturday">@string/saturday</item>
-    </string-array>
 
     <string-array name="frequency_transfer">
         <item>Yearly</item>

@@ -1,10 +1,13 @@
 package uk.co.transferx.app.mainscreen.schedule
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_end_transfer_layout.*
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.mainscreen.schedule.RepeatTransferActivity.Companion.END_DATE
 import uk.co.transferx.app.mainscreen.schedule.presenter.EndTransferPresenter
 import java.text.DateFormatSymbols
 import java.util.*
@@ -25,8 +28,17 @@ class EndTransferActivity : BaseActivity(), EndTransferPresenter.EndTransferUI {
             DateFormatSymbols(Locale.getDefault()).months,
             getString(R.string.month)
         )
+        customCl.setDataListener { presenter.setEndDate(it) }
+        setNever.setOnCheckedChangeListener { buttonView, isChecked ->
+            setTime.isChecked = !isChecked
+            presenter.setNever(isChecked)
+        }
+        setTime.setOnCheckedChangeListener { buttonView, isChecked ->
+            setNever.isChecked = !isChecked
+        }
         yearSpinner.setOnItemSelectedListener { position, obj -> presenter.setYear(obj.toString()) }
         monthSpinner.setOnItemSelectedListener { position, obj -> presenter.setMonth(position) }
+        saveTime.setOnClickListener { presenter.saveTime() }
     }
 
     override fun onResume() {
@@ -50,12 +62,26 @@ class EndTransferActivity : BaseActivity(), EndTransferPresenter.EndTransferUI {
         customCl.setDate(date)
     }
 
+    override fun setButtonEnabled(isEnabled: Boolean) {
+        setButtonStatus(saveTime, isEnabled)
+    }
+
+    override fun goBackWithTime(date: Date) {
+        setResult(Activity.RESULT_OK, Intent().putExtra(END_DATE, date.time))
+        finish()
+    }
+
+    override fun goBackWithNever() {
+        setResult(Activity.RESULT_OK)
+        finish()
+    }
+
     override fun goToWelcome() {
         // no op
     }
 
     companion object {
-        const val MAX_YEARS = 20
+        const val MAX_YEARS = 10
     }
 
 }

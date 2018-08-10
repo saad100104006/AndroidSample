@@ -1,183 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/buttonBackEnd"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="@dimen/left_right_main_screen"
-        android:layout_marginTop="52dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_back"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/big_title"
-        style="@style/CommonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/left_right_main_screen"
-        android:layout_marginTop="28dp"
-        android:gravity="center"
-        android:text="@string/set_end_date"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonBackEnd" />
-
-
-    <RadioButton
-        android:id="@+id/setTime"
-        style="@style/CommonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:buttonTint="@color/black"
-        android:text="@string/on"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/big_title" />
-
-
-    <TextView
-        android:id="@+id/year"
-        style="@style/CommonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="@dimen/left_right_main_screen"
-        android:gravity="center"
-        android:text="@string/year"
-        android:textAllCaps="true"
-        android:textColor="@color/black"
-        android:textSize="10sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/setTime" />
-
-    <TextView
-        android:id="@+id/month"
-        style="@style/CommonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
-        android:gravity="center"
-        android:text="@string/month"
-        android:textAllCaps="true"
-        android:textColor="@color/black"
-        android:textSize="10sp"
-        app:layout_constraintLeft_toRightOf="@id/yearSpinner"
-        app:layout_constraintTop_toBottomOf="@id/setTime" />
-
-    <uk.co.transferx.app.view.CustomSpinner
-        android:id="@+id/yearSpinner"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="@dimen/left_right_main_screen"
-        android:background="@android:color/transparent"
-        android:theme="@style/ThemeSpinner"
-        app:dropDownItemRes="@layout/spinner_year_item"
-        app:headerRes="@layout/spinner_header_year"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/monthSpinner"
-        app:layout_constraintTop_toBottomOf="@id/year">
-
-    </uk.co.transferx.app.view.CustomSpinner>
-
-
-    <View
-        android:id="@+id/underlineYear"
-        android:layout_width="100dp"
-        android:layout_height="2dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="@dimen/left_right_main_screen"
-        android:background="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/underlineMonth"
-        app:layout_constraintTop_toBottomOf="@id/yearSpinner" />
-
-    <View
-        android:id="@+id/underlineMonth"
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:layout_marginEnd="@dimen/left_right_main_screen"
-        android:background="@color/black"
-        app:layout_constraintLeft_toRightOf="@id/underlineYear"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/monthSpinner" />
-
-
-    <uk.co.transferx.app.view.CustomSpinner
-        android:id="@+id/monthSpinner"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="@dimen/left_right_main_screen"
-        android:background="@android:color/transparent"
-        android:theme="@style/ThemeSpinner"
-        app:dropDownItemRes="@layout/spinner_year_item"
-        app:headerRes="@layout/spinner_header_year"
-        app:layout_constraintLeft_toRightOf="@id/yearSpinner"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/year">
-
-    </uk.co.transferx.app.view.CustomSpinner>
-
-
-    <uk.co.transferx.app.view.CustomCalendar
-        android:id="@+id/customCl"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/left_right_main_screen"
-        android:layout_marginStart="@dimen/left_right_main_screen"
-        android:animateLayoutChanges="true"
-        app:headerVisible="false"
-        app:layout_constraintTop_toBottomOf="@id/underlineYear">
+        android:layout_height="wrap_content">
 
-    </uk.co.transferx.app.view.CustomCalendar>
+        <ImageView
+            android:id="@+id/buttonBackEnd"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:layout_marginTop="52dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_back"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioButton
-        android:id="@+id/setNever"
-        style="@style/CommonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:buttonTint="@color/black"
-        android:text="@string/never"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/customCl" />
-
-
-    <Button
-        android:id="@+id/saveTime"
-        style="@style/CommonButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/oval_button_gray"
-        android:enabled="false"
-        android:letterSpacing="0.17"
-        android:lineSpacingExtra="2sp"
-        android:text="@string/save"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:theme="@style/Button.Black"
-        app:layout_constraintTop_toBottomOf="@id/setNever" />
+        <TextView
+            android:id="@+id/big_title"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:text="@string/set_end_date"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonBackEnd" />
 
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="36dp" />
+        <RadioButton
+            android:id="@+id/setTime"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:buttonTint="@color/black"
+            android:checked="true"
+            android:text="@string/on"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/big_title" />
 
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/year"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:gravity="center"
+            android:text="@string/year"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/setTime" />
+
+        <TextView
+            android:id="@+id/month"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:text="@string/month"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toRightOf="@id/yearSpinner"
+            app:layout_constraintTop_toBottomOf="@id/setTime" />
+
+        <uk.co.transferx.app.view.CustomSpinner
+            android:id="@+id/yearSpinner"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:background="@android:color/transparent"
+            android:theme="@style/ThemeSpinner"
+            app:dropDownItemRes="@layout/spinner_year_item"
+            app:headerRes="@layout/spinner_header_year"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/monthSpinner"
+            app:layout_constraintTop_toBottomOf="@id/year">
+
+        </uk.co.transferx.app.view.CustomSpinner>
+
+
+        <View
+            android:id="@+id/underlineYear"
+            android:layout_width="100dp"
+            android:layout_height="2dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:background="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/underlineMonth"
+            app:layout_constraintTop_toBottomOf="@id/yearSpinner" />
+
+        <View
+            android:id="@+id/underlineMonth"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginEnd="@dimen/left_right_main_screen"
+            android:background="@color/black"
+            app:layout_constraintLeft_toRightOf="@id/underlineYear"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/monthSpinner" />
+
+
+        <uk.co.transferx.app.view.CustomSpinner
+            android:id="@+id/monthSpinner"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="@dimen/left_right_main_screen"
+            android:background="@android:color/transparent"
+            android:theme="@style/ThemeSpinner"
+            app:dropDownItemRes="@layout/spinner_year_item"
+            app:headerRes="@layout/spinner_header_year"
+            app:layout_constraintLeft_toRightOf="@id/yearSpinner"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/year">
+
+        </uk.co.transferx.app.view.CustomSpinner>
+
+
+        <uk.co.transferx.app.view.CustomCalendar
+            android:id="@+id/customCl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/left_right_main_screen"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:animateLayoutChanges="true"
+            app:headerVisible="false"
+            app:layout_constraintTop_toBottomOf="@id/underlineYear">
+
+        </uk.co.transferx.app.view.CustomCalendar>
+
+        <RadioButton
+            android:id="@+id/setNever"
+            style="@style/CommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:buttonTint="@color/black"
+            android:text="@string/never"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/customCl" />
+
+
+        <Button
+            android:id="@+id/saveTime"
+            style="@style/CommonButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/oval_button_gray"
+            android:enabled="false"
+            android:letterSpacing="0.17"
+            android:lineSpacingExtra="2sp"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:theme="@style/Button.Black"
+            app:layout_constraintTop_toBottomOf="@id/setNever" />
+
+
+        <Space
+            android:id="@+id/spaceBottom"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            app:layout_constraintTop_toBottomOf="@id/saveTime" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

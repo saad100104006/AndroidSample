@@ -10,21 +10,49 @@ class EndTransferPresenter @Inject constructor() :
 
     private var year: String? = null
     private var month: Int? = null
+    private var date: Date? = null
+    private var never = false
 
 
-    public fun setYear(year: String) {
+    fun setYear(year: String) {
         this.year = year
         setDate()
+        date = null
+        validateDate()
     }
 
-    public fun setMonth(month: Int) {
+    fun setMonth(month: Int) {
         this.month = month
         setDate()
+        date = null
+        validateDate()
     }
 
+    fun setEndDate(date: Date) {
+        this.date = date
+        validateDate()
+    }
 
-    private fun setDate(){
-        if(year != null && month != null) {
+    fun setNever(never: Boolean) {
+        this.never = never
+        validateDate()
+    }
+
+    fun saveTime() {
+        if (never) {
+            ui?.goBackWithNever()
+            return
+        }
+
+        ui?.goBackWithTime(date!!)
+    }
+
+    private fun validateDate() {
+        ui?.setButtonEnabled((date != null && year != null && month != null) || never)
+    }
+
+    private fun setDate() {
+        if (year != null && month != null) {
             val calendar = Calendar.getInstance()
             calendar.set(Calendar.YEAR, year!!.toInt())
             calendar.set(Calendar.MONTH, month!!)
@@ -34,6 +62,9 @@ class EndTransferPresenter @Inject constructor() :
 
     interface EndTransferUI : UI {
         fun setCalendarDate(date: Date)
+        fun setButtonEnabled(isEnabled: Boolean)
+        fun goBackWithTime(date: Date)
+        fun goBackWithNever()
 
     }
 }

@@ -1,5 +1,6 @@
 package uk.co.transferx.app.mainscreen.schedule
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -15,6 +16,8 @@ import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.mainscreen.schedule.presenter.RepeatTransferPresenter
+import uk.co.transferx.app.util.Constants.EMPTY
+import java.util.*
 import javax.inject.Inject
 
 
@@ -51,28 +54,43 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == END_TRANSFER && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                presenter.setDate(date = Date(data.getLongExtra(END_DATE, -1)))
+                presenter.setNever(false)
+                return
+            }
+            presenter.setNever(true)
+            endInput.text = getString(R.string.never)
+
+        }
     }
 
     private fun setRepeatState(buttonId: Int) {
         when (buttonId) {
-            R.id.noRepeat -> {
-                setTextViewDrawableColor(endInput, R.color.not_active)
-                setColorForState(R.color.not_active)
-                setButtonStatus(buttonFinish, true)
-                frequencyLabel.visibility = INVISIBLE
-                notActive.visibility = VISIBLE
-                endInput.isEnabled = false
-            }
-            R.id.yesRepeat -> {
-                setTextViewDrawableColor(endInput, R.color.black)
-                setColorForState(R.color.black)
-                setButtonStatus(buttonFinish, false)
-                notActive.visibility = GONE
-                frequencyLabel.visibility = VISIBLE
-                endInput.isEnabled = true
-
-            }
+            R.id.noRepeat -> setNotActiveState()
+            R.id.yesRepeat -> setActiveState()
         }
+    }
+
+    private fun setActiveState() {
+        setTextViewDrawableColor(endInput, R.color.black)
+        setColorForState(R.color.black)
+        setButtonStatus(buttonFinish, false)
+        notActive.visibility = GONE
+        frequencyLabel.visibility = VISIBLE
+        endInput.isEnabled = true
+        endInput.text = presenter.getDate()
+    }
+
+    private fun setNotActiveState() {
+        setTextViewDrawableColor(endInput, R.color.not_active)
+        setColorForState(R.color.not_active)
+        setButtonStatus(buttonFinish, true)
+        frequencyLabel.visibility = INVISIBLE
+        notActive.visibility = VISIBLE
+        endInput.isEnabled = false
+        endInput.text = EMPTY
     }
 
     private fun setColorForState(color: Int) {
@@ -111,6 +129,10 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
         }
     }
 
+    override fun setDateToView(date: String) {
+        endInput.text = date
+    }
+
     override fun goToWelcome() {
         //no op
     }
@@ -118,5 +140,6 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
 
     companion object {
         const val END_TRANSFER = 555
+        const val END_DATE = "end_date"
     }
 }
