@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,6 +25,7 @@ import uk.co.transferx.app.recipientsrepository.RecipientRepository;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
 import static java.net.HttpURLConnection.HTTP_OK;
+import static uk.co.transferx.app.util.Util.formattedDateForSend;
 
 /**
  * Created by sergey on 15.12.17.
@@ -169,6 +171,27 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         }
     }
 
+    public void sendLaterClicked() {
+        if (ui != null) {
+            ui.goToScheduleScreen(new TransactionCreate(
+                    recipient.getId(),
+                    calculatedValue == null ? BigDecimal.ZERO.intValue() : calculatedValue.intValue(),
+                    currencyTo,
+                    currencyFrom,
+                    card.getId(),
+                    message,
+                    false,
+                    amount,
+                    shouldRepeat,
+                    null,
+                    null,
+                    null,
+                    card,
+                    recipient
+            ));
+        }
+    }
+
     private void setCards() {
         compositeDisposable.add(tokenManager.getToken()
                 .flatMap(token -> cardsApi.getCards(token.getAccessToken()))
@@ -230,7 +253,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                     true,
                     amount,
                     shouldRepeat,
-                    null,
+                    formattedDateForSend(new Date()),
                     null,
                     null,
                     card,
@@ -264,5 +287,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         void sendNowClick(TransactionCreate transactionCreate);
 
         void sendWithRepeat(TransactionCreate transactionCreate);
+
+        void goToScheduleScreen(TransactionCreate transactionCreate);
     }
 }

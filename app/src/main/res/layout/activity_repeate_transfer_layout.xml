@@ -348,7 +348,6 @@
             android:hint="@string/end_date"
             android:clickable="true"
             android:focusable="true"
-            android:cursorVisible="false"
             android:drawableEnd="@drawable/ic_select_right"
             android:lineSpacingExtra="2sp"
             android:maxLines="1"

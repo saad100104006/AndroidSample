@@ -1,5 +1,9 @@
 package uk.co.transferx.app.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by sergey on 15.12.17.
  */
@@ -30,7 +34,9 @@ public final class Util {
         return name != null && name.matches(VALIDATE_PATTERN_NAME);
     }
 
-    public static boolean isNullorEmpty(String text) {
-        return text == null || text.isEmpty();
+    public static String formattedDateForSend(Date date) {
+        SimpleDateFormat formatDateToSend =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.'000Z'", Locale.getDefault());
+        return formatDateToSend.format(date);
     }
 }

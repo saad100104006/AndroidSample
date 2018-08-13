@@ -13,7 +13,9 @@ import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.mainscreen.schedule.presenter.ScheduleActivityPresenter
+import uk.co.transferx.app.pojo.TransactionCreate
 import uk.co.transferx.app.util.Constants.EMPTY
+import uk.co.transferx.app.util.Constants.TRANSACTION
 import uk.co.transferx.app.welcom.WelcomeActivity
 import java.util.*
 import javax.inject.Inject
@@ -22,7 +24,7 @@ import javax.inject.Inject
 class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActivityUI {
 
     private lateinit var dayOfWeek: Array<TextView>
-    private lateinit var markersOfcurrentDay: Array<TextView>
+    private lateinit var markersOfCurrentDay: Array<TextView>
 
     @Inject
     lateinit var presenter: ScheduleActivityPresenter
@@ -31,8 +33,9 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
         super.onCreate(savedInstanceState)
         (application as TransferXApplication).appComponent.inject(this)
         setContentView(R.layout.schedule_activity_layout)
+        presenter.setTransaction(intent.getParcelableExtra(TRANSACTION))
         dayOfWeek = arrayOf(One, Two, Tree, Four, Five, Six, Seven)
-        markersOfcurrentDay =
+        markersOfCurrentDay =
                 arrayOf(oneToday, twoToday, treeToday, fourToday, fiveToday, sixToday, sevenToday)
         arrow.setOnClickListener { startActivityForResult<CalendarActivity>(CALENDAR) }
         timeArrow.setOnClickListener { startActivityForResult<TimeActivity>(TIME) }
@@ -55,7 +58,7 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CALENDAR && resultCode == Activity.RESULT_OK) {
             val date = Date(data!!.getLongExtra(SETTLED_DATA, -1))
-            setChoosenDate(date)
+            setChosenDate(date)
             presenter.setDate(date = date)
         }
         if (requestCode == TIME && resultCode == Activity.RESULT_OK) {
@@ -77,9 +80,9 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
             }
             calendar.add(Calendar.DATE, 1)
             dayOfWeek[i].text = calendar.get(Calendar.DAY_OF_MONTH).toString()
-            markersOfcurrentDay[i].visibility = View.INVISIBLE
+            markersOfCurrentDay[i].visibility = View.INVISIBLE
         }
-        (markersOfcurrentDay[currentDayOfWeek.dec()]).visibility = View.VISIBLE
+        (markersOfCurrentDay[currentDayOfWeek.dec()]).visibility = View.VISIBLE
         date.text = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
 
     }
@@ -88,7 +91,7 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
         WelcomeActivity.startWelcomeActivity(this@ScheduleActivity)
     }
 
-    private fun setChoosenDate(settledDate: Date) {
+    private fun setChosenDate(settledDate: Date) {
         val calendar: Calendar = Calendar.getInstance()
         calendar.time = settledDate
         date.text = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
@@ -104,7 +107,7 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
             }
             calendar.add(Calendar.DATE, 1)
             day.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
-            markersOfcurrentDay[i].visibility = View.INVISIBLE
+            markersOfCurrentDay[i].visibility = View.INVISIBLE
         }
     }
 
@@ -112,8 +115,8 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
         setButtonStatus(buttonSubmite, isEnabled)
     }
 
-    override fun goToNext(time: Long) {
-        startActivity<RepeatTransferActivity>(SETTLED_DATA_SUMMARY to time)
+    override fun goToNext(transaction: TransactionCreate) {
+        startActivity<RepeatTransferActivity>(TRANSACTION to transaction)
     }
 
     companion object {
@@ -121,6 +124,5 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
         const val TIME: Int = 777
         const val SETTLED_DATA = "settled_data"
         const val SETTLED_TIME = "settled_time"
-        const val SETTLED_DATA_SUMMARY = "settled_data_summary"
     }
 }

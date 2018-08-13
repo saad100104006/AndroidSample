@@ -87,36 +87,6 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.attachUI(this);
-        disposable = RxTextView.textChanges(sendInput)
-                .debounce(300L, TimeUnit.MILLISECONDS)
-                .filter(val -> !EMPTY.equals(val.toString()))
-                .filter(value -> pattern.matcher(value.toString()).matches())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(sequence -> presenter.setValueToSend(sequence.toString()));
-        messageDisposable = RxTextView.textChanges(messageInput)
-                .debounce(100L, TimeUnit.MILLISECONDS)
-                .filter(val -> !EMPTY.equals(val.toString()))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(sequence -> presenter.setMessage(sequence.toString()));
-    }
-
-
-    @Override
-    public void onPause() {
-        presenter.detachUI();
-        if (disposable != null) {
-            disposable.dispose();
-        }
-        if (messageDisposable != null) {
-            messageDisposable.dispose();
-        }
-        super.onPause();
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -137,7 +107,7 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
         repeatTransfer = view.findViewById(R.id.repeat);
         repeatTransfer.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setRepeatStatus(isChecked));
         sendNowButton.setOnClickListener(v -> presenter.goToNextScreen());
-        sendLaterButton.setOnClickListener(v -> startActivity(new Intent(getContext(), ScheduleActivity.class)));
+        sendLaterButton.setOnClickListener(v -> presenter.sendLaterClicked());
         paymentMethod.setOnItemSelectedListener((position, object) -> {
             if (object == null || !(object instanceof Card)) {
                 return;
@@ -148,6 +118,35 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
         recipientSpinner.setOnItemSelectedListener((position, object) -> {
             presenter.chooseRecipientForTransfer((RecipientDto) object);
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.attachUI(this);
+        disposable = RxTextView.textChanges(sendInput)
+                .debounce(300L, TimeUnit.MILLISECONDS)
+                .filter(val -> !EMPTY.equals(val.toString()))
+                .filter(value -> pattern.matcher(value.toString()).matches())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(sequence -> presenter.setValueToSend(sequence.toString()));
+        messageDisposable = RxTextView.textChanges(messageInput)
+                .debounce(100L, TimeUnit.MILLISECONDS)
+                .filter(val -> !EMPTY.equals(val.toString()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(sequence -> presenter.setMessage(sequence.toString()));
+    }
+
+    @Override
+    public void onPause() {
+        presenter.detachUI();
+        if (disposable != null) {
+            disposable.dispose();
+        }
+        if (messageDisposable != null) {
+            messageDisposable.dispose();
+        }
+        super.onPause();
     }
 
     @Override
@@ -224,8 +223,13 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
         startNextScreen(new Intent(getContext(), RepeatTransferActivity.class).putExtra(TRANSACTION, transactionCreate));
     }
 
-    private void startNextScreen(final Intent intent){
+    private void startNextScreen(final Intent intent) {
         startActivity(intent);
+    }
+
+    @Override
+    public void goToScheduleScreen(TransactionCreate transactionCreate) {
+        startNextScreen(new Intent(getContext(), ScheduleActivity.class).putExtra(TRANSACTION, transactionCreate));
     }
 
     @Override

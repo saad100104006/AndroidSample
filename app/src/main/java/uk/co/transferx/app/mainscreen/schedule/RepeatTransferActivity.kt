@@ -11,6 +11,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_repeate_transfer_layout.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
@@ -32,9 +33,9 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as TransferXApplication).appComponent.inject(this)
+        setContentView(R.layout.activity_repeate_transfer_layout)
         presenter.setNeverString(getString(R.string.never))
         presenter.setTransaction(intent.getParcelableExtra(TRANSACTION))
-        setContentView(R.layout.activity_repeate_transfer_layout)
         buttonFinish.setOnClickListener { presenter.goToSummaryScreen() }
         endInput.setOnClickListener { startActivityForResult<EndTransferActivity>(END_TRANSFER) }
         buttonBackRepeat.setOnClickListener { onBackPressed() }
@@ -139,7 +140,7 @@ class RepeatTransferActivity : BaseActivity(), RepeatTransferPresenter.RepeatTra
     }
 
     override fun goToNextScreen(transaction: TransactionCreate) {
-
+        startActivity<ReviewActivity>(TRANSACTION to transaction)
     }
 
     override fun setButtonEnabled(enabled: Boolean) {

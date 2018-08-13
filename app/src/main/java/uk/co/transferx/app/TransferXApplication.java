@@ -48,7 +48,7 @@ public class TransferXApplication extends MultiDexApplication {
         }
         LeakCanary.install(this);
         // Normal app init code...
-        Fabric.with(this, new Crashlytics());
+      //  Fabric.with(this, new Crashlytics());
     }
 
     public AppComponent getAppComponent() {
