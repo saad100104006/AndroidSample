@@ -22,6 +22,8 @@ import timber.log.Timber;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.pojo.Card;
 
+import static uk.co.transferx.app.util.Constants.VISA;
+
 /**
  * Created by sergey on 04/04/2018.
  */
@@ -77,7 +79,7 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
         Object item = objects[position];
         if (position != hintItemIndex && objects[position] instanceof Card) {
             Card card = (Card) item;
-            ((ImageView) convertView.findViewById(R.id.image_recip)).setImageDrawable(card.getType().equals("VISA") ? ContextCompat.getDrawable(getContext(), R.drawable.ic_visa) : ContextCompat.getDrawable(getContext(), R.drawable.ic_master_card));
+            ((ImageView) convertView.findViewById(R.id.image_recip)).setImageDrawable(card.getType().equals(VISA) ? ContextCompat.getDrawable(getContext(), R.drawable.ic_visa) : ContextCompat.getDrawable(getContext(), R.drawable.ic_master_card));
         }
         return convertView;
     }
@@ -131,7 +133,7 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
         }
         if (position != hintItemIndex && item instanceof Card) {
             Card card = (Card) item;
-            itemImg.setImageDrawable(card.getType().equals("VISA") ? ContextCompat.getDrawable(getContext(), R.drawable.ic_visa) : ContextCompat.getDrawable(getContext(), R.drawable.ic_master_card));
+            itemImg.setImageDrawable(card.getType().equals(VISA) ? ContextCompat.getDrawable(getContext(), R.drawable.ic_visa) : ContextCompat.getDrawable(getContext(), R.drawable.ic_master_card));
         }
         return convertView;
     }

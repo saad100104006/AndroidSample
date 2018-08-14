@@ -119,7 +119,6 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     }
 
     private void fetchRate() {
-        Log.d("Serge", "currencyTo " + currencyTo + " currency from " + currencyFrom);
         if (currencyTo.equals(currencyFrom)) {
             return;
         }
@@ -130,7 +129,6 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                 .subscribe(resp -> {
                     if (resp.code() == HTTP_OK && ui != null) {
                         rates = new BigDecimal(resp.body().getRates().get(0).getRate()).setScale(SCALE_VALUE, BigDecimal.ROUND_HALF_UP);
-                        Log.d("Serge", "rate " + rates.toPlainString());
                         ui.showRates(String.format("%s %s = %s %s", "1", currencyFrom, rates.toPlainString(), currencyTo));
                         calculateValue();
                     }

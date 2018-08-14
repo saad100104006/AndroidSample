@@ -76,7 +76,8 @@ class RepeatTransferPresenter @Inject constructor() :
         ui?.goToNextScreen(
             transaction.copy(
                 frequency = frequency?.toLowerCase(),
-                endTime = endDate
+                endTime = endDate,
+                repeat = shouldRepeat
             )
         )
     }

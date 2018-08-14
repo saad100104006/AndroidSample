@@ -122,7 +122,7 @@
     <string name="message">Message</string>
     <string name="auto_transfer">Repeat transfer?</string>
     <string name="empty_list_activity_desc">This is where you’ll see your recent transfer history. Make someone’s day and transfer money today.</string>
-    <string name="send_now">send now</string>
+    <string name="send_now">Send now</string>
     <string name="send_later">send later</string>
     <string name="flexible_payment_desc">Choose from several different payment methods to make transfering funds simple.</string>
     <string name="title_flex">Flexible Payment Methods</string>
@@ -192,6 +192,9 @@
     <string name="month">Month</string>
     <string name="never">Never</string>
     <string name="yyyy">YYYY</string>
+    <string name="until">until</string>
+    <string name="never_end">never end</string>
+    <string name="cancel_transfer_message">Are you sure you want to cancel this transfer?</string>
 
     <!-- Calendar -->
     <string name="monday">M</string>

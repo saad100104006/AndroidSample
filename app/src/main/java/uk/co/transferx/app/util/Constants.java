@@ -15,6 +15,7 @@ public final class Constants {
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
     public static final String CREDENTIAL = "credential";
+    public static final String DELETE = "delete";
 
     public static final String TOKEN = "tok";
     public static final String LOGGED_IN_STATUS = "logged_in_status";
@@ -31,4 +32,6 @@ public final class Constants {
     public static final String TRANSACTION = "transaction";
     public static final String CARD = "card";
     public static final String PIN_REQUIRED = "pin_required";
+    public static final String MASTERCARD = "MASTERCARD";
+    public static final String VISA = "VISA";
 }

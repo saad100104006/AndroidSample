@@ -19,6 +19,7 @@ import uk.co.transferx.app.pojo.Card
 import uk.co.transferx.app.settings.profile.wallet.adapter.WalletAdapter
 import uk.co.transferx.app.settings.profile.wallet.presenter.WalletActivityPresenter
 import uk.co.transferx.app.util.Constants.CARD
+import uk.co.transferx.app.util.Constants.DELETE
 import uk.co.transferx.app.util.Constants.MODE
 import uk.co.transferx.app.view.ConfirmationDialogFragment
 import uk.co.transferx.app.view.ConfirmationDialogFragment.MESSAGE
@@ -87,7 +88,7 @@ class WalletActivity : BaseActivity(), WalletActivityPresenter.WalletActivityUI 
                 if (intent?.action == null) {
                     return
                 }
-                if (intent.action == DELETE_CARD) {
+                if (intent.action == DELETE) {
                     val pos = intent.getIntExtra(POSITION, -1)
                     if (pos == -1) {
                         return
@@ -98,7 +99,7 @@ class WalletActivity : BaseActivity(), WalletActivityPresenter.WalletActivityUI 
         }
         LocalBroadcastManager.getInstance(this).registerReceiver(
             localBroadcastReceiver,
-            IntentFilter(DELETE_CARD)
+            IntentFilter(DELETE)
         )
         isRegistered = true
         val dialogFragment = ConfirmationDialogFragment()
@@ -148,7 +149,4 @@ class WalletActivity : BaseActivity(), WalletActivityPresenter.WalletActivityUI 
         WelcomeActivity.startWelcomeActivity(this@WalletActivity)
     }
 
-    companion object {
-        const val DELETE_CARD = "delete_card"
-    }
 }

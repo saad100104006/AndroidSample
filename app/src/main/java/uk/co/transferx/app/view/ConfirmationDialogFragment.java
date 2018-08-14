@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import android.widget.TextView;
 import uk.co.transferx.app.R;
 
 import static android.app.Activity.RESULT_OK;
-import static uk.co.transferx.app.settings.profile.wallet.WalletActivity.DELETE_CARD;
+import static uk.co.transferx.app.util.Constants.DELETE;
 import static uk.co.transferx.app.util.Constants.EMPTY;
 
 public class ConfirmationDialogFragment extends DialogFragment {
@@ -69,8 +68,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
             intent.putExtra(POSITION, position);
             fragment.onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
         } else {
-            Log.d("Serge", "confirmation fragment else");
-            intent = new Intent(DELETE_CARD);
+            intent = new Intent(DELETE);
             intent.putExtra(POSITION, position);
             LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(
                     intent);
