@@ -18,7 +18,6 @@ import uk.co.transferx.app.mainscreen.schedule.ReviewActivity;
 import uk.co.transferx.app.mainscreen.schedule.ScheduleActivity;
 import uk.co.transferx.app.mainscreen.schedule.TimeActivity;
 import uk.co.transferx.app.recipients.addrecipients.fragments.AddRecipientsFragment;
-import uk.co.transferx.app.recipients.detailsrecipient.fragment.RecipientDetailsFragment;
 import uk.co.transferx.app.recipients.editrecipient.EditRecipientActivity;
 import uk.co.transferx.app.recoverpass.fragment.RecoverPasswordFragment;
 import uk.co.transferx.app.settings.fragment.SettingsFragment;
@@ -67,8 +66,6 @@ public interface AppComponent {
     void inject(SettingsFragment settingsFragment);
 
     void inject(AddRecipientsFragment addRecipientsFragment);
-
-    void inject(RecipientDetailsFragment recipientDetailsFragment);
 
     void inject(TransferXApplication transferXApplication);
 

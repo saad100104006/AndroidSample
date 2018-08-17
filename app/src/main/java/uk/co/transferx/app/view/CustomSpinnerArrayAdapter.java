@@ -41,6 +41,7 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
     private SparseArray<TextViewBinder> labelsToBind;
     private Object[] objects;
     private final int hintColor;
+    private final ImgMapper imgMapper = new ImgMapper();
 
     public CustomSpinnerArrayAdapter(Context context, @LayoutRes int resource, @IdRes int textViewResourceId, Object[] objects, boolean iconVisible, int hintColor) {
         super(context, resource, textViewResourceId, objects);
@@ -77,9 +78,15 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
         convertView = super.getView(position, convertView, parent);
         bindLabels(convertView, position);
         Object item = objects[position];
-        if (position != hintItemIndex && objects[position] instanceof Card) {
+        if (position != hintItemIndex && item instanceof Card) {
             Card card = (Card) item;
-            ((ImageView) convertView.findViewById(R.id.image_recip)).setImageDrawable(card.getType().equals(VISA) ? ContextCompat.getDrawable(getContext(), R.drawable.ic_visa) : ContextCompat.getDrawable(getContext(), R.drawable.ic_master_card));
+            ((ImageView) convertView.findViewById(R.id.image_recip)).setImageDrawable(ContextCompat.getDrawable(getContext(), imgMapper.mapCardType(card.getType())));
+        }
+        if (position != hintItemIndex && item instanceof String) {
+            ImageView flag = convertView.findViewById(R.id.image_recip);
+            if (flag != null) {
+                flag.setImageDrawable(ContextCompat.getDrawable(getContext(), imgMapper.mapNameToFlag((String) item)));
+            }
         }
         return convertView;
     }
@@ -133,7 +140,12 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
         }
         if (position != hintItemIndex && item instanceof Card) {
             Card card = (Card) item;
-            itemImg.setImageDrawable(card.getType().equals(VISA) ? ContextCompat.getDrawable(getContext(), R.drawable.ic_visa) : ContextCompat.getDrawable(getContext(), R.drawable.ic_master_card));
+            itemImg.setImageDrawable(ContextCompat.getDrawable(getContext(), imgMapper.mapCardType(card.getType())));
+        }
+        if (position != hintItemIndex && item instanceof String) {
+            if (itemImg != null) {
+                itemImg.setImageDrawable(ContextCompat.getDrawable(getContext(), imgMapper.mapNameToFlag((String) item)));
+            }
         }
         return convertView;
     }
