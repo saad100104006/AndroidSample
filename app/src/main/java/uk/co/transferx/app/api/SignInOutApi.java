@@ -7,6 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import uk.co.transferx.app.pojo.ForgotEmail;
 import uk.co.transferx.app.pojo.TokenEntity;
 import uk.co.transferx.app.pojo.UserSignIn;
 
@@ -24,8 +25,8 @@ public interface SignInOutApi {
     @POST("/v1/auth/user/logout")
     Single<Response<ResponseBody>> logOut(@Header("Authorization") String token);
 
-    @POST("/v1/auth/user/forgot/{mail}")
-    Single<Response<ResponseBody>> forgotEmail(@Header("Authorization") String token, @Path("mail") String mail);
+    @POST("/v1/auth/user/forgot")
+    Single<Response<ResponseBody>> forgotEmail(@Header("Authorization") String token, @Body ForgotEmail forgotEmail);
 
     @POST("/v1/auth/client/refresh")
     Single<Response<ResponseBody>> refreshToken(@Header("Authorization") String token);

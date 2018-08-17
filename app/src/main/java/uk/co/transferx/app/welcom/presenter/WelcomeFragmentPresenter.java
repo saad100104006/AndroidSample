@@ -98,11 +98,12 @@ public class WelcomeFragmentPresenter extends BasePresenter<WelcomeFragmentPrese
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         tokenManager.saveToken(resp.body());
-                        if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) ||
+                        if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) &&
                                 !sharedPreferences.getBoolean(LOGGED_IN_STATUS, false)) {
                             ui.goToPinView(email, password);
                             return;
                         }
+                        sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply();
                         ui.goToMainScreen();
                         return;
                     } else if (resp.code() == HttpsURLConnection.HTTP_NOT_FOUND && ui != null) {

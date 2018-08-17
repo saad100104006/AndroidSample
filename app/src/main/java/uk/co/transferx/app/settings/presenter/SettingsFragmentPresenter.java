@@ -69,6 +69,12 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentPre
         }
     }
 
+    public void supportClicked(){
+        if (ui != null) {
+            ui.goToSupport();
+        }
+    }
+
     public void clickProfile() {
         if (ui != null) {
             ui.goToProfile();
@@ -82,5 +88,7 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentPre
         void goAppSettings();
 
         void goToProfile();
+
+        void goToSupport();
     }
 }

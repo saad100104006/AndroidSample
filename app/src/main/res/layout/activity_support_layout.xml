@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ImageView
+        android:id="@+id/buttonBackSupport"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/left_right_main_screen"
+        android:layout_marginTop="52dp"
+        android:clickable="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusable="true"
+        android:src="@drawable/ic_back" />
+
+    <TextView
+        android:id="@+id/titleSupport"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/buttonBackSupport"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="@string/support"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <ImageView
+    android:id="@+id/exclamationImg"
+    android:layout_width="32dp"
+    android:layout_height="32dp"
+    android:layout_marginStart="@dimen/left_right_main_screen"
+    android:layout_marginTop="32dp"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/titleSupport"
+    android:src="@drawable/ic_faq" />
+
+
+    <TextView
+        android:id="@+id/faqTitle"
+        style="@style/CommonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/left_right_main_screen"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/titleSupport"
+        app:layout_constraintLeft_toRightOf="@id/exclamationImg"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/faq"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/faqDesc"
+        style="@style/CommonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/left_right_main_screen"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@id/faqTitle"
+        app:layout_constraintLeft_toRightOf="@id/exclamationImg"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/faq_desc"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/chatImg"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="@dimen/left_right_main_screen"
+        android:layout_marginTop="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/faqDesc"
+        android:src="@drawable/ic_chat" />
+
+
+    <TextView
+        android:id="@+id/chatTitle"
+        style="@style/CommonStyle"
+        android:layout_width="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/left_right_main_screen"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/faqDesc"
+        app:layout_constraintLeft_toRightOf="@id/chatImg"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/chat"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/chatDesc"
+        style="@style/CommonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/left_right_main_screen"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@id/chatTitle"
+        app:layout_constraintLeft_toRightOf="@id/chatImg"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/chat_desc"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>

@@ -22,6 +22,7 @@ import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
+import uk.co.transferx.app.recipients.SelectPictureDialog;
 import uk.co.transferx.app.recipients.addrecipients.Mode;
 import uk.co.transferx.app.recipients.addrecipients.presenters.AddRecipientsPresenter;
 import uk.co.transferx.app.view.ConfirmationDialogFragment;
@@ -88,6 +89,7 @@ public class AddRecipientsFragment extends BaseFragment implements AddRecipients
         phoneNumber = view.findViewById(R.id.phoneInput);
         newTransfer = view.findViewById(R.id.transfer_button);
         deleteRecipient = view.findViewById(R.id.delete_recipient);
+        view.findViewById(R.id.recipient_img).setOnClickListener(v -> SelectPictureDialog.Companion.newInstance().show(getFragmentManager(), "TAG"));
         view.findViewById(R.id.button_back).setOnClickListener(v -> getActivity().onBackPressed());
         countrySpinner.setOnItemSelectedListener((position, object) -> presenter.setCountry(object.toString()));
         countrySpinner.setDataWithHintItem(getResources().getStringArray(R.array.countries), getString(R.string.choose_country));

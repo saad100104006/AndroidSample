@@ -9,6 +9,7 @@ import io.reactivex.schedulers.Schedulers;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.SignInOutApi;
+import uk.co.transferx.app.pojo.ForgotEmail;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 import uk.co.transferx.app.util.Util;
 
@@ -48,7 +49,7 @@ public class RecoverPasswordPresenter extends BasePresenter<RecoverPasswordPrese
 
     public void sendEmail() {
         disposable = tokenManager.getToken()
-                .flatMap(token -> signInOutApi.forgotEmail(token.getAccessToken(), validEmail))
+                .flatMap(token -> signInOutApi.forgotEmail(token.getAccessToken(), new ForgotEmail(validEmail)))
                 .subscribeOn(Schedulers.io())
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {

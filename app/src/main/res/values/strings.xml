@@ -200,6 +200,13 @@
     <string name="transfer_receipt_number">Transfer #%s</string>
     <string name="transfer_in_progress">Transfer in progress</string>
     <string name="transfer_pending">Transfer pending</string>
+    <string name="faq">Frequently asked questions</string>
+    <string name="faq_desc">Check to see if there’s an answer to your question in our FAQ.</string>
+    <string name="chat">Chat</string>
+    <string name="chat_desc">Connect with us directly via chat.</string>
+    <string name="upload_documents">Upload documentation</string>
+    <string name="proof_of_id">Proof of Identification</string>
+    <string name="proof_of_address">Proof of Address</string>
 
     <!-- Calendar -->
     <string name="monday">M</string>

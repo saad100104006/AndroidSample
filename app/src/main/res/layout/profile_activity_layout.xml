@@ -89,6 +89,7 @@
         android:textSize="14sp" />
 
     <TextView
+        android:id="@+id/upload_docs"
         style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="32dp"

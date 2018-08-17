@@ -1,5 +1,6 @@
 package uk.co.transferx.app.settings.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.settings.notification.NotificationSettingsActivity;
 import uk.co.transferx.app.settings.presenter.SettingsFragmentPresenter;
 import uk.co.transferx.app.settings.profile.ProfileActivity;
+import uk.co.transferx.app.settings.support.SupportActivity;
 import uk.co.transferx.app.welcom.WelcomeActivity;
 
 /**
@@ -50,6 +52,7 @@ public class SettingsFragment extends BaseFragment implements SettingsFragmentPr
         view.findViewById(R.id.logout).setOnClickListener(v -> presenter.logOut());
         view.findViewById(R.id.notification).setOnClickListener(v -> presenter.clickNotification());
         view.findViewById(R.id.profile).setOnClickListener(v -> presenter.clickProfile());
+        view.findViewById(R.id.support).setOnClickListener(v -> presenter.supportClicked());
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -78,5 +81,10 @@ public class SettingsFragment extends BaseFragment implements SettingsFragmentPr
     @Override
     public void goToProfile() {
         ProfileActivity.startProfileActivity(getContext());
+    }
+
+    @Override
+    public void goToSupport() {
+        startActivity(new Intent(getContext(), SupportActivity.class));
     }
 }

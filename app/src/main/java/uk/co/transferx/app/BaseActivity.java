@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 import uk.co.transferx.app.signin.SignInActivity;
 import uk.co.transferx.app.signup.SignUpActivity;
+import uk.co.transferx.app.splash.SplashActivity;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 import uk.co.transferx.app.tokenmanager.TokenRepository;
 
@@ -48,8 +49,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private boolean isShouldStartPinCheck() {
         return sharedPreferences.getBoolean(PIN_REQUIRED, false) && !(this instanceof SignInActivity) &&
-                tokenRepository.getToken().getRefreshToken() != null && sharedPreferences.getBoolean(LOGGED_IN_STATUS,false) &&
-                !(this instanceof SignUpActivity);
+                tokenRepository.getToken().getRefreshToken() != null && sharedPreferences.getBoolean(LOGGED_IN_STATUS, false) &&
+                !(this instanceof SignUpActivity) && !(this instanceof SplashActivity);
     }
 
     protected void replaceFragment(BaseFragment baseFragment, int current, int container) {
@@ -62,7 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         fragmentTransaction.replace(container, baseFragment, baseFragment.getTag()).commit();
     }
 
-    protected void setButtonStatus(Button button, boolean isEnabled){
+    protected void setButtonStatus(Button button, boolean isEnabled) {
         button.setEnabled(isEnabled);
         button.setBackground(isEnabled ?
                 ContextCompat.getDrawable(this, R.drawable.oval_button_black) :

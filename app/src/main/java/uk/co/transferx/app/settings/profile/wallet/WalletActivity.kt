@@ -32,7 +32,6 @@ class WalletActivity : BaseActivity(), WalletActivityPresenter.WalletActivityUI 
     private lateinit var walletAdapter: WalletAdapter
     private var isRegistered = false
     private lateinit var localBroadcastReceiver: BroadcastReceiver
-    private var isShouldRefresh = false
 
     @Inject
     lateinit var presenter: WalletActivityPresenter
@@ -41,7 +40,7 @@ class WalletActivity : BaseActivity(), WalletActivityPresenter.WalletActivityUI 
         super.onCreate(savedInstanceState)
         (application as TransferXApplication).appComponent.inject(this)
         setContentView(R.layout.wallet_activity_layout)
-        ButtonBackWallet.setOnClickListener({ onBackPressed() })
+        ButtonBackWallet.setOnClickListener { onBackPressed() }
         walletAdapter = WalletAdapter(this)
         cardsView.adapter = walletAdapter
 
@@ -62,22 +61,23 @@ class WalletActivity : BaseActivity(), WalletActivityPresenter.WalletActivityUI 
                         }
                     )
                 )
-                underlayButtons.add(
+             /*   underlayButtons.add(
                     UnderlayButton(
                         getString(R.string.edit), ContextCompat.getColor(
                             this@WalletActivity, R.color.gray
                         ),
                         object : UnderlayButtonClickListener {
                             override fun onClick(pos: Int) {
-                                val intent =
+                              /*  val intent =
                                     Intent(this@WalletActivity, AddCardActivity::class.java)
                                 intent.putExtra(MODE, CardMode.EDIT.ordinal)
                                 intent.putExtra(CARD, walletAdapter.getCard(pos))
-                                startActivity(intent)
+                                startActivity(intent)*/
+                        toast("currently not operational")
                             }
                         }
                     )
-                )
+                ) */
             }
         }
     }

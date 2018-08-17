@@ -21,6 +21,7 @@ import uk.co.transferx.app.tokenmanager.TokenManager;
 import static uk.co.transferx.app.util.Constants.CREDENTIAL;
 import static uk.co.transferx.app.util.Constants.EMAIL;
 import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
+import static uk.co.transferx.app.util.Constants.PIN_REQUIRED;
 import static uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT;
 import static uk.co.transferx.app.util.Constants.UNDERSCORE;
 
@@ -82,6 +83,7 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
                     sharedPreferences.edit().putString(CREDENTIAL, sec).apply();
                     sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply();
                     sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply();
+                    sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply();
                     if (ui != null) {
                         ui.goToMainScreen();
                     }

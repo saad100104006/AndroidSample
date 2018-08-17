@@ -36,7 +36,6 @@ android {
     defaultConfig {
         applicationId "uk.co.transferx.app"
         minSdkVersion 21
-        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -69,6 +68,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.anko:anko-commons:0.10.5"
     implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
+
+    //smooch
+    implementation "io.smooch:core:5.+"
+    //implementation "io.smooch:ui:5.+"
 
     //android
     implementation "com.android.support:design:$supportLibraryVersion"
@@ -112,6 +115,8 @@ dependencies {
 
     //currency picker
     implementation 'com.github.midorikocak:currency-picker-android:1.2.1'
+    //rxPermission
+    implementation "com.github.tbruyelle:rxpermissions:0.10.2"
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.7.1'
@@ -130,9 +135,6 @@ dependencies {
     //braintree
      implementation 'com.braintreepayments.api:drop-in:3.+'
    // implementation 'com.braintreepayments.api:braintree:2.+'
-
-    //smooch
-    implementation "io.smooch:api:2.8.0"
 
     //Timber
     implementation 'com.jakewharton.timber:timber:4.6.0'

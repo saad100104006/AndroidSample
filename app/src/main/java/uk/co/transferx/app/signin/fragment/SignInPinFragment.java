@@ -122,6 +122,7 @@ public class SignInPinFragment extends BaseFragment implements SignInPinPresente
 
     @Override
     public void goToWelcomeScreen() {
+        hideKeyboard(pinView);
         WelcomeActivity.startWelcomeActivity(getActivity());
     }
 

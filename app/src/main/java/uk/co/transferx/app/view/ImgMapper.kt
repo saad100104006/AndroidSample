@@ -4,8 +4,7 @@ import uk.co.transferx.app.R
 import uk.co.transferx.app.util.Constants.MASTERCARD
 import uk.co.transferx.app.util.Constants.VISA
 
-class ImgMapper() {
-
+class ImgMapper {
 
     fun mapNameToFlag(countryName: String): Int {
         return when (countryName) {

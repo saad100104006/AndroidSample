@@ -40,7 +40,7 @@ public class ProfileActivity extends BaseActivity implements ProfileActivityPres
         findViewById(R.id.personal_details).setOnClickListener(v -> runActivity(PersonalDetailsActivity.class));
         findViewById(R.id.wallet).setOnClickListener(v -> runActivity(WalletActivity.class));
         findViewById(R.id.change_password).setOnClickListener(v -> runActivity(ChangePasswordActivity.class));
-
+        findViewById(R.id.upload_docs).setOnClickListener(v -> runActivity(UploadDocumentsActivity.class));
 
     }
 

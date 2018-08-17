@@ -23,12 +23,14 @@ import uk.co.transferx.app.recoverpass.fragment.RecoverPasswordFragment;
 import uk.co.transferx.app.settings.fragment.SettingsFragment;
 import uk.co.transferx.app.settings.notification.NotificationSettingsActivity;
 import uk.co.transferx.app.settings.profile.ProfileActivity;
+import uk.co.transferx.app.settings.profile.UploadDocumentsActivity;
 import uk.co.transferx.app.settings.profile.changepassword.ChangePasswordActivity;
 import uk.co.transferx.app.settings.profile.personaldetails.PersonalDetailsActivity;
 import uk.co.transferx.app.settings.profile.personaldetails.fragments.PersonalDetailsFragmentOne;
 import uk.co.transferx.app.settings.profile.personaldetails.fragments.PersonalDetailsFragmentTwo;
 import uk.co.transferx.app.settings.profile.wallet.AddCardActivity;
 import uk.co.transferx.app.settings.profile.wallet.WalletActivity;
+import uk.co.transferx.app.settings.support.SupportActivity;
 import uk.co.transferx.app.signin.fragment.SignInEmailFragment;
 import uk.co.transferx.app.signin.fragment.SignInPinFragment;
 import uk.co.transferx.app.signup.SignUpActivity;
@@ -109,5 +111,9 @@ public interface AppComponent {
 
     void inject(ReviewActivity reviewActivity);
 
+    void inject(SupportActivity supportActivity);
+
     void inject(BaseActivity baseActivity);
+
+    void inject(UploadDocumentsActivity uploadDocumentsActivity);
 }

@@ -43,7 +43,7 @@ abstract class SwipeHelper(private var recyclerView: RecyclerView?) :
         val swipedItem = swipedViewHolder?.itemView ?: return@OnTouchListener false
 
         val rect = Rect()
-        swipedItem?.getGlobalVisibleRect(rect)
+        swipedItem.getGlobalVisibleRect(rect)
 
         if (e.action == MotionEvent.ACTION_DOWN || e.action == MotionEvent.ACTION_UP || e.action == MotionEvent.ACTION_MOVE) {
             if (rect.top < point.y && rect.bottom > point.y)
@@ -81,7 +81,6 @@ abstract class SwipeHelper(private var recyclerView: RecyclerView?) :
 
         attachSwipe()
     }
-
 
     override fun onMove(
         recyclerView: RecyclerView,
@@ -206,10 +205,6 @@ abstract class SwipeHelper(private var recyclerView: RecyclerView?) :
     fun attachSwipe() {
         val itemTouchHelper = ItemTouchHelper(this)
         itemTouchHelper.attachToRecyclerView(recyclerView)
-    }
-
-    fun clearReasorces() {
-        recyclerView = null
     }
 
     abstract fun instantiateUnderlayButton(

@@ -85,6 +85,7 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
         if (position != hintItemIndex && item instanceof String) {
             ImageView flag = convertView.findViewById(R.id.image_recip);
             if (flag != null) {
+                flag.setVisibility(View.VISIBLE);
                 flag.setImageDrawable(ContextCompat.getDrawable(getContext(), imgMapper.mapNameToFlag((String) item)));
             }
         }
