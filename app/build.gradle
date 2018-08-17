@@ -175,8 +175,8 @@ dependencies {
     androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.2'
 
     dependencies {
-        implementation 'com.google.firebase:firebase-core:15.0.2'
-        implementation 'com.google.firebase:firebase-messaging:15.0.2'
+        implementation 'com.google.firebase:firebase-core:16.0.1'
+        implementation 'com.google.firebase:firebase-messaging:17.3.0'
     }
 
 }
