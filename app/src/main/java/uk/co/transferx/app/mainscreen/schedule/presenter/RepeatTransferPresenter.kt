@@ -72,7 +72,7 @@ class RepeatTransferPresenter @Inject constructor() :
             ui?.goToNextScreen(transaction.copy(repeat = shouldRepeat))
             return
         }
-        val endDate = if (date == null) EMPTY else formattedDateForSend(date)
+        val endDate = if (date == null) null else formattedDateForSend(date)
         ui?.goToNextScreen(
             transaction.copy(
                 frequency = frequency?.toLowerCase(),

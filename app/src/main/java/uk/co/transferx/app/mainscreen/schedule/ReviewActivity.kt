@@ -6,21 +6,25 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.content.LocalBroadcastManager
+import android.view.View
 import kotlinx.android.synthetic.main.activity_review_layout.*
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.startActivity
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.mainscreen.MainActivity
 import uk.co.transferx.app.mainscreen.schedule.presenter.ReviewPresenter
 import uk.co.transferx.app.pojo.TransactionCreate
+import uk.co.transferx.app.transfersummary.TransferSummaryActivity
 import uk.co.transferx.app.util.Constants.DELETE
 import uk.co.transferx.app.util.Constants.MASTERCARD
 import uk.co.transferx.app.util.Constants.TRANSACTION
 import uk.co.transferx.app.util.Util.formatEndDate
 import uk.co.transferx.app.util.Util.formattedDate
 import uk.co.transferx.app.view.ConfirmationDialogFragment
+import uk.co.transferx.app.welcom.WelcomeActivity
 import javax.inject.Inject
 
 class ReviewActivity : BaseActivity(), ReviewPresenter.ReviewUI {
@@ -37,6 +41,7 @@ class ReviewActivity : BaseActivity(), ReviewPresenter.ReviewUI {
         presenter.setTransaction(intent.getParcelableExtra(TRANSACTION))
         buttonBackReview.setOnClickListener { onBackPressed() }
         buttonCancel.setOnClickListener { showDialogConfirmation() }
+        buttonSubmit.setOnClickListener { presenter.sendTransfer() }
     }
 
     override fun onResume() {
@@ -88,11 +93,9 @@ class ReviewActivity : BaseActivity(), ReviewPresenter.ReviewUI {
         dialogFragment.show(supportFragmentManager, "TAG")
     }
 
-    override fun goToTransferSummary() {
-        //
-    }
 
     override fun setDataToSummary(transaction: TransactionCreate) {
+        groupSchedule.visibility = if(transaction.sendNow && !transaction.repeat) View.GONE else View.VISIBLE
         paymentMethodValue.setCompoundDrawablesWithIntrinsicBounds(
             resolveCard(transaction.card?.type),
             0,
@@ -121,7 +124,16 @@ class ReviewActivity : BaseActivity(), ReviewPresenter.ReviewUI {
         return String.format("%s %s %s", frequency, getString(R.string.until), formatEndDate(time))
     }
 
+    override fun setExchangeRate(rate: String) {
+        ExchangeRateValue.text = rate
+    }
+
+    override fun goToTransferReceipt(transaction: TransactionCreate) {
+        startActivity<TransferSummaryActivity>(TRANSACTION to transaction)
+        finishAffinity()
+    }
+
     override fun goToWelcome() {
-        //no op
+        WelcomeActivity.startWelcomeActivity(this@ReviewActivity)
     }
 }

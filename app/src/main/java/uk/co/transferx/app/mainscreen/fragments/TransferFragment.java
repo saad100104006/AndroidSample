@@ -31,6 +31,7 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.mainscreen.presenters.TransferFragmentPresenter;
 import uk.co.transferx.app.mainscreen.schedule.RepeatTransferActivity;
+import uk.co.transferx.app.mainscreen.schedule.ReviewActivity;
 import uk.co.transferx.app.mainscreen.schedule.ScheduleActivity;
 import uk.co.transferx.app.pojo.Card;
 import uk.co.transferx.app.pojo.TransactionCreate;
@@ -215,7 +216,7 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
 
     @Override
     public void sendNowClick(TransactionCreate transactionCreate) {
-        startNextScreen(new Intent(getContext(), TransferSummaryActivity.class).putExtra(TRANSACTION, transactionCreate));
+        startNextScreen(new Intent(getContext(), ReviewActivity.class).putExtra(TRANSACTION, transactionCreate));
     }
 
     @Override

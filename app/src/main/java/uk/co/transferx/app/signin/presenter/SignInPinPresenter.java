@@ -86,6 +86,7 @@ public class SignInPinPresenter extends BasePresenter<SignInPinPresenter.SignInP
                 .subscribe(res -> {
                     if (ui != null && !res.isEmpty()) {
                         sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply();
+                        sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply();
                         ui.goToMainScree();
                         return;
                     }

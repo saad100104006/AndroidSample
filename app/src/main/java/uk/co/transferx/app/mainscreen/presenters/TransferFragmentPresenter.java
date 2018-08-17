@@ -14,6 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.CardsApi;
@@ -22,6 +23,7 @@ import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.pojo.Card;
 import uk.co.transferx.app.pojo.TransactionCreate;
 import uk.co.transferx.app.recipientsrepository.RecipientRepository;
+import uk.co.transferx.app.repository.ExchangeRateRepository;
 import uk.co.transferx.app.tokenmanager.TokenManager;
 
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -43,6 +45,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     private BigDecimal calculatedValue;
     private final static int SCALE_VALUE = 4;
     private final RecipientRepository recipientRepository;
+    private final ExchangeRateRepository exchangeRateRepository;
     private List<RecipientDto> recipientDtos = new ArrayList<>();
     private CompositeDisposable compositeDisposable;
     private RecipientDto recipient;
@@ -57,13 +60,15 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                                      final TokenManager tokenManager,
                                      final RecipientRepository recipientRepository,
                                      final CardsApi cardsApi,
-                                     final SharedPreferences sharedPreferences) {
+                                     final SharedPreferences sharedPreferences,
+                                     final ExchangeRateRepository exchangeRateRepository) {
         super(sharedPreferences);
         this.transactionApi = transactionApi;
         this.tokenManager = tokenManager;
         this.recipientRepository = recipientRepository;
         compositeDisposable = new CompositeDisposable();
         this.cardsApi = cardsApi;
+        this.exchangeRateRepository = exchangeRateRepository;
     }
 
 
@@ -85,7 +90,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                         recipientDtos.addAll(recip);
                         if (ui != null) {
                             ui.setRecipients(recipientDtos);
-                            setChoosetRecipient();
+                            setChosenRecipient();
 
                         }
                     }, throwable -> Log.e(TransferFragmentPresenter.class.getSimpleName(), "Error ", throwable)));
@@ -94,7 +99,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         this.ui.setRecipients(recipientDtos);
     }
 
-    private void setChoosetRecipient() {
+    private void setChosenRecipient() {
         if (recipient == null) {
             return;
         }
@@ -122,13 +127,12 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         if (currencyTo.equals(currencyFrom)) {
             return;
         }
-        Disposable disposable = tokenManager.getToken()
-                .flatMap(token -> transactionApi.getRats(token.getAccessToken(), currencyFrom, currencyTo))
+        Disposable disposable = exchangeRateRepository.getRates(currencyFrom, currencyTo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
-                    if (resp.code() == HTTP_OK && ui != null) {
-                        rates = new BigDecimal(resp.body().getRates().get(0).getRate()).setScale(SCALE_VALUE, BigDecimal.ROUND_HALF_UP);
+                    if (ui != null) {
+                        rates = new BigDecimal(resp.getRates().get(0).getRate()).setScale(SCALE_VALUE, BigDecimal.ROUND_HALF_UP);
                         ui.showRates(String.format("%s %s = %s %s", "1", currencyFrom, rates.toPlainString(), currencyTo));
                         calculateValue();
                     }
@@ -185,7 +189,8 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                     null,
                     null,
                     card,
-                    recipient
+                    recipient,
+                    null
             ));
         }
     }
@@ -201,7 +206,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                                 ui.setCardToSpinner(cards.getCards());
                             }
                         }
-                        , throwable -> Log.e(TransferFragmentPresenter.class.getSimpleName(), "error ", throwable)));
+                        , Timber::e));
     }
 
     public void setValueToSend(String value) {
@@ -255,7 +260,8 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                     null,
                     null,
                     card,
-                    recipient
+                    recipient,
+                    null
             );
             if (shouldRepeat) {
                 ui.sendWithRepeat(transactionCreate);

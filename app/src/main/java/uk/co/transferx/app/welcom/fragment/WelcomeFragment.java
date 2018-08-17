@@ -26,6 +26,7 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.recoverpass.RecoverPasswordActivity;
+import uk.co.transferx.app.signin.SignInActivity;
 import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.welcom.presenter.WelcomeFragmentPresenter;
 
@@ -151,7 +152,8 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
 
     @Override
     public void goRecoverPassword() {
-        startActivity(new Intent(getContext(), RecoverPasswordActivity.class));
+       // startActivity(new Intent(getContext(), RecoverPasswordActivity.class));
+        SignInActivity.starSignInActivity(getActivity());
     }
 
     @Override
