@@ -58,10 +58,8 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.activity_fragment_layout, container, false);
-        }
-        return view;
+       
+        return inflater.inflate(R.layout.activity_fragment_layout, container, false);
     }
 
     @Override
