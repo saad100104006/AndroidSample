@@ -35,7 +35,6 @@ import uk.co.transferx.app.mainscreen.schedule.ReviewActivity;
 import uk.co.transferx.app.mainscreen.schedule.ScheduleActivity;
 import uk.co.transferx.app.pojo.Card;
 import uk.co.transferx.app.pojo.TransactionCreate;
-import uk.co.transferx.app.transfersummary.TransferSummaryActivity;
 import uk.co.transferx.app.view.CustomSpinner;
 import uk.co.transferx.app.welcom.WelcomeActivity;
 
@@ -59,9 +58,12 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     private Disposable disposable;
     private Disposable messageDisposable;
     private CustomSpinner recipientSpinner, paymentMethod;
-    private Pattern pattern = Pattern.compile("^(\\d+\\.)?\\d+$");
+    private Pattern patternNumber = Pattern.compile("^(\\d+\\.)?\\d+$");
     private Button sendNowButton, sendLaterButton;
     private AppCompatCheckBox repeatTransfer;
+    private View view;
+    private boolean isInitializedCards;
+    private boolean isInitializedRecipients;
 
     @Inject
     TransferFragmentPresenter presenter;
@@ -81,18 +83,22 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
         if (bundle != null) {
             presenter.chooseRecipientForTransfer(bundle.getParcelable(RECIPIENT));
         }
-    /*    if (savedInstanceState != null && view != null) {
-            presenter.setCurrencyFrom(currencyCodeFirst.getText().toString());
-            presenter.setCurrencyTo(currencyCodeSecond.getText().toString());
-        } */
+    }
+
+    public void clearState() {
+        isInitializedRecipients = false;
+        isInitializedCards = false;
     }
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.transfer_fragment_layout, container, false);
-
+        presenter.setInitialization(isInitializedCards && isInitializedRecipients);
+        if (view == null) {
+            view = inflater.inflate(R.layout.transfer_fragment_layout, container, false);
+        }
+        return view;
     }
 
     @Override
@@ -122,13 +128,20 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        presenter.setPreviosStateCard((Card) paymentMethod.getSelectedItem());
+        presenter.setPreviosStateRecipient((RecipientDto) recipientSpinner.getSelectedItem());
         presenter.attachUI(this);
         disposable = RxTextView.textChanges(sendInput)
                 .debounce(300L, TimeUnit.MILLISECONDS)
                 .filter(val -> !EMPTY.equals(val.toString()))
-                .filter(value -> pattern.matcher(value.toString()).matches())
+                .filter(value -> patternNumber.matcher(value.toString()).matches())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sequence -> presenter.setValueToSend(sequence.toString()));
         messageDisposable = RxTextView.textChanges(messageInput)
@@ -154,7 +167,10 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     public void setRecipients(List<RecipientDto> recipients) {
         if (getActivity() != null && isAdded()) {
             recipientSpinner.setDataWithHintItem(recipients.toArray(), getString(R.string.recipient));
+            isInitializedRecipients = true;
         }
+        presenter.setInitialization(isInitializedCards && isInitializedRecipients);
+
     }
 
     @Override
@@ -166,12 +182,7 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
 
     @Override
     public void showChoosenRecipient(RecipientDto recipientDto, int position) {
-        //  GlideApp.with(this)
-        //           .load(recipientDto.getImgUrl())
-        //           .placeholder(R.drawable.placeholder)
-        //            .into(photo);
         recipientSpinner.setSelection(position);
-
     }
 
     @Override
@@ -188,6 +199,8 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     @Override
     public void setCardToSpinner(List<Card> cards) {
         paymentMethod.setDataWithHintItem(cards.toArray(), getString(R.string.select_a_payment_method));
+        isInitializedCards = true;
+        presenter.setInitialization(isInitializedCards && isInitializedRecipients);
     }
 
     @Override

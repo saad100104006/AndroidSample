@@ -8,6 +8,7 @@ import uk.co.transferx.app.BasePresenter
 import uk.co.transferx.app.UI
 import uk.co.transferx.app.api.CardsApi
 import uk.co.transferx.app.pojo.Card
+import uk.co.transferx.app.repository.CardsRepository
 import uk.co.transferx.app.settings.profile.wallet.CardMode
 import uk.co.transferx.app.settings.profile.wallet.CardType
 import uk.co.transferx.app.tokenmanager.TokenManager
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class AddCardPresenter @Inject constructor(
     private val cardsApi: CardsApi,
     private val tokenManager: TokenManager,
+    private val cardsRepository: CardsRepository,
     sharedPreferences: SharedPreferences
 ) :
     BasePresenter<AddCardPresenter.AddCardUI>(sharedPreferences) {
@@ -109,7 +111,10 @@ class AddCardPresenter @Inject constructor(
             }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ ui?.goBack() }, { ui?.error() })
+            .subscribe({
+                cardsRepository.clearCards()
+                ui?.goBack()
+            }, { globalErrorHandler(it) })
     }
 
     fun saveEditedCard() {
@@ -124,6 +129,11 @@ class AddCardPresenter @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ ui?.goBack() }, { ui?.error() })
 
+    }
+
+    override fun globalErrorHandler(throwable: Throwable) {
+        super.globalErrorHandler(throwable)
+        ui?.error()
     }
 
     private fun isCardsTheSame(newCard: Card): Boolean {

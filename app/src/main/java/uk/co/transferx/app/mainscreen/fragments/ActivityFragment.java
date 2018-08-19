@@ -17,7 +17,6 @@ import javax.inject.Inject;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
-import uk.co.transferx.app.dto.TransactionDto;
 import uk.co.transferx.app.mainscreen.adapters.ActivityRecylerViewAdapter;
 import uk.co.transferx.app.mainscreen.presenters.ActivityFragmentPresenter;
 import uk.co.transferx.app.pojo.Transaction;
@@ -35,6 +34,7 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
     private ActivityRecylerViewAdapter adapter;
     private RecyclerView historyView;
     private LinearLayout emptyDescription;
+    private View view;
 
     @Override
     public String tagName() {
@@ -51,7 +51,10 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_fragment_layout, container, false);
+        if (view == null) {
+            view = inflater.inflate(R.layout.activity_fragment_layout, container, false);
+        }
+        return view;
     }
 
     @Override

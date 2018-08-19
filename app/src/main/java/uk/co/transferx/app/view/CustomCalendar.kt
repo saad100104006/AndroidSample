@@ -5,7 +5,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.GridLayout
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity.CENTER
 import android.view.View
 import android.widget.Button
@@ -36,7 +35,6 @@ class CustomCalendar @JvmOverloads constructor(
     private var shouldShowHeader = true
 
     init {
-
         inflate(context, R.layout.custom_calendar, this)
         if (attrs != null) {
             val values = context.obtainStyledAttributes(attrs, R.styleable.CustomCalendar)
@@ -60,7 +58,7 @@ class CustomCalendar @JvmOverloads constructor(
         for (i: Int in 0 until MAX_DAYS) {
             val day = getButton()
             if (i < 7) {
-                day.text = daysOfWeeks[i+1].take(1)
+                day.text = daysOfWeeks[i + 1].take(1)
                 day.setTextColor(ContextCompat.getColor(context, R.color.hint))
             } else {
                 days.add(day)

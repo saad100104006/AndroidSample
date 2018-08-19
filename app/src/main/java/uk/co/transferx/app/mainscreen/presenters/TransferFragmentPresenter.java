@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,16 +16,13 @@ import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
-import uk.co.transferx.app.api.CardsApi;
-import uk.co.transferx.app.api.TransactionApi;
 import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.pojo.Card;
 import uk.co.transferx.app.pojo.TransactionCreate;
 import uk.co.transferx.app.recipientsrepository.RecipientRepository;
+import uk.co.transferx.app.repository.CardsRepository;
 import uk.co.transferx.app.repository.ExchangeRateRepository;
-import uk.co.transferx.app.tokenmanager.TokenManager;
 
-import static java.net.HttpURLConnection.HTTP_OK;
 import static uk.co.transferx.app.util.Util.formattedDateForSend;
 
 /**
@@ -36,8 +32,6 @@ import static uk.co.transferx.app.util.Util.formattedDateForSend;
 public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPresenter.SendFragmentUI> {
 
     private RecipientDto recipientDto;
-    private final TransactionApi transactionApi;
-    private final TokenManager tokenManager;
     private BigDecimal rates;
     private String currencyFrom = "GBP";
     private String currencyTo = "UGX";
@@ -46,31 +40,38 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     private final static int SCALE_VALUE = 4;
     private final RecipientRepository recipientRepository;
     private final ExchangeRateRepository exchangeRateRepository;
-    private List<RecipientDto> recipientDtos = new ArrayList<>();
     private CompositeDisposable compositeDisposable;
     private RecipientDto recipient;
     private Card card;
     private int amount;
-    private final CardsApi cardsApi;
     private String message;
     private boolean shouldRepeat;
+    private final CardsRepository cardsRepository;
+    private boolean isInitialized;
 
     @Inject
-    public TransferFragmentPresenter(final TransactionApi transactionApi,
-                                     final TokenManager tokenManager,
-                                     final RecipientRepository recipientRepository,
-                                     final CardsApi cardsApi,
+    public TransferFragmentPresenter(final RecipientRepository recipientRepository,
                                      final SharedPreferences sharedPreferences,
-                                     final ExchangeRateRepository exchangeRateRepository) {
+                                     final ExchangeRateRepository exchangeRateRepository,
+                                     final CardsRepository cardsRepository) {
         super(sharedPreferences);
-        this.transactionApi = transactionApi;
-        this.tokenManager = tokenManager;
         this.recipientRepository = recipientRepository;
         compositeDisposable = new CompositeDisposable();
-        this.cardsApi = cardsApi;
         this.exchangeRateRepository = exchangeRateRepository;
+        this.cardsRepository = cardsRepository;
     }
 
+    public void setPreviosStateCard(Card card) {
+        if (card != null) {
+            this.card = card;
+        }
+    }
+
+    public void setPreviosStateRecipient(RecipientDto recipient) {
+        if (recipient != null) {
+            this.recipient = recipient;
+        }
+    }
 
     @Override
     public void attachUI(SendFragmentUI ui) {
@@ -78,33 +79,28 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         if (compositeDisposable.isDisposed()) {
             compositeDisposable = new CompositeDisposable();
         }
-        setCards();
+        if (!isInitialized || cardsRepository.shouldRefresh()) {
+            setCards();
+        }
         if (rates == null && isShouldFetch()) {
             fetchRate();
         }
-        if (recipientDtos.isEmpty()) {
+        if (!isInitialized || recipientRepository.isShouldRefresh()) {
             compositeDisposable.add(recipientRepository.getRecipients()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(recip -> {
-                        recipientDtos.addAll(recip);
                         if (ui != null) {
-                            ui.setRecipients(recipientDtos);
-                            setChosenRecipient();
-
+                            ui.setRecipients(recip);
                         }
                     }, throwable -> Log.e(TransferFragmentPresenter.class.getSimpleName(), "Error ", throwable)));
-            return;
         }
-        this.ui.setRecipients(recipientDtos);
+        this.ui.setButtonEnabled(isDataValid());
+
     }
 
-    private void setChosenRecipient() {
-        if (recipient == null) {
-            return;
-        }
-        ui.showChoosenRecipient(recipient, recipientDtos.indexOf(recipient));
-
+    public void setInitialization(boolean isInitialized) {
+        this.isInitialized = isInitialized;
     }
 
     private boolean isDataValid() {
@@ -196,14 +192,13 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
     }
 
     private void setCards() {
-        compositeDisposable.add(tokenManager.getToken()
-                .flatMap(token -> cardsApi.getCards(token.getAccessToken()))
+        compositeDisposable.add(cardsRepository.getCards()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(cards ->
                         {
                             if (ui != null) {
-                                ui.setCardToSpinner(cards.getCards());
+                                ui.setCardToSpinner(cards);
                             }
                         }
                         , Timber::e));

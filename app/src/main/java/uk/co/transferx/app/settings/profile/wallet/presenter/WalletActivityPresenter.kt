@@ -8,6 +8,7 @@ import uk.co.transferx.app.BasePresenter
 import uk.co.transferx.app.UI
 import uk.co.transferx.app.api.CardsApi
 import uk.co.transferx.app.pojo.Card
+import uk.co.transferx.app.repository.CardsRepository
 import uk.co.transferx.app.tokenmanager.TokenManager
 import java.net.HttpURLConnection
 import javax.inject.Inject
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class WalletActivityPresenter @Inject constructor(
     private val tokenManager: TokenManager,
     private val cardsApi: CardsApi,
+    private val cardsRepository: CardsRepository,
     sharedPreferences: SharedPreferences
 ) : BasePresenter<WalletActivityPresenter.WalletActivityUI>(sharedPreferences) {
 
@@ -33,11 +35,10 @@ class WalletActivityPresenter @Inject constructor(
 
     private fun setCards() {
         compositeDisposable?.add(
-            tokenManager.token
-                .flatMap { cardsApi.getCards(it.accessToken) }
+            cardsRepository.getCards()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ resp -> ui?.fillCardsOnUI(resp.cards) }, { ui?.error(it) })
+                .subscribe({ ui?.fillCardsOnUI(it) }, { ui?.error(it) })
         )
 
     }
@@ -49,7 +50,11 @@ class WalletActivityPresenter @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    { resp -> if (resp.code() == HttpURLConnection.HTTP_OK) ui?.deleteCard(card) },
+                    { resp -> if (resp.code() == HttpURLConnection.HTTP_OK)
+                    {
+                        ui?.deleteCard(card)
+                        cardsRepository.clearCards()
+                    } },
                     { ui?.error(it) })
         )
     }

@@ -24,6 +24,7 @@ public class RecipientRepositoryImpl implements RecipientRepository {
     private final RecipientsApi recipientsApi;
     private List<RecipientDto> recipientDtos = new ArrayList<>();
     private final TokenManager tokenManager;
+    private boolean shouldRefresh = true;
 
     @Inject
     public RecipientRepositoryImpl(final RecipientsApi recipientsApi, final TokenManager tokenManager) {
@@ -42,7 +43,9 @@ public class RecipientRepositoryImpl implements RecipientRepository {
     @Override
     public void clearRecipients() {
         recipientDtos.clear();
+        shouldRefresh = true;
     }
+
 
     private Single<List<RecipientDto>> getFromServer() {
         return tokenManager.getToken()
@@ -61,17 +64,27 @@ public class RecipientRepositoryImpl implements RecipientRepository {
     @Override
     public Single<List<RecipientDto>> refreshRecipients() {
         recipientDtos.clear();
+        shouldRefresh = true;
         return getFromServer();
+    }
+
+    @Override
+    public boolean isShouldRefresh() {
+        boolean temp = shouldRefresh;
+        shouldRefresh = false;
+        return temp;
     }
 
     @Override
     public void addUser(RecipientDto recipientDto) {
         recipientDtos.add(recipientDto);
+        shouldRefresh = true;
     }
 
     @Override
     public void deleteRecipient(RecipientDto recipientDto) {
         recipientDtos.remove(recipientDto);
+        shouldRefresh = true;
     }
 
     @Override
@@ -82,6 +95,7 @@ public class RecipientRepositoryImpl implements RecipientRepository {
                 .get();
         if (recipient != null) {
             recipientDtos.remove(recipient);
+            shouldRefresh = true;
         }
     }
 
@@ -94,6 +108,7 @@ public class RecipientRepositoryImpl implements RecipientRepository {
 
         if (oldRecipient != null) {
             recipientDtos.set(recipientDtos.indexOf(oldRecipient), recipient);
+            shouldRefresh = true;
         }
     }
 

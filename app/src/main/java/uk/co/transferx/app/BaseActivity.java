@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import javax.inject.Inject;
 
+import uk.co.transferx.app.recoverpass.RecoverPasswordActivity;
 import uk.co.transferx.app.signin.SignInActivity;
 import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.splash.SplashActivity;
@@ -50,7 +51,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private boolean isShouldStartPinCheck() {
         return sharedPreferences.getBoolean(PIN_REQUIRED, false) && !(this instanceof SignInActivity) &&
                 tokenRepository.getToken().getRefreshToken() != null && sharedPreferences.getBoolean(LOGGED_IN_STATUS, false) &&
-                !(this instanceof SignUpActivity) && !(this instanceof SplashActivity);
+                !(this instanceof SignUpActivity) && !(this instanceof SplashActivity) && !(this instanceof RecoverPasswordActivity);
     }
 
     protected void replaceFragment(BaseFragment baseFragment, int current, int container) {

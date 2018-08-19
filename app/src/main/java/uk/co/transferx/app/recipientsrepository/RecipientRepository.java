@@ -25,6 +25,8 @@ public interface RecipientRepository {
 
     void upDateUser(final RecipientDto recipient);
 
+    boolean isShouldRefresh();
+
     RecipientDto getUserById(final String id);
 
 }

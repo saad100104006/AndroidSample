@@ -26,7 +26,6 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.mainscreen.MainActivity;
 import uk.co.transferx.app.recoverpass.RecoverPasswordActivity;
-import uk.co.transferx.app.signin.SignInActivity;
 import uk.co.transferx.app.signup.SignUpActivity;
 import uk.co.transferx.app.welcom.presenter.WelcomeFragmentPresenter;
 
@@ -60,8 +59,6 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            //   setStatusOfError(firstInput, emailLabel, R.color.black);
-            //   emailError.setVisibility(View.GONE);
             presenter.validateEmail(s.toString());
         }
 
@@ -79,8 +76,6 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            //   setStatusOfError(secondInput, passwordLabel, R.color.black);
-            //   passwordError.setVisibility(View.GONE);
             presenter.validatePassword(s.toString());
         }
 
@@ -152,8 +147,7 @@ public class WelcomeFragment extends BaseFragment implements WelcomeFragmentPres
 
     @Override
     public void goRecoverPassword() {
-       // startActivity(new Intent(getContext(), RecoverPasswordActivity.class));
-        SignInActivity.starSignInActivity(getActivity());
+        startActivity(new Intent(getContext(), RecoverPasswordActivity.class));
     }
 
     @Override

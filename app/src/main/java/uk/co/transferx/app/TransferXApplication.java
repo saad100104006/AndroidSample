@@ -10,6 +10,7 @@ import com.squareup.leakcanary.LeakCanary;
 import javax.inject.Inject;
 
 import io.fabric.sdk.android.Fabric;
+import timber.log.Timber;
 import uk.co.transferx.app.dagger.component.AppComponent;
 import uk.co.transferx.app.dagger.component.DaggerAppComponent;
 import uk.co.transferx.app.dagger.module.AppModule;
@@ -40,6 +41,7 @@ public class TransferXApplication extends MultiDexApplication {
         ProcessLifecycleOwner.get()
                 .getLifecycle()
                 .addObserver(applicationObserver);
+        Timber.plant();
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
