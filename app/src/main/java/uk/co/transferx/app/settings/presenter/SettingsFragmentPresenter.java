@@ -42,24 +42,25 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentPre
     }
 
     public void logOut() {
+
      /*   if (ui != null && !tokenManager.isTokenExist()) {
             tokenManager.clearInitToken();
             sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, false).apply();
             ui.goToWelcome();
             return;
-        }
-        disposable = signInOutApi.logOut(tokenManager.getToken())
+        } */
+        disposable = tokenManager.getToken()
+                .flatMap(tok -> signInOutApi.logOut(tok.getAccessToken()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(res -> {
                     if (ui != null) {
                         tokenManager.clearToken();
-                        tokenManager.clearInitToken();
                         sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, false).apply();
                         ui.goToWelcome();
                     }
                 });
-*/
+
 
     }
 

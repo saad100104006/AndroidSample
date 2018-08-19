@@ -186,6 +186,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                     null,
                     card,
                     recipient,
+                    null,
                     null
             ));
         }
@@ -256,6 +257,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                     null,
                     card,
                     recipient,
+                    null,
                     null
             );
             if (shouldRepeat) {

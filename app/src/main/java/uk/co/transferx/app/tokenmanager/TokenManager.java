@@ -62,4 +62,9 @@ public class TokenManager {
         tokenRepository.saveToken(tokenEntity);
         cashedToken = tokenEntity;
     }
+
+    public void clearToken() {
+        cashedToken = null;
+        tokenRepository.clearToken();
+    }
 }

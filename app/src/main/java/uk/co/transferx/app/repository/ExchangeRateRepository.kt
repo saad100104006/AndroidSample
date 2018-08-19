@@ -19,7 +19,7 @@ class ExchangeRateRepository @Inject constructor(
     private var lastCheck: Long = -1
     private  val timeWait = TimeUnit.MINUTES.toMillis(30)
 
-    fun getRates(from: String, to: String): Single<Rates?> {
+    fun getRates(from: String?, to: String?): Single<Rates?> {
         if (rates == null || shouldCheck()) {
             return tokenManager.token
                 .flatMap { transactionApi.getRats(it.accessToken, from, to) }

@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
+import android.widget.Toast
 
 class SelectPictureDialog : DialogFragment() {
 
@@ -16,16 +17,11 @@ class SelectPictureDialog : DialogFragment() {
     }
 
     private fun handleClickOptions(option: Int) {
-        if (activity is PictureSettingsOptionsHandler) {
-            val pictureSettingsOptionsHandler = activity as PictureSettingsOptionsHandler?
-            when (option) {
-                TAKE_PHOTO -> pictureSettingsOptionsHandler?.takePhoto()
-                GALLERY -> pictureSettingsOptionsHandler?.chooseFromGallery()
 
+            when (option) {
+                TAKE_PHOTO -> Toast.makeText(context, "We need S3 for that", Toast.LENGTH_SHORT).show()
+                GALLERY -> Toast.makeText(context, "We need S3 for that",Toast.LENGTH_SHORT).show()
             }
-        } else {
-            throw RuntimeException("Error $option")
-        }
     }
 
     interface PictureSettingsOptionsHandler {

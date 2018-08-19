@@ -1,6 +1,7 @@
 package uk.co.transferx.app.transfersummary
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_transfer_summary.*
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
@@ -64,7 +65,7 @@ class TransferSummaryActivity : BaseActivity(), TransferSummaryPresenter.Transfe
         sendToValue.text =
                 String.format(
                     "%s - %s",
-                    transactionCreate.baseAmount,
+                    transactionCreate.baseAmount ?: EMPTY,
                     transactionCreate.currencyInput
                 )
         receiveValue.text =
@@ -77,10 +78,40 @@ class TransferSummaryActivity : BaseActivity(), TransferSummaryPresenter.Transfe
                 if (transactionCreate.sendNow) getString(R.string.send_now) else formattedDate(
                     transactionCreate.startTime
                 )
-        status.text =
-                if (transactionCreate.sendNow) getString(R.string.transfer_in_progress) else getString(
-                    R.string.transfer_pending
+       resolveStatus(transactionCreate)
+    }
+
+    private fun resolveStatus(transactionCreate: TransactionCreate) {
+        var statusMessage = EMPTY
+        when {
+            transactionCreate.status.isNullOrEmpty() -> {
+                statusMessage =
+                        if (transactionCreate.sendNow) getString(R.string.transfer_in_progress) else getString(
+                            R.string.transfer_pending
+                        )
+                status.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0, R.drawable.ic_in_progress, 0
                 )
+            }
+            transactionCreate.status == "PAYIN-FAILED" -> {
+
+                statusMessage = getString(R.string.transfer_error)
+                status.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0, R.drawable.ic_error_red, 0
+                )
+            }
+            transactionCreate.status == "PAYIN-SUCCESS" -> {
+                statusMessage = getString(R.string.transfer_completed)
+                status.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0, R.drawable.ic_complete, 0
+                )
+            }
+
+        }
+        status.text = statusMessage
     }
 
     private fun getFormattedRepeat(frequency: String?, time: String?): String {

@@ -17,7 +17,6 @@ public final class Constants {
     public static final String CREDENTIAL = "credential";
     public static final String DELETE = "delete";
 
-    public static final String TOKEN = "tok";
     public static final String LOGGED_IN_STATUS = "logged_in_status";
 
     public static final String LAYOUT = "layout";
@@ -28,8 +27,8 @@ public final class Constants {
     public static final String PIN_SHOULD_BE_INPUT = "pin_should_be_input";
     public static final String MODE = "mode";
     public static final String RECIPIENT = "recipient";
-    public static final String CARDS = "cards";
     public static final String TRANSACTION = "transaction";
+    public static final String TRANSACTION_RECEIPT = "transaction_receipt";
     public static final String CARD = "card";
     public static final String PIN_REQUIRED = "pin_required";
     public static final String MASTERCARD = "MASTERCARD";

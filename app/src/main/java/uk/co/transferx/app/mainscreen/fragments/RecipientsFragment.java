@@ -160,7 +160,6 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_RECIPIENT && resultCode == RESULT_OK) {
             presenter.attachUI(this);
-            Log.d("Serge", "onResult");
         } else if (requestCode == CHANGE_RECIPIENT) {
             presenter.attachUI(this);
             if (data != null) {

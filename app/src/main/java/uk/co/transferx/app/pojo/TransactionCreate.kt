@@ -21,5 +21,6 @@ data class TransactionCreate(
     @SerializedName("frequency") val frequency: String?,
     var card: Card?,
     var recipientDto: RecipientDto?,
-    var transactionNumber: String?
+    var transactionNumber: String?,
+    var status: String?
 ) : Parcelable

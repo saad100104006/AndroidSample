@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import uk.co.transferx.app.R;
-import uk.co.transferx.app.dto.TransactionDto;
+import uk.co.transferx.app.mainscreen.presenters.ActivityFragmentPresenter;
 import uk.co.transferx.app.pojo.Transaction;
 
 /**
@@ -23,15 +23,16 @@ public class ActivityRecylerViewAdapter extends RecyclerView.Adapter<ActivityRec
 
     private List<Transaction> transactions;
     private Context context;
-
+    private final ActivityFragmentPresenter presenter;
 
     private interface ItemClickListener {
 
         void onClickItem(final Transaction transaction);
     }
 
-    public ActivityRecylerViewAdapter(Context context) {
+    public ActivityRecylerViewAdapter(Context context, ActivityFragmentPresenter presenter) {
         this.context = context;
+        this.presenter = presenter;
     }
 
     @Override
@@ -44,14 +45,24 @@ public class ActivityRecylerViewAdapter extends RecyclerView.Adapter<ActivityRec
     public void onBindViewHolder(ActivityRecyclerHolder holder, int position) {
         final Transaction transaction = transactions.get(position);
         holder.amount.setText(context.getString(R.string.amount_with_currency, transaction.getAmount(), transaction.getCurrency()));
-        if(transaction.getMeta().getRecipientInfo() != null){
+        if (transaction.getMeta().getRecipientInfo() != null) {
             holder.name.setText(String.format("%s %s", transaction.getMeta().getRecipientInfo().getFirstName(),
                     transaction.getMeta().getRecipientInfo().getLastName()));
-        }else {
+        } else {
             holder.name.setText("");
         }
-        holder.amount.setCompoundDrawablesWithIntrinsicBounds(0,0, "PAYIN-SUCCESS".equals(transaction.getStatus()) ?  R.drawable.ic_complete : R.drawable.ic_in_progress, 0);
+        holder.amount.setCompoundDrawablesWithIntrinsicBounds(0, 0, resolveStatus(transaction.getStatus()), 0);
+        holder.itemClickListener = presenter::goToReceipt;
 
+    }
+
+    private int resolveStatus(String status){
+        switch (status){
+            case "PAYIN-SUCCESS": return R.drawable.ic_complete;
+            case "PAYIN-FAILED" : return R.drawable.ic_error_red;
+            default: return R.drawable.ic_in_progress;
+
+        }
     }
 
     @Override

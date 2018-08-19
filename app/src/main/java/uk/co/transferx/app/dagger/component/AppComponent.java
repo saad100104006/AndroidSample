@@ -7,6 +7,7 @@ import uk.co.transferx.app.BaseActivity;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.dagger.module.AppModule;
 import uk.co.transferx.app.dagger.module.NetworkModule;
+import uk.co.transferx.app.firebase.TransferXFirebaseIDService;
 import uk.co.transferx.app.mainscreen.fragments.ActivityFragment;
 import uk.co.transferx.app.mainscreen.fragments.RecipientDialogFragment;
 import uk.co.transferx.app.mainscreen.fragments.RecipientsFragment;
@@ -18,7 +19,6 @@ import uk.co.transferx.app.mainscreen.schedule.ReviewActivity;
 import uk.co.transferx.app.mainscreen.schedule.ScheduleActivity;
 import uk.co.transferx.app.mainscreen.schedule.TimeActivity;
 import uk.co.transferx.app.recipients.addrecipients.fragments.AddRecipientsFragment;
-import uk.co.transferx.app.recipients.editrecipient.EditRecipientActivity;
 import uk.co.transferx.app.recoverpass.fragment.RecoverPasswordFragment;
 import uk.co.transferx.app.settings.fragment.SettingsFragment;
 import uk.co.transferx.app.settings.notification.NotificationSettingsActivity;
@@ -93,7 +93,6 @@ public interface AppComponent {
 
     void inject(ChangePasswordActivity changePasswordActivity);
 
-    void inject(EditRecipientActivity editRecipientActivity);
 
     void inject(ScheduleActivity scheduleActivity);
 
@@ -116,4 +115,6 @@ public interface AppComponent {
     void inject(BaseActivity baseActivity);
 
     void inject(UploadDocumentsActivity uploadDocumentsActivity);
+
+    void inject(TransferXFirebaseIDService transferXFirebaseIDService);
 }

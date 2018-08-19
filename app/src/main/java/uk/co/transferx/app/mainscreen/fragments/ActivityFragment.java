@@ -1,5 +1,6 @@
 package uk.co.transferx.app.mainscreen.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,10 +18,16 @@ import javax.inject.Inject;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
+import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.mainscreen.adapters.ActivityRecylerViewAdapter;
 import uk.co.transferx.app.mainscreen.presenters.ActivityFragmentPresenter;
 import uk.co.transferx.app.pojo.Transaction;
+import uk.co.transferx.app.pojo.TransactionCreate;
+import uk.co.transferx.app.transfersummary.TransferSummaryActivity;
 import uk.co.transferx.app.welcom.WelcomeActivity;
+
+import static uk.co.transferx.app.util.Constants.TRANSACTION;
+import static uk.co.transferx.app.util.Constants.TRANSACTION_RECEIPT;
 
 /**
  * Created by sergey on 17.12.17.
@@ -64,7 +71,7 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
         emptyDescription = view.findViewById(R.id.empty_description);
         view.findViewById(R.id.title).setVisibility(View.VISIBLE);
         historyView.setHasFixedSize(true);
-        adapter = new ActivityRecylerViewAdapter(getContext());
+        adapter = new ActivityRecylerViewAdapter(getContext(), presenter);
         historyView.setAdapter(adapter);
     }
 
@@ -86,6 +93,13 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
         historyView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
         emptyDescription.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         adapter.setRecipients(transactions);
+    }
+
+    @Override
+    public void goToRecieptScreen(TransactionCreate transaction) {
+        final Intent intent = new Intent(getContext(), TransferSummaryActivity.class);
+        intent.putExtra(TRANSACTION, transaction);
+        startActivity(intent);
     }
 
     @Override

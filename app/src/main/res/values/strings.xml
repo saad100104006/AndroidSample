@@ -207,6 +207,8 @@
     <string name="upload_documents">Upload documentation</string>
     <string name="proof_of_id">Proof of Identification</string>
     <string name="proof_of_address">Proof of Address</string>
+    <string name="transfer_completed">Transfer completed</string>
+    <string name="transfer_error">Transfer error</string>
 
     <!-- Calendar -->
     <string name="monday">M</string>

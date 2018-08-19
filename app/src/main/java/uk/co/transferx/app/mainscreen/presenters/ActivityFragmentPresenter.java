@@ -16,9 +16,13 @@ import uk.co.transferx.app.BasePresenter;
 import uk.co.transferx.app.UI;
 import uk.co.transferx.app.api.TransactionApi;
 import uk.co.transferx.app.dto.RecipientDto;
+import uk.co.transferx.app.pojo.Card;
 import uk.co.transferx.app.pojo.Transaction;
+import uk.co.transferx.app.pojo.TransactionCreate;
 import uk.co.transferx.app.recipientsrepository.RecipientRepository;
 import uk.co.transferx.app.tokenmanager.TokenManager;
+
+import static uk.co.transferx.app.util.Constants.EMPTY;
 
 /**
  * Created by sergey on 13/02/2018.
@@ -92,6 +96,26 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
 
     }
 
+    public void goToReceipt(Transaction transaction) {
+
+        if (ui != null) {
+            ui.goToRecieptScreen(new TransactionCreate(EMPTY, Integer.valueOf(transaction.getAmount()),
+                    transaction.getCurrency(), transaction.getCurrency(), EMPTY, transaction.getMessage(),
+                    true, null, transaction.getRepeat(), transaction.getStartTime(), transaction.getEndTime(),
+                    transaction.getFrequency(), new Card(EMPTY, transaction.getMeta().getCardInfo().getName(),
+                    transaction.getMeta().getCardInfo().getNumber(), transaction.getMeta().getCardInfo().getType(),
+                    transaction.getMeta().getCardInfo().getExpDate(), null),
+                    new RecipientDto(null, transaction.getMeta().getRecipientInfo().getFirstName(),
+                            transaction.getMeta().getRecipientInfo().getLastName(),
+                            transaction.getMeta().getRecipientInfo().getImgUrl(),
+                            transaction.getMeta().getRecipientInfo().getCountry(),
+                            transaction.getMeta().getRecipientInfo().getPhone()),
+                    transaction.getId(),
+                    transaction.getStatus()
+            ));
+        }
+    }
+
     private void fetchHistory() {
         if (compositeDisposable == null) {
             compositeDisposable = new CompositeDisposable();
@@ -115,9 +139,6 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
     @Override
     protected void globalErrorHandler(Throwable throwable) {
         super.globalErrorHandler(throwable);
-        //   if (ui != null) {
-        //        ui.setError();
-        //    }
     }
 
     public interface ActivityFragmentUI extends UI {
@@ -125,6 +146,8 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
         void setData(List<Transaction> transactions);
 
         void setError();
+
+        void goToRecieptScreen(TransactionCreate transaction);
 
     }
 }

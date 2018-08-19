@@ -30,6 +30,14 @@ class TokenRepository @Inject constructor(private val sharedPreferences: SharedP
         )
     }
 
+    fun clearToken(){
+        val editableState = sharedPreferences.edit()
+        editableState.remove(KEY_TOKEN)
+        editableState.remove(KEY_REFRESH_TOKEN)
+        editableState.remove(KEY_CREATED)
+        editableState.remove(KEY_EXPIRES_IN)
+        editableState.apply()
+    }
     companion object {
         private const val KEY_TOKEN = "key:token"
         private const val KEY_REFRESH_TOKEN = "key:refresh_token"
