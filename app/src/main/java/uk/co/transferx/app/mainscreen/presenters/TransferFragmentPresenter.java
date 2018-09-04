@@ -127,11 +127,16 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
-                    if (ui != null) {
+                    if (ui != null && !resp.getRates().isEmpty()) {
                         rates = new BigDecimal(resp.getRates().get(0).getRate()).setScale(SCALE_VALUE, BigDecimal.ROUND_HALF_UP);
                         ui.showRates(String.format("%s %s = %s %s", "1", currencyFrom, rates.toPlainString(), currencyTo));
                         calculateValue();
+                        return;
                     }
+                    if(ui != null){
+                        ui.showErrorRates();
+                    }
+
                 }, this::globalErrorHandler);
         compositeDisposable.add(disposable);
     }
@@ -290,5 +295,7 @@ public class TransferFragmentPresenter extends BasePresenter<TransferFragmentPre
         void sendWithRepeat(TransactionCreate transactionCreate);
 
         void goToScheduleScreen(TransactionCreate transactionCreate);
+
+        void showErrorRates();
     }
 }

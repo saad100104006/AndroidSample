@@ -18,7 +18,6 @@ import javax.inject.Inject;
 import uk.co.transferx.app.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
-import uk.co.transferx.app.dto.RecipientDto;
 import uk.co.transferx.app.mainscreen.adapters.ActivityRecylerViewAdapter;
 import uk.co.transferx.app.mainscreen.presenters.ActivityFragmentPresenter;
 import uk.co.transferx.app.pojo.Transaction;
@@ -27,7 +26,6 @@ import uk.co.transferx.app.transfersummary.TransferSummaryActivity;
 import uk.co.transferx.app.welcom.WelcomeActivity;
 
 import static uk.co.transferx.app.util.Constants.TRANSACTION;
-import static uk.co.transferx.app.util.Constants.TRANSACTION_RECEIPT;
 
 /**
  * Created by sergey on 17.12.17.
@@ -58,7 +56,6 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-       
         return inflater.inflate(R.layout.activity_fragment_layout, container, false);
     }
 

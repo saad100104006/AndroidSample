@@ -7,13 +7,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.mynameismidori.currencypicker.ExtendedCurrency;
@@ -252,5 +252,10 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
     @Override
     public void goToWelcome() {
         WelcomeActivity.startWelcomeActivity(getActivity());
+    }
+
+    @Override
+    public void showErrorRates() {
+        Toast.makeText(getContext(), "Rates error", Toast.LENGTH_SHORT).show();
     }
 }
