@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".landing.fragment.LandingFragment">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_landing_background" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="@dimen/left_right_main_screen"
+            android:layout_marginRight="@dimen/left_right_main_screen"
+            android:layout_marginTop="@dimen/landing_top_logo"
+            android:src="@drawable/transferx_logo_secondary" />
+
+        <TextView
+            android:id="@+id/textLanding"
+            style="@style/CommonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/buttonSignIn"
+            android:layout_marginBottom="@dimen/landing_bottom_text"
+            android:layout_marginLeft="@dimen/left_right_main_screen"
+            android:layout_marginRight="@dimen/left_right_main_screen"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="4sp"
+            android:text="@string/landing_send_money"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            tools:text="Send money to your loved ones easier and faster." />
+
+        <Button
+            android:id="@+id/buttonSignIn"
+            style="@style/CommonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_above="@+id/buttonSignUp"
+            android:layout_marginBottom="@dimen/landing_bottom_login"
+            android:layout_marginLeft="@dimen/left_right_main_screen"
+            android:layout_marginRight="@dimen/left_right_main_screen"
+            android:background="@drawable/btn_style_bright"
+            android:gravity="center"
+            android:lineSpacingExtra="2sp"
+            android:text="@string/landing_login"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            tools:text="Login" />
+
+        <Button
+            android:id="@+id/buttonSignUp"
+            style="@style/CommonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/landing_bottom_register"
+            android:layout_marginLeft="@dimen/left_right_main_screen"
+            android:layout_marginRight="@dimen/left_right_main_screen"
+            android:background="@drawable/btn_style_dark"
+            android:gravity="center"
+            android:lineSpacingExtra="2sp"
+            android:text="@string/landing_register"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            tools:text="Create an account" />
+    </RelativeLayout>
+
+</FrameLayout>
