@@ -9,9 +9,10 @@ import android.view.ViewGroup
 
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import javax.inject.Inject
 
 
-class LandingFragment : Fragment() {
+class LandingFragment @Inject constructor() : Fragment()  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
