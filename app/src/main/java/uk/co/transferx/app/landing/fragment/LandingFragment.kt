@@ -6,13 +6,20 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.landing.LandingContract
+import uk.co.transferx.app.landing.presenter.LandingPresenter
+import uk.co.transferx.app.signup.SignUpActivity
+import uk.co.transferx.app.welcom.WelcomeActivity
 import javax.inject.Inject
 
 
-class LandingFragment @Inject constructor() : Fragment()  {
+class LandingFragment @Inject constructor() : Fragment(), LandingContract.View {
+    @Inject
+    lateinit var presenter: LandingPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +29,38 @@ class LandingFragment @Inject constructor() : Fragment()  {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_landing, container, false)
+        val root = inflater.inflate(R.layout.fragment_landing, container, false)
+
+        val buttonLogin = root.findViewById<Button>(R.id.btn_sign_in)
+        val buttonSignUp = root.findViewById<Button>(R.id.btn_sign_up)
+
+        buttonLogin.setOnClickListener { _ -> presenter.goToLoginScreen() }
+
+        buttonSignUp.setOnClickListener { _ -> presenter.goToSignUpScreen() }
+
+        return root
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.attachUI(this)
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.detachUI()
+    }
+
+    override fun showLoginScreen() {
+        WelcomeActivity.startWelcomeActivity(activity)
+    }
+
+    override fun showSignUpScreen() {
+        SignUpActivity.startSignUp(activity, null)
+    }
+
+    override fun goToWelcome() {
+        // no op
+    }
 }

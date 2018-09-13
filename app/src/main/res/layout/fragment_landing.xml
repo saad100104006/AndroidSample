@@ -24,11 +24,11 @@
             android:src="@drawable/transferx_logo_secondary" />
 
         <TextView
-            android:id="@+id/textLanding"
+            android:id="@+id/txt_landing"
             style="@style/CommonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/buttonSignIn"
+            android:layout_above="@+id/btn_sign_in"
             android:layout_marginBottom="@dimen/landing_bottom_text"
             android:layout_marginLeft="@dimen/left_right_main_screen"
             android:layout_marginRight="@dimen/left_right_main_screen"
@@ -40,11 +40,11 @@
             tools:text="Send money to your loved ones easier and faster." />
 
         <Button
-            android:id="@+id/buttonSignIn"
+            android:id="@+id/btn_sign_in"
             style="@style/CommonStyle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_above="@+id/buttonSignUp"
+            android:layout_above="@+id/btn_sign_up"
             android:layout_marginBottom="@dimen/landing_bottom_login"
             android:layout_marginLeft="@dimen/left_right_main_screen"
             android:layout_marginRight="@dimen/left_right_main_screen"
@@ -58,7 +58,7 @@
             tools:text="Login" />
 
         <Button
-            android:id="@+id/buttonSignUp"
+            android:id="@+id/btn_sign_up"
             style="@style/CommonStyle"
             android:layout_width="match_parent"
             android:layout_height="50dp"

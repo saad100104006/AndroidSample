@@ -33,10 +33,6 @@ class LandingActivity : BaseActivity() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-    }
-
     companion object {
 
         fun startLandingActivity(activity: Activity) {
