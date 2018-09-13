@@ -8,9 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 
 import uk.co.transferx.app.R
+import uk.co.transferx.app.TransferXApplication
 
 
 class LandingFragment : Fragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (activity?.application as TransferXApplication).appComponent.inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
