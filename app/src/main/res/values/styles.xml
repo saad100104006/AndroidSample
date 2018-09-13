@@ -65,6 +65,10 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="AppTheme.Landing" parent="AppTheme.NoActionBar">
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
     <style name="ButtonTheme" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/colorAccent</item>
         <item name="android:textColor">@color/background</item>

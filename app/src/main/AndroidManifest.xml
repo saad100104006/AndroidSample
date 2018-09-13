@@ -153,7 +153,10 @@
             android:name=".settings.profile.UploadDocumentsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".landing.LandingActivity"/>
+        <activity
+            android:name=".landing.LandingActivity"
+            android:theme="@style/AppTheme.Landing" />
+
     </application>
 
 </manifest>
