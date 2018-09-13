@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    tools:background="@color/dark_blue_grey">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:id="@+id/send_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent">
+
+
+            <TextView
+                android:id="@+id/title_send"
+                style="@style/CommonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginTop="@dimen/left_right_main_screen"
+                android:text="@string/send_to"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+            <Space
+                android:id="@+id/recipient_img"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_below="@id/title_send"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginTop="10dp" />
+
+
+            <View
+                android:id="@+id/underline"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/recipient_img"
+                android:layout_marginBottom="48dp"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:background="@color/white" />
+
+
+            <uk.co.transferx.app.ui.customview.CustomSpinner
+                android:id="@+id/SendToRecipient"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/underline"
+                android:layout_below="@id/title_send"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:layout_toRightOf="@id/recipient_img"
+                android:background="@android:color/transparent"
+                app:headerRes="@layout/header_spinner_recipient_dark"
+                android:theme="@style/ThemeSpinner">
+
+            </uk.co.transferx.app.ui.customview.CustomSpinner>
+
+            <TextView
+                android:id="@+id/title_amount_send"
+                style="@style/CommonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/underline"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:text="@string/send_amount"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/title_amount_receive"
+                style="@style/CommonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/underline"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:text="@string/receive_amount"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+            <EditText
+                android:id="@+id/sendInput"
+                style="@style/CommonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@id/title_amount_receive"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:background="@null"
+                android:gravity="start|center_vertical"
+                android:hint="@string/enter_send_amount"
+                android:inputType="textNoSuggestions|numberDecimal"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textColorHint="@color/hint"
+                android:textCursorDrawable="@null"
+                android:textSize="14sp"
+                android:theme="@style/EditText.White" />
+
+            <TextView
+                android:id="@+id/receiveInput"
+                style="@style/CommonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/title_amount_receive"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:layout_toRightOf="@id/sendInput"
+                android:backgroundTint="@android:color/transparent"
+                android:gravity="end|center_vertical"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:theme="@style/EditText.White" />
+
+            <View
+                android:id="@+id/underline_two"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/sendInput"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:background="@color/white" />
+
+
+            <TextView
+                android:id="@+id/title_exchange_rate"
+                style="@style/CommonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/underline_two"
+                android:layout_marginBottom="48dp"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:lineSpacingExtra="6sp"
+                android:text="@string/current_exchange_rate"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/exchange_rate"
+                style="@style/CommonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/underline_two"
+                android:layout_marginBottom="32dp"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/payment_method_title"
+                style="@style/CommonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/title_exchange_rate"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:text="@string/payment_method"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+            <Space
+                android:id="@+id/method_img"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_below="@id/payment_method_title"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginTop="10dp" />
+
+            <View
+                android:id="@+id/underline_three"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/method_img"
+                android:layout_marginBottom="48dp"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:background="@color/white" />
+
+
+            <uk.co.transferx.app.ui.customview.CustomSpinner
+                android:id="@+id/paymentCard"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/underline_three"
+                android:layout_below="@id/payment_method_title"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:layout_toRightOf="@id/method_img"
+                android:background="@android:color/transparent"
+                android:theme="@style/ThemeSpinner"
+                app:dropDownItemRes="@layout/item_payments">
+
+            </uk.co.transferx.app.ui.customview.CustomSpinner>
+
+            <TextView
+                android:id="@+id/message_label"
+                style="@style/CommonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/underline_three"
+                android:layout_marginStart="@dimen/left_right_main_screen"
+                android:text="@string/message"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+            <EditText
+                android:id="@+id/messageInput"
+                style="@style/CommonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
+                android:layout_below="@id/message_label"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:background="@null"
+                android:gravity="start"
+                android:hint="@string/add_a_personal_message"
+                android:inputType="textNoSuggestions|textMultiLine"
+                android:maxLength="140"
+                android:maxLines="5"
+                android:paddingTop="5dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/hint"
+                android:textCursorDrawable="@null"
+                android:textSize="14sp"
+                android:theme="@style/EditText.White" />
+
+            <View
+                android:id="@+id/underline_foure"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/messageInput"
+                android:layout_marginBottom="36dp"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:background="@color/white" />
+
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/repeat"
+                android:layout_width="48dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/underline_foure"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:layout_marginRight="@dimen/left_right_main_screen"
+                android:button="@drawable/check_box_selector"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:theme="@style/AutoPay.control" />
+
+            <TextView
+                style="@style/CommonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/underline_foure"
+                android:layout_marginLeft="@dimen/left_right_main_screen"
+                android:gravity="center_vertical"
+                android:text="@string/auto_transfer"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/sendNow"
+                style="@style/CommonButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_below="@id/repeat"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="48dp"
+                android:enabled="false"
+                android:background="@drawable/oval_button_gray"
+                android:letterSpacing="0.17"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/send_now"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/sendLater"
+                style="@style/CommonButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_below="@id/sendNow"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/oval_button_transparent_gray"
+                android:letterSpacing="0.17"
+                android:enabled="false"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/send_later"
+                android:textColor="@color/hint"
+                android:textSize="12sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_below="@id/sendLater" />
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <include layout="@layout/app_bar_with_collapsing" />
+</android.support.design.widget.CoordinatorLayout>
