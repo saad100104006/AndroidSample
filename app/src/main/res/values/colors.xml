@@ -19,6 +19,9 @@
     <color name="red_delete">#da1010</color>
     <color name="transparent">#00000000</color>
     <color name="not_active">#d8d8d8</color>
-
+    <color name="light_blue_tutorial">#373d64</color>
+    <color name="dark_blue_tutorial">#021486</color>
+    <color name="black_tutorial">#121212</color>
+    <color name="purple_tutorial">#5a2870</color>
 
 </resources>

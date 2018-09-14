@@ -53,6 +53,22 @@
         android:layout_above="@id/title"
         android:src="@drawable/ic_security" />
 
-
+    <TextView
+        android:id="@+id/skip"
+        style="@style/CommonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginBottom="@dimen/left_right_main_screen"
+        android:layout_marginEnd="@dimen/left_right_main_screen"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="12sp"
+        android:text="@string/skip"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
 
 </RelativeLayout>
