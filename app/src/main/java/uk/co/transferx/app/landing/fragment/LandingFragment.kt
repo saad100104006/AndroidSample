@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import kotlinx.android.synthetic.main.fragment_landing.*
 
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
@@ -29,16 +29,15 @@ class LandingFragment @Inject constructor() : Fragment(), LandingContract.View {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val root = inflater.inflate(R.layout.fragment_landing, container, false)
+        return inflater.inflate(R.layout.fragment_landing, container, false)
+    }
 
-        val buttonLogin = root.findViewById<Button>(R.id.btn_sign_in)
-        val buttonSignUp = root.findViewById<Button>(R.id.btn_sign_up)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        buttonLogin.setOnClickListener { _ -> presenter.goToLoginScreen() }
+        buttonSignIn.setOnClickListener { presenter.goToLoginScreen() }
 
-        buttonSignUp.setOnClickListener { _ -> presenter.goToSignUpScreen() }
-
-        return root
+        buttonSignUp.setOnClickListener { presenter.goToSignUpScreen() }
     }
 
     override fun onResume() {

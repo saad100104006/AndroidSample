@@ -10,6 +10,7 @@ import uk.co.transferx.app.landing.fragment.LandingFragment
 import uk.co.transferx.app.util.ActivityUtils
 import javax.inject.Inject
 
+
 class LandingActivity : BaseActivity() {
     @Inject
     lateinit var injectedFragment: LandingFragment
@@ -19,12 +20,15 @@ class LandingActivity : BaseActivity() {
         (application as TransferXApplication).appComponent.inject(this)
 
         setContentView(R.layout.activity_landing)
-
     }
 
     override fun onResume() {
         super.onResume()
 
+        bindFragment()
+    }
+
+    private fun bindFragment() {
         // bind fragment only if it is not already attached
         var fragment = supportFragmentManager.findFragmentById(R.id.frameLayout)
         if (fragment == null) {
@@ -32,15 +36,4 @@ class LandingActivity : BaseActivity() {
             ActivityUtils.addFragmentToActivity(supportFragmentManager, fragment, R.id.frameLayout)
         }
     }
-
-    companion object {
-
-        fun startLandingActivity(activity: Activity) {
-            val intent = Intent(activity, LandingActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            activity.startActivity(intent)
-            activity.finish()
-        }
-    }
-
 }
