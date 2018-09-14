@@ -42,8 +42,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.main_activity_layout);
         fragments.put(0, new ActivityFragment());
         fragments.put(1, new TransferFragment());
-        fragments.put(2, new RecipientsFragment());
-        fragments.put(3, new SettingsFragment());
+        //fragments.put(2, new RecipientsFragment());
+        fragments.put(2, new SettingsFragment());
         bottomNavigationViewEx = findViewById(R.id.bottom_navigation);
         bottomNavigationViewEx.setTypeface(ResourcesCompat.getFont(this, R.font.montserrat));
         selectScreen(R.id.activity, null);

@@ -45,15 +45,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (isShouldStartPinCheck()) {
+       //TBDD
+        /* if (isShouldStartPinCheck()) {
             SignInActivity.starSignInActivity(this);
-        }
+        }*/
     }
 
     private boolean isShouldStartPinCheck() {
-        return sharedPreferences.getBoolean(PIN_REQUIRED, false) && !(this instanceof SignInActivity) &&
+        //TBDD
+        return false; /*sharedPreferences.getBoolean(PIN_REQUIRED, false) && !(this instanceof SignInActivity) &&
                 tokenRepository.getToken().getRefreshToken() != null && sharedPreferences.getBoolean(LOGGED_IN_STATUS, false) &&
-                !(this instanceof SignUpActivity) && !(this instanceof SplashActivity) && !(this instanceof RecoverPasswordActivity);
+                !(this instanceof SignUpActivity) && !(this instanceof SplashActivity) && !(this instanceof RecoverPasswordActivity);*/
     }
 
     protected void replaceFragment(BaseFragment baseFragment, int current, int container) {

@@ -20,5 +20,13 @@
     <color name="transparent">#00000000</color>
     <color name="not_active">#d8d8d8</color>
 
+    <color name="color_primary">#f7f7f7</color>
+    <color name="color_accent">#ffb300</color>
+    <color name="color_text_primary">#333333</color>
+    <color name="color_text_disabled">#a7a7a7</color>
+    <color name="color_text_separator">#cccccc</color>
+
+
+
 
 </resources>
