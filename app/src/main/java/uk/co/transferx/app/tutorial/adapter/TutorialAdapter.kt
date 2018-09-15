@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
-import android.support.v4.content.ContextCompat
 import uk.co.transferx.app.R
 import uk.co.transferx.app.tutorial.fragments.TutorialFragment
 import uk.co.transferx.app.util.Constants.*
@@ -22,26 +21,26 @@ class TutorialAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
         when (position) {
             FIRST_PAGE -> {
                 bundle.putInt(TUTORIAL_IMG, R.drawable.ic_security)
-                bundle.putInt(TITLE, R.string.security)
-                bundle.putInt(DESCRIPTION, R.string.security_desc)
+                bundle.putInt(TITLE, R.string.tutorial_security)
+                bundle.putInt(DESCRIPTION, R.string.tutorial_security_desc)
                 bundle.putInt(BACKGROUND_COLOR, R.color.light_blue_tutorial)
             }
             SECOND_PAGE -> {
                 bundle.putInt(TUTORIAL_IMG, R.drawable.ic_auto_transfers)
-                bundle.putInt(TITLE, R.string.automated_transfer)
-                bundle.putInt(DESCRIPTION, R.string.second_page_desc)
+                bundle.putInt(TITLE, R.string.tutorial_automated_transfer)
+                bundle.putInt(DESCRIPTION, R.string.tutorial_automated_desc)
                 bundle.putInt(BACKGROUND_COLOR, R.color.dark_blue_tutorial)
             }
             THIRD_PAGE -> {
                 bundle.putInt(TUTORIAL_IMG, R.drawable.ic_recipients)
-                bundle.putInt(TITLE, R.string.recipients)
-                bundle.putInt(DESCRIPTION, R.string.three_page_desc)
+                bundle.putInt(TITLE, R.string.tutorial_recipients)
+                bundle.putInt(DESCRIPTION, R.string.tutorial_recipients_desc)
                 bundle.putInt(BACKGROUND_COLOR, R.color.black_tutorial)
             }
             FORTH_PAGE -> {
-                bundle.putInt(TUTORIAL_IMG, R.drawable.ic_credit_card)
-                bundle.putInt(TITLE, R.string.title_flex)
-                bundle.putInt(DESCRIPTION, R.string.flexible_payment_desc)
+                bundle.putInt(TUTORIAL_IMG, R.drawable.ic_mobile_wallet)
+                bundle.putInt(TITLE, R.string.tutorial_wallet)
+                bundle.putInt(DESCRIPTION, R.string.tutorial_wallet_desc)
                 bundle.putInt(BACKGROUND_COLOR, R.color.purple_tutorial)
                 bundle.putInt(BUTTON_TEXT, R.string.get_started)
             }

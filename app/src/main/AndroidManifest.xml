@@ -96,7 +96,7 @@
         <activity
             android:name=".tutorial.TutorialActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Landing" />
         <activity
             android:name=".settings.profile.personaldetails.PersonalDetailsActivity"
             android:screenOrientation="portrait"

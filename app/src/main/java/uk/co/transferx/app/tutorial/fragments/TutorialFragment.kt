@@ -7,7 +7,7 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.tutorial_fragment_layout_last.*
+import kotlinx.android.synthetic.main.tutorial_fragment_layout.*
 import uk.co.transferx.app.BaseFragment
 import uk.co.transferx.app.R
 import uk.co.transferx.app.util.Constants.*
@@ -20,6 +20,9 @@ import uk.co.transferx.app.welcom.WelcomeActivity
 class TutorialFragment : BaseFragment() {
     @DrawableRes
     private var image = -1
+
+    @DrawableRes
+    private var backgroundColor = 0
 
     @StringRes
     private var descriptionOne: Int = 0
@@ -40,6 +43,7 @@ class TutorialFragment : BaseFragment() {
         // get bundled data
         val bundle = arguments
         if (bundle != null) {
+            backgroundColor = bundle.getInt(BACKGROUND_COLOR)
             image = bundle.getInt(TUTORIAL_IMG)
             descriptionOne = bundle.getInt(TITLE)
             descriptionTwo = bundle.getInt(DESCRIPTION)
@@ -54,11 +58,13 @@ class TutorialFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        rootLayout.setBackgroundResource(backgroundColor)
         tutorial_img.setImageDrawable(ContextCompat.getDrawable(context!!, image))
+
         title.setText(descriptionOne)
         description.setText(descriptionTwo)
 
-        skip.setText(buttonText)
-        skip.setOnClickListener { WelcomeActivity.startWelcomeActivity(activity) }
+        buttonAction.setText(buttonText)
+        buttonAction.setOnClickListener { WelcomeActivity.startWelcomeActivity(activity) }
     }
 }

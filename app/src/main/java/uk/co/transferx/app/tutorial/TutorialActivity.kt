@@ -1,10 +1,7 @@
 package uk.co.transferx.app.tutorial
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.ViewPager
-
 import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.tutorial.adapter.TutorialAdapter
