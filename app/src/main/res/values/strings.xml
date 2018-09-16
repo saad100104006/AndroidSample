@@ -249,4 +249,14 @@
         <item>Tanzania</item>
     </string-array>
 
+
+    <string name="title_activity">ACTIVITY</string>
+    <string name="title_recipients">RECIPIENTS</string>
+    <string name="title_settings">SETTINGS</string>
+    <string name="str_activity">Activity</string>
+    <string name="msg_send_money">This is where you’ll see your activity. Make someone’s day and send them money today!</string>
+    <string name="action_add_recipient">Add recipient</string>
+    <string name="action_send_money">Send money</string>
+    <string name="msg_add_recipient">This is where you’ll have all your recipients. Add recipients and make transfer faster!</string>
+
 </resources>
