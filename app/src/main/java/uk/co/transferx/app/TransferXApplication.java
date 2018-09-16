@@ -1,7 +1,6 @@
 package uk.co.transferx.app;
 
 import android.arch.lifecycle.ProcessLifecycleOwner;
-import android.content.SharedPreferences;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
@@ -11,11 +10,11 @@ import javax.inject.Inject;
 
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
-import uk.co.transferx.app.dagger.component.AppComponent;
-import uk.co.transferx.app.dagger.component.DaggerAppComponent;
-import uk.co.transferx.app.dagger.module.AppModule;
-import uk.co.transferx.app.dagger.module.NetworkModule;
-import uk.co.transferx.app.recipientsrepository.RecipientRepository;
+import uk.co.transferx.app.di.component.AppComponent;
+import uk.co.transferx.app.di.component.DaggerAppComponent;
+import uk.co.transferx.app.di.module.AppModule;
+import uk.co.transferx.app.di.module.NetworkModule;
+import uk.co.transferx.app.data.repository.recipientsrepository.RecipientRepository;
 
 /**
  * Created by smilevkiy on 13.11.17.
