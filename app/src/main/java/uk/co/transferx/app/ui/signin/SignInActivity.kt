@@ -19,6 +19,11 @@ class SignInActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.signin_activity)
+
+        launchFragment()
+    }
+
+    private fun launchFragment(){
         val signInFragment = SignInFragment()
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.container, signInFragment, signInFragment.tag)
