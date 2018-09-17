@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:attrs="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/ButtonBack"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/left_right_main_screen"
+        android:layout_marginTop="52dp"
+        android:src="@drawable/ic_back" />
+
+    <com.rd.PageIndicatorView
+        android:id="@+id/PageIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="76dp"
+        attrs:piv_animationDuration="500"
+        attrs:piv_animationType="fill"
+        android:padding="2dp"
+        android:layout_centerHorizontal="true"
+        attrs:piv_padding="16dp"
+        attrs:piv_radius="7dp"
+        attrs:piv_selectedColor="@color/black"
+        attrs:piv_unselectedColor="@color/black"
+        attrs:piv_viewPager="@id/ViewPager"
+        attrs:piv_strokeWidth="2dp"/>
+
+    <uk.co.transferx.app.ui.customview.NonSwipeableViewPager
+        android:id="@+id/ViewPager"
+        android:layout_below="@id/ButtonBack"
+        android:layout_above="@id/PageIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </uk.co.transferx.app.ui.customview.NonSwipeableViewPager>
+
+</RelativeLayout>
