@@ -29,7 +29,7 @@ public class RecoverPasswordSuccessFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.sign_in).setOnClickListener(v -> getActivity().finish());
+        view.findViewById(R.id.signInButton).setOnClickListener(v -> getActivity().finish());
         view.findViewById(R.id.close).setOnClickListener(v -> getActivity().finish());
     }
 }

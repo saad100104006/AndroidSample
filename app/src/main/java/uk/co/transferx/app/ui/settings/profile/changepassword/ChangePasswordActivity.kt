@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.change_password_activity_layout.*
 import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
+import uk.co.transferx.app.ui.signin.SignInActivity
 import javax.inject.Inject
 
 class ChangePasswordActivity : BaseActivity(), ChangePasswordPresenter.ChangePasswordUI {
@@ -60,6 +60,6 @@ class ChangePasswordActivity : BaseActivity(), ChangePasswordPresenter.ChangePas
     }
 
     override fun goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(this@ChangePasswordActivity)
+        SignInActivity.startWelcomeActivity(this@ChangePasswordActivity)
     }
 }

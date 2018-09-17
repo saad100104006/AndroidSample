@@ -1,4 +1,4 @@
-package uk.co.transferx.app.ui.signin.fragment;
+package uk.co.transferx.app.ui.signinpin.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -22,8 +22,8 @@ import uk.co.transferx.app.ui.base.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.ui.mainscreen.MainActivity;
-import uk.co.transferx.app.ui.signin.presenter.SignInPinPresenter;
-import uk.co.transferx.app.ui.welcom.WelcomeActivity;
+import uk.co.transferx.app.ui.signinpin.presenter.SignInPinPresenter;
+import uk.co.transferx.app.ui.signin.SignInActivity;
 
 /**
  * Created by sergey on 19.11.17.
@@ -78,7 +78,7 @@ public class SignInPinFragment extends BaseFragment implements SignInPinPresente
         pinView.setAnimationEnable(true);
         ((TextView) view.findViewById(R.id.title)).setText(R.string.enter_your_pin);
         label = view.findViewById(R.id.first_label_pin);
-        view.findViewById(R.id.sign_in).setOnClickListener(v -> presenter.checkPingAndLogIn(pinView.getText().toString()));
+        view.findViewById(R.id.signInButton).setOnClickListener(v -> presenter.checkPingAndLogIn(pinView.getText().toString()));
         view.findViewById(R.id.forgot_pin).setOnClickListener(v -> presenter.resetPassword());
     }
 
@@ -123,7 +123,7 @@ public class SignInPinFragment extends BaseFragment implements SignInPinPresente
     @Override
     public void goToWelcomeScreen() {
         hideKeyboard(pinView);
-        WelcomeActivity.startWelcomeActivity(getActivity());
+        SignInActivity.Companion.startWelcomeActivity(getActivity());
     }
 
     @Override

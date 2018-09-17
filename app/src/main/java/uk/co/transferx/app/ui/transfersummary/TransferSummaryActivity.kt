@@ -15,7 +15,7 @@ import uk.co.transferx.app.util.Constants.EMPTY
 import uk.co.transferx.app.util.Constants.TRANSACTION
 import uk.co.transferx.app.util.Util
 import uk.co.transferx.app.util.Util.formattedDate
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
+import uk.co.transferx.app.ui.signin.SignInActivity
 import javax.inject.Inject
 
 class TransferSummaryActivity : BaseActivity(), TransferSummaryPresenter.TransferSummaryUI {
@@ -132,6 +132,6 @@ class TransferSummaryActivity : BaseActivity(), TransferSummaryPresenter.Transfe
     }
 
     override fun goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(this@TransferSummaryActivity)
+        SignInActivity.startWelcomeActivity(this@TransferSummaryActivity)
     }
 }

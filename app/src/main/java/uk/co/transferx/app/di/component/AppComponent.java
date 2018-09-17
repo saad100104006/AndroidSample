@@ -31,15 +31,15 @@ import uk.co.transferx.app.ui.settings.profile.personaldetails.fragments.Persona
 import uk.co.transferx.app.ui.settings.profile.wallet.AddCardActivity;
 import uk.co.transferx.app.ui.settings.profile.wallet.WalletActivity;
 import uk.co.transferx.app.ui.settings.support.SupportActivity;
-import uk.co.transferx.app.ui.signin.fragment.SignInEmailFragment;
-import uk.co.transferx.app.ui.signin.fragment.SignInPinFragment;
+import uk.co.transferx.app.ui.signin.fragment.SignInFragment;
+import uk.co.transferx.app.ui.signinpin.fragment.SignInEmailFragment;
+import uk.co.transferx.app.ui.signinpin.fragment.SignInPinFragment;
 import uk.co.transferx.app.ui.signup.SignUpActivity;
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepOneFragment;
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment;
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment;
 import uk.co.transferx.app.ui.splash.SplashActivity;
 import uk.co.transferx.app.ui.transfersummary.TransferSummaryActivity;
-import uk.co.transferx.app.ui.welcom.fragment.WelcomeFragment;
 
 /**
  * Created by smilevkiy on 13.11.17.
@@ -47,7 +47,7 @@ import uk.co.transferx.app.ui.welcom.fragment.WelcomeFragment;
 @Singleton
 @Component(modules = {AppModule.class, NetworkModule.class})
 public interface AppComponent {
-    void inject(WelcomeFragment welcomeFragment);
+    void inject(SignInFragment signInFragment);
 
     void inject(SplashActivity splashActivity);
 

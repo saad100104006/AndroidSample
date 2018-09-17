@@ -21,7 +21,6 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.ui.recoverpass.RecoverPasswordActivity;
 import uk.co.transferx.app.ui.recoverpass.presenter.RecoverPasswordPresenter;
-import uk.co.transferx.app.ui.welcom.WelcomeActivity;
 
 /**
  * Created by sergey on 23.11.17.
@@ -56,9 +55,9 @@ public class RecoverPasswordFragment extends BaseFragment implements RecoverPass
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        textInputEditText = view.findViewById(R.id.first_input);
-        label = view.findViewById(R.id.email_label);
-        firstError = view.findViewById(R.id.email_error);
+        textInputEditText = view.findViewById(R.id.mailInput);
+        label = view.findViewById(R.id.mailLabel);
+        firstError = view.findViewById(R.id.mailError);
         textInputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

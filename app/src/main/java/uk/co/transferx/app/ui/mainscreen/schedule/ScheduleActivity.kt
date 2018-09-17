@@ -16,7 +16,7 @@ import uk.co.transferx.app.ui.mainscreen.schedule.presenter.ScheduleActivityPres
 import uk.co.transferx.app.data.pojo.TransactionCreate
 import uk.co.transferx.app.util.Constants.EMPTY
 import uk.co.transferx.app.util.Constants.TRANSACTION
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
+import uk.co.transferx.app.ui.signin.SignInActivity
 import java.util.*
 import javax.inject.Inject
 
@@ -88,7 +88,7 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
     }
 
     override fun goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(this@ScheduleActivity)
+        SignInActivity.startWelcomeActivity(this@ScheduleActivity)
     }
 
     private fun setChosenDate(settledDate: Date) {

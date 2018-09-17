@@ -37,7 +37,7 @@ import uk.co.transferx.app.ui.mainscreen.schedule.ScheduleActivity;
 import uk.co.transferx.app.data.pojo.Card;
 import uk.co.transferx.app.data.pojo.TransactionCreate;
 import uk.co.transferx.app.ui.customview.CustomSpinner;
-import uk.co.transferx.app.ui.welcom.WelcomeActivity;
+import uk.co.transferx.app.ui.signin.SignInActivity;
 
 import static uk.co.transferx.app.util.Constants.EMPTY;
 import static uk.co.transferx.app.util.Constants.TRANSACTION;
@@ -251,7 +251,7 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
 
     @Override
     public void goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(getActivity());
+        SignInActivity.Companion.startWelcomeActivity(getActivity());
     }
 
     @Override

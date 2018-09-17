@@ -18,7 +18,7 @@ import uk.co.transferx.app.util.Constants.CARD
 import uk.co.transferx.app.util.Constants.MODE
 import uk.co.transferx.app.util.CreditCardNumberFormattingTextWatcher
 import uk.co.transferx.app.util.DataCardFormatter
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
+import uk.co.transferx.app.ui.signin.SignInActivity
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -104,6 +104,6 @@ class AddCardActivity : BaseActivity(), AddCardPresenter.AddCardUI {
     }
 
     override fun goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(this@AddCardActivity)
+        SignInActivity.startWelcomeActivity(this@AddCardActivity)
     }
 }

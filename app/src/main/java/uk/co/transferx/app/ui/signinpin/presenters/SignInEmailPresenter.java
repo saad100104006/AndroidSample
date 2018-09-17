@@ -1,4 +1,4 @@
-package uk.co.transferx.app.ui.signin.presenters;
+package uk.co.transferx.app.ui.signinpin.presenters;
 
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;

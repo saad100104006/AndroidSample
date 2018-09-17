@@ -1,4 +1,4 @@
-package uk.co.transferx.app.ui.signin.fragment;
+package uk.co.transferx.app.ui.signinpin.fragment;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -22,9 +22,7 @@ import uk.co.transferx.app.ui.base.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.ui.mainscreen.MainActivity;
-import uk.co.transferx.app.ui.recoverpass.RecoverPasswordActivity;
-import uk.co.transferx.app.ui.signin.presenters.SignInEmailPresenter;
-import uk.co.transferx.app.ui.welcom.WelcomeActivity;
+import uk.co.transferx.app.ui.signinpin.presenters.SignInEmailPresenter;
 
 /**
  * Created by sergey on 19.11.17.
@@ -101,7 +99,7 @@ public class SignInEmailFragment extends BaseFragment implements SignInEmailPres
 
             }
         });
-        Button buttonSignIn = view.findViewById(R.id.sign_in);
+        Button buttonSignIn = view.findViewById(R.id.signInButton);
         buttonSignIn.setText(R.string.sign_in);
         TextView forgotPass = view.findViewById(R.id.terms);
         String forgotPassword = getString(R.string.forgot_password) + "?";

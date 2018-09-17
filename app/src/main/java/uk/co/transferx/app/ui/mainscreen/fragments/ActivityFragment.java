@@ -23,7 +23,7 @@ import uk.co.transferx.app.ui.mainscreen.presenters.ActivityFragmentPresenter;
 import uk.co.transferx.app.data.pojo.Transaction;
 import uk.co.transferx.app.data.pojo.TransactionCreate;
 import uk.co.transferx.app.ui.transfersummary.TransferSummaryActivity;
-import uk.co.transferx.app.ui.welcom.WelcomeActivity;
+import uk.co.transferx.app.ui.signin.SignInActivity;
 
 import static uk.co.transferx.app.util.Constants.TRANSACTION;
 
@@ -99,7 +99,7 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
 
     @Override
     public void goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(getActivity());
+        SignInActivity.Companion.startWelcomeActivity(getActivity());
     }
 
     @Override

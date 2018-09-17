@@ -16,11 +16,10 @@ import uk.co.transferx.app.ui.base.BaseActivity;
 import uk.co.transferx.app.ui.base.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
-import uk.co.transferx.app.data.pojo.Recipient;
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepOneFragment;
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment;
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment;
-import uk.co.transferx.app.ui.welcom.WelcomeActivity;
+import uk.co.transferx.app.ui.signin.SignInActivity;
 
 import static uk.co.transferx.app.util.Constants.CREDENTIAL;
 import static uk.co.transferx.app.util.Constants.EMAIL;
@@ -104,7 +103,7 @@ public class SignUpActivity extends BaseActivity {
         }
         switch (currentFragment) {
             case 0:
-                startActivity(new Intent(SignUpActivity.this, WelcomeActivity.class));
+                startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
                 finish();
                 break;
             case 1:
