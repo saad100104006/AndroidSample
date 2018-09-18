@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import kotlinx.android.synthetic.main.signin_fragment_layout.*
 import uk.co.transferx.app.R
@@ -37,11 +38,16 @@ class SignInFragment : BaseFragment(), SignInContract.View {
 
     private var isErrorShown: Boolean = false
 
+    private var loadingBar: ProgressBar? = null
+
     private var snackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity!!.application as TransferXApplication).appComponent.inject(this)
+
+        // View from activity has to be obtained in normal way
+        loadingBar = activity?.findViewById<ProgressBar>(R.id.loading_bar)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -61,6 +67,9 @@ class SignInFragment : BaseFragment(), SignInContract.View {
         signInButton.setOnClickListener {
             presenter.signIn()
             hideKeyboard(rootLayout)
+
+            val loadingBar = activity?.findViewById<ProgressBar>(R.id.loading_bar)
+            loadingBar?.visibility = View.VISIBLE
         }
 
         backButton.setOnClickListener { activity?.onBackPressed() }
@@ -93,11 +102,11 @@ class SignInFragment : BaseFragment(), SignInContract.View {
     }
 
     override fun goToMainScreen() {
-        val activity = activity
-        if (activity != null) {
-            MainActivity.startMainActivity(activity)
-            activity.finish()
-        }
+        loadingBar?.visibility = View.GONE
+
+        // Launch main activity
+        MainActivity.startMainActivity(activity)
+        activity?.finish()
     }
 
     override fun goToRecoverPassword() {
@@ -105,6 +114,8 @@ class SignInFragment : BaseFragment(), SignInContract.View {
     }
 
     override fun showWrongPassword() {
+        loadingBar?.visibility = View.GONE
+
         snackbar = Snackbar.make(rootLayout!!,
                 getColoredString(getString(R.string.wrong_username_or_password)), Snackbar.LENGTH_LONG)
 
@@ -112,6 +123,8 @@ class SignInFragment : BaseFragment(), SignInContract.View {
     }
 
     override fun showUserNotFound() {
+        loadingBar?.visibility = View.GONE
+
         snackbar = Snackbar.make(rootLayout!!,
                 getColoredString(getString(R.string.user_not_found)), Snackbar.LENGTH_LONG)
         snackbar?.view?.setBackgroundColor(Color.RED)
@@ -121,6 +134,8 @@ class SignInFragment : BaseFragment(), SignInContract.View {
     }
 
     override fun showConnectionError() {
+        loadingBar?.visibility = View.GONE
+
         snackbar = Snackbar.make(rootLayout!!, getString(R.string.connection_error), Snackbar.LENGTH_INDEFINITE)
                 .setAction(getString(R.string.try_again)) {
                     presenter.refreshGenesisToken()

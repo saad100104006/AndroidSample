@@ -13,7 +13,6 @@ import uk.co.transferx.app.data.remote.SignUpApi
 import uk.co.transferx.app.data.repository.tokenmanager.TokenManager
 import uk.co.transferx.app.data.repository.tokenmanager.TokenRepository
 import uk.co.transferx.app.ui.base.BasePresenter
-import uk.co.transferx.app.ui.base.UI
 import uk.co.transferx.app.ui.signin.SignInContract
 import uk.co.transferx.app.util.Constants.*
 import uk.co.transferx.app.util.Util
@@ -24,10 +23,10 @@ import javax.net.ssl.HttpsURLConnection
  * Created by smilevkiy on 14.11.17.
  */
 
-class SignInPresenter @Inject
-constructor(private val signInOutApi: SignInOutApi, private val signUpApi: SignUpApi,
-            private val tokenManager: TokenManager, sharedPreferences: SharedPreferences,
-            private val tokenRepository: TokenRepository)
+class SignInPresenter @Inject constructor
+(private val signInOutApi: SignInOutApi, private val signUpApi: SignUpApi,
+ private val tokenManager: TokenManager, sharedPreferences: SharedPreferences,
+ private val tokenRepository: TokenRepository)
     : BasePresenter<SignInContract.View>(sharedPreferences), SignInContract.Presenter {
     private var disposable: Disposable? = null
     private var email: String? = null
@@ -111,8 +110,10 @@ constructor(private val signInOutApi: SignInOutApi, private val signUpApi: SignU
                         tokenManager.saveToken(resp.body())
                         sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
 
-                        // if(user has not added recip/cards) -> redirect to confirmation screen
-                        // TODO Add condition and link to confirmation screen
+                        if (shouldGoToConfirmation()) {
+                            // TODO Add link confirmation screen
+                            return@subscribe
+                        }
 
                         ui.goToMainScreen()
                         return@subscribe
@@ -134,4 +135,10 @@ constructor(private val signInOutApi: SignInOutApi, private val signUpApi: SignU
             ui.showConnectionError()
         }
     }
+
+    private fun shouldGoToConfirmation(): Boolean {
+        return sharedPreferences.getBoolean(CARD_REQUIRED, false)
+                || sharedPreferences.getBoolean(RECIPIENT_REQUIRED, false)
+    }
+
 }
