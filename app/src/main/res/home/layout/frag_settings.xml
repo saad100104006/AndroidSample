@@ -15,7 +15,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="40dp"
-        android:text="Settings"
+        android:text="@string/str_settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -37,7 +37,7 @@
         style="@style/settings_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Account"
+        android:text="@string/settings_account"
         app:layout_constraintBottom_toBottomOf="@+id/menu_icon1"
         app:layout_constraintLeft_toRightOf="@id/menu_icon1"
         app:layout_constraintTop_toTopOf="@+id/menu_icon1"/>
@@ -57,7 +57,7 @@
         style="@style/settings_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Notifications"
+        android:text="@string/settings_notifications"
         app:layout_constraintBottom_toBottomOf="@+id/menu_icon2"
         app:layout_constraintLeft_toRightOf="@id/menu_icon2"
         app:layout_constraintTop_toTopOf="@+id/menu_icon2"/>
@@ -77,7 +77,7 @@
         style="@style/settings_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Referrals"
+        android:text="@string/settings_referrals"
         app:layout_constraintBottom_toBottomOf="@+id/menu_icon3"
         app:layout_constraintLeft_toRightOf="@id/menu_icon3"
         app:layout_constraintTop_toTopOf="@+id/menu_icon3"/>
@@ -97,7 +97,7 @@
         style="@style/settings_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About us"
+        android:text="@string/settings_about_us"
         app:layout_constraintBottom_toBottomOf="@+id/menu_icon4"
         app:layout_constraintLeft_toRightOf="@id/menu_icon4"
         app:layout_constraintTop_toTopOf="@+id/menu_icon4"/>
@@ -117,7 +117,7 @@
         style="@style/settings_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Support"
+        android:text="@string/settings_support"
         app:layout_constraintBottom_toBottomOf="@+id/menu_icon5"
         app:layout_constraintLeft_toRightOf="@id/menu_icon5"
         app:layout_constraintTop_toTopOf="@+id/menu_icon5"/>
@@ -137,7 +137,7 @@
         style="@style/settings_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logout"
+        android:text="@string/settings_logout"
         app:layout_constraintBottom_toBottomOf="@+id/menu_icon6"
         app:layout_constraintLeft_toRightOf="@id/menu_icon6"
         app:layout_constraintTop_toTopOf="@+id/menu_icon6"/>
