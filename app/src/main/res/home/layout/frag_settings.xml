@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_bg">
+    android:background="@color/grey_bg"
+    android:fillViewport="true"
+    >
 
+    <android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/settings_title"
@@ -130,6 +135,7 @@
         android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="@+id/menu_icon5"
         app:layout_constraintTop_toBottomOf="@+id/menu_icon5"
+        android:layout_marginBottom="40dp"
         />
 
     <TextView
@@ -142,5 +148,5 @@
         app:layout_constraintLeft_toRightOf="@id/menu_icon6"
         app:layout_constraintTop_toTopOf="@+id/menu_icon6"/>
 
-
 </android.support.constraint.ConstraintLayout>
+</ScrollView>
