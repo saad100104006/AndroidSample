@@ -111,6 +111,9 @@ constructor(private val signInOutApi: SignInOutApi, private val signUpApi: SignU
                         tokenManager.saveToken(resp.body())
                         sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
 
+                        // if(user has not added recip/cards) -> redirect to confirmation screen
+                        // TODO Add condition and link to confirmation screen
+
                         ui.goToMainScreen()
                         return@subscribe
                     } else if (resp.code() == HttpsURLConnection.HTTP_NOT_FOUND && ui != null) {

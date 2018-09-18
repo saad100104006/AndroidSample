@@ -1,20 +1,22 @@
 package uk.co.transferx.app.ui.signin.fragment
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
-import android.text.Editable
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.TextWatcher
+import android.support.v4.content.res.ResourcesCompat
+import android.text.*
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.email_field.*
+import android.widget.EditText
+import android.widget.TextView
 import kotlinx.android.synthetic.main.signin_fragment_layout.*
 import uk.co.transferx.app.R
+import uk.co.transferx.app.R.string.forgot_password
+import uk.co.transferx.app.R.string.reset_password
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.mainscreen.MainActivity
@@ -24,6 +26,7 @@ import uk.co.transferx.app.ui.signin.presenter.SignInPresenter
 import uk.co.transferx.app.ui.signup.SignUpActivity
 import javax.inject.Inject
 
+
 /**
  * Created by smilevkiy on 13.11.17.
  */
@@ -32,35 +35,9 @@ class SignInFragment : BaseFragment(), SignInContract.View {
     @Inject
     lateinit var presenter: SignInPresenter
 
+    private var isErrorShown: Boolean = false
+
     private var snackbar: Snackbar? = null
-
-    private val emailTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-
-        }
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            presenter.validateEmail(s.toString())
-        }
-
-        override fun afterTextChanged(s: Editable) {
-
-        }
-    }
-
-    private val passwTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-
-        }
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            presenter.validatePassword(s.toString())
-        }
-
-        override fun afterTextChanged(s: Editable) {
-
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,15 +54,24 @@ class SignInFragment : BaseFragment(), SignInContract.View {
         registerButton.setOnClickListener { presenter.goToSignUp() }
 
         forgotPasswButton.setOnClickListener { presenter.goToRecoverPassword() }
+        forgotPasswButton.setText(getMixedColorsBuilder(), TextView.BufferType.SPANNABLE)
 
+        // enable superclass to handle disabling the button
         this.buttonNext = signInButton
-        signInButton.setOnClickListener { presenter.signIn() }
+        signInButton.setOnClickListener {
+            presenter.signIn()
+            hideKeyboard(rootLayout)
+        }
+
+        backButton.setOnClickListener { activity?.onBackPressed() }
     }
 
     override fun onStart() {
         super.onStart()
-        mailInput!!.addTextChangedListener(emailTextWatcher)
-        passwInput!!.addTextChangedListener(passwTextWatcher)
+
+        // Add listeners
+        mailInputText!!.addTextChangedListener(emailTextWatcher)
+        passwInputText!!.addTextChangedListener(passwTextWatcher)
     }
 
     override fun onResume() {
@@ -95,24 +81,15 @@ class SignInFragment : BaseFragment(), SignInContract.View {
 
     override fun onPause() {
         super.onPause()
-
         presenter.detachUI()
 
-        mailInput!!.removeTextChangedListener(emailTextWatcher)
-        passwInput!!.removeTextChangedListener(passwTextWatcher)
-
+        // Remove listeners
+        mailInputText!!.removeTextChangedListener(emailTextWatcher)
+        passwInputText!!.removeTextChangedListener(passwTextWatcher)
     }
 
     override fun goToSignUp() {
         SignUpActivity.startSignUp(activity, null)
-    }
-
-    override fun goToRecoverPassword() {
-        startActivity(Intent(context, RecoverPasswordActivity::class.java))
-    }
-
-    override fun showWrongPassword() {
-        Snackbar.make(coordinatorLayout!!, getColoredString(getString(R.string.wrong_username_or_password)), Snackbar.LENGTH_LONG).show()
     }
 
     override fun goToMainScreen() {
@@ -123,29 +100,51 @@ class SignInFragment : BaseFragment(), SignInContract.View {
         }
     }
 
+    override fun goToRecoverPassword() {
+        startActivity(Intent(context, RecoverPasswordActivity::class.java))
+    }
+
+    override fun showWrongPassword() {
+        snackbar = Snackbar.make(rootLayout!!,
+                getColoredString(getString(R.string.wrong_username_or_password)), Snackbar.LENGTH_LONG)
+
+        adjustFieldsOnError()
+    }
+
     override fun showUserNotFound() {
-        Snackbar.make(coordinatorLayout!!, getColoredString(getString(R.string.user_not_found)), Snackbar.LENGTH_LONG).show()
+        snackbar = Snackbar.make(rootLayout!!,
+                getColoredString(getString(R.string.user_not_found)), Snackbar.LENGTH_LONG)
+        snackbar?.view?.setBackgroundColor(Color.RED)
+        snackbar?.show()
+
+        adjustFieldsOnError()
     }
 
     override fun showConnectionError() {
-        snackbar = Snackbar.make(coordinatorLayout!!, getString(R.string.connection_error), Snackbar.LENGTH_INDEFINITE)
+        snackbar = Snackbar.make(rootLayout!!, getString(R.string.connection_error), Snackbar.LENGTH_INDEFINITE)
                 .setAction(getString(R.string.try_again)) {
                     presenter.refreshGenesisToken()
                     snackbar!!.dismiss()
                 }
-        snackbar!!.show()
+        snackbar?.view?.setBackgroundColor(Color.RED)
+        snackbar?.show()
+
+        adjustFieldsOnError()
     }
 
+    /*
+        Methods left for future development
+     */
     override fun showEmailError() {
-        setStatusOfError(mailInput, mailLabel, R.color.red)
-        mailError!!.setText(R.string.email_error)
-        mailError!!.visibility = View.VISIBLE
+        setStatusOfError(mailInputText, null, R.color.red)
     }
 
     override fun showPasswordError() {
-        setStatusOfError(passwInput, passwLabel, R.color.red)
-        passwError!!.setText(R.string.password_error)
-        passwError!!.visibility = View.VISIBLE
+        setStatusOfError(passwInputText, null, R.color.red)
+    }
+
+    override fun setStatusOfError(textInputEditText: EditText?, label: TextView?, color: Int) {
+        // ignore label
     }
 
     override fun changeButtonState(isEnabled: Boolean) {
@@ -160,6 +159,44 @@ class SignInFragment : BaseFragment(), SignInContract.View {
         //no op
     }
 
+    /*
+        Text Watchers
+     */
+
+    private val emailTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            presenter.validateEmail(s.toString())
+
+            adjustFieldsPostError()
+        }
+
+        override fun afterTextChanged(s: Editable) {
+        }
+    }
+
+    private val passwTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            presenter.validatePassword(s.toString())
+
+            adjustFieldsPostError()
+        }
+
+        override fun afterTextChanged(s: Editable) {
+
+        }
+    }
+
+    /*
+        Internal methods
+     */
     private fun getColoredString(message: String): SpannableStringBuilder {
         val ssb = SpannableStringBuilder()
                 .append(message)
@@ -169,5 +206,37 @@ class SignInFragment : BaseFragment(), SignInContract.View {
                 message.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         return ssb
+    }
+
+    private fun getMixedColorsBuilder(): SpannableStringBuilder {
+        val builder = SpannableStringBuilder()
+
+        val str1 = SpannableString(resources.getString(forgot_password))
+        str1.setSpan(ForegroundColorSpan(Color.BLACK), 0, str1.length, 0)
+        builder.append(str1)
+
+        val str2 = SpannableString(resources.getString(reset_password))
+        str2.setSpan(ForegroundColorSpan(
+                ResourcesCompat.getColor(resources, R.color.colorAccent, null)), 0, str2.length, 0)
+        builder.append(str2)
+
+        return builder
+    }
+
+    private fun adjustFieldsOnError() {
+        setFieldsBackground(R.drawable.input_field_error)
+        isErrorShown = true
+    }
+
+    private fun adjustFieldsPostError() {
+        if (isErrorShown) {
+            setFieldsBackground(R.drawable.input_field)
+            isErrorShown = false
+        }
+    }
+
+    private fun setFieldsBackground(resource: Int) {
+        mailInputText.setBackgroundResource(resource)
+        passwInputText.setBackgroundResource(resource)
     }
 }

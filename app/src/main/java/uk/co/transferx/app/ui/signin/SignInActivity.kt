@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction
 
 import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.R
+import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.signin.fragment.SignInFragment
 
 /**
@@ -17,6 +18,8 @@ import uk.co.transferx.app.ui.signin.fragment.SignInFragment
 class SignInActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as TransferXApplication).appComponent.inject(this)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.signin_activity)
 
@@ -30,6 +33,10 @@ class SignInActivity : BaseActivity() {
         ft.commit()
     }
 
+    /*
+        TODO - Delete this method when linking is done. Linking should be done from source, not from
+        TODO - target. This way, coupling is decreased
+     */
     companion object {
 
         fun startWelcomeActivity(activity: Activity) {

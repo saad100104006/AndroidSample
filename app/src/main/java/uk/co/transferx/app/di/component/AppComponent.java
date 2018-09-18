@@ -31,6 +31,7 @@ import uk.co.transferx.app.ui.settings.profile.personaldetails.fragments.Persona
 import uk.co.transferx.app.ui.settings.profile.wallet.AddCardActivity;
 import uk.co.transferx.app.ui.settings.profile.wallet.WalletActivity;
 import uk.co.transferx.app.ui.settings.support.SupportActivity;
+import uk.co.transferx.app.ui.signin.SignInActivity;
 import uk.co.transferx.app.ui.signin.fragment.SignInFragment;
 import uk.co.transferx.app.ui.signinpin.fragment.SignInEmailFragment;
 import uk.co.transferx.app.ui.signinpin.fragment.SignInPinFragment;
@@ -47,9 +48,11 @@ import uk.co.transferx.app.ui.transfersummary.TransferSummaryActivity;
 @Singleton
 @Component(modules = {AppModule.class, NetworkModule.class})
 public interface AppComponent {
+    void inject(SplashActivity splashActivity);
+
     void inject(SignInFragment signInFragment);
 
-    void inject(SplashActivity splashActivity);
+    void inject(SignInActivity signInActivity);
 
     void inject(SignUpStepThreeFragment signUpStepThreeFragment);
 

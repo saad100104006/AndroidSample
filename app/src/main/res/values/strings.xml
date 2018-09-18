@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">TransferX</string>
     <string name="welcome">Welcome!</string>
-    <string name="sign_in">Sign in</string>
+    <string name="sign_in">Log in</string>
+    <string name="log_in">Sign in</string>
     <string name="sign_up">SIGN UP</string>
     <string name="create_an_account">Create an account</string>
     <string name="next">NEXT</string>
@@ -9,6 +10,7 @@
     <string name="lets_start">Create an account</string>
     <string name="terms">"By signing up, you are agreeing to our<b> Terms &amp; Conditions</b> and <b>Privacy Policy.</b>"</string>
     <string name="forgot_password">Forgot your password?</string>
+    <string name="reset_password">\u0020 Reset it here.</string>
     <string name="forgot_pin">Forgot your PIN?</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -79,7 +81,7 @@
     <string name="amount_with_currency">%1$s - %2$s</string>
     <string name="money_that_cares">money that cares</string>
     <string name="enter_your_email_address">Enter your email address</string>
-    <string name="enter_your_password">Enter your password</string>
+    <string name="enter_your_password">Password</string>
     <string name="email_address">email address</string>
     <string name="connection_error">Something wrong with connection</string>
     <string name="try_again">Try again</string>
