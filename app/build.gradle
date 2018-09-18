@@ -139,6 +139,9 @@ dependencies {
         transitive = true
     }
 
+    // Circular Image View
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+
     //branch
     implementation 'io.branch.sdk.android:library:2.+'
 

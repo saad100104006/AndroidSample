@@ -179,4 +179,22 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="text_grey">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#777777</item>
+    </style>
+
+    <style name="text_black">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#333333</item>
+    </style>
+
+    <style name="common_divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#cccccc</item>
+    </style>
+
 </resources>
