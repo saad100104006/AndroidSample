@@ -249,4 +249,22 @@
         <item>Tanzania</item>
     </string-array>
 
+
+    <string name="title_activity">ACTIVITY</string>
+    <string name="title_recipients">RECIPIENTS</string>
+    <string name="title_settings">SETTINGS</string>
+    <string name="str_activity">Activity</string>
+    <string name="msg_send_money">This is where you’ll see your activity. Make someone’s day and send them money today!</string>
+    <string name="action_add_recipient">Add recipient</string>
+    <string name="action_send_money">Send money</string>
+    <string name="msg_add_recipient">This is where you’ll have all your recipients. Add recipients and make transfer faster!</string>
+    <string name="str_settings">Settings</string>
+    <string name="settings_account">Account</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_referrals">Referrals</string>
+    <string name="settings_about_us">About us</string>
+    <string name="settings_support">Support</string>
+    <string name="settings_logout">Logout</string>
+    <string name="msg_empty_recurrent">You haven\’t set up any recurrent transfer. Send money now and select the period of time in which you want to repeat the transfer.</string>
+
 </resources>
