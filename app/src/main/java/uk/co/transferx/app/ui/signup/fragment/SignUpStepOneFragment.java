@@ -21,7 +21,6 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.ui.signup.SignUpActivity;
 import uk.co.transferx.app.ui.signup.presenters.SignUpStepOnePresenter;
-import uk.co.transferx.app.ui.welcom.WelcomeActivity;
 
 import static uk.co.transferx.app.util.Constants.U_NAME;
 

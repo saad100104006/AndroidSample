@@ -22,9 +22,7 @@ import uk.co.transferx.app.ui.base.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.ui.mainscreen.MainActivity;
-import uk.co.transferx.app.ui.recoverpass.RecoverPasswordActivity;
 import uk.co.transferx.app.ui.signin.presenters.SignInEmailPresenter;
-import uk.co.transferx.app.ui.welcom.WelcomeActivity;
 
 /**
  * Created by sergey on 19.11.17.

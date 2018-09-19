@@ -60,6 +60,7 @@ android {
                        'src/main/res/common',
                        'src/main/res/splash',
                        'src/main/res/tutorial',
+                       'src/main/res/landing',
                        'src/main/res/onboarding',
                        'src/main/res/signup',
                        'src/main/res/signin',

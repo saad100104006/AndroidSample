@@ -1,5 +1,6 @@
 package uk.co.transferx.app.ui.splash;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -8,8 +9,8 @@ import javax.inject.Inject;
 import uk.co.transferx.app.ui.base.BaseActivity;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
+import uk.co.transferx.app.ui.landing.LandingActivity;
 import uk.co.transferx.app.ui.signin.SignInActivity;
-import uk.co.transferx.app.ui.signin.SignInType;
 import uk.co.transferx.app.ui.splash.presenter.SplashPresenter;
 import uk.co.transferx.app.ui.welcom.WelcomeActivity;
 
@@ -45,7 +46,11 @@ public class SplashActivity extends BaseActivity implements SplashPresenter.Spla
 
     @Override
     public void goToWelcomeScreen() {
-        WelcomeActivity.startWelcomeActivity(this);
+        // TEMPORARY LINK TO NEW LANDING ACTIVITY
+        // TODO - REFACTOR LINK WHEN LINKING IS PERFORMED
+        Intent intent = new Intent(this, LandingActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 

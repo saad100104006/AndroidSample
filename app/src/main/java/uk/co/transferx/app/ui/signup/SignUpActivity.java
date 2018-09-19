@@ -16,7 +16,6 @@ import uk.co.transferx.app.ui.base.BaseActivity;
 import uk.co.transferx.app.ui.base.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
-import uk.co.transferx.app.data.pojo.Recipient;
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepOneFragment;
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment;
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment;

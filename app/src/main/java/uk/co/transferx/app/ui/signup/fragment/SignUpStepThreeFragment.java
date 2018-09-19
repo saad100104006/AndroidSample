@@ -23,7 +23,6 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.ui.mainscreen.MainActivity;
 import uk.co.transferx.app.ui.signup.presenters.SignUpStepThreePresenter;
-import uk.co.transferx.app.ui.tutorial.TutorialActivity;
 import uk.co.transferx.app.ui.welcom.WelcomeActivity;
 
 import static uk.co.transferx.app.util.Constants.EMAIL;
@@ -110,7 +109,9 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
                 activity.finish();
                 return;
             }
-            TutorialActivity.startTutorialActivity(activity);
+            // TEMPORARY REMOVED LINK
+            // TODO - REFACTOR LINK WHEN LINKING IS PERFORMED
+            // TutorialActivity.startTutorialActivity(activity);
             activity.finish();
         }
     }

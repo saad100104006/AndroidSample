@@ -2,6 +2,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="left_right_main_screen">32dp</dimen>
     <dimen name="main_screen_title_margin">2dp</dimen>
+    <dimen name="landing_top_logo">64dp</dimen>
+    <dimen name="landing_bottom_register">24dp</dimen>
+    <dimen name="landing_bottom_login">12dp</dimen>
+    <dimen name="landing_bottom_text">32dp</dimen>
     <dimen name="size_of_photo">60dp</dimen>
     <dimen name="size_icon_settings">24dp</dimen>
     <dimen name="design_bottom_navigation_height" tools:override="true">70dp</dimen>

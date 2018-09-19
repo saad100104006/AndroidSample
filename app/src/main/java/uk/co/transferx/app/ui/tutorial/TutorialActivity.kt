@@ -16,9 +16,6 @@ class TutorialActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tutorial_activity_layout)
 
-//        viewPager = findViewById(R.id.pager)
-//        val tutorialAdapter = TutorialAdapter(supportFragmentManager)
-//        viewPager!!.adapter = tutorialAdapter
         pager.adapter = TutorialAdapter(supportFragmentManager)
     }
 

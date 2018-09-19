@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:name="uk.co.transferx.app.TransferXApplication"
+        android:name=".TransferXApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -41,30 +41,25 @@
                 <data android:scheme="${applicationId}.braintree" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.homescreen.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.welcom.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:screenOrientation="portrait"
@@ -163,6 +158,10 @@
             android:name="uk.co.transferx.app.ui.settings.profile.UploadDocumentsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="uk.co.transferx.app.ui.landing.LandingActivity"
+            android:theme="@style/AppTheme.Landing" />
+
     </application>
 
 </manifest>

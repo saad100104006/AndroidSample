@@ -16,6 +16,9 @@
     <string name="last_name">Last Name</string>
     <string name="pin">Pin</string>
     <string name="confirm_pin">Confirm pin</string>
+    <string name="landing_send_money">Send money to your loved ones easier and faster.</string>
+    <string name="landing_login">Login</string>
+    <string name="landing_register">Create an account</string>
     <string name="title_one">Lets Start With You</string>
     <string name="title_two">Your login details</string>
     <string name="title_three">And Finally Set A PIN</string>
@@ -266,5 +269,6 @@
     <string name="settings_support">Support</string>
     <string name="settings_logout">Logout</string>
     <string name="msg_empty_recurrent">You haven\’t set up any recurrent transfer. Send money now and select the period of time in which you want to repeat the transfer.</string>
+
 
 </resources>
