@@ -1,6 +1,5 @@
-package uk.co.transferx.app.landing
-
-import uk.co.transferx.app.UI
+package uk.co.transferx.app.ui.landing
+import uk.co.transferx.app.ui.base.UI
 
 interface LandingContract {
     interface View: UI {

@@ -110,7 +110,7 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
                 activity.finish();
                 return;
             }
-            TutorialActivity.startTutorialActivity(activity);
+//            TutorialActivity.startTutorialActivity(activity);
             activity.finish();
         }
     }

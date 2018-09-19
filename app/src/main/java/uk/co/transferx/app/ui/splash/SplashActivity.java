@@ -1,5 +1,6 @@
 package uk.co.transferx.app.ui.splash;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -45,7 +46,10 @@ public class SplashActivity extends BaseActivity implements SplashPresenter.Spla
 
     @Override
     public void goToWelcomeScreen() {
-        WelcomeActivity.startWelcomeActivity(this);
+//        WelcomeActivity.startWelcomeActivity(this);
+        Intent intent = new Intent(this, WelcomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 

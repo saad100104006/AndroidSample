@@ -1,19 +1,16 @@
-package uk.co.transferx.app.landing.fragment
-
-
+package uk.co.transferx.app.ui.landing.fragment
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_landing.*
-
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
-import uk.co.transferx.app.landing.LandingContract
-import uk.co.transferx.app.landing.presenter.LandingPresenter
-import uk.co.transferx.app.signup.SignUpActivity
-import uk.co.transferx.app.welcom.WelcomeActivity
+import uk.co.transferx.app.ui.landing.LandingContract
+import uk.co.transferx.app.ui.landing.presenter.LandingPresenter
+import uk.co.transferx.app.ui.signup.SignUpActivity
+import uk.co.transferx.app.ui.welcom.WelcomeActivity
 import javax.inject.Inject
 
 

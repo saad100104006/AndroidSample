@@ -1,7 +1,6 @@
-package uk.co.transferx.app.landing.presenter
-
-import uk.co.transferx.app.BasePresenter
-import uk.co.transferx.app.landing.LandingContract
+package uk.co.transferx.app.ui.landing.presenter
+import uk.co.transferx.app.ui.base.BasePresenter
+import uk.co.transferx.app.ui.landing.LandingContract
 import javax.inject.Inject
 
 class LandingPresenter @Inject constructor() :

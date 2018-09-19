@@ -1,12 +1,10 @@
-package uk.co.transferx.app.landing
+package uk.co.transferx.app.ui.landing
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import uk.co.transferx.app.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
-import uk.co.transferx.app.landing.fragment.LandingFragment
+import uk.co.transferx.app.ui.base.BaseActivity
+import uk.co.transferx.app.ui.landing.fragment.LandingFragment
 import uk.co.transferx.app.util.ActivityUtils
 import javax.inject.Inject
 

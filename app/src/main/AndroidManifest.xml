@@ -163,7 +163,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".landing.LandingActivity"
+            android:name="uk.co.transferx.app.ui.landing.LandingActivity"
             android:theme="@style/AppTheme.Landing" />
 
     </application>
