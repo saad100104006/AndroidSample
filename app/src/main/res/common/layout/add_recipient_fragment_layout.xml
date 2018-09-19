@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/button_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginStart="@dimen/left_right_main_screen"
+            android:layout_marginTop="52dp"
+            android:src="@drawable/ic_back" />
+
+    <TextView
+        android:id="@+id/title_recipient"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:text="@string/recipient_details"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/recipient_img"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/placeholder" />
+    </FrameLayout>
+
+    <TextView
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:text="@string/first_name"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="10sp" />
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/firstName"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:background="@drawable/underline_normal"
+        android:drawablePadding="10dp"
+        android:hint="@string/first_name_recipient_hint"
+        android:inputType="textNoSuggestions|text"
+        android:lineSpacingExtra="2sp"
+        android:maxLines="1"
+        android:paddingBottom="8dp"
+        android:paddingEnd="0dp"
+        android:paddingStart="0dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint"
+        android:textSize="14sp"
+        android:theme="@style/Button.Black" />
+
+
+    <TextView
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:text="@string/last_name"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="10sp" />
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/lastName"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:background="@drawable/underline_normal"
+        android:drawablePadding="10dp"
+        android:hint="@string/last_name_recipient_hint"
+        android:inputType="textNoSuggestions|text"
+        android:lineSpacingExtra="2sp"
+        android:maxLines="1"
+        android:paddingBottom="8dp"
+        android:paddingEnd="0dp"
+        android:paddingStart="0dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint"
+        android:textSize="14sp"
+        android:theme="@style/Button.Black" />
+
+
+    <TextView
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:text="@string/country"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="10sp" />
+
+    <uk.co.transferx.app.ui.customview.CustomSpinner
+        android:id="@+id/countrySpinner"
+        style="@style/Widget.AppCompat.Spinner.Underlined"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:background="@android:color/transparent"
+        android:theme="@style/ThemeSpinner"
+        app:dropDownItemRes="@layout/item_country"
+        app:headerRes="@layout/spinner_select_black_arrow" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:background="@color/black" />
+
+    <TextView
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:text="@string/phone"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="10sp" />
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/phoneInput"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:background="@drawable/underline_normal"
+        android:hint="@string/enter_phone_number"
+        android:inputType="textNoSuggestions|phone"
+        android:lineSpacingExtra="2sp"
+        android:maxLines="1"
+        android:paddingBottom="8dp"
+        android:paddingEnd="0dp"
+        android:paddingStart="0dp"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/add_recipient_button"
+        style="@style/CommonButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/oval_button_gray"
+        android:enabled="false"
+        android:letterSpacing="0.17"
+        android:lineSpacingExtra="2sp"
+        android:text="@string/add_recipients"
+        android:textColor="@color/white"
+        android:theme="@style/Button.Black" />
+
+
+    <Button
+        android:id="@+id/transfer_button"
+        style="@style/CommonButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:background="@drawable/oval_button_green"
+        android:letterSpacing="0.17"
+        android:lineSpacingExtra="2sp"
+        android:text="@string/new_transfer"
+        android:textColor="@color/white"
+        android:theme="@style/Button.Black"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+
+    <Button
+        android:id="@+id/delete_recipient"
+        style="@style/CommonButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:background="@drawable/oval_button_red"
+        android:letterSpacing="0.17"
+        android:lineSpacingExtra="2sp"
+        android:text="@string/delete_recipient"
+        android:textColor="@color/white"
+        android:theme="@style/Button.Black"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+
+</LinearLayout>

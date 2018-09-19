@@ -18,12 +18,12 @@
             android:name="io.fabric.ApiKey"
             android:value="7c701a587dab135a65c991b03f12146453d44b9c" />
 
-        <service android:name=".firebase.TransferXFirebaseMessagingService">
+        <service android:name=".data.firebase.TransferXFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".firebase.TransferXFirebaseIDService">
+        <service android:name=".data.firebase.TransferXFirebaseIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -42,7 +42,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".splash.SplashActivity"
+            android:name=".ui.splash.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.homescreen.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -52,105 +61,105 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".welcom.WelcomeActivity"
+            android:name=".ui.welcom.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".signup.SignUpActivity"
+            android:name=".ui.signup.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".signin.SignInActivity"
+            android:name=".ui.signin.SignInActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".recoverpass.RecoverPasswordActivity"
+            android:name=".ui.recoverpass.RecoverPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".mainscreen.MainActivity"
+            android:name="uk.co.transferx.app.ui.mainscreen.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name="uk.co.transferx.app.ui.settings.SettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".recipients.addrecipients.AddRecipientsActivity"
+            android:name="uk.co.transferx.app.ui.recipients.addrecipients.AddRecipientsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".settings.notification.NotificationSettingsActivity"
+            android:name="uk.co.transferx.app.ui.settings.notification.NotificationSettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".settings.profile.ProfileActivity"
+            android:name="uk.co.transferx.app.ui.settings.profile.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".recoverpass.RecoverPasswordSuccessActivity"
+            android:name=".ui.recoverpass.RecoverPasswordSuccessActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".tutorial.TutorialActivity"
+            android:name=".ui.tutorial.TutorialActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Landing" />
+        <activity
+            android:name="uk.co.transferx.app.ui.settings.profile.personaldetails.PersonalDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".settings.profile.personaldetails.PersonalDetailsActivity"
+            android:name="uk.co.transferx.app.ui.settings.profile.wallet.WalletActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".settings.profile.wallet.WalletActivity"
+            android:name="uk.co.transferx.app.ui.settings.profile.changepassword.ChangePasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".settings.profile.changepassword.ChangePasswordActivity"
+            android:name="uk.co.transferx.app.ui.mainscreen.schedule.ScheduleActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".mainscreen.schedule.ScheduleActivity"
+            android:name="uk.co.transferx.app.ui.transferdetails.TransferDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".transferdetails.TransferDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".settings.profile.wallet.AddCardActivity"
+            android:name="uk.co.transferx.app.ui.settings.profile.wallet.AddCardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".transfersummary.TransferSummaryActivity"
+            android:name="uk.co.transferx.app.ui.transfersummary.TransferSummaryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".mainscreen.schedule.CalendarActivity"
+            android:name="uk.co.transferx.app.ui.mainscreen.schedule.CalendarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".mainscreen.schedule.TimeActivity"
+            android:name="uk.co.transferx.app.ui.mainscreen.schedule.TimeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".mainscreen.schedule.RepeatTransferActivity"
+            android:name="uk.co.transferx.app.ui.mainscreen.schedule.RepeatTransferActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".mainscreen.schedule.EndTransferActivity"
+            android:name="uk.co.transferx.app.ui.mainscreen.schedule.EndTransferActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".mainscreen.schedule.ReviewActivity"
+            android:name="uk.co.transferx.app.ui.mainscreen.schedule.ReviewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".settings.support.SupportActivity"
+            android:name="uk.co.transferx.app.ui.settings.support.SupportActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".settings.profile.UploadDocumentsActivity"
+            android:name="uk.co.transferx.app.ui.settings.profile.UploadDocumentsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
