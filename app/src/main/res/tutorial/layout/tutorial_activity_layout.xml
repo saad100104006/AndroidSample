@@ -25,10 +25,10 @@
         attrs:piv_dynamicCount="true"
         attrs:piv_interactiveAnimation="true"
         attrs:piv_padding="16dp"
-        attrs:piv_radius="7dp"
+        attrs:piv_radius="16dp"
         attrs:piv_strokeWidth="2dp"
-        attrs:piv_selectedColor="@color/white"
-        attrs:piv_unselectedColor="@color/white"
+        attrs:piv_selectedColor="@color/colorAccent"
+        attrs:piv_unselectedColor="@color/colorAccent"
         attrs:piv_viewPager="@id/pager" />
 
 

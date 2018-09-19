@@ -8,6 +8,8 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.di.module.AppModule;
 import uk.co.transferx.app.di.module.NetworkModule;
 import uk.co.transferx.app.data.firebase.TransferXFirebaseIDService;
+import uk.co.transferx.app.ui.landing.LandingActivity;
+import uk.co.transferx.app.ui.landing.fragment.LandingFragment;
 import uk.co.transferx.app.ui.mainscreen.fragments.ActivityFragment;
 import uk.co.transferx.app.ui.mainscreen.fragments.RecipientDialogFragment;
 import uk.co.transferx.app.ui.mainscreen.fragments.RecipientsFragment;
@@ -48,6 +50,10 @@ import uk.co.transferx.app.ui.transfersummary.TransferSummaryActivity;
 @Singleton
 @Component(modules = {AppModule.class, NetworkModule.class})
 public interface AppComponent {
+    void inject(LandingActivity landingActivity);
+
+    void inject(LandingFragment landingFragment);
+
     void inject(SplashActivity splashActivity);
 
     void inject(SignInFragment signInFragment);

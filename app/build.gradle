@@ -59,6 +59,8 @@ android {
         main.res.srcDirs += ['src/main/res',
                        'src/main/res/common',
                        'src/main/res/splash',
+                       'src/main/res/tutorial',
+                       'src/main/res/landing',
                        'src/main/res/onboarding',
                        'src/main/res/signup',
                        'src/main/res/signin',
@@ -138,6 +140,9 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
     }
+
+    // Circular Image View
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
 
     //branch
     implementation 'io.branch.sdk.android:library:2.+'
