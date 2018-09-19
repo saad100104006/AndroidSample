@@ -4,7 +4,6 @@ import android.support.v7.util.DiffUtil;
 
 import java.util.List;
 
-import uk.co.transferx.app.data.dto.TransactionDto;
 import uk.co.transferx.app.data.pojo.Transaction;
 
 /**

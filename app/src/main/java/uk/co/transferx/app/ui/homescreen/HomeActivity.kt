@@ -1,12 +1,9 @@
 package uk.co.transferx.app.ui.homescreen
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.support.v4.content.ContextCompat
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_home.*
 import uk.co.transferx.app.R
 import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.ui.homescreen.fragments.FragActivity
@@ -14,8 +11,6 @@ import uk.co.transferx.app.ui.homescreen.fragments.FragRecipients
 import uk.co.transferx.app.ui.homescreen.fragments.FragSettings
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import android.graphics.drawable.Drawable
-
 
 
 class HomeActivity : BaseActivity() {

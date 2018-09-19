@@ -21,7 +21,6 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.ui.recoverpass.RecoverPasswordActivity;
 import uk.co.transferx.app.ui.recoverpass.presenter.RecoverPasswordPresenter;
-import uk.co.transferx.app.ui.welcom.WelcomeActivity;
 
 /**
  * Created by sergey on 23.11.17.
