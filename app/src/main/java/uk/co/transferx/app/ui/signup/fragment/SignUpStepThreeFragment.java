@@ -23,7 +23,6 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.ui.mainscreen.MainActivity;
 import uk.co.transferx.app.ui.signup.presenters.SignUpStepThreePresenter;
-import uk.co.transferx.app.ui.tutorial.TutorialActivity;
 import uk.co.transferx.app.ui.signin.SignInActivity;
 import static uk.co.transferx.app.util.Constants.EMAIL;
 import static uk.co.transferx.app.util.Constants.EMPTY;
@@ -80,7 +79,7 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
             hideKeyboard(backButton);
             getActivity().onBackPressed();
         });
-        buttonNext = view.findViewById(R.id.sign_in);
+        buttonNext = view.findViewById(R.id.signInButton);
         buttonNext.setText(reEnterPin ? R.string.sign_in : R.string.register);
         buttonNext.setOnClickListener(v -> presenter.validatePin());
         firstPinView.setAnimationEnable(true);
@@ -111,7 +110,6 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
             }
             // TEMPORARY REMOVED LINK
             // TODO - REFACTOR LINK WHEN LINKING IS PERFORMED
-            // TutorialActivity.startTutorialActivity(activity);
             activity.finish();
         }
     }
@@ -178,7 +176,7 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
 
     @Override
     public void goToWelcome() {
-        SignInActivity.Companion.startWelcomeActivity(getActivity());
+        SignInActivity.Companion.startSignInActivity(getActivity());
     }
 
     @Override

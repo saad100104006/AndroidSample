@@ -37,6 +37,6 @@ class PersonalDetailsActivity : BaseActivity(), PersonalDetailsPresenter.Persona
     }
 
     override fun goToWelcome() {
-        SignInActivity.startWelcomeActivity(this@PersonalDetailsActivity)
+        SignInActivity.startSignInActivity(this@PersonalDetailsActivity)
     }
 }

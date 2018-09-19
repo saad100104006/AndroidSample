@@ -1,6 +1,5 @@
 package uk.co.transferx.app.ui.signin.fragment
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -15,6 +14,7 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import kotlinx.android.synthetic.main.signin_fragment_layout.*
+import org.jetbrains.anko.*
 import uk.co.transferx.app.R
 import uk.co.transferx.app.R.string.forgot_password
 import uk.co.transferx.app.R.string.reset_password
@@ -45,9 +45,6 @@ class SignInFragment : BaseFragment(), SignInContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity!!.application as TransferXApplication).appComponent.inject(this)
-
-        // View from activity has to be obtained in normal way
-        loadingBar = activity?.findViewById<ProgressBar>(R.id.loading_bar)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,6 +53,9 @@ class SignInFragment : BaseFragment(), SignInContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // View from activity has to be obtained in normal way
+        loadingBar = activity?.findViewById<ProgressBar>(R.id.loading_bar)
 
         registerButton.setOnClickListener { presenter.goToSignUp() }
 
@@ -98,19 +98,19 @@ class SignInFragment : BaseFragment(), SignInContract.View {
     }
 
     override fun goToSignUp() {
-        SignUpActivity.startSignUp(activity, null)
+        activity?.startActivity<SignUpActivity>()
     }
 
     override fun goToMainScreen() {
         loadingBar?.visibility = View.GONE
 
         // Launch main activity
-        MainActivity.startMainActivity(activity)
+        activity?.startActivity(context?.intentFor<MainActivity>()?.newTask()?.clearTask())
         activity?.finish()
     }
 
     override fun goToRecoverPassword() {
-        startActivity(Intent(context, RecoverPasswordActivity::class.java))
+        activity?.startActivity<RecoverPasswordActivity>()
     }
 
     override fun showWrongPassword() {

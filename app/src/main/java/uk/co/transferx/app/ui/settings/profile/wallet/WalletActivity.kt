@@ -144,7 +144,7 @@ class WalletActivity : BaseActivity(), WalletActivityPresenter.WalletActivityUI 
     }
 
     override fun goToWelcome() {
-        SignInActivity.startWelcomeActivity(this@WalletActivity)
+        SignInActivity.startSignInActivity(this@WalletActivity)
     }
 
 }

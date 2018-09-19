@@ -63,7 +63,7 @@ public class ProfileActivity extends BaseActivity implements ProfileActivityPres
 
     @Override
     public void goToWelcome() {
-        SignInActivity.Companion.startWelcomeActivity(ProfileActivity.this);
+        SignInActivity.Companion.startSignInActivity(ProfileActivity.this);
     }
 
 }

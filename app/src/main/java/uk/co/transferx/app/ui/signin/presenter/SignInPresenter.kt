@@ -28,8 +28,11 @@ class SignInPresenter @Inject constructor
  private val tokenManager: TokenManager, sharedPreferences: SharedPreferences,
  private val tokenRepository: TokenRepository)
     : BasePresenter<SignInContract.View>(sharedPreferences), SignInContract.Presenter {
+
     private var disposable: Disposable? = null
+
     private var email: String? = null
+
     private var password: String? = null
 
     private val isInputDataValid: Boolean
@@ -90,7 +93,6 @@ class SignInPresenter @Inject constructor
                         }
                         ui.showConnectionError()
                     }
-
                 }, { this.handleError() })
     }
 

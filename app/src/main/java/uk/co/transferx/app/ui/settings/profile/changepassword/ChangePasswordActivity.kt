@@ -60,6 +60,6 @@ class ChangePasswordActivity : BaseActivity(), ChangePasswordPresenter.ChangePas
     }
 
     override fun goToWelcome() {
-        SignInActivity.startWelcomeActivity(this@ChangePasswordActivity)
+        SignInActivity.startSignInActivity(this@ChangePasswordActivity)
     }
 }

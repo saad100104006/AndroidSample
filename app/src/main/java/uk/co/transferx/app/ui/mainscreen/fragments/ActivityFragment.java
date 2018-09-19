@@ -99,7 +99,7 @@ public class ActivityFragment extends BaseFragment implements ActivityFragmentPr
 
     @Override
     public void goToWelcome() {
-        SignInActivity.Companion.startWelcomeActivity(getActivity());
+        SignInActivity.Companion.startSignInActivity(getActivity());
     }
 
     @Override

@@ -127,6 +127,6 @@ public class RecipientDialogFragment extends DialogFragment implements Recipient
 
     @Override
     public void goToWelcome() {
-        SignInActivity.Companion.startWelcomeActivity(getActivity());
+        SignInActivity.Companion.startSignInActivity(getActivity());
     }
 }

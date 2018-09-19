@@ -132,6 +132,6 @@ class TransferSummaryActivity : BaseActivity(), TransferSummaryPresenter.Transfe
     }
 
     override fun goToWelcome() {
-        SignInActivity.startWelcomeActivity(this@TransferSummaryActivity)
+        SignInActivity.startSignInActivity(this@TransferSummaryActivity)
     }
 }

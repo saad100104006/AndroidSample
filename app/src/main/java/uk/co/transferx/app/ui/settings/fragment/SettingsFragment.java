@@ -70,7 +70,7 @@ public class SettingsFragment extends BaseFragment implements SettingsFragmentPr
 
     @Override
     public void goToWelcome() {
-        SignInActivity.Companion.startWelcomeActivity(getActivity());
+        SignInActivity.Companion.startSignInActivity(getActivity());
     }
 
     @Override

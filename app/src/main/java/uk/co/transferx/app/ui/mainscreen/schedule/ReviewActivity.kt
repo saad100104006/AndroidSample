@@ -134,6 +134,6 @@ class ReviewActivity : BaseActivity(), ReviewPresenter.ReviewUI {
     }
 
     override fun goToWelcome() {
-        SignInActivity.startWelcomeActivity(this@ReviewActivity)
+        SignInActivity.startSignInActivity(this@ReviewActivity)
     }
 }

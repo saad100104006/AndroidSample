@@ -4,11 +4,9 @@ package uk.co.transferx.app.ui.signin
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.FragmentTransaction
-
-import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.ui.signin.fragment.SignInFragment
 
 /**
@@ -26,11 +24,10 @@ class SignInActivity : BaseActivity() {
         launchFragment()
     }
 
-    private fun launchFragment(){
-        val signInFragment = SignInFragment()
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.container, signInFragment, signInFragment.tag)
-        ft.commit()
+    private fun launchFragment() {
+        val fragment = SignInFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.tag)
+                .commit()
     }
 
     /*
@@ -39,7 +36,7 @@ class SignInActivity : BaseActivity() {
      */
     companion object {
 
-        fun startWelcomeActivity(activity: Activity) {
+        fun startSignInActivity(activity: Activity) {
             val intent = Intent(activity, SignInActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             activity.startActivity(intent)

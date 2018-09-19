@@ -191,6 +191,6 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Override
     public void goToWelcome() {
-        SignInActivity.Companion.startWelcomeActivity(getActivity());
+        SignInActivity.Companion.startSignInActivity(getActivity());
     }
 }

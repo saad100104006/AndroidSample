@@ -32,6 +32,6 @@ class UploadDocumentsActivity : BaseActivity(), UploadDocumentsPresenter.UploadD
     }
 
     override fun goToWelcome() {
-        SignInActivity.startWelcomeActivity(this@UploadDocumentsActivity)
+        SignInActivity.startSignInActivity(this@UploadDocumentsActivity)
     }
 }

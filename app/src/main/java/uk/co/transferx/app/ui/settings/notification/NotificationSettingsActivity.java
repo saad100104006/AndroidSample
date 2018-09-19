@@ -105,6 +105,6 @@ public class NotificationSettingsActivity extends BaseActivity implements Notifi
 
     @Override
     public void goToWelcome() {
-        SignInActivity.Companion.startWelcomeActivity(NotificationSettingsActivity.this);
+        SignInActivity.Companion.startSignInActivity(NotificationSettingsActivity.this);
     }
 }

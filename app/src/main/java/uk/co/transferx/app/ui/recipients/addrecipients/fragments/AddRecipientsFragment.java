@@ -223,6 +223,6 @@ public class AddRecipientsFragment extends BaseFragment implements AddRecipients
 
     @Override
     public void goToWelcome() {
-        SignInActivity.Companion.startWelcomeActivity(getActivity());
+        SignInActivity.Companion.startSignInActivity(getActivity());
     }
 }

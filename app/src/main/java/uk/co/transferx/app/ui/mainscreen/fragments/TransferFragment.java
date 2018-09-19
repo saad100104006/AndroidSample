@@ -251,7 +251,7 @@ public class TransferFragment extends BaseFragment implements TransferFragmentPr
 
     @Override
     public void goToWelcome() {
-        SignInActivity.Companion.startWelcomeActivity(getActivity());
+        SignInActivity.Companion.startSignInActivity(getActivity());
     }
 
     @Override

@@ -104,6 +104,6 @@ class AddCardActivity : BaseActivity(), AddCardPresenter.AddCardUI {
     }
 
     override fun goToWelcome() {
-        SignInActivity.startWelcomeActivity(this@AddCardActivity)
+        SignInActivity.startSignInActivity(this@AddCardActivity)
     }
 }

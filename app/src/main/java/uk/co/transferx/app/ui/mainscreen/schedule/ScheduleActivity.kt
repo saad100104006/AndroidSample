@@ -88,7 +88,7 @@ class ScheduleActivity : BaseActivity(), ScheduleActivityPresenter.ScheduleActiv
     }
 
     override fun goToWelcome() {
-        SignInActivity.startWelcomeActivity(this@ScheduleActivity)
+        SignInActivity.startSignInActivity(this@ScheduleActivity)
     }
 
     private fun setChosenDate(settledDate: Date) {

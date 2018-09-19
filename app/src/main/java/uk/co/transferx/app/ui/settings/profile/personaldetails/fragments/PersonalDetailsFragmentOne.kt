@@ -53,6 +53,6 @@ class PersonalDetailsFragmentOne : BaseFragment(), PersonalDetailsPresenterOne.P
     }
 
     override fun goToWelcome() {
-//        SignInActivity.startWelcomeActivity(activity)
+//        SignInActivity.startSignInActivity(activity)
     }
 }
