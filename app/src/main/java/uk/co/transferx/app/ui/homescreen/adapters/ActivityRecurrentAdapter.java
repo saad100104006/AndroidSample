@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.data.pojo.Transaction;
 
-/**
- * Created by Root on 12/30/2017.
- */
-
 public class ActivityRecurrentAdapter extends RecyclerView.Adapter<ActivityRecurrentAdapter.SingleItemRowHolder> {
 
     private ArrayList<Transaction> transactions;
