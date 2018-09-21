@@ -79,8 +79,8 @@ class SignInFragment : BaseFragment(), SignInContract.View {
         super.onStart()
 
         // Add listeners
-        mailInputText!!.addTextChangedListener(emailTextWatcher)
-        passwInputText!!.addTextChangedListener(passwTextWatcher)
+        mailInputText.addTextChangedListener(emailTextWatcher)
+        passwInputText.addTextChangedListener(passwTextWatcher)
     }
 
     override fun onResume() {
@@ -93,8 +93,8 @@ class SignInFragment : BaseFragment(), SignInContract.View {
         presenter.detachUI()
 
         // Remove listeners
-        mailInputText!!.removeTextChangedListener(emailTextWatcher)
-        passwInputText!!.removeTextChangedListener(passwTextWatcher)
+        mailInputText.removeTextChangedListener(emailTextWatcher)
+        passwInputText.removeTextChangedListener(passwTextWatcher)
     }
 
     override fun goToSignUp() {

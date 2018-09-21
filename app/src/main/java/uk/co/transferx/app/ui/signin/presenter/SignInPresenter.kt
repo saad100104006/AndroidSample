@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import uk.co.transferx.app.data.pojo.TokenEntity
@@ -29,7 +30,7 @@ class SignInPresenter @Inject constructor
  private val tokenRepository: TokenRepository)
     : BasePresenter<SignInContract.View>(sharedPreferences), SignInContract.Presenter {
 
-    private var disposable: Disposable? = null
+    private var disposable: Disposable? = Disposables.disposed()
 
     private var email: String? = null
 
@@ -40,58 +41,49 @@ class SignInPresenter @Inject constructor
 
     override fun detachUI() {
         super.detachUI()
-        if (disposable != null) {
-            disposable!!.dispose()
-        }
+        disposable?.dispose()
     }
 
     override fun signIn() {
-        if (tokenRepository.getToken().accessToken.isEmpty() && ui != null) {
-            ui.showConnectionError()
+        if (tokenRepository.getToken().accessToken.isEmpty()) {
+            this.ui?.showConnectionError()
             return
         }
         signIn(email, password)
     }
 
     override fun validateEmail(email: String) {
-        if (ui != null) {
-            this.email = email
-            ui.changeButtonState(isInputDataValid)
-        }
+        this.email = email
+        this.ui?.changeButtonState(isInputDataValid)
     }
 
     override fun validatePassword(password: String) {
-        if (ui != null) {
-            this.password = password
-            ui.changeButtonState(isInputDataValid)
-        }
+        this.password = password
+        this.ui?.changeButtonState(isInputDataValid)
     }
 
     override fun goToRecoverPassword() {
-        ui.goToRecoverPassword()
+        this.ui?.goToRecoverPassword()
     }
 
     override fun goToSignUp() {
         if (!tokenRepository.getToken().accessToken.isEmpty()) {
             sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply()
             sharedPreferences.edit().remove(CREDENTIAL).apply()
-            ui.goToSignUp()
+            this.ui?.goToSignUp()
             return
         }
-        ui.showConnectionError()
+        this.ui?.showConnectionError()
     }
 
     override fun refreshGenesisToken() {
         disposable = signUpApi.initialToken
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ resp ->
-                    if (ui != null) {
-                        if (resp.code() == HttpsURLConnection.HTTP_OK) {
-                            tokenManager.saveToken(resp.body())
-                            return@subscribe
-                        }
-                        ui.showConnectionError()
+                .subscribe({
+                    when (it.code()) {
+                        HttpsURLConnection.HTTP_OK -> tokenManager.saveToken(it.body())
+                        else -> this.ui?.showConnectionError()
                     }
                 }, { this.handleError() })
     }
@@ -99,43 +91,34 @@ class SignInPresenter @Inject constructor
     private fun signIn(email: String?, password: String?) {
         val request = UserSignIn.Builder()
         disposable = signUpApi.initialToken
-                .flatMap<Response<TokenEntity>> { resp ->
-                    if (resp.code() == HttpsURLConnection.HTTP_OK) {
-                        return@flatMap signInOutApi.signIn(resp.body()?.accessToken, request.uname(email).upass(password).build())
+                .flatMap<Response<TokenEntity>> {
+                    if (it.code() == HttpsURLConnection.HTTP_OK) {
+                        return@flatMap signInOutApi.signIn(it.body()?.accessToken, request.uname(email).upass(password).build())
                     }
-                    return@flatMap Single.just<Response<TokenEntity>>(resp)
+                    return@flatMap Single.just<Response<TokenEntity>>(it)
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ resp ->
-                    if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                        tokenManager.saveToken(resp.body())
-                        sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
+                .subscribe({
+                    when (it.code()) {
+                        HttpsURLConnection.HTTP_OK -> {
+                            tokenManager.saveToken(it.body())
+                            sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
 
-                        if (shouldGoToConfirmation()) {
-                            // TODO Add link confirmation screen
-                            return@subscribe
+                            if (shouldGoToConfirmation()) {
+                                // TODO Add link confirmation screen
+                            } else this.ui?.goToMainScreen()
                         }
-
-                        ui.goToMainScreen()
-                        return@subscribe
-                    } else if (resp.code() == HttpsURLConnection.HTTP_NOT_FOUND && ui != null) {
-                        ui.showUserNotFound()
-                        return@subscribe
-                    } else if (resp.code() == HttpsURLConnection.HTTP_UNAUTHORIZED && ui != null) {
-                        ui.showWrongPassword()
-                        return@subscribe
+                        HttpsURLConnection.HTTP_NOT_FOUND -> this.ui?.showUserNotFound()
+                        HttpsURLConnection.HTTP_UNAUTHORIZED -> this.ui?.showWrongPassword()
+                        else -> this.ui?.showConnectionError()
                     }
-                    ui.showConnectionError()
-
                 }, { this.handleError() })
 
     }
 
     private fun handleError() {
-        if (ui != null) {
-            ui.showConnectionError()
-        }
+            this.ui?.showConnectionError()
     }
 
     private fun shouldGoToConfirmation(): Boolean {
