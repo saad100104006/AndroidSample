@@ -3,6 +3,7 @@ package uk.co.transferx.app.ui.splash.presenter
 import android.content.SharedPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
 import uk.co.transferx.app.data.firebase.SubscriptionManager
 import uk.co.transferx.app.data.remote.SignUpApi
@@ -26,7 +27,7 @@ constructor(private val signUpApi: SignUpApi, private val tokenManager: TokenMan
             private val tokenRepository: TokenRepository)
     : BasePresenter<SplashContract.View>(sharedPreferences) {
 
-    private var dis: Disposable? = null
+    private var dis: Disposable? = Disposables.disposed()
 
     init {
         subscriptionManager.initSubscribtions()
@@ -38,7 +39,7 @@ constructor(private val signUpApi: SignUpApi, private val tokenManager: TokenMan
                 .delay(SPLASH_DELAY, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ res ->
+                .subscribe({
                     val loggedInStatus = sharedPreferences.getBoolean(LOGGED_IN_STATUS, false)
                     val firstStart = sharedPreferences.getBoolean(FIRST_START_APP, true)
 
@@ -49,25 +50,23 @@ constructor(private val signUpApi: SignUpApi, private val tokenManager: TokenMan
                         return@subscribe
                     }
 
-                    if (res.code() == HttpsURLConnection.HTTP_OK && tokenManager.shouldSaveGenesis()) {
-                        tokenManager.saveToken(res.body())
+                    if (it.code() == HttpsURLConnection.HTTP_OK && tokenManager.shouldSaveGenesis()) {
+                        tokenManager.saveToken(it.body())
                     }
 
                     if (loggedInStatus) {
                         this.ui?.goToPinScreen()
-                        return@subscribe
-                    }
-                    this.ui?.goToLandingScreen()
+                    } else this.ui?.goToLandingScreen()
 
                 }, { this.handleError(it) })
     }
 
     private fun handleError(throwable: Throwable) {
-        this.ui.goToLandingScreen()
+        this.ui?.goToLandingScreen()
     }
 
     override fun detachUI() {
-        dis!!.dispose()
+        dis?.dispose()
         super.detachUI()
     }
 

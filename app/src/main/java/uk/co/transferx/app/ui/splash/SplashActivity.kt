@@ -36,7 +36,6 @@ class SplashActivity : BaseActivity(), SplashContract.View {
         presenter.attachUI(this)
     }
 
-
     override fun onPause() {
         super.onPause()
         presenter.detachUI()
