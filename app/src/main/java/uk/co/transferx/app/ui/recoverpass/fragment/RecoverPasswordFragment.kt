@@ -1,6 +1,7 @@
 package uk.co.transferx.app.ui.recoverpass.fragment
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.design.widget.TextInputEditText
 import android.support.v4.content.ContextCompat
 import android.text.Editable
@@ -19,13 +20,14 @@ import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.recoverpass.RecoverPasswordActivity
+import uk.co.transferx.app.ui.recoverpass.RecoverPasswordContract
 import uk.co.transferx.app.ui.recoverpass.presenter.RecoverPasswordPresenter
 
 /**
  * Created by sergey on 23.11.17.
  */
 
-class RecoverPasswordFragment : BaseFragment(), RecoverPasswordPresenter.RecoverPasswordUI {
+class RecoverPasswordFragment : BaseFragment(), RecoverPasswordContract.View {
     @Inject
     lateinit var presenter: RecoverPasswordPresenter
 
@@ -47,8 +49,6 @@ class RecoverPasswordFragment : BaseFragment(), RecoverPasswordPresenter.Recover
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // setStatusOfError(textInputEditText, label, R.color.black);
-                // firstError.setVisibility(View.GONE);
                 presenter.validateEmail(s.toString())
             }
 
@@ -64,9 +64,6 @@ class RecoverPasswordFragment : BaseFragment(), RecoverPasswordPresenter.Recover
     override fun unlockButton() {
         sendEmail?.isEnabled = true
         sendEmail?.background = ContextCompat.getDrawable(context!!, R.drawable.btn_style_bright)
-        //  setStatusOfError(textInputEditText, label, R.color.red);
-        //  firstError.setText(R.string.email_error);
-        //  firstError.setVisibility(View.VISIBLE);
     }
 
     override fun onResume() {
@@ -74,14 +71,14 @@ class RecoverPasswordFragment : BaseFragment(), RecoverPasswordPresenter.Recover
         presenter.attachUI(this)
     }
 
-    override fun successGoBack() {
-        hideKeyboard(recoverMailInputText)
-        (activity as RecoverPasswordActivity).goSuccess()
+    override fun onPause() {
+        super.onPause()
+        presenter.detachUI()
     }
 
-    override fun onPause() {
-        presenter.detachUI()
-        super.onPause()
+    override fun goToSuccessScreen() {
+        hideKeyboard(recoverMailInputText)
+        (activity as RecoverPasswordActivity).goSuccess()
     }
 
     override fun lockButton() {
@@ -94,7 +91,7 @@ class RecoverPasswordFragment : BaseFragment(), RecoverPasswordPresenter.Recover
     }
 
     override fun error() {
-        Toast.makeText(context, "Error occurred", Toast.LENGTH_SHORT).show()
+        Snackbar.make(rootLayout!!, getString(R.string.connection_error), Snackbar.LENGTH_LONG)
     }
 
     override fun goToWelcome() {
