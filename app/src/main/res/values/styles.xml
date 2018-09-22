@@ -62,7 +62,7 @@
     </style>
 
     <style name="AppTheme.Splash" parent="AppTheme.NoActionBar">
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
     <style name="ButtonTheme" parent="Widget.AppCompat.Button.Colored">
