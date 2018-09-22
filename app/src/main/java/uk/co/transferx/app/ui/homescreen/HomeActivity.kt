@@ -1,12 +1,9 @@
 package uk.co.transferx.app.ui.homescreen
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.support.v4.content.ContextCompat
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_home.*
 import uk.co.transferx.app.R
 import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.ui.homescreen.fragments.FragActivity
@@ -14,9 +11,7 @@ import uk.co.transferx.app.ui.homescreen.fragments.FragRecipients
 import uk.co.transferx.app.ui.homescreen.fragments.FragSettings
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import android.graphics.drawable.Drawable
-
-
+import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity() {
 
@@ -24,61 +19,53 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val tvActivity = findViewById<TextView>(R.id.tv_activity)
-        val tvRecipients = findViewById<TextView>(R.id.tv_recipients)
-        val tvSettings = findViewById<TextView>(R.id.tv_settings)
-
-        val barActivity = findViewById<View>(R.id.view_activity_bar)
-        val barRecipients = findViewById<View>(R.id.view_recipients_bar)
-        val barSettings = findViewById<View>(R.id.view_settings_bar)
-
-        tvActivity.setOnClickListener(View.OnClickListener {
+        tvActivity.setOnClickListener{
             tvActivity.setTextColor(ContextCompat.getColor(this, R.color.amber))
             setTextViewDrawableColor(tvActivity, R.color.amber)
-            barActivity.setBackgroundColor(ContextCompat.getColor(this, R.color.amber))
+            viewActivityBar.setBackgroundColor(ContextCompat.getColor(this, R.color.amber))
 
             tvRecipients.setTextColor(ContextCompat.getColor(this, R.color.grey_text))
             setTextViewDrawableColor(tvRecipients, R.color.grey_text)
-            barRecipients.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
+            viewRecipientsBar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
 
             tvSettings.setTextColor(ContextCompat.getColor(this, R.color.grey_text))
             setTextViewDrawableColor(tvSettings, R.color.grey_text)
-            barSettings.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
+            viewSettingsBar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
 
             callFragmentActivity()
-        })
+        }
 
-        tvRecipients.setOnClickListener(View.OnClickListener {
+        tvRecipients.setOnClickListener {
             tvActivity.setTextColor(ContextCompat.getColor(this, R.color.grey_text))
             setTextViewDrawableColor(tvActivity, R.color.grey_text)
-            barActivity.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
+            viewActivityBar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
 
             tvRecipients.setTextColor(ContextCompat.getColor(this, R.color.amber))
             setTextViewDrawableColor(tvRecipients, R.color.amber)
-            barRecipients.setBackgroundColor(ContextCompat.getColor(this, R.color.amber))
+            viewRecipientsBar.setBackgroundColor(ContextCompat.getColor(this, R.color.amber))
 
             tvSettings.setTextColor(ContextCompat.getColor(this, R.color.grey_text))
             setTextViewDrawableColor(tvSettings, R.color.grey_text)
-            barSettings.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
+            viewSettingsBar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
 
             callFragmentRecipients()
-        })
+        }
 
-        tvSettings.setOnClickListener(View.OnClickListener {
+        tvSettings.setOnClickListener{
             tvActivity.setTextColor(ContextCompat.getColor(this, R.color.grey_text))
             setTextViewDrawableColor(tvActivity, R.color.grey_text)
-            barActivity.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
+            viewActivityBar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
 
             tvRecipients.setTextColor(ContextCompat.getColor(this, R.color.grey_text))
             setTextViewDrawableColor(tvRecipients, R.color.grey_text)
-            barRecipients.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
+            viewRecipientsBar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
 
             tvSettings.setTextColor(ContextCompat.getColor(this, R.color.amber))
             setTextViewDrawableColor(tvSettings, R.color.amber)
-            barSettings.setBackgroundColor(ContextCompat.getColor(this, R.color.amber))
+            viewSettingsBar.setBackgroundColor(ContextCompat.getColor(this, R.color.amber))
 
             callFragmentSettings()
-        })
+        }
 
         callFragmentActivity()
     }
@@ -92,14 +79,14 @@ class HomeActivity : BaseActivity() {
     }
 
     internal fun callFragmentActivity() {
-        replaceFragment(FragActivity(), 0, R.id.container_home)
+        replaceFragment(FragActivity(), 0, R.id.containerHome)
     }
 
     internal fun callFragmentRecipients() {
-        replaceFragment(FragRecipients(), 0, R.id.container_home)
+        replaceFragment(FragRecipients(), 0, R.id.containerHome)
     }
 
     internal fun callFragmentSettings() {
-        replaceFragment(FragSettings(), 0, R.id.container_home)
+        replaceFragment(FragSettings(), 0, R.id.containerHome)
     }
 }
