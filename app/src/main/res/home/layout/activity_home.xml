@@ -9,14 +9,12 @@
     tools:context=".ui.homescreen.HomeActivity">
 
     <FrameLayout
-        android:visibility="gone"
         android:id="@+id/containerHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/navBottom" />
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/navBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -106,48 +104,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/main_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/grey_bg">
-
-        <ImageView
-            android:id="@+id/main_background"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:alpha="0.05"
-            android:scaleType="fitXY"
-            android:src="@drawable/success_background"
-            android:tint="@color/hint" />
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_height="66dp"
-            app:tabIndicatorHeight="3dp"
-            android:background="@color/color_nav_bottom_bar"
-            app:tabMode="fixed"
-            app:tabPaddingBottom="-1dp"
-            app:tabPaddingEnd="-1dp"
-            app:tabPaddingStart="-1dp"
-            app:tabPaddingTop="-1dp"
-            app:tabBackground="@color/color_nav_bottom_bar"
-            app:tabIndicatorColor="@color/amber" />
-
-        <uk.co.transferx.app.ui.customview.NonSwipeableViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/tabs"
-            android:layout_alignParentTop="true">
-        </uk.co.transferx.app.ui.customview.NonSwipeableViewPager>
-
-    </RelativeLayout>
 
 </RelativeLayout>
