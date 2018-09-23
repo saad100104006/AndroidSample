@@ -18,11 +18,9 @@ class ActivityRecurrentAdapter(private val mContext: Context, private val transa
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == TYPE_ITEM) {
-            val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_activity, parent, false)
-            return ItemViewHolder(itemView)
+            return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_activity, parent, false))
         } else {
-            val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_header_divider, parent, false)
-            return HeaderViewHolder(itemView)
+            return HeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_header_divider, parent, false))
         }
     }
 
@@ -52,10 +50,10 @@ class ActivityRecurrentAdapter(private val mContext: Context, private val transa
 
         init {
 
-            this.name = view.findViewById(R.id.tv_name)
-            this.amount = view.findViewById(R.id.tv_amount)
-            this.userImg = view.findViewById(R.id.img_user)
-            this.indicator = view.findViewById(R.id.img_indicator)
+            this.name = view.findViewById(R.id.tvName)
+            this.amount = view.findViewById(R.id.tvAmount)
+            this.userImg = view.findViewById(R.id.imgUser)
+            this.indicator = view.findViewById(R.id.imgIndicator)
 
             view.setOnClickListener { v -> if (clickListener != null) clickListener!!.onItemClick(v, transactions!![adapterPosition]) }
         }
@@ -70,7 +68,7 @@ class ActivityRecurrentAdapter(private val mContext: Context, private val transa
         protected var header: TextView
 
         init {
-            this.header = view.findViewById(R.id.tv_header)
+            this.header = view.findViewById(R.id.tvDate)
         }
     }
 

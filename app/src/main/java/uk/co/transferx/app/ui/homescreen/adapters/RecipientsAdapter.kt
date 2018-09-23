@@ -18,11 +18,9 @@ class RecipientsAdapter(private val mContext: Context, private val transactions:
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == TYPE_ITEM) {
-            val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_recipient, parent, false)
-            return ItemViewHolder(itemView)
+            return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_recipient, parent, false))
         } else {
-            val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_header_divider, parent, false)
-            return HeaderViewHolder(itemView)
+            return HeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_header_divider, parent, false))
         }
     }
 
@@ -51,9 +49,9 @@ class RecipientsAdapter(private val mContext: Context, private val transactions:
 
         init {
 
-            this.name = view.findViewById(R.id.tv_name)
-            this.flagImg = view.findViewById(R.id.img_country_flag)
-            this.userImg = view.findViewById(R.id.img_user)
+            this.name = view.findViewById(R.id.tvName)
+            this.flagImg = view.findViewById(R.id.imgCountryFlag)
+            this.userImg = view.findViewById(R.id.imgUser)
 
             view.setOnClickListener { v -> if (clickListener != null) clickListener!!.onItemClick(v, transactions!![adapterPosition]) }
         }
@@ -68,7 +66,7 @@ class RecipientsAdapter(private val mContext: Context, private val transactions:
         protected var header: TextView
 
         init {
-            this.header = view.findViewById(R.id.tv_header)
+            this.header = view.findViewById(R.id.tvDate)
         }
     }
 

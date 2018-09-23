@@ -1,66 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgUser"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/ic_user"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="1dp"
+        app:civ_fill_color="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/viewDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <TextView
+        android:id="@+id/tvName"
+        style="@style/text_grey"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:text="Naomi Campbell"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvAmount"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imgUser"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAmount"
+        style="@style/text_black"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="20dp"
+        android:text="£ 50"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/imgIndicator"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgIndicator"
+        android:layout_width="12dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="24dp"
+        android:src="@android:drawable/ic_notification_overlay"
+        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_user"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="32dp"
-            android:src="@drawable/ic_user"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="1dp"
-            app:civ_fill_color="@color/white" />
-
-        <TextView
-            android:id="@+id/tv_name"
-            style="@style/text_grey"
-            android:text="Naomi Campbell"
-            android:textSize="16sp"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:layout_marginLeft="12dp"
-            android:id="@+id/tv_amount"
-            style="@style/text_black"
-            android:text="£ 50"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:id="@+id/img_indicator"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="2dp"
-            android:layout_width="12dp"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_notification_overlay"/>
-
-        <ImageView
-            android:layout_marginRight="28dp"
-            android:layout_width="wrap_content"
-            android:layout_height="16sp"
-            android:src="@drawable/ic_right_arrow"/>
-
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="16sp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_right_arrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
+        android:id="@+id/viewDivider"
         style="@style/common_divider"
-        android:layout_marginStart="32dp" />
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgUser" />
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
