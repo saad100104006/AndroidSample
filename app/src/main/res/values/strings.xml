@@ -95,7 +95,7 @@
     <string name="last_name_recipient_hint">Enter a last name</string>
     <string name="enter_pin">Enter a PIN</string>
     <string name="enter_your_pin">Enter your PIN</string>
-    <string name="title_recover_success">Your recovery email is on it’s way</string>
+    <string name="title_recover_success">Email is on its way!</string>
     <string name="check_mail">Check your email inbox for a link to reset your password.</string>
     <string name="didnt_receive">Didn’t receive an email? <b>Contact Us</b> and we’ll help.</string>
     <string name="description">TransferX™ provides universal access to financial services. Allow us to point out some of our finest features.</string>
