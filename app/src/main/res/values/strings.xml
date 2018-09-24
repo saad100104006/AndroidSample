@@ -4,6 +4,8 @@
     <string name="sign_in">Sign in</string>
     <string name="sign_up">SIGN UP</string>
     <string name="create_an_account">Create an account</string>
+    <string name="login_details">Login details</string>
+    <string name="password_rules">Password must contain 8 characters and 1 capital letter.</string>
     <string name="next">NEXT</string>
     <string name="steps">Step %d</string>
     <string name="lets_start">Create an account</string>

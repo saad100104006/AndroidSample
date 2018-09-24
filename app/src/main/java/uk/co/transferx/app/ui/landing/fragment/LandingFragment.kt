@@ -53,7 +53,7 @@ class LandingFragment @Inject constructor() : Fragment(), LandingContract.View {
     }
 
     override fun showSignUpScreen() {
-        SignUpActivity.startSignUp(activity, null)
+        SignUpActivity.startSignUp(activity!!, null)
     }
 
     override fun goToWelcome() {
