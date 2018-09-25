@@ -12,7 +12,7 @@
         android:layout_height="120dp" >
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imgSendCash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="28dp"
@@ -38,32 +38,34 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tv_all"
+                android:id="@+id/tvAll"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
                 android:background="@color/amber"
                 android:gravity="center_horizontal"
                 android:padding="4dp"
-                android:textColor="#333333"
+                android:textColor="@color/black_text"
                 android:textSize="12sp"
+                android:clickable="true"
                 android:text="All" />
 
             <TextView
-                android:id="@+id/tv_recipient"
+                android:clickable="true"
+                android:id="@+id/tvRecurrent"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
                 android:gravity="center_horizontal"
                 android:padding="4dp"
-                android:textColor="#333333"
+                android:textColor="@color/black_text"
                 android:textSize="12sp"
                 android:text="Recurrent" />
 
         </LinearLayout>
 
         <TextView
-            style="@style/tv_toolbar_heading"
+            style="@style/tvToolbarHeading"
             android:text="@string/str_activity"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +82,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/img_empty_item"
+        android:id="@+id/imgEmptyItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -94,30 +96,35 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <TextView
-        android:id="@+id/tv_msg_empty_data"
+        android:id="@+id/tvMsgEmptyData"
         style="@style/tv_single_page_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_empty_item"
+        app:layout_constraintTop_toBottomOf="@+id/imgEmptyItem"
         android:text="@string/msg_send_money" />
 
     <TextView
-        android:id="@+id/tv_send_money"
+        android:id="@+id/tvSendMoney"
         style="@style/tv_action_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_msg_empty_data"
+        app:layout_constraintTop_toBottomOf="@+id/tvMsgEmptyData"
         app:layout_constraintVertical_bias="0.0"
         android:text="@string/action_send_money" />
 
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
+        android:background="@color/white"
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"/>
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

@@ -19,12 +19,11 @@
     <color name="red_delete">#da1010</color>
     <color name="transparent">#00000000</color>
     <color name="not_active">#d8d8d8</color>
-
-
     <color name="amber">#ffb300</color>
     <color name="grey">#cccccc</color>
     <color name="grey_bg">#f7f7f7</color>
     <color name="grey_text">#a7a7a7</color>
-
-
+    <color name="color_nav_bottom_bar">#121212</color>
+    <color name="black_text">#333333</color>
+    <color name="grey_77">#777777</color>
 </resources>

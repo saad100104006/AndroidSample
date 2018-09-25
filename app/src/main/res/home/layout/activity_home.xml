@@ -9,18 +9,20 @@
     tools:context=".ui.homescreen.HomeActivity">
 
     <FrameLayout
-        android:id="@+id/container_home"
+        android:visibility="visible"
+        android:id="@+id/containerHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/nav_bottom" />
+        android:layout_above="@+id/navBottom" />
 
     <LinearLayout
-        android:id="@+id/nav_bottom"
+        android:visibility="visible"
+        android:id="@+id/navBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
-        android:background="#121212"
+        android:background="@color/color_nav_bottom_bar"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
@@ -30,7 +32,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_activity"
+                android:id="@+id/tvActivity"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +44,7 @@
                 android:textSize="10sp" />
 
             <View
-                android:id="@+id/view_activity_bar"
+                android:id="@+id/viewActivityBar"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:layout_marginTop="4dp"
@@ -57,7 +59,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_recipients"
+                android:id="@+id/tvRecipients"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,7 +71,7 @@
                 android:textSize="10sp" />
 
             <View
-                android:id="@+id/view_recipients_bar"
+                android:id="@+id/viewRecipientsBar"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:layout_marginTop="4dp"
@@ -84,7 +86,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_settings"
+                android:id="@+id/tvSettings"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +98,7 @@
                 android:textSize="10sp" />
 
             <View
-                android:id="@+id/view_settings_bar"
+                android:id="@+id/viewSettingsBar"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:layout_marginTop="4dp"
@@ -104,5 +106,28 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <!--<android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="66dp"
+        app:tabTextColor="@color/bottom_nav_color"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:tabPaddingBottom="-1dp"
+        app:tabPaddingEnd="-1dp"
+        app:tabPaddingStart="-1dp"
+        app:tabPaddingTop="-1dp"
+        android:background="@color/color_nav_bottom_bar"
+        app:tabIndicatorColor="@color/amber" />
+
+    <uk.co.transferx.app.ui.customview.NonSwipeableViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tabs"
+        android:layout_alignParentTop="true">
+    </uk.co.transferx.app.ui.customview.NonSwipeableViewPager>-->
 
 </RelativeLayout>

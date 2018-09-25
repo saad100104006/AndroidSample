@@ -6,31 +6,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-
-import java.util.ArrayList
 
 import uk.co.transferx.app.R
 import uk.co.transferx.app.data.pojo.Transaction
 
-class ActivityAllAdapter(private val mContext: Context, private val transactions: ArrayList<Transaction>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+class ActivityAllAdapter(private val mContext: Context, private val transactions: List<Transaction>?) : RecyclerView.Adapter<ActivityAllAdapter.ItemViewHolder>() {
+
     private var clickListener: ItemClickListener? = null
+    private var flagDate: String? = ""
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == TYPE_ITEM) {
-            return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_activity, parent, false))
-        } else {
-            return HeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_header_divider, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityAllAdapter.ItemViewHolder {
+        return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_activity, parent, false))
+    }
+
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        if (!transactions?.get(position)?.created.equals(flagDate)) {
+            flagDate = transactions?.get(position)?.created
+            holder.headerView.visibility = View.VISIBLE
+            holder.date.setText(transactions?.get(position)?.created)
+            holder.divider.visibility = View.GONE
         }
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
-    }
-
-    override fun getItemViewType(position: Int): Int {
-
-        return TYPE_ITEM
+        else {
+            holder.headerView.visibility = View.GONE
+            holder.divider.visibility = View.VISIBLE
+        }
+        holder.name.setText(transactions?.get(position)?.meta?.recipientInfo?.firstName)
+        holder.amount.setText(transactions?.get(position)?.amount)
     }
 
     override fun getItemCount(): Int {
@@ -43,10 +47,13 @@ class ActivityAllAdapter(private val mContext: Context, private val transactions
 
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
-        protected var name: TextView
-        protected var amount: TextView
-        protected var userImg: ImageView
-        protected var indicator: ImageView
+        var name: TextView
+        var amount: TextView
+        var userImg: ImageView
+        var indicator: ImageView
+        var headerView: LinearLayout
+        var date: TextView
+        var divider: View
 
         init {
 
@@ -54,6 +61,9 @@ class ActivityAllAdapter(private val mContext: Context, private val transactions
             this.amount = view.findViewById(R.id.tvAmount)
             this.userImg = view.findViewById(R.id.imgUser)
             this.indicator = view.findViewById(R.id.imgIndicator)
+            this.headerView = view.findViewById(R.id.llHeader)
+            this.date = view.findViewById(R.id.tvDate)
+            this.divider = view.findViewById(R.id.viewDivider)
 
             view.setOnClickListener { v -> if (clickListener != null) clickListener!!.onItemClick(v, transactions!![adapterPosition]) }
         }
@@ -63,22 +73,7 @@ class ActivityAllAdapter(private val mContext: Context, private val transactions
         }
     }
 
-    inner class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        protected var header: TextView
-
-        init {
-            this.header = view.findViewById(R.id.tvDate)
-        }
-    }
-
     interface ItemClickListener {
         fun onItemClick(view: View, data: Transaction)
-    }
-
-    companion object {
-
-        private val TYPE_HEADER = 0
-        private val TYPE_ITEM = 1
     }
 }
