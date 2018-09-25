@@ -19,7 +19,7 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        tvActivity.setOnClickListener{
+        tvActivity.setOnClickListener {
             tvActivity.setTextColor(ContextCompat.getColor(this, R.color.amber))
             setTextViewDrawableColor(tvActivity, R.color.amber)
             viewActivityBar.setBackgroundColor(ContextCompat.getColor(this, R.color.amber))
@@ -51,7 +51,7 @@ class HomeActivity : BaseActivity() {
             callFragmentRecipients()
         }
 
-        tvSettings.setOnClickListener{
+        tvSettings.setOnClickListener {
             tvActivity.setTextColor(ContextCompat.getColor(this, R.color.grey_text))
             setTextViewDrawableColor(tvActivity, R.color.grey_text)
             viewActivityBar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))

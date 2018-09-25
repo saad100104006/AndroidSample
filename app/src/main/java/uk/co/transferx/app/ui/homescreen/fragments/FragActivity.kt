@@ -15,7 +15,7 @@ class FragActivity : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_activity, container, false)
 
-        tvAll.setOnClickListener{
+        tvAll.setOnClickListener {
             tvAll.setBackgroundColor(ContextCompat.getColor(context!!, R.color.amber))
             tvRecipient.setBackgroundColor(ContextCompat.getColor(context!!, R.color.transparent))
 
@@ -23,7 +23,7 @@ class FragActivity : BaseFragment() {
             imgEmptyItem.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.cash_send))
         }
 
-        tvRecipient.setOnClickListener{
+        tvRecipient.setOnClickListener {
             tvAll.setBackgroundColor(ContextCompat.getColor(context!!, R.color.transparent))
             tvRecipient.setBackgroundColor(ContextCompat.getColor(context!!, R.color.amber))
 
@@ -32,7 +32,6 @@ class FragActivity : BaseFragment() {
         }
 
         tvSendMoney.setOnClickListener { }
-
         return view
     }
 

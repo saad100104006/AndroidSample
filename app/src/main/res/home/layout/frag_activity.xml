@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/grey_bg"
     android:layout_height="match_parent">
@@ -47,7 +46,7 @@
                 android:padding="4dp"
                 android:textColor="@color/black_text"
                 android:textSize="12sp"
-                android:text="All" />
+                android:text="@string/all" />
 
             <TextView
                 android:id="@+id/tvRecipient"
@@ -58,7 +57,7 @@
                 android:padding="4dp"
                 android:textColor="@color/black_text"
                 android:textSize="12sp"
-                android:text="Recurrent" />
+                android:text="@string/recurrent" />
 
         </LinearLayout>
 
