@@ -33,7 +33,7 @@ class RecoverPasswordFragment : BaseFragment(), RecoverPasswordContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity!!.application as TransferXApplication).appComponent.inject(this)
+        (activity?.application as TransferXApplication).appComponent.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,20 +42,6 @@ class RecoverPasswordFragment : BaseFragment(), RecoverPasswordContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        recoverMailInputText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                presenter.validateEmail(s.toString())
-            }
-
-            override fun afterTextChanged(s: Editable) {
-
-            }
-        })
 
         sendEmail?.setOnClickListener { presenter.sendEmail() }
         buttonBack.setOnClickListener { presenter.goBack() }
@@ -68,12 +54,16 @@ class RecoverPasswordFragment : BaseFragment(), RecoverPasswordContract.View {
 
     override fun onResume() {
         super.onResume()
+
         presenter.attachUI(this)
+        recoverMailInputText.addTextChangedListener(recoverEmailTextWatcher)
     }
 
     override fun onPause() {
         super.onPause()
+
         presenter.detachUI()
+        recoverMailInputText.removeTextChangedListener(recoverEmailTextWatcher)
     }
 
     override fun goToSuccessScreen() {
@@ -91,7 +81,7 @@ class RecoverPasswordFragment : BaseFragment(), RecoverPasswordContract.View {
     }
 
     override fun error() {
-        Snackbar.make(rootLayout!!, getString(R.string.connection_error), Snackbar.LENGTH_LONG)
+        Snackbar.make(rootLayout, getString(R.string.connection_error), Snackbar.LENGTH_LONG)
     }
 
     override fun goToWelcome() {
@@ -100,5 +90,17 @@ class RecoverPasswordFragment : BaseFragment(), RecoverPasswordContract.View {
 
     override fun tagName(): String {
         return RecoverPasswordFragment::class.java.simpleName
+    }
+
+    private val recoverEmailTextWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            presenter.validateEmail(s.toString())
+        }
     }
 }
