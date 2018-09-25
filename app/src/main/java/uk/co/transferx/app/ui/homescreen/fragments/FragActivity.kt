@@ -15,10 +15,11 @@ import uk.co.transferx.app.ui.base.BaseFragment
 class FragActivity : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.frag_activity, container, false)
+        return inflater.inflate(R.layout.frag_activity, container, false)
+    }
 
-        val txtAll = view.findViewById<TextView>(R.id.txtAll)
-        val txtRecipient = view.findViewById<TextView>(R.id.txtRecipient)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         txtAll.setOnClickListener{
             txtAll.setBackgroundColor(ContextCompat.getColor(context!!, R.color.amber))
@@ -37,8 +38,6 @@ class FragActivity : BaseFragment() {
         }
 
         //tvSendMoney.setOnClickListener { }
-
-        return view
     }
 
     override fun tagName(): String {

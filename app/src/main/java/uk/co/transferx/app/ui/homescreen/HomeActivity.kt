@@ -27,10 +27,6 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val tvActivity = findViewById<TextView>(R.id.tvActivity)
-        val tvRecipients = findViewById<TextView>(R.id.tvRecipients)
-        val tvSettings = findViewById<TextView>(R.id.tvSettings)
-
         tvActivity.setOnClickListener{
             tvActivity.setTextColor(ContextCompat.getColor(this, R.color.amber))
             setTextViewDrawableColor(tvActivity, R.color.amber)
