@@ -9,12 +9,14 @@
                 tools:context=".ui.homescreen.HomeActivity">
 
     <FrameLayout
+        android:visibility="visible"
         android:id="@+id/containerHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/navBottom"/>
 
     <LinearLayout
+        android:visibility="visible"
         android:id="@+id/navBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -105,5 +107,28 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <!--<android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="66dp"
+        app:tabTextColor="@color/bottom_nav_color"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:tabPaddingBottom="-1dp"
+        app:tabPaddingEnd="-1dp"
+        app:tabPaddingStart="-1dp"
+        app:tabPaddingTop="-1dp"
+        android:background="@color/color_nav_bottom_bar"
+        app:tabIndicatorColor="@color/amber" />
+
+    <uk.co.transferx.app.ui.customview.NonSwipeableViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tabs"
+        android:layout_alignParentTop="true">
+    </uk.co.transferx.app.ui.customview.NonSwipeableViewPager>-->
 
 </RelativeLayout>
