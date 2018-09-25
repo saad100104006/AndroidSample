@@ -27,7 +27,6 @@ import uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT
  */
 
 class SignUpActivity : BaseActivity() {
-
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
@@ -40,9 +39,7 @@ class SignUpActivity : BaseActivity() {
         val credentials = intent.getBundleExtra(CREDENTIAL)
         setContentView(R.layout.signup_activity_layout)
 
-        sparseArray.put(0, SignUpStepOneFragment())
-        sparseArray.put(1, SignUpStepTwoFragment())
-        sparseArray.put(2, SignUpStepThreeFragment())
+        setUpFragments()
 
         val fragment = sparseArray.get(currentFragment)
         if (credentials != null) fragment.arguments = credentials
@@ -78,6 +75,12 @@ class SignUpActivity : BaseActivity() {
             2 -> showNextOrPreviousFragment(1, null)
             else -> super.onBackPressed()
         }
+    }
+
+    private fun setUpFragments(){
+        sparseArray.put(0, SignUpStepOneFragment())
+        sparseArray.put(1, SignUpStepTwoFragment())
+        sparseArray.put(2, SignUpStepThreeFragment())
     }
 
     companion object {

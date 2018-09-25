@@ -36,7 +36,6 @@ public class SignUpStepThreePresenter extends BasePresenter<SignUpStepThreePrese
     private CompositeDisposable compositeDisposable;
     private String firstPin, secondPin;
 
-
     @Inject
     public SignUpStepThreePresenter(final CryptoManager cryptoManager, final SharedPreferences sharedPreferences, final SignUpApi signUpApi, final TokenManager tokenManager) {
         this.cryptoManager = cryptoManager;

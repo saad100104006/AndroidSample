@@ -1,25 +1,20 @@
 package uk.co.transferx.app.ui.signup.fragment
 
 import android.os.Bundle
-import android.support.design.widget.TextInputEditText
+import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.signup_step_one_fragment_layout.*
-import org.w3c.dom.Text
 
 import javax.inject.Inject
 
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.R
-import uk.co.transferx.app.R.string.email
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.signup.SignUpActivity
 import uk.co.transferx.app.ui.signup.presenters.SignUpStepOnePresenter
@@ -41,6 +36,10 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity!!.application as TransferXApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
+
+        // Set credentials from previous step
+        presenter.setEmail(arguments?.getString(EMAIL))
+        presenter.setPassword(arguments?.getString(PASSWORD))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,49 +49,62 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        buttonBack!!.setOnClickListener {
+        buttonBack.setOnClickListener {
             hideKeyboard(buttonBack)
             activity?.onBackPressed()
         }
-        
-        emailInputText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-        passwordInputText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-        passwordReinputText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-        
+
+        // Link base class button
+        buttonNext = buttonNextOne
         buttonNext.setOnClickListener { presenter.goToNextStep() }
 
-        emailInputText.setText(savedInstanceState?.getString(EMAIL))
-        passwordInputText.setText(savedInstanceState?.getString(PASSWORD))
-        passwordReinputText.setText(savedInstanceState?.getString(REPASSWORD))
+        countrySpinner.setData(resources.getStringArray(R.array.countries))
+        countrySpinner.setSelection(0, true)
+        countrySpinner.setOnItemSelectedListener { _, country -> presenter.setCountry(country.toString()) }
+
+        // Restore if possible
+        firstNameInputText.setText(savedInstanceState?.getString(FIRST_NAME))
+        secondNameInputText.setText(savedInstanceState?.getString(LAST_NAME))
+        phoneNumberInputText.setText(savedInstanceState?.getString(PHONE_NUMBER))
     }
+
+
 
     override fun onResume() {
         super.onResume()
         presenter.attachUI(this)
-        presenter.setFirstName(emailInputText!!.text.toString())
-        presenter.setLastName(passwordInputText!!.text.toString())
-        
+
+        firstNameInputText.addTextChangedListener(emailTextWatcher)
+        secondNameInputText.addTextChangedListener(passwordTextWatcher)
+        phoneNumberInputText.addTextChangedListener(phoneNumberTextWatcher)
     }
 
     override fun onPause() {
         presenter.detachUI()
-        emailInputText.removeTextChangedListener(emailTextWatcher)
-        passwordInputText.removeTextChangedListener(passwordTextWatcher)
-        passwordReinputText.removeTextChangedListener(rePasswordTextWatcher)
+
+        // Remove listeners
+        firstNameInputText.removeTextChangedListener(emailTextWatcher)
+        secondNameInputText.removeTextChangedListener(passwordTextWatcher)
+        phoneNumberInputText.removeTextChangedListener(phoneNumberTextWatcher)
         super.onPause()
     }
 
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(EMAIL, emailInputText.text.toString())
-        outState.putString(PASSWORD, passwordInputText.text.toString())
-        outState.putString(REPASSWORD, passwordReinputText.text.toString())
         super.onSaveInstanceState(outState)
+        outState.putString(FIRST_NAME, firstNameInputText.text.toString())
+        outState.putString(LAST_NAME, secondNameInputText.text.toString())
+        outState.putString(PHONE_NUMBER, phoneNumberInputText.text.toString())
     }
 
-    override fun goToNextStep(uname: String) {
+    override fun goToNextStep(email: String?, password: String?, uname: String?, phoneNumber: String?, country: String?) {
         val bundle = Bundle()
         bundle.putString(U_NAME, uname)
+        bundle.putString(EMAIL, email)
+        bundle.putString(PHONE_NUMBER, phoneNumber)
+        bundle.putString(PASSWORD, password)
+        bundle.putString(COUNTRY, country)
+
         (activity as SignUpActivity).showNextOrPreviousFragment(1, bundle)
     }
 
@@ -100,21 +112,20 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
         setButtonStatus(isEnabled)
     }
 
-    override fun showError() {
-        // TODO handle error with snackbar
-        Toast.makeText(context, "Something wrong with connection, please try again later", Toast.LENGTH_SHORT).show()
+    override fun setButtonStatus(isEnabled: Boolean) {
+        buttonNext.isEnabled = isEnabled
+        buttonNext.background = if (isEnabled) ContextCompat.getDrawable(context!!, R.drawable.btn_style_bright)
+        else ContextCompat.getDrawable(context!!, R.drawable.btn_disabled)
     }
 
-    override fun showNameError() {
-        //        setStatusOfError(emailInputText, firstLabel, R.color.red);
-        //        firstError.setText(R.string.first_name_error);
-        //        firstError.setVisibility(View.VISIBLE);
+    // Methods left for possible usage and implementation
+    override fun showNameError(isError: Boolean) {
     }
 
     override fun showLastNameError() {
-        //        setStatusOfError(passwordInputText, secondLabel, R.color.red);
-        //        secondError.setText(R.string.last_name_error);
-        //        secondError.setVisibility(View.VISIBLE);
+    }
+
+    override fun showPhoneNumberError() {
     }
 
     override fun goToWelcome() {
@@ -131,7 +142,6 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            // TODO set email
             presenter.setFirstName(s.toString())
         }
 
@@ -147,13 +157,12 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            // TODO set password
             presenter.setLastName(s.toString())
         }
 
     }
 
-    private val rePasswordTextWatcher = object : TextWatcher {
+    private val phoneNumberTextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
 
         }
@@ -163,15 +172,17 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            // TODO set again password
-            presenter.setLastName(s.toString())
+            presenter.setPhoneNumber(s.toString())
         }
 
     }
     companion object {
-        // TODO add to const util
-        private val EMAIL = "email"
-        private val PASSWORD = "password"
-        private val REPASSWORD = "repassword"
+        private const val FIRST_NAME = "first_name"
+        private const val LAST_NAME = "last_name"
+        private const val PHONE_NUMBER = "phone_number"
+        private const val COUNTRY = "country"
+        private const val PASSWORD = "password"
+        private const val EMAIL = "email"
+        private const val POSITION = "country_position"
     }
 }

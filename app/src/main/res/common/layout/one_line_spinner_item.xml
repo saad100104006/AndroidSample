@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@color/dark_blue_grey"
+    android:background="@drawable/input_field"
     android:orientation="horizontal">
 
     <View
@@ -31,7 +31,7 @@
         android:layout_toRightOf="@id/image_recip"
         android:gravity="center_vertical"
         android:lineSpacingExtra="6sp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="14sp"
         tools:text="testsdfasdf" />
 

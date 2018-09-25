@@ -3,20 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@color/dark_blue_grey"
+    android:background="@drawable/input_field"
     android:orientation="horizontal">
-
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white"
-        android:layout_alignParentBottom="true"/>
 
     <ImageView
         android:id="@+id/image_recip"
         android:layout_width="40dp"
         android:layout_height="24dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginBottom="6dp"
         android:visibility="visible"
         android:layout_centerVertical="true"
@@ -29,7 +23,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="8dp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:lineSpacingExtra="6sp"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
