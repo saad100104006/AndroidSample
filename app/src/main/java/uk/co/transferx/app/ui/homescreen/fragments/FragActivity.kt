@@ -5,7 +5,9 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import kotlinx.android.synthetic.main.frag_activity.*
+import kotlinx.android.synthetic.main.frag_activity.view.*
 
 import uk.co.transferx.app.R
 import uk.co.transferx.app.ui.base.BaseFragment
@@ -15,23 +17,26 @@ class FragActivity : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_activity, container, false)
 
-        tvAll.setOnClickListener{
-            tvAll.setBackgroundColor(ContextCompat.getColor(context!!, R.color.amber))
-            tvRecipient.setBackgroundColor(ContextCompat.getColor(context!!, R.color.transparent))
+        val txtAll = view.findViewById<TextView>(R.id.txtAll)
+        val txtRecipient = view.findViewById<TextView>(R.id.txtRecipient)
+
+        txtAll.setOnClickListener{
+            txtAll.setBackgroundColor(ContextCompat.getColor(context!!, R.color.amber))
+            txtRecipient.setBackgroundColor(ContextCompat.getColor(context!!, R.color.transparent))
 
             tvMsgEmptyData.setText(R.string.msg_add_recipient)
             imgEmptyItem.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.cash_send))
         }
 
-        tvRecipient.setOnClickListener{
-            tvAll.setBackgroundColor(ContextCompat.getColor(context!!, R.color.transparent))
-            tvRecipient.setBackgroundColor(ContextCompat.getColor(context!!, R.color.amber))
+        txtRecipient.setOnClickListener{
+            txtAll.setBackgroundColor(ContextCompat.getColor(context!!, R.color.transparent))
+            txtRecipient.setBackgroundColor(ContextCompat.getColor(context!!, R.color.amber))
 
             tvMsgEmptyData.setText(R.string.msg_empty_recurrent)
             imgEmptyItem.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_empty_recurrent))
         }
 
-        tvSendMoney.setOnClickListener { }
+        //tvSendMoney.setOnClickListener { }
 
         return view
     }
