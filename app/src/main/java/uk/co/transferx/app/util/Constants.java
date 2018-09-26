@@ -9,9 +9,14 @@ public final class Constants {
     public final static String SPACE = " ";
     public final static String UNDERSCORE = "_";
 
-    public static final String U_NAME = "first_name";
+    public static final String U_NAME = "user_name";
+    public static final String FIRST_NAME = "first_name";
+    public static final String LAST_NAME = "last_name";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
+    public static final String PHONE_NUMBER = "phone_number";
+    public static final String COUNTRY = "country";
+
     public static final String CREDENTIAL = "credential";
     public static final String DELETE = "delete";
 

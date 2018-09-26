@@ -78,8 +78,10 @@ class SignUpActivity : BaseActivity() {
     }
 
     private fun setUpFragments(){
-        sparseArray.put(0, SignUpStepOneFragment())
-        sparseArray.put(1, SignUpStepTwoFragment())
+//        sparseArray.put(0, SignUpStepOneFragment())
+//        sparseArray.put(1, SignUpStepTwoFragment())
+        sparseArray.put(1, SignUpStepOneFragment())
+        sparseArray.put(0, SignUpStepTwoFragment())
         sparseArray.put(2, SignUpStepThreeFragment())
     }
 

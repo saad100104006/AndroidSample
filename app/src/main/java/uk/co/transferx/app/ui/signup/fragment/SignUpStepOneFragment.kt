@@ -3,12 +3,10 @@ package uk.co.transferx.app.ui.signup.fragment
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.text.Editable
-import android.text.InputType
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import kotlinx.android.synthetic.main.signup_step_one_fragment_layout.*
 
 import javax.inject.Inject
@@ -18,8 +16,7 @@ import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.signup.SignUpActivity
 import uk.co.transferx.app.ui.signup.presenters.SignUpStepOnePresenter
-
-import uk.co.transferx.app.util.Constants.U_NAME
+import uk.co.transferx.app.util.Constants.*
 
 /**
  * Created by smilevkiy on 15.11.17.
@@ -59,8 +56,8 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
         buttonNext.setOnClickListener { presenter.goToNextStep() }
 
         countrySpinner.setData(resources.getStringArray(R.array.countries))
-        countrySpinner.setSelection(0, true)
         countrySpinner.setOnItemSelectedListener { _, country -> presenter.setCountry(country.toString()) }
+        countrySpinner.setSelection(0, true)
 
         // Restore if possible
         firstNameInputText.setText(savedInstanceState?.getString(FIRST_NAME))
@@ -73,9 +70,12 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
     override fun onResume() {
         super.onResume()
         presenter.attachUI(this)
+        presenter.setFirstName(firstNameInputText.text.toString())
+        presenter.setLastName(secondNameInputText.text.toString())
+        presenter.setPhoneNumber(phoneNumberInputText.text.toString())
 
-        firstNameInputText.addTextChangedListener(emailTextWatcher)
-        secondNameInputText.addTextChangedListener(passwordTextWatcher)
+        firstNameInputText.addTextChangedListener(firstNameTextWatcher)
+        secondNameInputText.addTextChangedListener(secondNameTextWatche)
         phoneNumberInputText.addTextChangedListener(phoneNumberTextWatcher)
     }
 
@@ -83,8 +83,8 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
         presenter.detachUI()
 
         // Remove listeners
-        firstNameInputText.removeTextChangedListener(emailTextWatcher)
-        secondNameInputText.removeTextChangedListener(passwordTextWatcher)
+        firstNameInputText.removeTextChangedListener(firstNameTextWatcher)
+        secondNameInputText.removeTextChangedListener(secondNameTextWatche)
         phoneNumberInputText.removeTextChangedListener(phoneNumberTextWatcher)
         super.onPause()
     }
@@ -105,7 +105,7 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
         bundle.putString(PASSWORD, password)
         bundle.putString(COUNTRY, country)
 
-        (activity as SignUpActivity).showNextOrPreviousFragment(1, bundle)
+        (activity as SignUpActivity).showNextOrPreviousFragment(2, bundle)
     }
 
     override fun setButton(isEnabled: Boolean) {
@@ -132,7 +132,7 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
         //no op
     }
 
-    private val emailTextWatcher = object : TextWatcher {
+    private val firstNameTextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             
         }
@@ -147,7 +147,7 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
 
     }
 
-    private val passwordTextWatcher = object : TextWatcher {
+    private val secondNameTextWatche = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
 
         }
@@ -176,13 +176,5 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
         }
 
     }
-    companion object {
-        private const val FIRST_NAME = "first_name"
-        private const val LAST_NAME = "last_name"
-        private const val PHONE_NUMBER = "phone_number"
-        private const val COUNTRY = "country"
-        private const val PASSWORD = "password"
-        private const val EMAIL = "email"
-        private const val POSITION = "country_position"
-    }
+
 }
