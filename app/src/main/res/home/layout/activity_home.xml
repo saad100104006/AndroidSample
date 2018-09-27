@@ -8,106 +8,7 @@
     android:background="@color/grey_bg"
     tools:context=".ui.homescreen.HomeActivity">
 
-    <FrameLayout
-        android:visibility="visible"
-        android:id="@+id/containerHome"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/navBottom" />
-
-    <LinearLayout
-        android:visibility="visible"
-        android:id="@+id/navBottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
-        android:background="@color/color_nav_bottom_bar"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvActivity"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="8dp"
-                android:drawableTop="@drawable/home_cash"
-                android:paddingTop="12dp"
-                android:text="@string/title_activity"
-                android:textColor="@color/amber"
-                android:textSize="10sp" />
-
-            <View
-                android:id="@+id/viewActivityBar"
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/amber" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvRecipients"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="8dp"
-                android:drawableTop="@drawable/home_recipients"
-                android:paddingTop="12dp"
-                android:text="@string/title_recipients"
-                android:textColor="@color/grey_text"
-                android:textSize="10sp" />
-
-            <View
-                android:id="@+id/viewRecipientsBar"
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/transparent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvSettings"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="8dp"
-                android:drawableTop="@drawable/home_settings"
-                android:paddingTop="12dp"
-                android:text="@string/title_settings"
-                android:textColor="@color/grey_text"
-                android:textSize="10sp" />
-
-            <View
-                android:id="@+id/viewSettingsBar"
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/transparent" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <!--<android.support.design.widget.TabLayout
+    <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
@@ -128,6 +29,6 @@
         android:layout_height="match_parent"
         android:layout_above="@id/tabs"
         android:layout_alignParentTop="true">
-    </uk.co.transferx.app.ui.customview.NonSwipeableViewPager>-->
+    </uk.co.transferx.app.ui.customview.NonSwipeableViewPager>
 
 </RelativeLayout>
