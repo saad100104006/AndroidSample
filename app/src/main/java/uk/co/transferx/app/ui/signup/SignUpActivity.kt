@@ -12,9 +12,9 @@ import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
-import uk.co.transferx.app.ui.signup.fragment.SignUpStepOneFragment
-import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment
+import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment
+import uk.co.transferx.app.ui.signup.fragment.SignUpStepOneFragment
 import uk.co.transferx.app.ui.welcom.WelcomeActivity
 
 import uk.co.transferx.app.util.Constants.CREDENTIAL
@@ -78,10 +78,8 @@ class SignUpActivity : BaseActivity() {
     }
 
     private fun setUpFragments(){
-//        sparseArray.put(0, SignUpStepOneFragment())
-//        sparseArray.put(1, SignUpStepTwoFragment())
-        sparseArray.put(1, SignUpStepOneFragment())
-        sparseArray.put(0, SignUpStepTwoFragment())
+        sparseArray.put(0, SignUpStepOneFragment())
+        sparseArray.put(1, SignUpStepTwoFragment())
         sparseArray.put(2, SignUpStepThreeFragment())
     }
 

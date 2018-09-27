@@ -1,14 +1,15 @@
 package uk.co.transferx.app.ui.signup.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.ColorRes
+import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import kotlinx.android.synthetic.main.sign_up_step_three_fragment_layout.*
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
@@ -36,8 +37,8 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
         super.onCreate(savedInstanceState)
 
         // Get credentials from previous steps
-         presenter.setCredential(arguments!!.getString(U_NAME), arguments!!.getString(EMAIL),
-                 arguments!!.getString(PASSWORD), arguments!!.getString(PHONE_NUMBER), arguments!!.getString(COUNTRY))
+        presenter.setCredential(arguments!!.getString(U_NAME), arguments!!.getString(EMAIL),
+                arguments!!.getString(PASSWORD), arguments!!.getString(PHONE_NUMBER), arguments!!.getString(COUNTRY))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -53,7 +54,10 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
         }
 
         buttonNext = buttonSignUp
-        buttonNext.setOnClickListener { presenter.signUpUser() }
+        buttonNext.setOnClickListener {
+            hideKeyboard(it)
+            presenter.signUpUser()
+        }
 
         firstPinEntry.setAnimationEnable(true)
         secondPinEntry.setAnimationEnable(true)
@@ -80,6 +84,10 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
         secondPinEntry.setText(EMPTY)
         setLinesColor(R.color.red)
         firstPinEntry.requestFocus()
+
+        val snackbar = Snackbar.make(view!!, getString(R.string.no_match_pin), Snackbar.LENGTH_LONG)
+        snackbar.view.setBackgroundColor(Color.RED)
+        snackbar.show()
     }
 
     private fun resetErrorPin() {

@@ -20,6 +20,7 @@
     <string name="last_name">Last Name</string>
     <string name="pin">Security PIN</string>
     <string name="confirm_pin">Confirm PIN</string>
+    <string name="no_match_pin">Entered PIN does not match</string>
     <string name="landing_send_money">Send money to your loved ones easier and faster.</string>
     <string name="landing_login">Login</string>
     <string name="landing_register">Create an account</string>
@@ -34,6 +35,7 @@
     <string name="recover_title">Use Registration Email</string>
     <string name="recover_desc">We will send  you an email with the a link to change your password</string>
     <string name="password_error">Password should be at least 8 characters and contain one uppercase character and one number.</string>
+    <string name="no_match_password">Entered password does not match</string>
     <string name="email_error">Please enter a valid email address.</string>
     <string name="recipient_label">Recipient</string>
     <string name="delivery_label">Delivery Method</string>
