@@ -11,6 +11,8 @@ import android.widget.TextView
 
 import uk.co.transferx.app.R
 import uk.co.transferx.app.data.pojo.Transaction
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 
 class ActivityAllAdapter(private val mContext: Context, private val transactions: List<Transaction>?) : RecyclerView.Adapter<ActivityAllAdapter.ItemViewHolder>() {
@@ -23,10 +25,10 @@ class ActivityAllAdapter(private val mContext: Context, private val transactions
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        if (!transactions?.get(position)?.created.equals(flagDate)) {
-            flagDate = transactions?.get(position)?.created
+        if (!getPrettyDate(transactions?.get(position)?.created).equals(flagDate)) {
+            flagDate = getPrettyDate(transactions?.get(position)?.created)
             holder.headerView.visibility = View.VISIBLE
-            holder.date.setText(transactions?.get(position)?.created)
+            holder.date.text = flagDate
             holder.divider.visibility = View.GONE
         }
         else {
@@ -35,6 +37,24 @@ class ActivityAllAdapter(private val mContext: Context, private val transactions
         }
         holder.name.setText(transactions?.get(position)?.meta?.recipientInfo?.firstName)
         holder.amount.setText(transactions?.get(position)?.amount)
+    }
+
+    fun getPrettyDate(date:String?):String
+    {
+        var dateString = date!!.split("T")[0]
+        try {
+
+            val sdf = SimpleDateFormat("yyyy-MM-dd")
+            val date = sdf.parse(dateString)
+
+            val outputFormat = SimpleDateFormat("MMM yyyy")
+            val formattedDate = outputFormat.format(date)
+
+           return formattedDate;
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+       return date;
     }
 
     override fun getItemCount(): Int {
