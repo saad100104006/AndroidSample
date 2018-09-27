@@ -18,8 +18,6 @@ import uk.co.transferx.app.ui.customview.NonSwipeableViewPager
 import android.view.LayoutInflater
 import android.support.v4.app.FragmentPagerAdapter
 import android.view.Gravity
-import kotlinx.android.synthetic.main.notification_template_lines_media.view.*
-
 
 class HomeActivity : BaseActivity() {
 
@@ -27,61 +25,58 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        tvActivity.setOnClickListener {
-            tvActivity.setTextColor(ContextCompat.getColor(this, R.color.amber))
-            setTextViewDrawableColor(tvActivity, R.color.amber)
-            viewActivityBar.setBackgroundColor(ContextCompat.getColor(this, R.color.amber))
-
-            tvRecipients.setTextColor(ContextCompat.getColor(this, R.color.grey_text))
-            setTextViewDrawableColor(tvRecipients, R.color.grey_text)
-            viewRecipientsBar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
-
-            tvSettings.setTextColor(ContextCompat.getColor(this, R.color.grey_text))
-            setTextViewDrawableColor(tvSettings, R.color.grey_text)
-            viewSettingsBar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
-
-            callFragmentActivity()
-        }
-
-        tvRecipients.setOnClickListener {
-            tvActivity.setTextColor(ContextCompat.getColor(this, R.color.grey_text))
-            setTextViewDrawableColor(tvActivity, R.color.grey_text)
-            viewActivityBar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
-
-            tvRecipients.setTextColor(ContextCompat.getColor(this, R.color.amber))
-            setTextViewDrawableColor(tvRecipients, R.color.amber)
-            viewRecipientsBar.setBackgroundColor(ContextCompat.getColor(this, R.color.amber))
-
-            tvSettings.setTextColor(ContextCompat.getColor(this, R.color.grey_text))
-            setTextViewDrawableColor(tvSettings, R.color.grey_text)
-            viewSettingsBar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
-
-            callFragmentRecipients()
-        }
-
-        tvSettings.setOnClickListener {
-            tvActivity.setTextColor(ContextCompat.getColor(this, R.color.grey_text))
-            setTextViewDrawableColor(tvActivity, R.color.grey_text)
-            viewActivityBar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
-
-            tvRecipients.setTextColor(ContextCompat.getColor(this, R.color.grey_text))
-            setTextViewDrawableColor(tvRecipients, R.color.grey_text)
-            viewRecipientsBar.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
-
-            tvSettings.setTextColor(ContextCompat.getColor(this, R.color.amber))
-            setTextViewDrawableColor(tvSettings, R.color.amber)
-            viewSettingsBar.setBackgroundColor(ContextCompat.getColor(this, R.color.amber))
-
-            callFragmentSettings()
-        }
-
-        callFragmentActivity()
-
-
-        /*// TabLayout Part..
+        // TabLayout Part..
         setupViewPager(pager);
         tabs.setupWithViewPager(pager);
-        setupTabIcons(tabs);*/
+        setupTabIcons(tabs);
+
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                //do stuff here
+
+                pager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 0) {
+                    val tabOne = tab.customView as TextView
+                    setTextViewDrawableColor(tabOne, R.color.amber)
+                    tabOne.setTextColor(ContextCompat.getColor(baseContext, R.color.amber))
+                    tabs.getTabAt(0)?.setCustomView(tabOne)
+                } else if (tab.getPosition() == 1) {
+                    val tabTwo = tab.customView as TextView
+                    setTextViewDrawableColor(tabTwo, R.color.amber)
+                    tabTwo.setTextColor(ContextCompat.getColor(baseContext, R.color.amber))
+                    tabs.getTabAt(1)?.setCustomView(tabTwo)
+                } else if (tab.getPosition() == 2) {
+                    val tabThree = tab.customView as TextView
+                    setTextViewDrawableColor(tabThree, R.color.amber)
+                    tabThree.setTextColor(ContextCompat.getColor(baseContext, R.color.amber))
+                    tabs.getTabAt(2)?.setCustomView(tabThree)
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                pager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 0) {
+                    val tabOne = tab.customView as TextView
+                    setTextViewDrawableColor(tabOne, R.color.grey_text)
+                    tabOne.setTextColor(ContextCompat.getColor(baseContext, R.color.grey_text))
+                    tabs.getTabAt(0)?.setCustomView(tabOne)
+                } else if (tab.getPosition() == 1) {
+                    val tabTwo = tab.customView as TextView
+                    setTextViewDrawableColor(tabTwo, R.color.grey_text)
+                    tabTwo.setTextColor(ContextCompat.getColor(baseContext, R.color.grey_text))
+                    tabs.getTabAt(1)?.setCustomView(tabTwo)
+                } else if (tab.getPosition() == 2) {
+                    val tabThree = tab.customView as TextView
+                    setTextViewDrawableColor(tabThree, R.color.grey_text)
+                    tabThree.setTextColor(ContextCompat.getColor(baseContext, R.color.grey_text))
+                    tabs.getTabAt(2)?.setCustomView(tabThree)
+                }
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+
+            }
+        })
     }
 
     private fun setupViewPager(pager: NonSwipeableViewPager) {
@@ -98,6 +93,7 @@ class HomeActivity : BaseActivity() {
         tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_cash, 0, 0)
         tabOne.text = getString(R.string.title_activity)
         tabOne.gravity = Gravity.CENTER_HORIZONTAL
+        tabOne.setTextColor(ContextCompat.getColor(baseContext, R.color.amber))
         tabOne.compoundDrawablePadding = 10
         tabs.getTabAt(0)?.setCustomView(tabOne)
 
@@ -122,18 +118,6 @@ class HomeActivity : BaseActivity() {
                 drawable.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(this, color), PorterDuff.Mode.SRC_IN)
             }
         }
-    }
-
-    internal fun callFragmentActivity() {
-        replaceFragment(FragActivity(), 0, R.id.containerHome)
-    }
-
-    internal fun callFragmentRecipients() {
-        replaceFragment(FragRecipients(), 0, R.id.containerHome)
-    }
-
-    internal fun callFragmentSettings() {
-        replaceFragment(FragSettings(), 0, R.id.containerHome)
     }
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
