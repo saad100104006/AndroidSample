@@ -22,6 +22,8 @@ public final class Constants {
 
     public static final String FIRST_START_APP = "logged_in_status";
     public static final String LOGGED_IN_STATUS = "logged_in_status";
+    public static final String CARD_REQUIRED = "card_required";
+    public static final String RECIPIENT_REQUIRED = "recipient_required";
 
     public static final String BACKGROUND_COLOR = "background_color";
     public static final String TUTORIAL_IMG = "tutorial_img";
