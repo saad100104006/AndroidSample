@@ -265,5 +265,7 @@
     <string name="settings_support">Support</string>
     <string name="settings_logout">Logout</string>
     <string name="msg_empty_recurrent">You haven\’t set up any recurrent transfer. Send money now and select the period of time in which you want to repeat the transfer.</string>
+    <string name="all">All</string>
+    <string name="recurrent">Recurrent</string>
 
 </resources>

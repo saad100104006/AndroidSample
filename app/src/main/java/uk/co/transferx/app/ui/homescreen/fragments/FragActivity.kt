@@ -12,6 +12,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.frag_activity.*
 
 import uk.co.transferx.app.R
+
 import uk.co.transferx.app.data.pojo.Transaction
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.homescreen.adapters.ActivityAllAdapter
@@ -20,7 +21,7 @@ import uk.co.transferx.app.data.pojo.Transactions
 
 class FragActivity : BaseFragment(), ActivityAllAdapter.ItemClickListener{
     override fun onItemClick(view: View, data: Transaction) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -62,6 +63,7 @@ class FragActivity : BaseFragment(), ActivityAllAdapter.ItemClickListener{
         relativeLayout.setHasFixedSize(true)
         relativeLayout.setLayoutManager(GridLayoutManager(context, 1, LinearLayoutManager.VERTICAL, false))
         relativeLayout.setAdapter(adapter)
+
     }
 
     override fun tagName(): String {
