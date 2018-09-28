@@ -24,7 +24,7 @@ import uk.co.transferx.app.ui.homescreen.presenters.FragActivityPresenter
 import javax.inject.Inject
 
 
-class FragActivity @Inject constructor() : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, ActivityAllAdapter.ItemClickListener{
+class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, ActivityAllAdapter.ItemClickListener{
 
     internal lateinit var adapter: ActivityAllAdapter
 
@@ -33,7 +33,7 @@ class FragActivity @Inject constructor() : BaseFragment(), FragActivityPresenter
 
     override fun onItemClick(view: View, data: Transaction) {
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity?.application as TransferXApplication).appComponent.inject(this)

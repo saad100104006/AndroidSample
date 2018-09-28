@@ -24,8 +24,8 @@ import javax.inject.Inject
 
 class HomeActivity : BaseActivity() {
 
-    @Inject
-    lateinit var fragActivity: FragActivity
+   // @Inject
+   // lateinit var fragActivity: FragActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (this?.application as TransferXApplication).appComponent.inject(this)
@@ -87,7 +87,7 @@ class HomeActivity : BaseActivity() {
 
     private fun setupViewPager(pager: NonSwipeableViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFrag(fragActivity, getString(R.string.title_activity))
+        adapter.addFrag(FragActivity(), getString(R.string.title_activity))
         adapter.addFrag(FragRecipients(), getString(R.string.title_recipients))
         adapter.addFrag(FragSettings(), getString(R.string.title_settings))
         pager.setAdapter(adapter)
