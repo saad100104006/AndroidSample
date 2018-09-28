@@ -10,7 +10,6 @@
         <item name="android:alertDialogTheme">@style/AppAlertTheme</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="android:textColorHint">@color/hint</item>
-
         <!--SwitchCompat Style -->
         <!-- Active thumb color & Active track color(30% transparency) -->
         <item name="colorControlActivated">@color/colorAccent</item>
@@ -18,10 +17,7 @@
         <item name="colorSwitchThumbNormal">@color/colorAccent</item>
         <!-- Inactive track color(30% transparency) -->
         <item name="android:colorForeground">@color/colorAccent</item>
-
-
     </style>
-
 
     <style name="AppDialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -36,7 +32,6 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
-
 
     <!-- Define  custom alert theme here extending from base -->
     <style name="AppAlertTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -107,6 +102,7 @@
     <style name="CommonStyle">
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
+
     <style name="CommonButtonStyle" parent="Widget.AppCompat.Button.Colored">
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
@@ -149,35 +145,29 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-
     <style name="Header">
         <item name="android:textColor">@color/black_text</item>
         <item name="android:textSize">20sp</item>
     </style>
+
     <style name="Header.Bold">
         <item name="android:textStyle">bold</item>
     </style>
 
-
-
-
     <style name="tvToolbarHeading">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:layout_marginLeft">32dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
         <item name="android:layout_marginStart">32dp</item>
-        <item name="android:layout_marginTop">8dp</item>
         <item name="android:textAppearance">@style/Header.Bold</item>
-
     </style>
 
     <style name="tv_single_page_info">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginEnd">32dp</item>
-        <item name="android:layout_marginStart">32dp</item>
-        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:layout_marginTop">60dp</item>
+        <item name="android:layout_marginStart">40dp</item>
+        <item name="android:layout_marginEnd">40dp</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textColor">@color/grey_text</item>
         <item name="android:textSize">14sp</item>
@@ -186,10 +176,9 @@
     <style name="tv_action_button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">8dp</item>
         <item name="android:layout_marginEnd">32dp</item>
         <item name="android:layout_marginStart">32dp</item>
-        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginTop">23dp</item>
         <item name="android:background">@drawable/rounded_corner_filled_amber</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:padding">10dp</item>
@@ -226,7 +215,5 @@
         <item name="android:textAppearance">@style/Body.Bold</item>
         <item name="android:layout_marginLeft">28dp</item>
     </style>
-
-
 
 </resources>
