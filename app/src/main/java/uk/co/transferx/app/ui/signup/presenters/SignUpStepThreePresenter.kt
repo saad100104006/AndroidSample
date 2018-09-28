@@ -127,14 +127,15 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
                 .subscribe { sec ->
                     sharedPreferences.edit().putString(CREDENTIAL, sec).apply()
                     sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply()
-                    sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
+                    // TODO Uncomment line when linking is done
+//                    sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
                     sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply()
 
                     sharedPreferences.edit().putBoolean(CARD_REQUIRED, true).apply()
                     sharedPreferences.edit().putBoolean(RECIPIENT_REQUIRED, true).apply()
 
                     // TODO finish link to Confirmation Screen
-//                    ui?.goToConfirmationScreen()
+                    ui?.goToConfirmationScreen()
 
                 }
         )
@@ -158,6 +159,8 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
         fun showErrorFromBackend()
 
         fun setButtonEnabled(isEnabled: Boolean)
+
+        fun goToConfirmationScreen()
 
     }
 

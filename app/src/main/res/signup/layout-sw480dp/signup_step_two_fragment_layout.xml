@@ -97,4 +97,20 @@
         android:textAllCaps="false"
         android:text="@string/next_register" />
 
+    <TextView
+        android:id="@+id/terms"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:gravity="center"
+        android:lineSpacingExtra="6sp"
+        android:maxLines="2"
+        android:text="@string/terms"
+        android:textColor="@color/black"
+        android:textSize="10sp" />
+
 </LinearLayout>

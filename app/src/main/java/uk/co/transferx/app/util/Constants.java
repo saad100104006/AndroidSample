@@ -20,7 +20,7 @@ public final class Constants {
     public static final String CREDENTIAL = "credential";
     public static final String DELETE = "delete";
 
-    public static final String FIRST_START_APP = "logged_in_status";
+    public static final String FIRST_START_APP = "first_start_app";
     public static final String LOGGED_IN_STATUS = "logged_in_status";
     public static final String CARD_REQUIRED = "card_required";
     public static final String RECIPIENT_REQUIRED = "recipient_required";

@@ -15,6 +15,7 @@ import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.mainscreen.MainActivity
+import uk.co.transferx.app.ui.signup.SignUpActivity
 import uk.co.transferx.app.ui.signup.presenters.SignUpStepThreePresenter
 import uk.co.transferx.app.ui.welcom.WelcomeActivity
 import uk.co.transferx.app.util.Constants.*
@@ -27,10 +28,6 @@ import javax.inject.Inject
 class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpStepThreeUI {
     @Inject
     lateinit var presenter: SignUpStepThreePresenter
-
-    override fun tagName(): String {
-        return SignUpStepThreeFragment::class.java.simpleName
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity?.application as TransferXApplication).appComponent.inject(this)
@@ -95,14 +92,15 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
     }
 
     override fun goToMainScreen() {
-        val activity = activity
-
         MainActivity.startMainActivity(activity)
         activity?.finish()
     }
 
-    override fun showErrorFromBackend() {
+    override fun goToConfirmationScreen() {
+        (activity as SignUpActivity).showNextOrPreviousFragment(3, null)
+    }
 
+    override fun showErrorFromBackend() {
     }
 
     override fun setButtonStatus(isEnabled: Boolean) {
@@ -117,6 +115,10 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
 
     override fun setButtonEnabled(isEnabled: Boolean) {
         setButtonStatus(isEnabled)
+    }
+
+    override fun tagName(): String {
+        return SignUpStepThreeFragment::class.java.simpleName
     }
 
     private fun setLinesColor(@ColorRes color: Int) {
@@ -151,4 +153,5 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
         }
 
     }
+
 }

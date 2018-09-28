@@ -8,22 +8,6 @@
     android:background="@color/white"
     tools:context=".ui.signup.SignUpActivity">
 
-    <TextView
-        android:id="@+id/terms"
-        style="@style/CommonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="48dp"
-        android:layout_marginLeft="@dimen/left_right_main_screen"
-        android:layout_marginRight="@dimen/left_right_main_screen"
-        android:gravity="center"
-        android:lineSpacingExtra="6sp"
-        android:maxLines="2"
-        android:text="@string/terms"
-        android:textColor="@color/black"
-        android:textSize="10sp" />
-
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"

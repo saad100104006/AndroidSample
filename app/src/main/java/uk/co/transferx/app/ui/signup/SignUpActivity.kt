@@ -15,6 +15,7 @@ import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepOneFragment
+import uk.co.transferx.app.ui.signup.fragment.SignUpSuccessFragment
 import uk.co.transferx.app.ui.welcom.WelcomeActivity
 
 import uk.co.transferx.app.util.Constants.CREDENTIAL
@@ -30,7 +31,7 @@ class SignUpActivity : BaseActivity() {
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
-    private val sparseArray = SparseArray<BaseFragment>(3)
+    private val sparseArray = SparseArray<BaseFragment>(4)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +82,7 @@ class SignUpActivity : BaseActivity() {
         sparseArray.put(0, SignUpStepOneFragment())
         sparseArray.put(1, SignUpStepTwoFragment())
         sparseArray.put(2, SignUpStepThreeFragment())
+        sparseArray.put(3, SignUpSuccessFragment())
     }
 
     companion object {
