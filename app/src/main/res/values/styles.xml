@@ -162,12 +162,10 @@
 
 
     <style name="tvToolbarHeading">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:layout_marginLeft">32dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
         <item name="android:layout_marginStart">32dp</item>
-        <item name="android:layout_marginTop">8dp</item>
         <item name="android:textAppearance">@style/Header.Bold</item>
 
     </style>
@@ -175,9 +173,9 @@
     <style name="tv_single_page_info">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginEnd">32dp</item>
-        <item name="android:layout_marginStart">32dp</item>
-        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:layout_marginTop">60dp</item>
+        <item name="android:layout_marginStart">40dp</item>
+        <item name="android:layout_marginEnd">40dp</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textColor">@color/grey_text</item>
         <item name="android:textSize">14sp</item>
@@ -186,10 +184,9 @@
     <style name="tv_action_button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">8dp</item>
         <item name="android:layout_marginEnd">32dp</item>
         <item name="android:layout_marginStart">32dp</item>
-        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginTop">23dp</item>
         <item name="android:background">@drawable/rounded_corner_filled_amber</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:padding">10dp</item>
