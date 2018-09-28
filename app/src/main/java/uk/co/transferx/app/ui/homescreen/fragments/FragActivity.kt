@@ -1,6 +1,7 @@
 package uk.co.transferx.app.ui.homescreen.fragments
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -23,22 +24,20 @@ import uk.co.transferx.app.ui.homescreen.presenters.FragActivityPresenter
 import javax.inject.Inject
 
 
-class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, ActivityAllAdapter.ItemClickListener{
+class FragActivity @Inject constructor() : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, ActivityAllAdapter.ItemClickListener{
 
     internal lateinit var adapter: ActivityAllAdapter
 
     @Inject
-    internal var presenter: FragActivityPresenter? = null
+    lateinit var presenter: FragActivityPresenter
 
     override fun onItemClick(view: View, data: Transaction) {
-
     }
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity?.application as TransferXApplication).appComponent.inject(this)
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.frag_activity, container, false)
