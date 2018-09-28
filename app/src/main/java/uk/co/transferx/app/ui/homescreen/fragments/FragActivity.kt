@@ -12,6 +12,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.frag_activity.*
 
 import uk.co.transferx.app.R
+import uk.co.transferx.app.TransferXApplication
 
 import uk.co.transferx.app.data.pojo.Transaction
 import uk.co.transferx.app.data.pojo.TransactionCreate
@@ -35,7 +36,9 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (activity?.application as TransferXApplication).appComponent.inject(this)
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.frag_activity, container, false)

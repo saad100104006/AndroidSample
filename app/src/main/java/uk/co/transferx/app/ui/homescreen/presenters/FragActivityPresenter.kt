@@ -17,9 +17,9 @@ import uk.co.transferx.app.ui.base.BasePresenter
 import uk.co.transferx.app.ui.base.UI
 
 class FragActivityPresenter @Inject
-constructor(private val recipientRepository: RecipientRepository,
-            private val transactionApi: TransactionApi,
-            private val tokenManager: TokenManager,
+constructor( val recipientRepository: RecipientRepository,
+             val transactionApi: TransactionApi,
+             val tokenManager: TokenManager,
             sharedPreferences: SharedPreferences) : BasePresenter<FragActivityPresenter.ActivityFragmentUI>(sharedPreferences) {
     private var compositeDisposable: CompositeDisposable? = null
     private var recipientDtos: List<RecipientDto>? = null
