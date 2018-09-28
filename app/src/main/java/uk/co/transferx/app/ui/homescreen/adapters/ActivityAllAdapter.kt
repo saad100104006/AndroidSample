@@ -1,6 +1,7 @@
 package uk.co.transferx.app.ui.homescreen.adapters
 
 import android.content.Context
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +12,16 @@ import android.widget.TextView
 
 import uk.co.transferx.app.R
 import uk.co.transferx.app.data.pojo.Transaction
+import uk.co.transferx.app.ui.homescreen.presenters.FragActivityPresenter
+import uk.co.transferx.app.ui.mainscreen.adapters.TransactionDiffCallback
+import uk.co.transferx.app.ui.mainscreen.presenters.ActivityFragmentPresenter
 import java.text.ParseException
 import java.text.SimpleDateFormat
 
 
-class ActivityAllAdapter(private val mContext: Context, private val transactions: List<Transaction>?) : RecyclerView.Adapter<ActivityAllAdapter.ItemViewHolder>() {
+class ActivityAllAdapter(private val mContext: Context, private var presenter: FragActivityPresenter?) : RecyclerView.Adapter<ActivityAllAdapter.ItemViewHolder>() {
 
+    private var transactions: List<Transaction>? = null
     private var clickListener: ItemClickListener? = null
     private var flagDate: String? = ""
 
@@ -63,6 +68,22 @@ class ActivityAllAdapter(private val mContext: Context, private val transactions
 
     fun setClickListener(clickListener: ItemClickListener) {
         this.clickListener = clickListener
+    }
+
+    fun setAllTransactions(transactions: List<Transaction>) {
+        if (this.transactions == null) {
+            this.transactions = transactions
+            notifyDataSetChanged()
+            return
+        }
+        if (transactions.isEmpty()) {
+            return
+        }
+        /*val transactionDiffCallback = TransactionDiffCallback(this.transactions, transactions)
+        val diffResult = DiffUtil.calculateDiff(transactionDiffCallback)
+        this.transactions.clear()
+        this.transactions.addAll(transactions)
+        diffResult.dispatchUpdatesTo(this)*/
     }
 
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
