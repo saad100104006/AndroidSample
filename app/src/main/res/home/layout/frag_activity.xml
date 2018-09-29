@@ -26,16 +26,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/tvRecurrent"
         app:layout_constraintTop_toTopOf="parent"/>
-    <!-- <TextView
-                android:id="@+id/tvRecurrent"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="1dp"
-                android:gravity="center_horizontal"
-                android:padding="4dp"
-                android:text="@string/recurrent"
-                android:textColor="@color/black_text"
-                android:textSize="12sp"/>-->
 
     <TextView
         android:id="@+id/tvRecurrent"
