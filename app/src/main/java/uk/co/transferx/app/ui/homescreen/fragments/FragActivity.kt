@@ -2,16 +2,12 @@ package uk.co.transferx.app.ui.homescreen.fragments
 
 import android.os.Bundle
 import android.support.constraint.Group
-import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.frag_activity.*
 
 import uk.co.transferx.app.R
@@ -21,10 +17,8 @@ import uk.co.transferx.app.data.pojo.Transaction
 import uk.co.transferx.app.data.pojo.TransactionCreate
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.homescreen.adapters.ActivityAllAdapter
-import uk.co.transferx.app.data.pojo.Transactions
 import uk.co.transferx.app.ui.homescreen.ObservableBoolean
 import uk.co.transferx.app.ui.homescreen.presenters.FragActivityPresenter
-import java.util.Observer
 import javax.inject.Inject
 
 
@@ -51,15 +45,14 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
         super.onViewCreated(view, savedInstanceState)
 
         tvAll.setOnClickListener {
-            tvAll.setBackgroundColor(ContextCompat.getColor(context!!, R.color.amber))
-            tvRecurrent.setBackgroundColor(ContextCompat.getColor(context!!, R.color.transparent))
+            tvAll.setBackgroundResource(R.drawable.rounded_corner_left_filled_amber)
+            tvRecurrent.setBackgroundResource(R.drawable.rounded_corner_right_amber)
             presenter.loadData(false)
         }
 
         tvRecurrent.setOnClickListener {
-            tvAll.setBackgroundColor(ContextCompat.getColor(context!!, R.color.transparent))
-            tvRecurrent.setBackgroundColor(ContextCompat.getColor(context!!, R.color.amber))
-
+            tvAll.setBackgroundResource(R.drawable.rounded_corner_left_amber)
+            tvRecurrent.setBackgroundResource(R.drawable.rounded_corner_right_filled_amber)
             presenter.loadData(true)
         }
 
