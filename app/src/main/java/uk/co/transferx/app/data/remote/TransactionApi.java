@@ -27,4 +27,9 @@ public interface TransactionApi {
     @POST("/v1/transactions")
     Single<Response<CardTokenId>> createTransaction(@Header("Authorization") String token, @Body TransactionCreate transactionCreate);
 
+    @GET("/v1/transactions?scheduled=true")
+    Single<Response<Transactions>> getRecurrentHistory(@Header("Authorization") String token);
+
+
+
 }

@@ -1,8 +1,10 @@
 package uk.co.transferx.app.ui.homescreen.fragments
 
 import android.os.Bundle
+import android.support.constraint.Group
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -20,11 +22,13 @@ import uk.co.transferx.app.data.pojo.TransactionCreate
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.homescreen.adapters.ActivityAllAdapter
 import uk.co.transferx.app.data.pojo.Transactions
+import uk.co.transferx.app.ui.homescreen.ObservableBoolean
 import uk.co.transferx.app.ui.homescreen.presenters.FragActivityPresenter
+import java.util.Observer
 import javax.inject.Inject
 
 
-class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, ActivityAllAdapter.ItemClickListener{
+class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, ActivityAllAdapter.ItemClickListener {
 
     internal lateinit var adapter: ActivityAllAdapter
 
@@ -46,64 +50,96 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tvAll.setOnClickListener{
+        tvAll.setOnClickListener {
             tvAll.setBackgroundColor(ContextCompat.getColor(context!!, R.color.amber))
             tvRecurrent.setBackgroundColor(ContextCompat.getColor(context!!, R.color.transparent))
-
-            tvMsgEmptyData.setText(R.string.msg_add_recipient)
-            imgEmptyItem.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.cash_send))
+            presenter.loadData(false)
         }
 
-        tvRecurrent.setOnClickListener{
+        tvRecurrent.setOnClickListener {
             tvAll.setBackgroundColor(ContextCompat.getColor(context!!, R.color.transparent))
             tvRecurrent.setBackgroundColor(ContextCompat.getColor(context!!, R.color.amber))
 
-            tvMsgEmptyData.setText(R.string.msg_empty_recurrent)
-            imgEmptyItem.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_empty_recurrent))
+            presenter.loadData(true)
         }
 
-
-        // TODO: For showing history part ..
-        adapter = ActivityAllAdapter(context!!, presenter)
+        adapter = ActivityAllAdapter(context!!)
         adapter.setClickListener(this)
-        relativeLayout.setHasFixedSize(true)
-        relativeLayout.setLayoutManager(GridLayoutManager(context, 1, LinearLayoutManager.VERTICAL, false))
-        relativeLayout.setAdapter(adapter)
-    }
 
-    override fun onResume() {
-        super.onResume()
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerviewHistory.setLayoutManager(layoutManager)
+        recyclerviewHistory.setItemAnimator(DefaultItemAnimator())
+        recyclerviewHistory.setAdapter(adapter)
+
+        presenter?.isLoading.addObserver { o, arg ->
+            if (o == null || o !is ObservableBoolean) {
+                hideProgress()
+            } else {
+                if (o.value)
+                    showProgress()
+                else
+                    hideProgress()
+            }
+        }
         presenter?.attachUI(this)
-    }
-
-    override fun onPause() {
-        presenter?.detachUI()
-        super.onPause()
     }
 
     override fun tagName(): String {
         return FragActivity::class.java.simpleName
     }
 
-    override fun setData(transactions: List<Transaction>) {
-        val isEmpty = transactions.isEmpty()
-        relativeLayout.setVisibility(if (isEmpty) View.VISIBLE else View.GONE)
-        imgEmptyItem.setVisibility(if (isEmpty) View.GONE else View.VISIBLE)
-        tvMsgEmptyData.setVisibility(if (isEmpty) View.GONE else View.VISIBLE)
-        tvSendMoney.setVisibility(if (isEmpty) View.GONE else View.VISIBLE)
+    override fun showAllTransactions(transactions: List<Transaction>) {
 
-        adapter.setAllTransactions(transactions)
+        emptyMessageGroup.visibility = Group.GONE
+        emptyMessageGroup.updatePreLayout(constraintLayout)
+        swapAdapters(false, transactions)
+        recyclerviewHistory.visibility = View.VISIBLE
+    }
+
+    fun swapAdapters(recurrent: Boolean, transactions: List<Transaction>) {
+            adapter.setRecurrentType(recurrent)
+            adapter.setAllTransactions(transactions)
+    }
+
+    override fun onDestroyView() {
+        presenter?.isLoading.deleteObservers()
+        presenter?.detachUI()
+        super.onDestroyView()
+    }
+
+    override fun hideAllTransactions() {
+        recyclerviewHistory.visibility = View.GONE
+        emptyMessageGroup.visibility = Group.VISIBLE
+        tvMsgEmptyData.setText(R.string.msg_add_recipient)
+        imgEmptyItem.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.cash_send))
+    }
+
+
+    override fun hideRecurrentTransactions() {
+        recyclerviewHistory.visibility = View.GONE
+        emptyMessageGroup.visibility = Group.VISIBLE
+        tvMsgEmptyData.setText(R.string.msg_empty_recurrent)
+        imgEmptyItem.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_empty_recurrent))
+    }
+
+    override fun showRecurrentTransactions(transactions: List<Transaction>) {
+
+        emptyMessageGroup.visibility = Group.GONE
+        emptyMessageGroup.updatePreLayout(constraintLayout)
+        swapAdapters(true, transactions)
+        recyclerviewHistory.visibility = View.VISIBLE
+
     }
 
     override fun goToWelcome() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun setError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun goToMoneySendScreen() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun goToRecieptScreen(transaction: TransactionCreate) {
+        //  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

@@ -216,4 +216,8 @@
         <item name="android:layout_marginLeft">28dp</item>
     </style>
 
+    <style name="AppTheme.Progress">
+        <item name="colorAccent">@color/color_accent</item> <!-- Whatever color you want-->
+    </style>
+
 </resources>
