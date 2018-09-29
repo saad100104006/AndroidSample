@@ -1,5 +1,7 @@
 package uk.co.transferx.app.ui.homescreen
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 
 import uk.co.transferx.app.R
@@ -10,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_home.*
 
 import uk.co.transferx.app.ui.homescreen.adapter.TabAdapter
 
-class HomeActivity : BaseActivity() {
+class MainActivity : BaseActivity() {
 
 
     private lateinit var tabAdapter: TabAdapter
@@ -27,6 +29,16 @@ class HomeActivity : BaseActivity() {
             tabAdapter.setCheckStatus(tab?.position ?: 0, true)
         }
 
+    }
+
+    companion object {
+
+        fun startMainActivity(activity: Activity) {
+            val intent = Intent(activity, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            activity.startActivity(intent)
+            activity.finish()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

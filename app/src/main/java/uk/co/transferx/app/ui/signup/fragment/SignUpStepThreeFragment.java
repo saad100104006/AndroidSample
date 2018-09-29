@@ -21,7 +21,8 @@ import javax.inject.Inject;
 import uk.co.transferx.app.ui.base.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
-import uk.co.transferx.app.ui.mainscreen.MainActivity;
+import uk.co.transferx.app.ui.homescreen.MainActivity;
+import uk.co.transferx.app.ui.mainscreen.MainActivityOld;
 import uk.co.transferx.app.ui.signup.presenters.SignUpStepThreePresenter;
 import uk.co.transferx.app.ui.tutorial.TutorialActivity;
 import uk.co.transferx.app.ui.welcom.WelcomeActivity;
@@ -106,7 +107,7 @@ public class SignUpStepThreeFragment extends BaseFragment implements SignUpStepT
         Activity activity = getActivity();
         if (activity != null) {
             if (reEnterPin) {
-                MainActivity.startMainActivity(activity);
+                MainActivity.Companion.startMainActivity(getActivity());
                 activity.finish();
                 return;
             }

@@ -8,7 +8,7 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.di.module.AppModule;
 import uk.co.transferx.app.di.module.NetworkModule;
 import uk.co.transferx.app.data.firebase.TransferXFirebaseIDService;
-import uk.co.transferx.app.ui.homescreen.HomeActivity;
+import uk.co.transferx.app.ui.homescreen.MainActivity;
 import uk.co.transferx.app.ui.homescreen.fragments.FragActivity;
 import uk.co.transferx.app.ui.homescreen.fragments.FragRecipients;
 import uk.co.transferx.app.ui.homescreen.fragments.FragSettings;
@@ -123,7 +123,7 @@ public interface AppComponent {
     void inject(TransferXFirebaseIDService transferXFirebaseIDService);
 
 
-    void inject(HomeActivity homeActivity);
+    void inject(MainActivity mainActivity);
 
     void inject (FragActivity fragActivity);
 

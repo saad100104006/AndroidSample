@@ -23,10 +23,10 @@ class TokenRepository @Inject constructor(private val sharedPreferences: SharedP
     fun getToken(): TokenEntity {
         Log.d("Serge", "ReadToken " + sharedPreferences.getString(KEY_TOKEN, "").takeLast(7))
         return TokenEntity(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiI3YzE1MzcwYy02Yjc1LTRlYWUtYTgwYS0zNTk2MmI3MDI0ZTUiLCJhdG9rZW5faWQiOiJmMDQ2YzNkYS04OTJmLTRhMTYtOTI5Ni0wYTBmOGMyYWU4NGQiLCJpYXQiOjE1MzgyMDI3NzZ9.mCj_OaKvyrufd8gxYau_6rCgu40Gc1tNe4Rj7VMNWCU",//sharedPreferences.getString(KEY_TOKEN, ""),
+            sharedPreferences.getString(KEY_TOKEN, ""),
             sharedPreferences.getLong(KEY_EXPIRES_IN, DEFAULT_TIMESTAMP),
             sharedPreferences.getLong(KEY_CREATED, DEFAULT_TIMESTAMP),
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiI3YzE1MzcwYy02Yjc1LTRlYWUtYTgwYS0zNTk2MmI3MDI0ZTUiLCJyZWZyZXNoX3Rva2VuX2lkIjoiNmJjMDZlOTAtMWQwNS00YTgzLTk5ZmYtMDIxNGI4OTI2NGYzIiwiaWF0IjoxNTM4MjAyNzc2fQ.JU06ELBngwiepzvMLPjJup3ucEzN_DW3w9yUTN5JU0M"//sharedPreferences.getString(KEY_REFRESH_TOKEN, "")
+            sharedPreferences.getString(KEY_REFRESH_TOKEN, "")
         )
     }
 

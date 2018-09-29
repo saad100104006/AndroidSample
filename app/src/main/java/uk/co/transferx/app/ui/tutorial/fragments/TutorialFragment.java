@@ -17,7 +17,8 @@ import android.widget.TextView;
 
 import uk.co.transferx.app.ui.base.BaseFragment;
 import uk.co.transferx.app.R;
-import uk.co.transferx.app.ui.mainscreen.MainActivity;
+import uk.co.transferx.app.ui.homescreen.MainActivity;
+import uk.co.transferx.app.ui.mainscreen.MainActivityOld;
 import uk.co.transferx.app.ui.recipients.addrecipients.AddRecipientsActivity;
 import uk.co.transferx.app.ui.recipients.addrecipients.Mode;
 import uk.co.transferx.app.ui.settings.profile.wallet.AddCardActivity;
@@ -96,7 +97,7 @@ public class TutorialFragment extends BaseFragment {
                 intent.putExtra(MODE, CardMode.ADD.ordinal());
                 startActivity(intent);
             });
-            view.findViewById(R.id.skip).setOnClickListener(v -> MainActivity.startMainActivity(getActivity()));
+            view.findViewById(R.id.skip).setOnClickListener(v -> MainActivity.Companion.startMainActivity(getActivity()));
 
         }
     }
