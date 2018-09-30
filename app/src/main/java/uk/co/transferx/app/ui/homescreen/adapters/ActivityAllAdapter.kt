@@ -68,7 +68,6 @@ class ActivityAllAdapter(private val mContext: Context) : RecyclerView.Adapter<R
             if (!(getPrettyDate(transactions?.get(position)?.created).equals(headerText))) {
                 headerText = getPrettyDate(transactions?.get(position)?.created)
                 sparseArrayInteger!!.put(position, VIEW_WITH_HEADER);
-                return VIEW_ROW
                 return VIEW_WITH_HEADER
             } else {
                 sparseArrayInteger!!.put(position, VIEW_ROW);

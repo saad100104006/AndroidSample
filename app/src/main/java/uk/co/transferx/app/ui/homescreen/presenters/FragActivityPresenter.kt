@@ -43,6 +43,9 @@ constructor(val recipientRepository: RecipientRepository,
 
     override fun attachUI(ui: ActivityFragmentUI) {
         super.attachUI(ui)
+        if(compositeDisposable==null) {
+            compositeDisposable = CompositeDisposable()
+        }
 
         if (transactionDtos.isEmpty()) {
             this.ui.hideAllTransactions()
@@ -66,12 +69,12 @@ constructor(val recipientRepository: RecipientRepository,
         compositeDisposable?.clear()
 
         isLoading.value = true
-        compositeDisposable = CompositeDisposable()
+
         val dis = recipientRepository.recipients
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ recipients ->
-                    isLoading.value =false
+                    isLoading.value = false
                     recipientDtos = recipients
                     if (isRecurrent)
                         fetchRecurrentHistory()
@@ -79,7 +82,7 @@ constructor(val recipientRepository: RecipientRepository,
                         fetchAllHistory()
 
                 }, { throwable ->
-                    isLoading.value =false
+                    isLoading.value = false
                     globalErrorHandler(throwable)
                 })
 
@@ -88,10 +91,7 @@ constructor(val recipientRepository: RecipientRepository,
     }
 
     private fun fetchRecurrentHistory() {
-        if (compositeDisposable == null) {
-            compositeDisposable = CompositeDisposable()
-        }
-        isLoading.value =true
+        isLoading.value = true
 
         val historyDis = tokenManager.token
                 .flatMap { (accessToken) -> transactionApi.getRecurrentHistory(accessToken) }
@@ -99,15 +99,14 @@ constructor(val recipientRepository: RecipientRepository,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { resp ->
 
-                    isLoading.value =false
+                    isLoading.value = false
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         transactionRecurrentDtos.clear()
                         transactionRecurrentDtos.addAll(resp.body()?.transactions
                                 ?: ArrayList<Transaction>())
-                        if(transactionRecurrentDtos.isEmpty()) {
+                        if (transactionRecurrentDtos.isEmpty()) {
                             ui.hideRecurrentTransactions()
-                        }
-                        else {
+                        } else {
                             ui.showRecurrentTransactions(transactionRecurrentDtos)
                         }
                     }
@@ -128,14 +127,13 @@ constructor(val recipientRepository: RecipientRepository,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { resp ->
-                    isLoading.value =false
+                    isLoading.value = false
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         transactionDtos.clear()
                         transactionDtos.addAll(resp.body()?.transactions ?: generateMockData())
-                        if(transactionDtos.isEmpty()) {
+                        if (transactionDtos.isEmpty()) {
                             ui.hideAllTransactions()
-                        }
-                        else {
+                        } else {
                             ui.showAllTransactions(transactionDtos)
                         }
                     }
@@ -161,7 +159,6 @@ constructor(val recipientRepository: RecipientRepository,
         fun hideAllTransactions()
 
         fun hideRecurrentTransactions()
-
 
 
     }
