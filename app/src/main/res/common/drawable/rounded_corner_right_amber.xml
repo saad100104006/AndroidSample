@@ -10,8 +10,7 @@
     </stroke>
 
     <!-- Here is the corner radius -->
-    <corners
-        android:radius="4dp"   >
-    </corners>
+    <corners android:topLeftRadius="0dp" android:topRightRadius="4dp"
+        android:bottomLeftRadius="0dp" android:bottomRightRadius="4dp"/>
 
 </shape>
