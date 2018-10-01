@@ -3,10 +3,12 @@ package uk.co.transferx.app.ui.signin.fragment
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
-import android.text.*
+import android.text.Editable
 import android.text.InputType.*
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -135,7 +137,9 @@ class SignInFragment : BaseFragment(), SignInContract.View {
         loadingBar?.visibility = View.GONE
 
         snackbar = Snackbar.make(rootLayout!!,
-                getColoredString(getString(R.string.wrong_username_or_password)), Snackbar.LENGTH_LONG)
+                getString(R.string.wrong_username_or_password), Snackbar.LENGTH_LONG)
+        snackbar?.view?.setBackgroundColor(Color.RED)
+        snackbar?.show()
 
         adjustFieldsOnError()
     }
@@ -144,7 +148,7 @@ class SignInFragment : BaseFragment(), SignInContract.View {
         loadingBar?.visibility = View.GONE
 
         snackbar = Snackbar.make(rootLayout!!,
-                getColoredString(getString(R.string.user_not_found)), Snackbar.LENGTH_LONG)
+                getString(R.string.user_not_found), Snackbar.LENGTH_LONG)
         snackbar?.view?.setBackgroundColor(Color.RED)
         snackbar?.show()
 
@@ -230,17 +234,6 @@ class SignInFragment : BaseFragment(), SignInContract.View {
     /*
         Internal methods
      */
-    private fun getColoredString(message: String): SpannableStringBuilder {
-        val ssb = SpannableStringBuilder()
-                .append(message)
-        ssb.setSpan(
-                ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.red)),
-                0,
-                message.length,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        return ssb
-    }
-
     private fun getMixedColorsBuilder(): SpannableStringBuilder {
         val builder = SpannableStringBuilder()
 

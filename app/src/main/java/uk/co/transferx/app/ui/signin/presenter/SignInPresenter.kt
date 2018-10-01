@@ -110,7 +110,7 @@ class SignInPresenter @Inject constructor
                             } else this.ui?.goToMainScreen()
                         }
                         HttpsURLConnection.HTTP_NOT_FOUND -> this.ui?.showUserNotFound()
-                        HttpsURLConnection.HTTP_UNAUTHORIZED -> this.ui?.showWrongPassword()
+                        HttpsURLConnection.HTTP_BAD_REQUEST -> this.ui?.showWrongPassword()
                         else -> this.ui?.showConnectionError()
                     }
                 }, { this.handleError() })
