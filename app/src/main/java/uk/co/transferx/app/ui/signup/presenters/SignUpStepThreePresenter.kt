@@ -134,7 +134,6 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
                     sharedPreferences.edit().putBoolean(CARD_REQUIRED, true).apply()
                     sharedPreferences.edit().putBoolean(RECIPIENT_REQUIRED, true).apply()
 
-                    // TODO finish link to Confirmation Screen
                     ui?.goToConfirmationScreen()
 
                 }

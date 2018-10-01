@@ -36,8 +36,8 @@ class SignInActivity : BaseActivity() {
     }
 
     /*
-        TODO - Delete this method when linking is done. Linking should be done from source, not from
-        TODO - target. This way, coupling is decreased
+        TODO - Delete this method when linking is remove in all components.
+        TODO - Linking should be done from source, not from target. This way, coupling is decreased.
      */
     companion object {
 

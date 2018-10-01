@@ -1,28 +1,17 @@
 package uk.co.transferx.app.ui.signup
-
-import android.app.Activity
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.SparseArray
-import org.jetbrains.anko.startActivity
-
 import javax.inject.Inject
-
 import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
-import uk.co.transferx.app.ui.landing.LandingActivity
-import uk.co.transferx.app.ui.signin.SignInActivity
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepOneFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpSuccessFragment
-
 import uk.co.transferx.app.util.Constants.CREDENTIAL
-import uk.co.transferx.app.util.Constants.EMAIL
-import uk.co.transferx.app.util.Constants.PASSWORD
 import uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT
 
 /**
@@ -71,8 +60,7 @@ class SignUpActivity : BaseActivity() {
 
         when (currentFragment) {
             0 -> {
-                finish()
-            }
+                finish() }
             1 -> showNextOrPreviousFragment(0, null)
             2 -> showNextOrPreviousFragment(1, null)
             else -> super.onBackPressed()
@@ -88,27 +76,6 @@ class SignUpActivity : BaseActivity() {
 
     companion object {
         private var currentFragment: Int = 0
-
-        // Linking methods
-        // SHOULD NOT BE USED in order to externalize dependencies
-        // TODO When linking is done, these methods should be refined/deleted
-        fun startSignUp(activity: Activity, bundle: Bundle?) {
-            val intent = Intent(activity, SignUpActivity::class.java)
-            if (bundle != null) {
-                intent.putExtra(CREDENTIAL, bundle)
-            }
-            activity.startActivity(intent)
-            activity.finish()
-        }
-
-        fun startSignUp(activity: Activity, fragmentNumber: Int, email: String, password: String) {
-            val bundle = Bundle()
-            bundle.putString(EMAIL, email)
-            bundle.putString(PASSWORD, password)
-            bundle.putBoolean(PIN_SHOULD_BE_INPUT, true)
-            currentFragment = fragmentNumber
-            startSignUp(activity, bundle)
-        }
     }
 
 }

@@ -45,9 +45,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        /* TBDD
         if (isShouldStartPinCheck()) {
+
             SignInPinActivity.starSignInActivity(this);
         }
+         */
     }
 
     private boolean isShouldStartPinCheck() {

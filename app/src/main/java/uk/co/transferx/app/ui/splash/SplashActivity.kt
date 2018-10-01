@@ -45,7 +45,7 @@ class SplashActivity : BaseActivity(), SplashContract.View {
     }
 
     override fun goToPinScreen() {
-        // TODO - CREATE LINK  TO SignInPinActivity WHEN LINKING IS PERFORMED
+        // TODO - CREATE LINK TO PIN WHEN LINKING IS PERFORMED
     }
 
     override fun goToTutorialScreen() {

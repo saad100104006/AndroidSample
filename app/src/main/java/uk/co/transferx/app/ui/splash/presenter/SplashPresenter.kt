@@ -55,8 +55,10 @@ constructor(private val signUpApi: SignUpApi, private val tokenManager: TokenMan
                     }
 
                     if (loggedInStatus) {
-                        this.ui?.goToPinScreen()
-                    } else this.ui?.goToLandingScreen()
+                        // TODO enable link when PIN strategy is decided
+//                        this.ui?.goToPinScreen()
+                    }
+                    this.ui?.goToLandingScreen()
 
                 }, { this.handleError(it) })
     }

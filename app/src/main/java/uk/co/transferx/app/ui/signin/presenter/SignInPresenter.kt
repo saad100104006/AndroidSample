@@ -67,13 +67,7 @@ class SignInPresenter @Inject constructor
     }
 
     override fun goToSignUp() {
-        if (!tokenRepository.getToken().accessToken.isEmpty()) {
-            sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply()
-            sharedPreferences.edit().remove(CREDENTIAL).apply()
             this.ui?.goToSignUp()
-            return
-        }
-        this.ui?.showConnectionError()
     }
 
     override fun refreshGenesisToken() {
@@ -106,8 +100,10 @@ class SignInPresenter @Inject constructor
                             sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
 
                             if (shouldGoToConfirmation()) {
-                                // TODO Add link confirmation screen
-                            } else this.ui?.goToMainScreen()
+                                // TODO - Add link to confirmation screen when Confirmation screen
+                                // TODO - has linking finished
+                            }
+                            this.ui?.goToMainScreen()
                         }
                         HttpsURLConnection.HTTP_NOT_FOUND -> this.ui?.showUserNotFound()
                         HttpsURLConnection.HTTP_BAD_REQUEST -> this.ui?.showWrongPassword()
