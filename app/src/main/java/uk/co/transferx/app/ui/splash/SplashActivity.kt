@@ -16,7 +16,6 @@ import uk.co.transferx.app.ui.landing.LandingActivity
 import uk.co.transferx.app.ui.signin.SignInActivity
 import uk.co.transferx.app.ui.splash.presenter.SplashPresenter
 import uk.co.transferx.app.ui.tutorial.TutorialActivity
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
 
 /**
  * Created by sergey on 19.11.17.

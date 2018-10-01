@@ -11,13 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.sign_up_step_three_fragment_layout.*
+import org.jetbrains.anko.startActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseFragment
+import uk.co.transferx.app.ui.landing.LandingActivity
 import uk.co.transferx.app.ui.mainscreen.MainActivity
 import uk.co.transferx.app.ui.signup.SignUpActivity
 import uk.co.transferx.app.ui.signup.presenters.SignUpStepThreePresenter
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
 import uk.co.transferx.app.util.Constants.*
 import javax.inject.Inject
 
@@ -110,7 +111,7 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
     }
 
     override fun goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(activity)
+        context?.startActivity<LandingActivity>()
     }
 
     override fun setButtonEnabled(isEnabled: Boolean) {

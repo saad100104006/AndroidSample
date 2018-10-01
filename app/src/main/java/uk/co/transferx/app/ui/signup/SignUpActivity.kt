@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.SparseArray
+import org.jetbrains.anko.startActivity
 
 import javax.inject.Inject
 
@@ -12,11 +13,12 @@ import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.ui.landing.LandingActivity
+import uk.co.transferx.app.ui.signin.SignInActivity
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepOneFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpSuccessFragment
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
 
 import uk.co.transferx.app.util.Constants.CREDENTIAL
 import uk.co.transferx.app.util.Constants.EMAIL
@@ -69,7 +71,6 @@ class SignUpActivity : BaseActivity() {
 
         when (currentFragment) {
             0 -> {
-                startActivity(Intent(this@SignUpActivity, WelcomeActivity::class.java))
                 finish()
             }
             1 -> showNextOrPreviousFragment(0, null)
