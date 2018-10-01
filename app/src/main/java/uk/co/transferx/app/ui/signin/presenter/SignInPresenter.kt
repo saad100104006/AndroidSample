@@ -37,7 +37,7 @@ class SignInPresenter @Inject constructor
     private var password: String? = null
 
     private val isInputDataValid: Boolean
-        get() = Util.validateEmail(email!!) && Util.validatePassword(password)
+        get() = Util.validateEmail(email) && Util.validatePassword(password)
 
     override fun detachUI() {
         super.detachUI()

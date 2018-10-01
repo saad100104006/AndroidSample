@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.text.*
+import android.text.InputType.*
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,10 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import kotlinx.android.synthetic.main.signin_fragment_layout.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.clearTask
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.newTask
+import org.jetbrains.anko.startActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.R.string.forgot_password
 import uk.co.transferx.app.R.string.reset_password
@@ -41,6 +45,8 @@ class SignInFragment : BaseFragment(), SignInContract.View {
     private var loadingBar: ProgressBar? = null
 
     private var snackbar: Snackbar? = null
+
+    private var isPasswordVisible: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +76,18 @@ class SignInFragment : BaseFragment(), SignInContract.View {
 
             val loadingBar = activity?.findViewById<ProgressBar>(R.id.loading_bar)
             loadingBar?.visibility = View.VISIBLE
+        }
+
+        toggleText.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+
+            if (isPasswordVisible) {
+                toggleText.setText(R.string.hide)
+                passwInputText.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            } else {
+                toggleText.setText(R.string.show)
+                passwInputText.inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD
+            }
         }
 
         backButton.setOnClickListener { activity?.onBackPressed() }

@@ -26,7 +26,7 @@ public final class Util {
     private static final String TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.'000Z'";
 
     public static boolean validateEmail(String email) {
-        return email.matches(VALIDATE_PATTERN_EMAIL);
+        return email != null && email.matches(VALIDATE_PATTERN_EMAIL);
     }
 
     public static boolean validatePassword(String password) {
