@@ -24,7 +24,7 @@ import uk.co.transferx.app.util.Constants.TRANSACTION
 import uk.co.transferx.app.util.Util.formatEndDate
 import uk.co.transferx.app.util.Util.formattedDate
 import uk.co.transferx.app.ui.customview.ConfirmationDialogFragment
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
+import uk.co.transferx.app.ui.signin.SignInActivity
 import javax.inject.Inject
 
 class ReviewActivity : BaseActivity(), ReviewPresenter.ReviewUI {
@@ -134,6 +134,6 @@ class ReviewActivity : BaseActivity(), ReviewPresenter.ReviewUI {
     }
 
     override fun goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(this@ReviewActivity)
+        SignInActivity.startSignInActivity(this@ReviewActivity)
     }
 }

@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import uk.co.transferx.app.ui.base.BaseActivity;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
-import uk.co.transferx.app.ui.welcom.WelcomeActivity;
+import uk.co.transferx.app.ui.signin.SignInActivity;
 
 /**
  * Created by sergey on 26/01/2018.
@@ -105,6 +105,6 @@ public class NotificationSettingsActivity extends BaseActivity implements Notifi
 
     @Override
     public void goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(NotificationSettingsActivity.this);
+        SignInActivity.Companion.startSignInActivity(NotificationSettingsActivity.this);
     }
 }

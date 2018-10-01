@@ -63,8 +63,8 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((TextView) view.findViewById(R.id.title)).setText(getString(R.string.title_two));
-        firstInput = view.findViewById(R.id.first_input);
-        secondInput = view.findViewById(R.id.second_input);
+        firstInput = view.findViewById(R.id.mailInput);
+        secondInput = view.findViewById(R.id.passwInput);
         firstLabel = view.findViewById(R.id.first_input_label);
         secondLabel = view.findViewById(R.id.second_input_label);
         firstError = view.findViewById(R.id.first_input_error);
@@ -82,7 +82,7 @@ public class SignUpStepTwoFragment extends BaseFragment implements SignUpStepTwo
         secondInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         firstInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_email_address, 0, 0, 0);
         secondInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_password, 0, 0, 0);
-        buttonNext = view.findViewById(R.id.sign_in);
+        buttonNext = view.findViewById(R.id.signInButton);
         buttonNext.setOnClickListener(v -> presenter.goToNextStep());
         if (savedInstanceState != null) {
             firstInput.setText(savedInstanceState.getString(EMAIL));

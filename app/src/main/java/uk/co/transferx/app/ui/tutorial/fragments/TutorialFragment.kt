@@ -8,9 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.tutorial_fragment_layout.*
+import org.jetbrains.anko.startActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.ui.base.BaseFragment
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
+import uk.co.transferx.app.ui.landing.LandingActivity
 import uk.co.transferx.app.util.Constants.*
 
 /**
@@ -41,7 +42,7 @@ class TutorialFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         // get bundled data
-        arguments?.let{
+        arguments?.let {
             backgroundColor = it.getInt(BACKGROUND_COLOR)
             image = it.getInt(TUTORIAL_IMG)
             descriptionOne = it.getInt(TITLE)
@@ -64,6 +65,9 @@ class TutorialFragment : BaseFragment() {
         description.setText(descriptionTwo)
 
         buttonAction.setText(buttonText)
-        buttonAction.setOnClickListener { WelcomeActivity.startWelcomeActivity(activity) }
+        buttonAction.setOnClickListener {
+            activity?.startActivity<LandingActivity>()
+            activity?.finish()
+        }
     }
 }

@@ -27,7 +27,7 @@ import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.data.dto.RecipientDto;
 import uk.co.transferx.app.ui.mainscreen.adapters.RecipientDialogAdapter;
 import uk.co.transferx.app.ui.mainscreen.presenters.RecipientDialogFragmentPresenter;
-import uk.co.transferx.app.ui.welcom.WelcomeActivity;
+import uk.co.transferx.app.ui.signin.SignInActivity;
 
 /**
  * Created by sergey on 15/01/2018.
@@ -127,6 +127,6 @@ public class RecipientDialogFragment extends DialogFragment implements Recipient
 
     @Override
     public void goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(getActivity());
+        SignInActivity.Companion.startSignInActivity(getActivity());
     }
 }

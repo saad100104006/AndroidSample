@@ -39,6 +39,7 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+
     protected void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -47,8 +48,8 @@ public abstract class BaseFragment extends Fragment {
     protected void setButtonStatus(boolean isEnabled){
         buttonNext.setEnabled(isEnabled);
         buttonNext.setBackground(isEnabled ?
-                ContextCompat.getDrawable(getContext(), R.drawable.oval_button_black) :
-                ContextCompat.getDrawable(getContext(), R.drawable.oval_button_gray));
+                ContextCompat.getDrawable(getContext(), R.drawable.btn_style_bright) :
+                ContextCompat.getDrawable(getContext(), R.drawable.btn_disabled));
     }
 
 }

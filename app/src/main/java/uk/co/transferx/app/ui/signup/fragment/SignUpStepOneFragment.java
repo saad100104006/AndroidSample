@@ -60,8 +60,8 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        firstInput = view.findViewById(R.id.first_input);
-        secondInput = view.findViewById(R.id.second_input);
+        firstInput = view.findViewById(R.id.mailInput);
+        secondInput = view.findViewById(R.id.passwInput);
         firstLabel = view.findViewById(R.id.first_input_label);
         secondLabel = view.findViewById(R.id.second_input_label);
         firstError = view.findViewById(R.id.first_input_error);
@@ -79,7 +79,7 @@ public class SignUpStepOneFragment extends BaseFragment implements SignUpStepOne
         secondInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         firstInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_name, 0, 0, 0);
         secondInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_name, 0, 0, 0);
-        buttonNext = view.findViewById(R.id.sign_in);
+        buttonNext = view.findViewById(R.id.signInButton);
         buttonNext.setOnClickListener(v -> presenter.goToNextStep());
         if (savedInstanceState != null) {
             firstInput.setText(savedInstanceState.getString(FIRST_NAME));

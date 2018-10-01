@@ -17,7 +17,7 @@ import uk.co.transferx.app.ui.settings.notification.NotificationSettingsActivity
 import uk.co.transferx.app.ui.settings.presenter.SettingsFragmentPresenter;
 import uk.co.transferx.app.ui.settings.profile.ProfileActivity;
 import uk.co.transferx.app.ui.settings.support.SupportActivity;
-import uk.co.transferx.app.ui.welcom.WelcomeActivity;
+import uk.co.transferx.app.ui.signin.SignInActivity;
 
 /**
  * Created by sergey on 22/12/2017.
@@ -70,7 +70,7 @@ public class SettingsFragment extends BaseFragment implements SettingsFragmentPr
 
     @Override
     public void goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(getActivity());
+        SignInActivity.Companion.startSignInActivity(getActivity());
     }
 
     @Override

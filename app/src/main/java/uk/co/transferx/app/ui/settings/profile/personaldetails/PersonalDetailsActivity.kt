@@ -7,7 +7,7 @@ import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.settings.profile.personaldetails.adapter.PersonalDetailsAdapter
 import uk.co.transferx.app.ui.settings.profile.personaldetails.presenter.PersonalDetailsPresenter
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
+import uk.co.transferx.app.ui.signin.SignInActivity
 import javax.inject.Inject
 
 class PersonalDetailsActivity : BaseActivity(), PersonalDetailsPresenter.PersonalDetailsUI {
@@ -37,6 +37,6 @@ class PersonalDetailsActivity : BaseActivity(), PersonalDetailsPresenter.Persona
     }
 
     override fun goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(this@PersonalDetailsActivity)
+        SignInActivity.startSignInActivity(this@PersonalDetailsActivity)
     }
 }

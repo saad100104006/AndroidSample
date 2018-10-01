@@ -1,4 +1,4 @@
-package uk.co.transferx.app.ui.signin.presenter;
+package uk.co.transferx.app.ui.signinpin.presenter;
 
 import android.content.SharedPreferences;
 
