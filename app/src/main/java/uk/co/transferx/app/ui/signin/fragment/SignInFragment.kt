@@ -119,6 +119,7 @@ class SignInFragment : BaseFragment(), SignInContract.View {
 
     override fun goToSignUp() {
         activity?.startActivity<SignUpActivity>()
+        activity?.finish()
     }
 
     override fun goToMainScreen() {

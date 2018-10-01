@@ -94,9 +94,7 @@
     <string name="upload_documentation">Upload Documentation</string>
     <string name="amount_with_currency">%1$s - %2$s</string>
     <string name="money_that_cares">money that cares</string>
-    <string name="enter_your_email_address">Enter your email address</string>
     <string name="hint_email_address">Email address</string>
-    <string name="enter_your_password">Enter your password</string>
     <string name="hint_password">Password</string>
     <string name="hint_repassword">Confirm password</string>
     <string name="enter_your_email_address">Phone number or email address</string>

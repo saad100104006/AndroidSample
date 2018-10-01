@@ -24,6 +24,11 @@ class SignInActivity : BaseActivity() {
         launchFragment()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
     private fun launchFragment() {
         val fragment = SignInFragment()
         supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.tag)
