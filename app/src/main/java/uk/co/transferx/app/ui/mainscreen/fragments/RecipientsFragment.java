@@ -27,7 +27,7 @@ import uk.co.transferx.app.ui.mainscreen.presenters.RecipientsFragmentPresenter;
 import uk.co.transferx.app.ui.recipients.addrecipients.AddRecipientsActivity;
 import uk.co.transferx.app.ui.recipients.addrecipients.Mode;
 import uk.co.transferx.app.ui.customview.ConfirmationDialogFragment;
-import uk.co.transferx.app.ui.welcom.WelcomeActivity;
+import uk.co.transferx.app.ui.signin.SignInActivity;
 
 import static android.app.Activity.RESULT_OK;
 import static uk.co.transferx.app.util.Constants.MODE;
@@ -191,6 +191,6 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
 
     @Override
     public void goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(getActivity());
+        SignInActivity.Companion.startSignInActivity(getActivity());
     }
 }

@@ -6,7 +6,7 @@ import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.settings.profile.wallet.presenter.UploadDocumentsPresenter
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
+import uk.co.transferx.app.ui.signin.SignInActivity
 import javax.inject.Inject
 
 class UploadDocumentsActivity : BaseActivity(), UploadDocumentsPresenter.UploadDocumentsUI {
@@ -32,6 +32,6 @@ class UploadDocumentsActivity : BaseActivity(), UploadDocumentsPresenter.UploadD
     }
 
     override fun goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(this@UploadDocumentsActivity)
+        SignInActivity.startSignInActivity(this@UploadDocumentsActivity)
     }
 }

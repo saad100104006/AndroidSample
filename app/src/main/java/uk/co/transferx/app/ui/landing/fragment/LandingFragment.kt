@@ -9,8 +9,9 @@ import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.landing.LandingContract
 import uk.co.transferx.app.ui.landing.presenter.LandingPresenter
+import uk.co.transferx.app.ui.signin.SignInActivity
 import uk.co.transferx.app.ui.signup.SignUpActivity
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
+import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 
@@ -49,11 +50,11 @@ class LandingFragment @Inject constructor() : Fragment(), LandingContract.View {
     }
 
     override fun showLoginScreen() {
-        WelcomeActivity.startWelcomeActivity(activity)
+        activity?.startActivity<SignInActivity>()
     }
 
     override fun showSignUpScreen() {
-        SignUpActivity.startSignUp(activity!!, null)
+        activity?.startActivity<SignUpActivity>()
     }
 
     override fun goToWelcome() {

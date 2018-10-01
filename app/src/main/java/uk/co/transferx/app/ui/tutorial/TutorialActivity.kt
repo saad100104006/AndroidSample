@@ -3,8 +3,8 @@ package uk.co.transferx.app.ui.tutorial
 import android.os.Bundle
 import kotlinx.android.synthetic.main.tutorial_activity_layout.*
 import uk.co.transferx.app.R
-import uk.co.transferx.app.ui.tutorial.adapter.TutorialAdapter
 import uk.co.transferx.app.ui.base.BaseActivity
+import uk.co.transferx.app.ui.tutorial.adapter.TutorialAdapter
 
 /**
  * Created by sergey on 21/03/2018.
