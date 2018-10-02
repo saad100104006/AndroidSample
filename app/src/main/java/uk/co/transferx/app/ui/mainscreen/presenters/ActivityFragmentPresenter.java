@@ -136,6 +136,26 @@ public class ActivityFragmentPresenter extends BasePresenter<ActivityFragmentPre
         compositeDisposable.add(historyDis);
     }
 
+    private void fetchRecurrent() {
+        if (compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable();
+        }
+
+        final Disposable historyDis = tokenManager.getToken()
+                .flatMap(token -> transactionApi.getHistory(token.getAccessToken()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(resp -> {
+                    if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
+                        ui.setData(resp.body().getTransactions());
+                        return;
+                    }
+                    globalErrorHandler(resp.code());
+
+                });
+        compositeDisposable.add(historyDis);
+    }
+
     @Override
     protected void globalErrorHandler(Throwable throwable) {
         super.globalErrorHandler(throwable);

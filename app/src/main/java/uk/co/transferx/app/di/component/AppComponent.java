@@ -10,6 +10,11 @@ import uk.co.transferx.app.di.module.NetworkModule;
 import uk.co.transferx.app.data.firebase.TransferXFirebaseIDService;
 import uk.co.transferx.app.ui.landing.LandingActivity;
 import uk.co.transferx.app.ui.landing.fragment.LandingFragment;
+
+import uk.co.transferx.app.ui.homescreen.MainActivity;
+import uk.co.transferx.app.ui.homescreen.fragments.FragActivity;
+import uk.co.transferx.app.ui.homescreen.fragments.FragRecipients;
+import uk.co.transferx.app.ui.homescreen.fragments.FragSettings;
 import uk.co.transferx.app.ui.mainscreen.fragments.ActivityFragment;
 import uk.co.transferx.app.ui.mainscreen.fragments.RecipientDialogFragment;
 import uk.co.transferx.app.ui.mainscreen.fragments.RecipientsFragment;
@@ -123,4 +128,13 @@ public interface AppComponent {
     void inject(UploadDocumentsActivity uploadDocumentsActivity);
 
     void inject(TransferXFirebaseIDService transferXFirebaseIDService);
+
+
+    void inject(MainActivity mainActivity);
+
+    void inject (FragActivity fragActivity);
+
+    void inject (FragRecipients fragRecipients);
+
+    void inject (FragSettings fragSettings);
 }

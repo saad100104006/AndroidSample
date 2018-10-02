@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Transactions(@SerializedName("transactions") val transactions: List<Transaction>) :
+data class Transactions(@SerializedName("transactions") val transactions: ArrayList<Transaction>) :
     Parcelable
 
 @Parcelize

@@ -1,155 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/grey_bg"
-    android:fillViewport="true"
-    >
+    android:fillViewport="true">
 
     <android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
         android:id="@+id/container"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/settings_title"
-        style="@style/tv_toolbar_heading"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/str_settings"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"/>
+        <TextView
+            android:id="@+id/settings_title"
+            style="@style/tvToolbarHeading"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/title_settings"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
-        android:id="@+id/menu_icon1"
-        style="@style/settings_icon"
-        android:src="@drawable/ic_settings_account"
-        android:layout_marginTop="36dp"
-        app:layout_constraintStart_toStartOf="@+id/settings_title"
-        app:layout_constraintTop_toBottomOf="@+id/settings_title"
-       />
+        <TextView
+            android:id="@+id/menuAccount"
+            style="@style/settings_item_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="44dp"
+            android:drawableLeft="@drawable/ic_settings_account"
+            android:drawablePadding="28dp"
+            android:gravity="center_vertical"
+            android:text="@string/settings_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.008"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settings_title" />
 
-    <TextView
-        android:id="@+id/menu_item1"
-        style="@style/settings_item_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_account"
-        app:layout_constraintBottom_toBottomOf="@+id/menu_icon1"
-        app:layout_constraintLeft_toRightOf="@id/menu_icon1"
-        app:layout_constraintTop_toTopOf="@+id/menu_icon1"/>
-
-
-    <ImageView
-        android:id="@+id/menu_icon2"
-        style="@style/settings_icon"
-        android:src="@drawable/ic_settings_notifications"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="@+id/menu_icon1"
-        app:layout_constraintTop_toBottomOf="@+id/menu_icon1"
-       />
-
-    <TextView
-        android:id="@+id/menu_item2"
-        style="@style/settings_item_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_notifications"
-        app:layout_constraintBottom_toBottomOf="@+id/menu_icon2"
-        app:layout_constraintLeft_toRightOf="@id/menu_icon2"
-        app:layout_constraintTop_toTopOf="@+id/menu_icon2"/>
+        <TextView
+            android:id="@+id/menuNotification"
+            style="@style/settings_item_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="40dp"
+            android:drawableLeft="@drawable/ic_settings_notifications"
+            android:drawablePadding="28dp"
+            android:gravity="center_vertical"
+            android:text="@string/settings_notifications"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/menuAccount" />
 
 
-    <ImageView
-        android:id="@+id/menu_icon3"
-        style="@style/settings_icon"
-        android:src="@drawable/ic_settings_referrals"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="@+id/menu_icon2"
-        app:layout_constraintTop_toBottomOf="@+id/menu_icon2"
-        />
+        <TextView
+            android:id="@+id/menuReferrals"
+            style="@style/settings_item_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="40dp"
+            android:drawableLeft="@drawable/ic_settings_referrals"
+            android:drawablePadding="28dp"
+            android:gravity="center_vertical"
+            android:text="@string/settings_referrals"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/menuNotification" />
 
-    <TextView
-        android:id="@+id/menu_item3"
-        style="@style/settings_item_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_referrals"
-        app:layout_constraintBottom_toBottomOf="@+id/menu_icon3"
-        app:layout_constraintLeft_toRightOf="@id/menu_icon3"
-        app:layout_constraintTop_toTopOf="@+id/menu_icon3"/>
-
-
-    <ImageView
-        android:id="@+id/menu_icon4"
-        style="@style/settings_icon"
-        android:src="@drawable/ic_settings_support"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="@+id/menu_icon3"
-        app:layout_constraintTop_toBottomOf="@+id/menu_icon3"
-        />
-
-    <TextView
-        android:id="@+id/menu_item4"
-        style="@style/settings_item_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_about_us"
-        app:layout_constraintBottom_toBottomOf="@+id/menu_icon4"
-        app:layout_constraintLeft_toRightOf="@id/menu_icon4"
-        app:layout_constraintTop_toTopOf="@+id/menu_icon4"/>
+        <TextView
+            android:id="@+id/menuSupport"
+            style="@style/settings_item_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="40dp"
+            android:drawableLeft="@drawable/ic_settings_support"
+            android:drawablePadding="28dp"
+            android:gravity="center_vertical"
+            android:text="@string/settings_support"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/menuAboutUs" />
 
 
-    <ImageView
-        android:id="@+id/menu_icon5"
-        style="@style/settings_icon"
-        android:src="@drawable/ic_settings_account"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="@+id/menu_icon4"
-        app:layout_constraintTop_toBottomOf="@+id/menu_icon4"
-      />
-
-    <TextView
-        android:id="@+id/menu_item5"
-        style="@style/settings_item_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_support"
-        app:layout_constraintBottom_toBottomOf="@+id/menu_icon5"
-        app:layout_constraintLeft_toRightOf="@id/menu_icon5"
-        app:layout_constraintTop_toTopOf="@+id/menu_icon5"/>
+        <TextView
+            android:id="@+id/menuAboutUs"
+            style="@style/settings_item_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="40dp"
+            android:drawableLeft="@drawable/ic_settings_aboutus"
+            android:drawablePadding="28dp"
+            android:gravity="center_vertical"
+            android:text="@string/settings_about_us"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/menuReferrals" />
 
 
-    <ImageView
-        android:id="@+id/menu_icon6"
-        style="@style/settings_icon"
-        android:src="@drawable/ic_settings_logout"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="@+id/menu_icon5"
-        app:layout_constraintTop_toBottomOf="@+id/menu_icon5"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toBottomOf="@id/container"
-        />
+        <TextView
+            android:id="@+id/menuLogout"
+            style="@style/settings_item_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="40dp"
+            android:drawableLeft="@drawable/ic_settings_logout"
+            android:drawablePadding="28dp"
+            android:gravity="center_vertical"
+            android:text="@string/settings_logout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/menuSupport" />
 
-    <TextView
-        android:id="@+id/menu_item6"
-        style="@style/settings_item_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_logout"
-        app:layout_constraintBottom_toBottomOf="@+id/menu_icon6"
-        app:layout_constraintLeft_toRightOf="@id/menu_icon6"
-        app:layout_constraintTop_toTopOf="@+id/menu_icon6"/>
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 </ScrollView>

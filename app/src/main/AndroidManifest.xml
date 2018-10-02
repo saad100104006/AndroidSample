@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="uk.co.transferx.app">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="uk.co.transferx.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -8,7 +9,8 @@
 
     <application
         android:name=".TransferXApplication"
-        android:allowBackup="true"
+        tools:replace="android:allowBackup"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -47,14 +49,17 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.homescreen.HomeActivity"
+            android:name=".ui.homescreen.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.welcom.WelcomeActivity"
@@ -73,10 +78,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="uk.co.transferx.app.ui.mainscreen.MainActivity"
+            android:name="uk.co.transferx.app.ui.mainscreen.MainActivityOld"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustNothing" />
+            android:windowSoftInputMode="stateHidden|adjustNothing" >
+
+        </activity>
         <activity
             android:name="uk.co.transferx.app.ui.settings.SettingsActivity"
             android:screenOrientation="portrait"

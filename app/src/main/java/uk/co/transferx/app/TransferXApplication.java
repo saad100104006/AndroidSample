@@ -37,9 +37,11 @@ public class TransferXApplication extends MultiDexApplication {
                 .networkModule(new NetworkModule("http://transferx.ddns.net:3001"))
                 .build();
         appComponent.inject(this);
-        ProcessLifecycleOwner.get()
+
+        //TBDD
+       /* ProcessLifecycleOwner.get()
                 .getLifecycle()
-                .addObserver(applicationObserver);
+                .addObserver(applicationObserver);*/
         Timber.plant();
 
         if (LeakCanary.isInAnalyzerProcess(this)) {

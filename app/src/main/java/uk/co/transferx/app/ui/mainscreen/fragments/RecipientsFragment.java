@@ -20,7 +20,7 @@ import uk.co.transferx.app.ui.base.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.data.dto.RecipientDto;
-import uk.co.transferx.app.ui.mainscreen.MainActivity;
+import uk.co.transferx.app.ui.mainscreen.MainActivityOld;
 import uk.co.transferx.app.ui.mainscreen.adapters.RecipientVerticalRecyclerAdapter;
 import uk.co.transferx.app.ui.mainscreen.adapters.SwipeHelper;
 import uk.co.transferx.app.ui.mainscreen.presenters.RecipientsFragmentPresenter;
@@ -152,7 +152,7 @@ public class RecipientsFragment extends BaseFragment implements RecipientsFragme
     public void goToTransfer(RecipientDto recipientDto) {
         final Bundle bundle = new Bundle();
         bundle.putParcelable(RECIPIENT, recipientDto);
-        ((MainActivity) getActivity()).selectScreen(R.id.transfer, bundle);
+        ((MainActivityOld) getActivity()).selectScreen(R.id.transfer, bundle);
     }
 
     @Override

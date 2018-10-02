@@ -17,7 +17,6 @@ class ApplicationObserver @Inject constructor(val sharedPreferences: SharedPrefe
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onBackground() {
-        Log.d("Serge", "pin required true")
       sharedPreferences.edit().putBoolean(PIN_REQUIRED, true).apply()
     }
 
