@@ -1,10 +1,7 @@
 package uk.co.transferx.app.ui.homescreen.adapters
 
 import android.content.Context
-import android.content.res.Resources
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
-import android.util.SparseBooleanArray
 import android.util.SparseIntArray
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +12,6 @@ import android.widget.TextView
 
 import uk.co.transferx.app.R
 import uk.co.transferx.app.data.pojo.Transaction
-import uk.co.transferx.app.ui.homescreen.presenters.FragActivityPresenter
-import uk.co.transferx.app.ui.mainscreen.adapters.TransactionDiffCallback
-import uk.co.transferx.app.ui.mainscreen.presenters.ActivityFragmentPresenter
 import java.text.ParseException
 import java.text.SimpleDateFormat
 
