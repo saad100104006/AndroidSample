@@ -120,12 +120,13 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
     private fun saveTokenWithNewPin(pin: String) {
         if (compositeDisposable == null) compositeDisposable = CompositeDisposable()
 
-        compositeDisposable!!.add(tokenManager.token
-                .map { (accessToken) -> cryptoManager.getEncryptedCredential(accessToken, pin) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { sec ->
-                    sharedPreferences.edit().putString(CREDENTIAL, sec).apply()
+            // TODO Functionality should be rewritten from scratch
+//        compositeDisposable!!.add(tokenManager.token
+//                .map { (accessToken) -> cryptoManager.getEncryptedCredential(accessToken, pin) }
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe { sec ->
+//                    sharedPreferences.edit().putString(CREDENTIAL, sec).apply()
                     sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply()
                     // TODO Uncomment line when linking is done
 //                    sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
@@ -136,8 +137,8 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
 
                     ui?.goToConfirmationScreen()
 
-                }
-        )
+//                }
+//        )
     }
 
     private fun validateInputs() {
