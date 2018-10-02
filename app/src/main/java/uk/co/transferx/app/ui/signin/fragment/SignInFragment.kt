@@ -28,9 +28,11 @@ import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.mainscreen.MainActivity
 import uk.co.transferx.app.ui.recoverpass.RecoverPasswordActivity
+import uk.co.transferx.app.ui.signin.SignInActivity
 import uk.co.transferx.app.ui.signin.SignInContract
 import uk.co.transferx.app.ui.signin.presenter.SignInPresenter
 import uk.co.transferx.app.ui.signup.SignUpActivity
+import uk.co.transferx.app.ui.signup.fragment.SignUpSuccessFragment
 import javax.inject.Inject
 
 
@@ -120,6 +122,11 @@ class SignInFragment : BaseFragment(), SignInContract.View {
     override fun goToSignUp() {
         activity?.startActivity<SignUpActivity>()
         activity?.finish()
+    }
+
+    override fun goToConfirmation() {
+        (activity as SignInActivity).launchFragment(SignUpSuccessFragment())
+        loadingBar?.visibility = View.GONE
     }
 
     override fun goToMainScreen() {

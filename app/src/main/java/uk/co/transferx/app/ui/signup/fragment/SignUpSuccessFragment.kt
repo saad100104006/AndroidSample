@@ -15,7 +15,11 @@ import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.mainscreen.MainActivity
 import uk.co.transferx.app.ui.recipients.addrecipients.AddRecipientsActivity
+import uk.co.transferx.app.ui.recipients.addrecipients.Mode
+import uk.co.transferx.app.ui.settings.profile.wallet.AddCardActivity
+import uk.co.transferx.app.ui.settings.profile.wallet.CardMode
 import uk.co.transferx.app.ui.signup.presenters.SignUpSuccessPresenter
+import uk.co.transferx.app.util.Constants
 import java.time.Duration
 import javax.inject.Inject
 
@@ -56,24 +60,18 @@ class SignUpSuccessFragment : BaseFragment(), SignUpSuccessPresenter.SignUpSucce
     }
 
     override fun showAddRecipient() {
-        // TODO Linking
-//        context?.startActivity(context?.intentFor<AddRecipientsActivity>())
-//        activity?.finish()
-        Toast.makeText(activity, "Linking has not been written yet!", Toast.LENGTH_LONG).show()
+        context?.startActivity(context?.intentFor<AddRecipientsActivity>(Constants.MODE to Mode.ADD.ordinal))
+        activity?.finish()
     }
 
     override fun showAddPaymentMethod() {
-        // TODO Linking
-//        context?.startActivity(context?.intentFor<AddRecipientsActivity>())
-//        activity?.finish()
-        Toast.makeText(activity, "Linking has not been written yet!", Toast.LENGTH_LONG).show()
+        context?.startActivity(context?.intentFor<AddCardActivity>(Constants.MODE to CardMode.ADD.ordinal))
+        activity?.finish()
     }
 
     override fun showMainScreen() {
-        // TODO Linking
-//        context?.startActivity(context?.intentFor<MainActivity>())
-//        activity?.finish()
-        Toast.makeText(activity, "Linking has not been written yet!", Toast.LENGTH_LONG).show()
+        context?.startActivity(context?.intentFor<MainActivity>())
+        activity?.finish()
     }
 
     override fun goToWelcome() {

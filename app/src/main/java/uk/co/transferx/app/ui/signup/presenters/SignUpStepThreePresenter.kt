@@ -61,10 +61,10 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
 
     fun signUpUser() {
         if (firstPin == secondPin) {
-            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) || !sharedPreferences.getBoolean(LOGGED_IN_STATUS, false)) {
+//            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) || !sharedPreferences.getBoolean(LOGGED_IN_STATUS, false)) {
                 saveTokenWithNewPin(firstPin?: return)
-                return
-            }
+//                return
+//            }
         } else ui.showErrorPin()
         /*   UserRequest.Builder request = new UserRequest.Builder();
         if (firstPin.equals(secondPin)) {

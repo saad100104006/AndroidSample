@@ -7,13 +7,16 @@ import android.os.Bundle
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseActivity
+import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.signin.fragment.SignInFragment
+import uk.co.transferx.app.ui.signup.fragment.SignUpSuccessFragment
 
 /**
  * Created by smilevkiy on 13.11.17.
  */
 
 class SignInActivity : BaseActivity() {
+    private var isConfirmationDisplayed: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as TransferXApplication).appComponent.inject(this)
@@ -21,16 +24,18 @@ class SignInActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.signin_activity)
 
-        launchFragment()
+        launchFragment(SignInFragment())
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
+        if(!isConfirmationDisplayed) {
+            super.onBackPressed()
+            finish()
+        }
     }
 
-    private fun launchFragment() {
-        val fragment = SignInFragment()
+     fun launchFragment(fragment: BaseFragment) {
+        if(fragment is SignUpSuccessFragment) isConfirmationDisplayed = true
         supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.tag)
                 .commit()
     }

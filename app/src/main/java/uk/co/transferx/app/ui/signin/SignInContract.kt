@@ -10,6 +10,8 @@ interface SignInContract {
 
         fun goToMainScreen()
 
+        fun goToConfirmation()
+
         fun showConnectionError()
 
         fun showEmailError()
