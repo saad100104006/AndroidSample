@@ -21,13 +21,8 @@ import javax.inject.Inject;
 import uk.co.transferx.app.ui.base.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
-<<<<<<< HEAD:app/src/main/java/uk/co/transferx/app/ui/signin/fragment/SignInEmailFragment.java
 import uk.co.transferx.app.ui.homescreen.MainActivity;
-import uk.co.transferx.app.ui.signin.presenters.SignInEmailPresenter;
-=======
-import uk.co.transferx.app.ui.mainscreen.MainActivity;
 import uk.co.transferx.app.ui.signinpin.presenters.SignInEmailPresenter;
->>>>>>> f64c28a745e4c2a40cd86c1e4ec232cad017191e:app/src/main/java/uk/co/transferx/app/ui/signinpin/fragment/SignInEmailFragment.java
 
 /**
  * Created by sergey on 19.11.17.

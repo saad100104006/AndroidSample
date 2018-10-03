@@ -26,7 +26,7 @@ import uk.co.transferx.app.R.string.forgot_password
 import uk.co.transferx.app.R.string.reset_password
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseFragment
-import uk.co.transferx.app.ui.mainscreen.MainActivity
+import uk.co.transferx.app.ui.homescreen.MainActivity
 import uk.co.transferx.app.ui.recoverpass.RecoverPasswordActivity
 import uk.co.transferx.app.ui.signin.SignInActivity
 import uk.co.transferx.app.ui.signin.SignInContract

@@ -15,8 +15,8 @@ import org.jetbrains.anko.startActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseFragment
+import uk.co.transferx.app.ui.homescreen.MainActivity
 import uk.co.transferx.app.ui.landing.LandingActivity
-import uk.co.transferx.app.ui.mainscreen.MainActivity
 import uk.co.transferx.app.ui.signup.SignUpActivity
 import uk.co.transferx.app.ui.signup.presenters.SignUpStepThreePresenter
 import uk.co.transferx.app.util.Constants.*
@@ -93,7 +93,7 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
     }
 
     override fun goToMainScreen() {
-        MainActivity.startMainActivity(activity)
+        MainActivity.Companion.startMainActivity(activity as SignUpActivity)
         activity?.finish()
     }
 
