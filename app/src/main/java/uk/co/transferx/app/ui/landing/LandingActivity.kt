@@ -22,7 +22,6 @@ class LandingActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-
         bindFragment()
     }
 

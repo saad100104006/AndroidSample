@@ -10,7 +10,7 @@ import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.data.pojo.Profile
 import uk.co.transferx.app.ui.settings.profile.personaldetails.presenter.PersonalDetailsPresenterTwo
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
+import uk.co.transferx.app.ui.signin.SignInActivity
 import javax.inject.Inject
 
 class PersonalDetailsFragmentTwo : BaseFragment(), PersonalDetailsPresenterTwo.PersonalDetailsUITwo {
@@ -54,6 +54,6 @@ class PersonalDetailsFragmentTwo : BaseFragment(), PersonalDetailsPresenterTwo.P
     }
 
     override fun goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(activity)
+//        SignInActivity.startWelcomeActivity(activity)
     }
 }

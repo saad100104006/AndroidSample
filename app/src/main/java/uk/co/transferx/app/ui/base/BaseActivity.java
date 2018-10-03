@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.ui.recoverpass.RecoverPasswordActivity;
-import uk.co.transferx.app.ui.signin.SignInActivity;
+import uk.co.transferx.app.ui.signinpin.SignInPinActivity;
 import uk.co.transferx.app.ui.signup.SignUpActivity;
 import uk.co.transferx.app.ui.splash.SplashActivity;
 import uk.co.transferx.app.data.repository.tokenmanager.TokenManager;
@@ -45,17 +45,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       //TBDD
-        /* if (isShouldStartPinCheck()) {
-            SignInActivity.starSignInActivity(this);
-        }*/
+        /* TBDD
+        if (isShouldStartPinCheck()) {
+
+            SignInPinActivity.starSignInActivity(this);
+        }
+         */
     }
 
     private boolean isShouldStartPinCheck() {
-        //TBDD
-        return false; /*sharedPreferences.getBoolean(PIN_REQUIRED, false) && !(this instanceof SignInActivity) &&
+        return sharedPreferences.getBoolean(PIN_REQUIRED, false) && !(this instanceof SignInPinActivity) &&
                 tokenRepository.getToken().getRefreshToken() != null && sharedPreferences.getBoolean(LOGGED_IN_STATUS, false) &&
-                !(this instanceof SignUpActivity) && !(this instanceof SplashActivity) && !(this instanceof RecoverPasswordActivity);*/
+                !(this instanceof SignUpActivity) && !(this instanceof SplashActivity) && !(this instanceof RecoverPasswordActivity);
     }
 
     protected void replaceFragment(BaseFragment baseFragment, int current, int container) {

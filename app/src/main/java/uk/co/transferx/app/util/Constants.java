@@ -5,19 +5,25 @@ package uk.co.transferx.app.util;
  */
 
 public final class Constants {
-
     public final static String EMPTY = "";
     public final static String SPACE = " ";
     public final static String UNDERSCORE = "_";
 
-
-    public static final String U_NAME = "first_name";
+    public static final String U_NAME = "user_name";
+    public static final String FIRST_NAME = "first_name";
+    public static final String LAST_NAME = "last_name";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
+    public static final String PHONE_NUMBER = "phone_number";
+    public static final String COUNTRY = "country";
+
     public static final String CREDENTIAL = "credential";
     public static final String DELETE = "delete";
 
+    public static final String FIRST_START_APP = "first_start_app";
     public static final String LOGGED_IN_STATUS = "logged_in_status";
+    public static final String CARD_REQUIRED = "card_required";
+    public static final String RECIPIENT_REQUIRED = "recipient_required";
 
     public static final String BACKGROUND_COLOR = "background_color";
     public static final String TUTORIAL_IMG = "tutorial_img";
@@ -33,4 +39,6 @@ public final class Constants {
     public static final String PIN_REQUIRED = "pin_required";
     public static final String MASTERCARD = "MASTERCARD";
     public static final String VISA = "VISA";
+
+    public static final long SPLASH_DELAY = 800;
 }

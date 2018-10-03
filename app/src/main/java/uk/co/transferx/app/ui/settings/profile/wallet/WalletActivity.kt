@@ -22,7 +22,7 @@ import uk.co.transferx.app.util.Constants.DELETE
 import uk.co.transferx.app.ui.customview.ConfirmationDialogFragment
 import uk.co.transferx.app.ui.customview.ConfirmationDialogFragment.MESSAGE
 import uk.co.transferx.app.ui.customview.ConfirmationDialogFragment.POSITION
-import uk.co.transferx.app.ui.welcom.WelcomeActivity
+import uk.co.transferx.app.ui.signin.SignInActivity
 import javax.inject.Inject
 
 class WalletActivity : BaseActivity(), WalletActivityPresenter.WalletActivityUI {
@@ -144,7 +144,7 @@ class WalletActivity : BaseActivity(), WalletActivityPresenter.WalletActivityUI 
     }
 
     override fun goToWelcome() {
-        WelcomeActivity.startWelcomeActivity(this@WalletActivity)
+        SignInActivity.startSignInActivity(this@WalletActivity)
     }
 
 }
