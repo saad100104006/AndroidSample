@@ -46,11 +46,6 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        buttonBack.setOnClickListener {
-            hideKeyboard(buttonBack)
-            activity?.onBackPressed()
-        }
-
         buttonNext = buttonSignUp
         buttonNext.setOnClickListener {
             hideKeyboard(it)
