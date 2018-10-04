@@ -7,9 +7,9 @@ import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
-import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment
-import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepOneFragment
+import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment
+import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpSuccessFragment
 import uk.co.transferx.app.util.Constants.CREDENTIAL
 import uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT
@@ -48,9 +48,8 @@ class SignUpActivity : BaseActivity() {
 
     fun showNextOrPreviousFragment(nextView: Int, bundle: Bundle?) {
         val fragment = sparseArray.get(nextView)
-        if (bundle != null) {
-            fragment.arguments = bundle
-        }
+        if (bundle != null) fragment.arguments = bundle
+
         replaceFragment(fragment, currentFragment - nextView, R.id.container)
         currentFragment = nextView
     }

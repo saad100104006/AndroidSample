@@ -1,5 +1,7 @@
 package uk.co.transferx.app.ui.signup.presenters
 
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposables
 import javax.inject.Inject
 
 import uk.co.transferx.app.ui.base.BasePresenter
@@ -12,11 +14,15 @@ import uk.co.transferx.app.util.Util
 
 class SignUpStepTwoPresenter @Inject
 constructor() : BasePresenter<SignUpStepTwoPresenter.SignUpStepTwoUI>() {
-
     private var email: String? = null
     private var password: String? = null
-
     private var rePassword: String? = null
+    var firstName: String? = null
+    var lastName: String? = null
+    var phoneNumber: String? = null
+    var country: String? = null
+
+    private var compositeDisposable: CompositeDisposable? = null
 
     private val isInputCorrect: Boolean
         get() = Util.validatePassword(password) && Util.validateEmail(email)
@@ -24,9 +30,28 @@ constructor() : BasePresenter<SignUpStepTwoPresenter.SignUpStepTwoUI>() {
     private val isPasswordInputCorrect: Boolean
         get() = password == rePassword
 
-    fun goToNextStep() {
-            if(isPasswordInputCorrect) ui?.goToNextView(email, password)
+    override fun attachUI(ui: SignUpStepTwoUI?) {
+        super.attachUI(ui)
+        if (compositeDisposable == null) compositeDisposable =  CompositeDisposable()
+    }
+
+    override fun detachUI() {
+        super.detachUI()
+        compositeDisposable?.dispose()
+    }
+
+    fun signUpUser() {
+            if(isPasswordInputCorrect) {
+                // reg logic
+                /// TODO
+
+                ui?.goToPinSetup()
+            }
             else ui.showErrorPassword()
+    }
+
+    fun checkIfEmailIsTaken(){
+
     }
 
     fun setEmail(email: String) {
@@ -50,7 +75,7 @@ constructor() : BasePresenter<SignUpStepTwoPresenter.SignUpStepTwoUI>() {
 
     interface SignUpStepTwoUI : UI {
 
-        fun goToNextView(email: String?, password: String?)
+        fun goToPinSetup()
 
         fun showErrorPassword()
 

@@ -35,8 +35,8 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
         super.onCreate(savedInstanceState)
 
         // Get credentials from previous steps
-        presenter.setCredential(arguments!!.getString(U_NAME), arguments!!.getString(EMAIL),
-                arguments!!.getString(PASSWORD), arguments!!.getString(PHONE_NUMBER), arguments!!.getString(COUNTRY))
+//        presenter.setCredential(arguments!!.getString(U_NAME), arguments!!.getString(EMAIL),
+//                arguments!!.getString(PASSWORD), arguments!!.getString(PHONE_NUMBER), arguments!!.getString(COUNTRY))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -54,7 +54,7 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
         buttonNext = buttonSignUp
         buttonNext.setOnClickListener {
             hideKeyboard(it)
-            presenter.signUpUser()
+            presenter.signUpPin()
         }
 
         firstPinEntry.setAnimationEnable(true)

@@ -38,9 +38,9 @@ import uk.co.transferx.app.ui.signin.fragment.SignInFragment;
 import uk.co.transferx.app.ui.signinpin.fragment.SignInEmailFragment;
 import uk.co.transferx.app.ui.signinpin.fragment.SignInPinFragment;
 import uk.co.transferx.app.ui.signup.SignUpActivity;
-import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment;
-import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment;
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepOneFragment;
+import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment;
+import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment;
 import uk.co.transferx.app.ui.signup.fragment.SignUpSuccessFragment;
 import uk.co.transferx.app.ui.splash.SplashActivity;
 import uk.co.transferx.app.ui.transfersummary.TransferSummaryActivity;
@@ -63,7 +63,7 @@ public interface AppComponent {
 
     void inject(SignUpStepThreeFragment signUpStepThreeFragment);
 
-    void inject(SignUpStepOneFragment signUpStepOneFragment);
+    void inject(SignUpStepTwoFragment signUpStepTwoFragment);
 
     void inject(SignUpSuccessFragment signUpSuccessFragment);
 
@@ -73,7 +73,7 @@ public interface AppComponent {
 
     void inject(ActivityFragment activityFragment);
 
-    void inject(SignUpStepTwoFragment signUpStepTwoFragment);
+    void inject(SignUpStepOneFragment signUpStepOneFragment);
 
     void inject(SignInEmailFragment signInEmailFragment);
 

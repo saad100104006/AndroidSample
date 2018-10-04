@@ -59,12 +59,14 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
         validateInputs()
     }
 
-    fun signUpUser() {
+    fun signUpPin() {
         if (firstPin == secondPin) {
 //            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) || !sharedPreferences.getBoolean(LOGGED_IN_STATUS, false)) {
-                saveTokenWithNewPin(firstPin?: return)
+//                saveTokenWithNewPin(firstPin?: return)
 //                return
 //            }
+            // TODO store pin
+            ui?.goToConfirmationScreen()
         } else ui.showErrorPin()
         /*   UserRequest.Builder request = new UserRequest.Builder();
         if (firstPin.equals(secondPin)) {
@@ -122,13 +124,15 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
 
             // TODO Functionality should be rewritten from scratch
 //        compositeDisposable!!.add(tokenManager.token
+        // TODO - ASK SERGEY WHAT ABOUT ENCRYPTED CREDS
 //                .map { (accessToken) -> cryptoManager.getEncryptedCredential(accessToken, pin) }
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe { sec ->
 //                    sharedPreferences.edit().putString(CREDENTIAL, sec).apply()
+        // TODO ADD THESE TO STEP 2 LOGIC
                     sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply()
-                    // TODO Uncomment line when linking is done
+
 //                    sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
                     sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply()
 

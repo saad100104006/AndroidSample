@@ -1,6 +1,7 @@
 package uk.co.transferx.app.ui.signin.presenter
 
 import android.content.SharedPreferences
+import android.util.Log
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -45,10 +46,10 @@ class SignInPresenter @Inject constructor
     }
 
     override fun signIn() {
-        if (tokenRepository.getToken().accessToken.isEmpty()) {
-            this.ui?.showConnectionError()
-            return
-        }
+//        if (tokenRepository.getToken().accessToken.isEmpty()) {
+//            this.ui?.showConnectionError()
+//            return
+//        }
         signIn(email, password)
     }
 
@@ -79,7 +80,7 @@ class SignInPresenter @Inject constructor
                         HttpsURLConnection.HTTP_OK -> tokenManager.saveToken(it.body())
                         else -> this.ui?.showConnectionError()
                     }
-                }, { this.handleError() })
+                }, { throwable -> this.handleError(throwable) })
     }
 
     private fun signIn(email: String?, password: String?) {
@@ -107,11 +108,11 @@ class SignInPresenter @Inject constructor
                         HttpsURLConnection.HTTP_BAD_REQUEST -> this.ui?.showWrongPassword()
                         else -> this.ui?.showConnectionError()
                     }
-                }, { this.handleError() })
+                }, { throwable -> this.handleError(throwable) })
 
     }
 
-    private fun handleError() {
+    private fun handleError(th: Throwable) {
             this.ui?.showConnectionError()
     }
 
