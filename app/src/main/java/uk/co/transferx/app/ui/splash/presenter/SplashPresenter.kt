@@ -42,6 +42,7 @@ constructor(private val signUpApi: SignUpApi, private val tokenManager: TokenMan
                 .subscribe({
                     val loggedInStatus = sharedPreferences.getBoolean(LOGGED_IN_STATUS, false)
                     val firstStart = sharedPreferences.getBoolean(FIRST_START_APP, true)
+                    val pinShouldBeSet = sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)
 
                     if (firstStart) {
                         this.ui?.goToTutorialScreen()
@@ -55,10 +56,9 @@ constructor(private val signUpApi: SignUpApi, private val tokenManager: TokenMan
                     }
 
                     if (loggedInStatus) {
-                        // TODO enable link when PIN strategy is decided
-//                        this.ui?.goToPinScreen()
-                    }
-                    this.ui?.goToLandingScreen()
+                        if(pinShouldBeSet) this.ui?.goToSetPinScreen()
+                        else this.ui?.goToPinScreen()
+                    } else this.ui?.goToLandingScreen()
 
                 }, { this.handleError(it) })
     }

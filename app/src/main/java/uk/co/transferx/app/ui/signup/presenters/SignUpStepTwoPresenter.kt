@@ -74,7 +74,10 @@ constructor(sharedPreferences: SharedPreferences,
 
                                     // Edit local credentials
                                     sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
+                                    sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply()
                                     sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, true).apply()
+                                    sharedPreferences.edit().putBoolean(CARD_REQUIRED, true).apply()
+                                    sharedPreferences.edit().putBoolean(RECIPIENT_REQUIRED, true).apply()
 
                                     // TBDD - Currently firstName and lastName are required for PIN encryption
                                     sharedPreferences.edit().putString(FIRST_NAME, firstName).apply()

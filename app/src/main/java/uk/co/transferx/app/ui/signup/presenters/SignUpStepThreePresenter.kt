@@ -22,11 +22,6 @@ class SignUpStepThreePresenter @Inject
 constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedPreferences,
             private val signUpApi: SignUpApi, private val tokenManager: TokenManager)
     : BasePresenter<SignUpStepThreePresenter.SignUpStepThreeUI>(sharedPreferences) {
-    private var uname: String? = null
-    private var email: String? = null
-    private var password: String? = null
-    private var phoneNumber: String? = null
-    private var country: String? = null
 
     private var compositeDisposable: CompositeDisposable? = null
     private var firstPin: String? = null
@@ -41,13 +36,6 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
         compositeDisposable?.dispose()
     }
 
-    fun setCredential(uname: String, email: String, password: String, phoneNumber: String, country: String) {
-        this.uname = uname
-        this.email = email
-        this.password = password
-        this.phoneNumber = phoneNumber
-        this.country = country
-    }
 
     fun setFirstPin(firstPin: String) {
         this.firstPin = firstPin
@@ -61,12 +49,17 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
 
     fun signUpPin() {
         if (firstPin == secondPin) {
-//            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) || !sharedPreferences.getBoolean(LOGGED_IN_STATUS, false)) {
-//                saveTokenWithNewPin(firstPin?: return)
-//                return
-//            }
-            // TODO store pin
-            ui?.goToConfirmationScreen()
+            // Store encyrpted PIN
+            val firstName = sharedPreferences.getString(FIRST_NAME, FIRST_NAME)
+            val secondName = sharedPreferences.getString(LAST_NAME, LAST_NAME)
+            val encryptedCredential =
+                    cryptoManager.getEncryptedCredential(firstName + UNDERSCORE + secondName, firstPin)
+            sharedPreferences.edit().putString(CREDENTIAL, encryptedCredential).apply()
+
+            sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply()
+
+            if(shouldGoToConfirmation()) ui?.goToConfirmationScreen()
+            else ui?.goToMainScreen()
         } else ui.showErrorPin()
         /*   UserRequest.Builder request = new UserRequest.Builder();
         if (firstPin.equals(secondPin)) {
@@ -149,9 +142,9 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
         ui?.setButtonEnabled(isPinFilled)
     }
 
-    private fun handleErrorFromBackend(throwable: Throwable) {
-        Timber.e(javaClass.name, throwable)
-
+    private fun shouldGoToConfirmation(): Boolean {
+        return sharedPreferences.getBoolean(CARD_REQUIRED, false)
+                || sharedPreferences.getBoolean(RECIPIENT_REQUIRED, false)
     }
 
     interface SignUpStepThreeUI : UI {
@@ -169,8 +162,6 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
     }
 
     companion object {
-        private val FIRST_NAME: Short = 0
-        private val LAST_NAME: Short = 1
         private val PIN_SIZE: Short = 4
     }
 }

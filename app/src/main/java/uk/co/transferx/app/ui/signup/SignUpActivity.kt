@@ -11,8 +11,7 @@ import uk.co.transferx.app.ui.signup.fragment.SignUpStepOneFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment
 import uk.co.transferx.app.ui.signup.fragment.SignUpSuccessFragment
-import uk.co.transferx.app.util.Constants.CREDENTIAL
-import uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT
+import uk.co.transferx.app.util.Constants.*
 
 /**
  * Created by smilevkiy on 15.11.17.
@@ -28,13 +27,14 @@ class SignUpActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         (application as TransferXApplication).appComponent.inject(this)
 
-        val credentials = intent.getBundleExtra(CREDENTIAL)
+        val credentials = intent.getIntExtra(SIGNUP_PIN_STEP, 0)
         setContentView(R.layout.signup_activity_layout)
 
         setUpFragments()
 
+        currentFragment = credentials
         val fragment = sparseArray.get(currentFragment)
-        if (credentials != null) fragment.arguments = credentials
+//        if (credentials != null) fragment.arguments = credentials
 
         supportFragmentManager.beginTransaction().replace(R.id.container, fragment, sparseArray
                 .get(currentFragment).tag).commit()
