@@ -123,6 +123,13 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
         snackbar.show()
     }
 
+    override fun showConnectionError() {
+        val snackbar = Snackbar.make(view!!, getString(R.string.connection_error), Snackbar.LENGTH_LONG)
+
+        snackbar.view.setBackgroundColor(Color.RED)
+        snackbar.show()
+    }
+
     override fun goToWelcome() {
         //no op
     }
