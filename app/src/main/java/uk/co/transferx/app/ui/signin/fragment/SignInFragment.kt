@@ -78,7 +78,6 @@ class SignInFragment : BaseFragment(), SignInContract.View {
             presenter.signIn()
             hideKeyboard(rootLayout)
 
-            val loadingBar = activity?.findViewById<ProgressBar>(R.id.loading_bar)
             loadingBar?.visibility = View.VISIBLE
         }
 

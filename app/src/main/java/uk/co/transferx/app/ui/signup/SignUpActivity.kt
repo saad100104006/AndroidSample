@@ -26,15 +26,12 @@ class SignUpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as TransferXApplication).appComponent.inject(this)
-
-        val credentials = intent.getIntExtra(SIGNUP_PIN_STEP, 0)
         setContentView(R.layout.signup_activity_layout)
 
+        val credentials = intent.getIntExtra(SIGNUP_PIN_STEP, 0)
         setUpFragments()
-
         currentFragment = credentials
         val fragment = sparseArray.get(currentFragment)
-//        if (credentials != null) fragment.arguments = credentials
 
         supportFragmentManager.beginTransaction().replace(R.id.container, fragment, sparseArray
                 .get(currentFragment).tag).commit()

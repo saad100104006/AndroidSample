@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import kotlinx.android.synthetic.main.signup_step_one_fragment_layout.*
 import uk.co.transferx.app.R
@@ -28,6 +29,8 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
     lateinit var presenter: SignUpStepTwoPresenter
 
     private var isErrorShown: Boolean = false
+
+    private var loadingBar: ProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity?.application as TransferXApplication).appComponent.inject(this)
@@ -59,9 +62,13 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
             }
         }
 
+        // View from activity has to be obtained in normal way
+        loadingBar = activity?.findViewById<ProgressBar>(R.id.loading_bar)
+
         buttonNext = buttonNextStep
         buttonNext.setOnClickListener {
             presenter.signUpUser()
+            loadingBar?.visibility = View.VISIBLE
             hideKeyboard(buttonBack)
         }
 
@@ -71,11 +78,9 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
     override fun goToPinSetup() {
         hideKeyboard(passwordInputText)
 
-//        val bundle = Bundle()
-//        bundle.putString(EMAIL, email)
-//        bundle.putString(PASSWORD, password)
-
         (activity as SignUpActivity).showNextOrPreviousFragment(2, null)
+
+        loadingBar?.visibility = View.GONE
     }
 
     override fun onResume() {
@@ -117,6 +122,8 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
 
 
     override fun showErrorPassword() {
+        loadingBar?.visibility = View.GONE
+
         enableErrorOnPasswordInputs()
         val snackbar = Snackbar.make(view!!, getString(R.string.no_match_password), Snackbar.LENGTH_LONG)
         snackbar.view.setBackgroundColor(Color.RED)
@@ -124,6 +131,8 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
     }
 
     override fun showConnectionError() {
+        loadingBar?.visibility = View.GONE
+
         val snackbar = Snackbar.make(view!!, getString(R.string.connection_error), Snackbar.LENGTH_LONG)
 
         snackbar.view.setBackgroundColor(Color.RED)
@@ -131,6 +140,8 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
     }
 
     override fun showBackendError() {
+        loadingBar?.visibility = View.GONE
+
         val snackbar = Snackbar.make(view!!, getString(R.string.backend_error), Snackbar.LENGTH_LONG)
 
         snackbar.view.setBackgroundColor(Color.RED)
