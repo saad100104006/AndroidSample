@@ -19,8 +19,7 @@ import javax.inject.Inject
  */
 
 class SignUpStepThreePresenter @Inject
-constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedPreferences,
-            private val signUpApi: SignUpApi, private val tokenManager: TokenManager)
+constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedPreferences)
     : BasePresenter<SignUpStepThreePresenter.SignUpStepThreeUI>(sharedPreferences) {
 
     private var compositeDisposable: CompositeDisposable? = null
@@ -61,81 +60,7 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
             if(shouldGoToConfirmation()) ui?.goToConfirmationScreen()
             else ui?.goToMainScreen()
         } else ui.showErrorPin()
-        /*   UserRequest.Builder request = new UserRequest.Builder();
-        if (firstPin.equals(secondPin)) {
-            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) ||
-                    !sharedPreferences.getBoolean(LOGGED_IN_STATUS, false) &&
-                            tokenManager.getToken() != null) {
-                saveTokenWithNewPin(firstPin);
-                return;
-            }
-            String[] firstNameAndLastName = uname.split(UNDERSCORE);
-            Disposable disposable = signUpApi.registerUser(tokenManager.getInitialToken(),
-                    request.firstName(firstNameAndLastName[FIRST_NAME])
-                            .lastName(firstNameAndLastName[LAST_NAME])
-                            .email(email)
-                            .upass(password).build())
-                    .doOnSuccess(resp -> {
-                        if (resp.code() == HttpsURLConnection.HTTP_OK) {
-                            final String encryptedCredential = cryptoManager.getEncryptedCredential(email + UNDERSCORE + password, firstPin);
-                            sharedPreferences.edit().putString(CREDENTIAL, encryptedCredential).apply();
-                        }
-                    })
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(resp -> {
-                        if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                            String token = resp.body().getToken();
-                            SharedPreferences.Editor editorShared = sharedPreferences.edit();
-                            editorShared.putBoolean(LOGGED_IN_STATUS, true).apply();
-                            tokenManager.setToken(token);
-                            tokenManager.clearInitToken();
-                            ui.goToMainScreen();
-                            return;
-                        }
-                        if (resp.code() == HttpsURLConnection.HTTP_BAD_REQUEST && ui != null) {
-                            String message = resp.errorBody().string();
-                            if (message != null && message.contains(EMAIL) && ui != null) {
-                                ui.showErrorFromBackend();
-                            }
-                        }
 
-                    }, this::handleErrorFromBackend);
-            if (compositeDisposable == null) {
-                compositeDisposable = new CompositeDisposable();
-            }
-            compositeDisposable.add(disposable);
-            return;
-        }
-        if (ui != null) {
-            ui.showErrorPin();
-        }  */
-    }
-
-    private fun saveTokenWithNewPin(pin: String) {
-        if (compositeDisposable == null) compositeDisposable = CompositeDisposable()
-
-            // TODO Functionality should be rewritten from scratch
-//        compositeDisposable!!.add(tokenManager.token
-        // TODO - ASK SERGEY WHAT ABOUT ENCRYPTED CREDS
-//                .map { (accessToken) -> cryptoManager.getEncryptedCredential(accessToken, pin) }
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe { sec ->
-//                    sharedPreferences.edit().putString(CREDENTIAL, sec).apply()
-        // TODO ADD THESE TO STEP 2 LOGIC
-                    sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply()
-
-//                    sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
-                    sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply()
-
-                    sharedPreferences.edit().putBoolean(CARD_REQUIRED, true).apply()
-                    sharedPreferences.edit().putBoolean(RECIPIENT_REQUIRED, true).apply()
-
-                    ui?.goToConfirmationScreen()
-
-//                }
-//        )
     }
 
     private fun validateInputs() {

@@ -33,10 +33,6 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity?.application as TransferXApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-
-//        // Set credentials from previous step
-//        presenter.setEmail(arguments?.getString(EMAIL))
-//        presenter.setPassword(arguments?.getString(PASSWORD))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

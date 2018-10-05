@@ -46,10 +46,6 @@ class SignInPresenter @Inject constructor
     }
 
     override fun signIn() {
-//        if (tokenRepository.getToken().accessToken.isEmpty()) {
-//            this.ui?.showConnectionError()
-//            return
-//        }
         signIn(email, password)
     }
 
