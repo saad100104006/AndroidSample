@@ -130,6 +130,13 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
         snackbar.show()
     }
 
+    override fun showBackendError() {
+        val snackbar = Snackbar.make(view!!, getString(R.string.backend_error), Snackbar.LENGTH_LONG)
+
+        snackbar.view.setBackgroundColor(Color.RED)
+        snackbar.show()
+    }
+
     override fun goToWelcome() {
         //no op
     }

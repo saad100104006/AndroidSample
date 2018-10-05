@@ -83,8 +83,8 @@ constructor(sharedPreferences: SharedPreferences,
                                     this.ui?.goToPinSetup()
 
                                 }
-//                                HttpsURLConnection.HTTP_NOT_FOUND -> this.ui?.()
-//                                HttpsURLConnection.HTTP_BAD_REQUEST -> this.ui?.()
+                                HttpsURLConnection.HTTP_BAD_REQUEST -> this.ui?.showConnectionError()
+                                HttpsURLConnection.HTTP_INTERNAL_ERROR -> this.ui?.showBackendError()
                                 else -> this.ui?.showConnectionError()
                             }
                         }, { this.ui?.showConnectionError() })
@@ -124,6 +124,8 @@ constructor(sharedPreferences: SharedPreferences,
         fun showErrorPassword()
 
         fun showConnectionError()
+
+        fun showBackendError()
 
         fun setStateButton(isEnabled: Boolean)
 
