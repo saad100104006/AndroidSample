@@ -4,19 +4,18 @@ import android.content.SharedPreferences
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
+import okhttp3.ResponseBody
 import retrofit2.Response
 import uk.co.transferx.app.data.pojo.TokenEntity
 import uk.co.transferx.app.data.pojo.UserRequest
 import uk.co.transferx.app.data.remote.SignUpApi
 import uk.co.transferx.app.data.repository.tokenmanager.TokenManager
-import javax.inject.Inject
-
 import uk.co.transferx.app.ui.base.BasePresenter
 import uk.co.transferx.app.ui.base.UI
 import uk.co.transferx.app.util.Constants.*
 import uk.co.transferx.app.util.Util
+import javax.inject.Inject
 import javax.net.ssl.HttpsURLConnection
 
 /**
@@ -34,18 +33,19 @@ constructor(sharedPreferences: SharedPreferences,
     var lastName: String? = null
     var phoneNumber: String? = null
     var country: String? = null
+    private var isEmailErrorShown: Boolean = false
 
     private var compositeDisposable: CompositeDisposable? = null
 
     private val isInputCorrect: Boolean
-        get() = Util.validatePassword(password) && Util.validateEmail(email)
+        get() = Util.validatePassword(password) && Util.validateEmail(email) && !isEmailErrorShown
 
     private val isPasswordInputCorrect: Boolean
         get() = password == rePassword
 
     override fun attachUI(ui: SignUpStepTwoUI?) {
         super.attachUI(ui)
-        if (compositeDisposable == null) compositeDisposable =  CompositeDisposable()
+        if (compositeDisposable == null) compositeDisposable = CompositeDisposable()
     }
 
     override fun detachUI() {
@@ -54,51 +54,62 @@ constructor(sharedPreferences: SharedPreferences,
     }
 
     fun signUpUser() {
-            if(isPasswordInputCorrect) {
-                val userRequest = UserRequest.Builder()
-                compositeDisposable?.add(signUpApi.initialToken
-                        .flatMap<Response<TokenEntity>> {
-                            if (it.code() == HttpsURLConnection.HTTP_OK) {
-                                return@flatMap signUpApi.registerUser(it.body()?.accessToken,
-                                        userRequest.email(email).firstName(firstName).lastName(lastName).upass(password).build())
+        if (isPasswordInputCorrect) {
+            val userRequest = UserRequest.Builder()
+            compositeDisposable?.add(signUpApi.initialToken
+                    .flatMap<Response<TokenEntity>> {
+                        if (it.code() == HttpsURLConnection.HTTP_OK) {
+                            return@flatMap signUpApi.registerUser(it.body()?.accessToken,
+                                    userRequest.email(email).firstName(firstName).lastName(lastName).upass(password).build())
+                        } else return@flatMap Single.just<Response<TokenEntity>>(it)
+                    }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        when (it.code()) {
+                            HttpsURLConnection.HTTP_OK -> {
+                                // Save token
+                                tokenManager.saveToken(it.body())
+
+                                // Edit local credentials
+                                sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
+                                sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply()
+                                sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, true).apply()
+                                sharedPreferences.edit().putBoolean(CARD_REQUIRED, true).apply()
+                                sharedPreferences.edit().putBoolean(RECIPIENT_REQUIRED, true).apply()
+
+                                // TBDD - Currently firstName and lastName are required for PIN encryption
+                                sharedPreferences.edit().putString(FIRST_NAME, firstName).apply()
+                                sharedPreferences.edit().putString(LAST_NAME, lastName).apply()
+
+                                this.ui?.goToPinSetup()
+
                             }
-                             else return@flatMap Single.just<Response<TokenEntity>>(it)
+                            HttpsURLConnection.HTTP_BAD_REQUEST -> this.ui?.showConnectionError()
+                            HttpsURLConnection.HTTP_INTERNAL_ERROR -> this.ui?.showBackendError()
+                            else -> this.ui?.showConnectionError()
                         }
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            when (it.code()) {
-                                HttpsURLConnection.HTTP_OK -> {
-                                    // Save token
-                                    tokenManager.saveToken(it.body())
-
-                                    // Edit local credentials
-                                    sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
-                                    sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply()
-                                    sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, true).apply()
-                                    sharedPreferences.edit().putBoolean(CARD_REQUIRED, true).apply()
-                                    sharedPreferences.edit().putBoolean(RECIPIENT_REQUIRED, true).apply()
-
-                                    // TBDD - Currently firstName and lastName are required for PIN encryption
-                                    sharedPreferences.edit().putString(FIRST_NAME, firstName).apply()
-                                    sharedPreferences.edit().putString(LAST_NAME, lastName).apply()
-
-                                    this.ui?.goToPinSetup()
-
-                                }
-                                HttpsURLConnection.HTTP_BAD_REQUEST -> this.ui?.showConnectionError()
-                                HttpsURLConnection.HTTP_INTERNAL_ERROR -> this.ui?.showBackendError()
-                                else -> this.ui?.showConnectionError()
-                            }
-                        }, { this.ui?.showConnectionError() })
-                )
+                    }, { this.ui?.showConnectionError() })
+            )
 
 
-            } else ui.showErrorPassword()
+        } else ui.showErrorPassword()
     }
 
-    fun checkIfEmailIsTaken(){
-
+    fun checkIfEmailIsTaken() {
+        compositeDisposable?.add(signUpApi.initialToken
+                .flatMap<Response<ResponseBody>> {
+                    return@flatMap signUpApi.checkEmail(it.body()?.accessToken, email)
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if(it.code() == HttpsURLConnection.HTTP_BAD_REQUEST) {
+                        this.ui.showErrorEmail()
+                        this.ui.hideKeyboard()
+                        isEmailErrorShown = true
+                    } else isEmailErrorShown = false
+                }, { this.ui?.showConnectionError() }))
     }
 
     fun setEmail(email: String) {
@@ -117,7 +128,7 @@ constructor(sharedPreferences: SharedPreferences,
     }
 
     private fun validateInputData() {
-            ui?.setStateButton(isInputCorrect)
+        ui?.setStateButton(isInputCorrect)
     }
 
     interface SignUpStepTwoUI : UI {
@@ -126,11 +137,14 @@ constructor(sharedPreferences: SharedPreferences,
 
         fun showErrorPassword()
 
+        fun showErrorEmail()
+
         fun showConnectionError()
 
         fun showBackendError()
 
         fun setStateButton(isEnabled: Boolean)
 
+        fun hideKeyboard()
     }
 }

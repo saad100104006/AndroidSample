@@ -10,7 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
+import kotlinx.android.synthetic.main.signin_fragment_layout.*
 import kotlinx.android.synthetic.main.signup_step_one_fragment_layout.*
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
@@ -28,7 +28,9 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
     @Inject
     lateinit var presenter: SignUpStepTwoPresenter
 
-    private var isErrorShown: Boolean = false
+    private var isPasswordErrorShown: Boolean = false
+
+    private var isEmailErrorShown: Boolean = false
 
     private var loadingBar: ProgressBar? = null
 
@@ -56,10 +58,7 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
         presenter.country = arguments?.getString(COUNTRY)
 
         emailInputText.setOnFocusChangeListener { _, b ->
-            if (!b) {
-                // Check if email is taken
-
-            }
+            if (!b) presenter.checkIfEmailIsTaken()
         }
 
         // View from activity has to be obtained in normal way
@@ -67,16 +66,16 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
 
         buttonNext = buttonNextStep
         buttonNext.setOnClickListener {
-            presenter.signUpUser()
             loadingBar?.visibility = View.VISIBLE
-            hideKeyboard(buttonBack)
+            presenter.signUpUser()
+            hideKeyboard()
         }
 
         setUpCredentialsOnRestore(savedInstanceState)
     }
 
     override fun goToPinSetup() {
-        hideKeyboard(passwordInputText)
+        hideKeyboard()
 
         (activity as SignUpActivity).showNextOrPreviousFragment(2, null)
 
@@ -130,6 +129,14 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
         snackbar.show()
     }
 
+
+    override fun showErrorEmail() {
+        enableErrorOnEmailInput()
+        val snackbar = Snackbar.make(view!!, getString(R.string.taken_email_address), Snackbar.LENGTH_LONG)
+        snackbar.view.setBackgroundColor(Color.RED)
+        snackbar.show()
+    }
+
     override fun showConnectionError() {
         loadingBar?.visibility = View.GONE
 
@@ -148,6 +155,10 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
         snackbar.show()
     }
 
+    override fun hideKeyboard() {
+        hideKeyboard(passwordInputText)
+    }
+
     override fun goToWelcome() {
         //no op
     }
@@ -155,6 +166,8 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
     override fun tagName(): String {
         return SignUpStepTwoFragment::class.java.simpleName
     }
+
+
 
     private val emailTextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
@@ -165,6 +178,7 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             s?.let { presenter.setEmail(s.toString()) }
+            disableErrorOnEmailInput()
         }
 
     }
@@ -218,14 +232,27 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
         passwordInputText.setBackgroundResource(R.drawable.input_field_error)
         rePasswordInputText.setBackgroundResource(R.drawable.input_field_error)
 
-        isErrorShown = true
+        isPasswordErrorShown = true
+    }
+
+    private fun enableErrorOnEmailInput() {
+        emailInputText.setBackgroundResource(R.drawable.input_field_error)
+
+        isEmailErrorShown = true
     }
 
     private fun disableErrorOnPasswordInputs() {
-        if (isErrorShown) {
+        if (isPasswordErrorShown) {
             passwordInputText.setBackgroundResource(R.drawable.input_field)
             rePasswordInputText.setBackgroundResource(R.drawable.input_field)
-            isErrorShown = false
+            isPasswordErrorShown = false
+        }
+    }
+
+    private fun disableErrorOnEmailInput() {
+        if (isEmailErrorShown) {
+            emailInputText.setBackgroundResource(R.drawable.input_field)
+            isEmailErrorShown = false
         }
     }
 }
