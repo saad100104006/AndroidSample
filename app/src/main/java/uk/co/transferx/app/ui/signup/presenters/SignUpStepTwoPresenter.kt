@@ -7,6 +7,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
 import retrofit2.Response
+import uk.co.transferx.app.data.pojo.CheckEmail
 import uk.co.transferx.app.data.pojo.TokenEntity
 import uk.co.transferx.app.data.pojo.UserRequest
 import uk.co.transferx.app.data.remote.SignUpApi
@@ -17,6 +18,7 @@ import uk.co.transferx.app.util.Constants.*
 import uk.co.transferx.app.util.Util
 import javax.inject.Inject
 import javax.net.ssl.HttpsURLConnection
+
 
 /**
  * Created by sergey on 08.12.17.
@@ -97,19 +99,21 @@ constructor(sharedPreferences: SharedPreferences,
     }
 
     fun checkIfEmailIsTaken() {
-        compositeDisposable?.add(signUpApi.initialToken
-                .flatMap<Response<ResponseBody>> {
-                    return@flatMap signUpApi.checkEmail(it.body()?.accessToken, email)
-                }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if(it.code() == HttpsURLConnection.HTTP_BAD_REQUEST) {
-                        this.ui.showErrorEmail()
-                        this.ui.hideKeyboard()
-                        isEmailErrorShown = true
-                    } else isEmailErrorShown = false
-                }, { this.ui?.showConnectionError() }))
+        if (Util.validateEmail(email)) {
+            compositeDisposable?.add(signUpApi.initialToken
+                    .flatMap<Response<ResponseBody>> {
+                        return@flatMap signUpApi.checkEmail(it.body()?.accessToken, CheckEmail(email!!))
+                    }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        if (it.code() == HttpsURLConnection.HTTP_BAD_REQUEST) {
+                            this.ui.showErrorEmail()
+                            this.ui.hideKeyboard()
+                            isEmailErrorShown = true
+                        } else isEmailErrorShown = false
+                    }, { this.ui?.showConnectionError() }))
+        }
     }
 
     fun setEmail(email: String) {

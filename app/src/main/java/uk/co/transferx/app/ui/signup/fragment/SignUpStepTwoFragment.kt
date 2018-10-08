@@ -57,7 +57,7 @@ class SignUpStepTwoFragment : BaseFragment(), SignUpStepTwoPresenter.SignUpStepT
         presenter.phoneNumber = arguments?.getString(PHONE_NUMBER)
         presenter.country = arguments?.getString(COUNTRY)
 
-        emailInputText.setOnFocusChangeListener { _, b ->
+        emailInputText.setOnFocusChangeListener { text, b ->
             if (!b) presenter.checkIfEmailIsTaken()
         }
 

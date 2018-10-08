@@ -7,6 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import uk.co.transferx.app.data.pojo.CheckEmail;
 import uk.co.transferx.app.data.pojo.TokenEntity;
 import uk.co.transferx.app.data.pojo.UserRequest;
 
@@ -28,6 +29,6 @@ public interface SignUpApi {
     Single<Response<TokenEntity>> refreshToken(@Header("Authorization") String token);
 
     @POST("/v1/auth/user/exists")
-    Single<Response<ResponseBody>> checkEmail(@Header("Authorization") String token, @Body String email);
+    Single<Response<ResponseBody>> checkEmail(@Header("Authorization") String token, @Body CheckEmail email);
 
 }
