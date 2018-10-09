@@ -28,6 +28,7 @@ import uk.co.transferx.app.ui.customview.CustomSpinner
 import uk.co.transferx.app.ui.signin.SignInActivity
 
 import android.view.Gravity.CENTER
+import kotlinx.android.synthetic.main.add_recipient_fragment_layout.*
 import uk.co.transferx.app.ui.mainscreen.fragments.RecipientsFragment.DELETE_USER
 import uk.co.transferx.app.util.Constants.MODE
 import uk.co.transferx.app.util.Constants.RECIPIENT
@@ -39,34 +40,22 @@ import uk.co.transferx.app.ui.customview.ConfirmationDialogFragment.MESSAGE
  */
 
 class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipientsUI {
-
     @Inject
-    internal var presenter: AddRecipientsPresenter? = null
-    private var firstName: TextInputEditText? = null
-    private var lastName: TextInputEditText? = null
-    private var phoneNumber: TextInputEditText? = null
-    private var countrySpinner: CustomSpinner? = null
-    private var titleText: TextView? = null
+    lateinit var presenter: AddRecipientsPresenter
+
     private var compositeDisposable: CompositeDisposable? = null
     private var mode: Mode? = null
-    private var newTransfer: Button? = null
-    private var deleteRecipient: Button? = null
     private var shouldButtonDisabled = true
 
-    override fun tagName(): String {
-        return AddRecipientsFragment::class.java.simpleName
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity?.application as TransferXApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-        val bundle = arguments
-        if (bundle != null && bundle.getInt(MODE) != -1) {
-            mode = Mode.values()[bundle.getInt(MODE)]
-            presenter!!.recipient = bundle.getParcelable(RECIPIENT)
-        } else {
-            mode = Mode.NONE
-        }
+
+        arguments?.let { if ( arguments!!.getInt(MODE) != -1) {
+            mode = Mode.values()[arguments!!.getInt(MODE)]
+            presenter.recipient = arguments?.getParcelable(RECIPIENT)
+        } else mode = Mode.NONE }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -77,65 +66,61 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        countrySpinner = view.findViewById(R.id.countrySpinner)
-        buttonNext = view.findViewById(R.id.add_recipient_button)
-        titleText = view.findViewById(R.id.title_recipient)
-        firstName = view.findViewById(R.id.firstName)
-        lastName = view.findViewById(R.id.lastName)
-        phoneNumber = view.findViewById(R.id.phoneInput)
-        newTransfer = view.findViewById(R.id.transfer_button)
-        deleteRecipient = view.findViewById(R.id.delete_recipient)
-        view.findViewById<View>(R.id.recipient_img).setOnClickListener { v -> SelectPictureDialog.newInstance().show(fragmentManager!!, "TAG") }
-        view.findViewById<View>(R.id.button_back).setOnClickListener { v -> activity!!.onBackPressed() }
-        countrySpinner!!.setOnItemSelectedListener { position, `object` -> presenter!!.setCountry(`object`.toString()) }
-        countrySpinner!!.setDataWithHintItem(resources.getStringArray(R.array.countries), getString(R.string.choose_country))
+
+        buttonNext = view.findViewById(R.id.addRecipientButton)
+
+        buttonGoBack.setOnClickListener { activity?.onBackPressed() }
+
+        countrySpinner.setOnItemSelectedListener { _, country -> presenter.setCountry(country.toString()) }
+        countrySpinner.setDataWithHintItem(resources.getStringArray(R.array.countries), getString(R.string.choose_country))
         if (mode == Mode.EDIT) {
             setUpView()
             return
         }
         shouldButtonDisabled = false
-        buttonNext.setOnClickListener { v -> presenter!!.saveUserToApi() }
+        buttonNext.setOnClickListener {  presenter.saveUserToApi() }
     }
 
     private fun setUpView() {
-        titleText!!.gravity = CENTER
+        titleRecipient!!.gravity = CENTER
         setEnabled(false)
         setButtonStatus(true)
         buttonNext.setText(R.string.edit)
-        newTransfer!!.visibility = View.VISIBLE
-        deleteRecipient!!.visibility = View.VISIBLE
-        buttonNext.setOnClickListener { v -> setEditMode() }
-        deleteRecipient!!.setOnClickListener { v -> showDialogConfirmation(presenter!!.recipient) }
-        newTransfer!!.setOnClickListener { v -> presenter!!.sendTransfer() }
+        transferButton.visibility = View.VISIBLE
+        delete_recipient.visibility = View.VISIBLE
+        buttonNext.setOnClickListener { setEditMode() }
+
+        delete_recipient.setOnClickListener { showDialogConfirmation(presenter.recipient) }
+        transferButton.setOnClickListener { presenter.sendTransfer() }
     }
 
     private fun setEditMode() {
         shouldButtonDisabled = false
         setEnabled(true)
-        newTransfer!!.visibility = View.GONE
-        deleteRecipient!!.visibility = View.GONE
+        transferButton.visibility = View.GONE
+        delete_recipient!!.visibility = View.GONE
         buttonNext.setText(R.string.save_changes)
         setButtonStatus(false)
-        buttonNext.setOnClickListener { v -> presenter!!.refreshUserData() }
+        buttonNext.setOnClickListener { presenter.refreshUserData() }
     }
 
     private fun setEnabled(enabled: Boolean) {
         countrySpinner!!.isEnabled = enabled
         firstName!!.isEnabled = enabled
         lastName!!.isEnabled = enabled
-        phoneNumber!!.isEnabled = enabled
+        phoneInput!!.isEnabled = enabled
     }
 
     override fun onResume() {
         super.onResume()
         compositeDisposable = CompositeDisposable()
-        presenter!!.attachUI(this)
+        presenter.attachUI(this)
         compositeDisposable!!.add(RxTextView.textChanges(firstName!!)
-                .subscribe { first -> presenter!!.setFirstName(first.toString()) })
+                .subscribe { first -> presenter.setFirstName(first.toString()) })
         compositeDisposable!!.add(RxTextView.textChanges(lastName!!)
-                .subscribe { last -> presenter!!.setLastName(last.toString()) })
-        compositeDisposable!!.add(RxTextView.textChanges(phoneNumber!!)
-                .subscribe { phone -> presenter!!.setPhone(phone.toString()) })
+                .subscribe { last -> presenter.setLastName(last.toString()) })
+        compositeDisposable!!.add(RxTextView.textChanges(phoneInput!!)
+                .subscribe { phone -> presenter.setPhone(phone.toString()) })
 
     }
 
@@ -154,7 +139,7 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
         if (compositeDisposable != null) {
             compositeDisposable!!.dispose()
         }
-        presenter!!.detachUI()
+        presenter.detachUI()
         super.onPause()
     }
 
@@ -162,7 +147,7 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == DELETE_USER) {
             val id = data!!.getStringExtra(ADDITIONAL_DATA)
-            presenter!!.deleteRecipient(id)
+            presenter.deleteRecipient(id)
         }
     }
 
@@ -176,27 +161,21 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
     }
 
     override fun setEnabledButton(enabled: Boolean) {
-        if (shouldButtonDisabled) {
-            return
-        }
+        if (shouldButtonDisabled) return
         setButtonStatus(enabled)
     }
 
     private fun getItemPosition(country: String): Int {
         val countries = resources.getStringArray(R.array.countries)
-        for (i in countries.indices) {
-            if (countries[i] == country) {
-                return i
-            }
-        }
+        for (i in countries.indices) if (countries[i] == country) return i
         return -1
     }
 
     override fun setData(recipientDto: RecipientDto) {
-        titleText!!.text = recipientDto.fullName
+        titleRecipient!!.text = recipientDto.fullName
         firstName!!.setText(recipientDto.firstName)
         lastName!!.setText(recipientDto.lastName)
-        phoneNumber!!.setText(recipientDto.phone)
+        phoneInput!!.setText(recipientDto.phone)
         val position = getItemPosition(recipientDto.country)
         countrySpinner!!.adapter.setItemSelected(position)
         countrySpinner!!.setSelection(position)
@@ -205,11 +184,16 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
     override fun sendTransfer(recipientDto: RecipientDto) {
         val intent = Intent()
         intent.putExtra(RECIPIENT, recipientDto)
-        activity!!.setResult(Activity.RESULT_OK, intent)
-        activity!!.finish()
+        activity?.setResult(Activity.RESULT_OK, intent)
+        activity?.finish()
     }
 
     override fun goToWelcome() {
         SignInActivity.startSignInActivity(activity!!)
     }
+
+    override fun tagName(): String {
+        return AddRecipientsFragment::class.java.simpleName
+    }
+
 }
