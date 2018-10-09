@@ -20,13 +20,32 @@
         style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
         android:layout_marginTop="24dp"
-        android:text="@string/recipient_details"
+        android:lineSpacingExtra="16sp"
+        android:text="@string/new_recipient"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey" />
+
+    <TextView
+        android:id="@+id/descriptionRecipient"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:layout_marginTop="24dp"
+        android:text="@string/new_recipient_details"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 
     <android.support.design.widget.TextInputEditText
         android:id="@+id/firstName"
@@ -36,6 +55,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
+        android:layout_marginTop="8dp"
         android:background="@drawable/input_field"
         android:hint="@string/first_name_recipient_hint"
         android:inputType="textNoSuggestions|text"
@@ -64,17 +84,6 @@
         android:textColorHint="@color/hint"
         android:textSize="14sp" />
 
-    <uk.co.transferx.app.ui.customview.CustomSpinner
-        android:id="@+id/countrySpinner"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="@dimen/left_right_main_screen"
-        android:layout_marginRight="@dimen/left_right_main_screen"
-        android:background="@color/transparent"
-        app:dropDownItemRes="@layout/item_country"
-        app:headerRes="@layout/spinner_select_black_arrow" />
 
     <android.support.design.widget.TextInputEditText
         android:id="@+id/phoneInput"
@@ -90,9 +99,18 @@
         android:lineSpacingExtra="2sp"
         android:maxLines="1"
         android:padding="12dp"
-        android:paddingStart="0dp"
         android:textColor="@color/black"
         android:textSize="14sp" />
+
+    <uk.co.transferx.app.ui.customview.CustomSpinner
+        android:id="@+id/countrySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:background="@color/transparent"
+        app:dropDownItemRes="@layout/item_country" />
 
     <Button
         android:id="@+id/addRecipientButton"
@@ -105,7 +123,8 @@
         android:background="@drawable/btn_style_bright"
         android:enabled="false"
         android:lineSpacingExtra="2sp"
-        android:text="@string/add_recipients" />
+        android:text="@string/add_recipients"
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/transferButton"
@@ -118,6 +137,7 @@
         android:background="@drawable/btn_style_bright"
         android:lineSpacingExtra="2sp"
         android:text="@string/new_transfer"
+        android:textColor="@color/black"
         android:visibility="gone"
         tools:visibility="visible" />
 
@@ -131,13 +151,9 @@
         android:background="@drawable/btn_style_bright"
         android:lineSpacingExtra="2sp"
         android:text="@string/delete_recipient"
+        android:textColor="@color/black"
         android:theme="@style/Button.Black"
         android:visibility="gone"
         tools:visibility="visible" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="48dp" />
-
 
 </LinearLayout>

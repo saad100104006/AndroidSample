@@ -70,6 +70,8 @@
     <string name="add_recipients">Add Recipient</string>
     <string name="add_recipientss">Add Recipients</string>
     <string name="recipient_details">Recipient Details</string>
+    <string name="new_recipient">New recipient</string>
+    <string name="new_recipient_details">Write the details of your new recipient and start sending money to them.</string>
     <string name="add_recipients_and_payment">Add recipients and payment methods to make transfers faster.</string>
     <string name="country">Country</string>
     <string name="choose_country">Choose Country</string>
