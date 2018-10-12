@@ -1,14 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.recipients.addrecipients.fragments.AddRecipientSuccessFragment">
+    android:background="@color/black_tutorial">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
+        android:id="@+id/mainBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/background_success" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/imageComplete"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/ic_complete_actions"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textReady"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="4sp"
+        android:text="@string/recipient_added_successfully"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageComplete" />
+
+    <TextView
+        android:id="@+id/textAddRecipientsPayments"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:layout_marginTop="32dp"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="4sp"
+        android:text="@string/what_would_you_like"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textReady" />
+
+    <Button
+        android:id="@+id/buttonAddPayment"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/btn_style_bright"
+        android:gravity="center"
+        android:lineSpacingExtra="2sp"
+        android:text="@string/add_payment"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textAddRecipientsPayments" />
+
+    <Button
+        android:id="@+id/buttonAddRecipient"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="@dimen/landing_bottom_login"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:background="@drawable/btn_style_bright"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:lineSpacingExtra="2sp"
+        android:text="@string/add_recipient"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonAddPayment" />
+
+    <Button
+        android:id="@+id/buttonGoToMain"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/btn_style_dark"
+        android:gravity="center"
+        android:lineSpacingExtra="2sp"
+        android:text="@string/skip"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonAddRecipient" />
+
+
+</android.support.constraint.ConstraintLayout>

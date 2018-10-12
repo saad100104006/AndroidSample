@@ -151,7 +151,13 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
     }
 
     override fun goToConfirmationScreen(MODE: Int) {
-        (activity as AddRecipientsActivity).launchAddRecipientConfirmationFragment(MODE)
+        val fragment: BaseFragment
+        // TODO link to normal confirmation screen when done
+        when(MODE){
+            FIRST_RECIPIENT_ADDED_MODE -> fragment = AddFirstRecipientSuccessFragment()
+            else -> fragment = AddFirstRecipientSuccessFragment()
+        }
+        (activity as AddRecipientsActivity).launchAddRecipientConfirmationFragment(fragment)
     }
 
     override fun userActionPerformed() {

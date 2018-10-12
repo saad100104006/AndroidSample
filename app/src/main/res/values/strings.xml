@@ -112,6 +112,7 @@
     <string name="first_name_recipient_hint">Enter a first name</string>
     <string name="last_name_recipient_hint">Enter a last name</string>
     <string name="enter_pin">Enter a PIN</string>
+    <string name="what_would_you_like">What would you like to do now?</string>
     <string name="enter_your_pin">Enter your PIN</string>
     <string name="title_recover_success">Email is on its way!</string>
     <string name="check_mail">Check your email inbox for a link to reset your password.</string>
@@ -131,8 +132,10 @@
     <string name="activity">ACTIVITY</string>
     <string name="transfer">TRANSFER</string>
     <string name="tutorial_recipients">Add Recipients</string>
+    <string name="add_recipient">Add new recipient</string>
     <string name="edit">EDIT</string>
     <string name="recipient">Recipient</string>
+    <string name="recipient_added_successfully">Recipient added successfully!</string>
     <string name="amount_sent">Amount sent</string>
     <string name="send_amount">Send amount</string>
     <string name="receive_amount">Receive amount</string>
@@ -162,6 +165,7 @@
     <string name="city">city</string>
     <string name="post_code">post code</string>
     <string name="add_payment_method">Add Payment Methods</string>
+    <string name="add_payment">Add Payment Method</string>
     <string name="not_now">Not now</string>
     <string name="payment_methods_desc">Choose from several different payment methods to make transferring funds simple.</string>
     <string name="current_password">current password</string>
