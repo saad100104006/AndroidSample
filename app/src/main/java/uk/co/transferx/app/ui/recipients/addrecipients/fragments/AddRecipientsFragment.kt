@@ -30,10 +30,10 @@ import uk.co.transferx.app.ui.signin.SignInActivity
 import android.view.Gravity.CENTER
 import kotlinx.android.synthetic.main.add_recipient_fragment_layout.*
 import uk.co.transferx.app.ui.mainscreen.fragments.RecipientsFragment.DELETE_USER
-import uk.co.transferx.app.util.Constants.MODE
-import uk.co.transferx.app.util.Constants.RECIPIENT
 import uk.co.transferx.app.ui.customview.ConfirmationDialogFragment.ADDITIONAL_DATA
 import uk.co.transferx.app.ui.customview.ConfirmationDialogFragment.MESSAGE
+import uk.co.transferx.app.ui.recipients.addrecipients.AddRecipientsActivity
+import uk.co.transferx.app.util.Constants.*
 
 /**
  * Created by sergey on 03/01/2018.
@@ -47,12 +47,11 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
     private var mode: Mode? = null
     private var shouldButtonDisabled = true
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity?.application as TransferXApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
 
-        arguments?.let { if ( arguments!!.getInt(MODE) != -1) {
+        arguments?.let { if ( arguments?.getInt(MODE) != -1) {
             mode = Mode.values()[arguments!!.getInt(MODE)]
             presenter.recipient = arguments?.getParcelable(RECIPIENT)
         } else mode = Mode.NONE }
@@ -151,9 +150,13 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
         }
     }
 
+    override fun goToConfirmationScreen(MODE: Int) {
+        (activity as AddRecipientsActivity).launchAddRecipientConfirmationFragment(MODE)
+    }
+
     override fun userActionPerformed() {
-        activity!!.setResult(Activity.RESULT_OK)
-        activity!!.finish()
+        activity?.setResult(Activity.RESULT_OK)
+        activity?.finish()
     }
 
     override fun showError() {

@@ -290,5 +290,8 @@
     <string name="settings_logout">Logout</string>
     <string name="msg_empty_recurrent">You haven\’t set up any recurrent transfer. Send money now and select the period of time in which you want to repeat the transfer.</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

@@ -19,6 +19,10 @@ import uk.co.transferx.app.data.repository.recipientsrepository.RecipientReposit
 import uk.co.transferx.app.data.repository.tokenmanager.TokenManager;
 import uk.co.transferx.app.util.Util;
 
+import static uk.co.transferx.app.util.Constants.FIRST_RECIPIENT_ADDED_MODE;
+import static uk.co.transferx.app.util.Constants.FIRST_START_APP;
+import static uk.co.transferx.app.util.Constants.RECIPIENT_ADDED_MODE;
+
 /**
  * Created by sergey on 03/01/2018.
  */
@@ -57,7 +61,12 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
                 .subscribe(resp -> {
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         recipientRepository.addUser(new RecipientDto(resp.body().getId(), firstName, lastName, null, country, phone));
-                        ui.userActionPerformed();
+//                        ui.userActionPerformed();
+                        Boolean firstRecipientAdded = sharedPreferences.getBoolean(FIRST_START_APP, true);
+                        if (firstRecipientAdded) {
+                            this.ui.goToConfirmationScreen(FIRST_RECIPIENT_ADDED_MODE);
+                            sharedPreferences.edit().putBoolean(FIRST_START_APP, false).apply();
+                        } else this.ui.goToConfirmationScreen(RECIPIENT_ADDED_MODE);
                     }
                 }, this::handleError);
     }
@@ -189,6 +198,8 @@ public class AddRecipientsPresenter extends BasePresenter<AddRecipientsPresenter
     public interface AddRecipientsUI extends UI {
 
         void userActionPerformed();
+
+        void goToConfirmationScreen(int MODE);
 
         void showError();
 
