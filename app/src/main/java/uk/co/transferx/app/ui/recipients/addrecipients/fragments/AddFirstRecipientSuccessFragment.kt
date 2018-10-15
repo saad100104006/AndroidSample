@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import org.jetbrains.anko.intentFor
+import uk.co.transferx.app.R
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.landing.LandingActivity
 import uk.co.transferx.app.ui.recipients.addrecipients.AddRecipientsActivity

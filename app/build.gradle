@@ -32,7 +32,7 @@ android {
         experimental = true
     }
 
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "uk.co.transferx.app"
         minSdkVersion 21
@@ -74,7 +74,7 @@ android {
 }
 
 dependencies {
-    def supportLibraryVersion = '27.1.1'
+    def supportLibraryVersion = '28.0.0'
     def retroFit = '2.4.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //kotlin
@@ -88,6 +88,8 @@ dependencies {
 
     //android
     implementation "com.android.support:design:$supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$supportLibraryVersion"
+    implementation "com.android.support:animated-vector-drawable:$supportLibraryVersion"
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
     implementation "com.android.support:support-v4:$supportLibraryVersion"
     implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
