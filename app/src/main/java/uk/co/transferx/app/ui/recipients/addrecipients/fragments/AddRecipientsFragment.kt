@@ -123,21 +123,8 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
 
     }
 
-    private fun showDialogConfirmation(recipientDto: RecipientDto) {
-        val dialogFragment = ConfirmationDialogFragment()
-        val bundle = Bundle()
-        bundle.putString(MESSAGE, getString(R.string.delete_user_message, recipientDto.fullName))
-        bundle.putString(ADDITIONAL_DATA, recipientDto.id)
-        dialogFragment.arguments = bundle
-        dialogFragment.setTargetFragment(this, DELETE_USER)
-        dialogFragment.isCancelable = false
-        dialogFragment.show(fragmentManager!!, "TAG")
-    }
-
     override fun onPause() {
-        if (compositeDisposable != null) {
-            compositeDisposable!!.dispose()
-        }
+        if (compositeDisposable != null) compositeDisposable!!.dispose()
         presenter.detachUI()
         super.onPause()
     }
@@ -145,7 +132,7 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == DELETE_USER) {
-            val id = data!!.getStringExtra(ADDITIONAL_DATA)
+            val id = data?.getStringExtra(ADDITIONAL_DATA)
             presenter.deleteRecipient(id)
         }
     }
@@ -166,6 +153,7 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
     }
 
     override fun showError() {
+        // TODO replace with snackbar
         Toast.makeText(context, "Upss something went wrong", Toast.LENGTH_LONG).show()
     }
 
@@ -174,20 +162,14 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
         setButtonStatus(enabled)
     }
 
-    private fun getItemPosition(country: String): Int {
-        val countries = resources.getStringArray(R.array.countries)
-        for (i in countries.indices) if (countries[i] == country) return i
-        return -1
-    }
-
     override fun setData(recipientDto: RecipientDto) {
-        titleRecipient!!.text = recipientDto.fullName
-        firstName!!.setText(recipientDto.firstName)
-        lastName!!.setText(recipientDto.lastName)
-        phoneInput!!.setText(recipientDto.phone)
+        titleRecipient.text = recipientDto.fullName
+        firstName.setText(recipientDto.firstName)
+        lastName.setText(recipientDto.lastName)
+        phoneInput.setText(recipientDto.phone)
         val position = getItemPosition(recipientDto.country)
-        countrySpinner!!.adapter.setItemSelected(position)
-        countrySpinner!!.setSelection(position)
+        countrySpinner.adapter.setItemSelected(position)
+        countrySpinner.setSelection(position)
     }
 
     override fun sendTransfer(recipientDto: RecipientDto) {
@@ -203,6 +185,23 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
 
     override fun tagName(): String {
         return AddRecipientsFragment::class.java.simpleName
+    }
+
+    private fun showDialogConfirmation(recipientDto: RecipientDto) {
+        val dialogFragment = ConfirmationDialogFragment()
+        val bundle = Bundle()
+        bundle.putString(MESSAGE, getString(R.string.delete_user_message, recipientDto.fullName))
+        bundle.putString(ADDITIONAL_DATA, recipientDto.id)
+        dialogFragment.arguments = bundle
+        dialogFragment.setTargetFragment(this, DELETE_USER)
+        dialogFragment.isCancelable = false
+        dialogFragment.show(fragmentManager!!, "TAG")
+    }
+
+    private fun getItemPosition(country: String): Int {
+        val countries = resources.getStringArray(R.array.countries)
+        for (i in countries.indices) if (countries[i] == country) return i
+        return -1
     }
 
 }

@@ -35,7 +35,7 @@ class AddRecipientsActivity : BaseActivity() {
                 .replace(R.id.container, fragment, fragment.tag).commit()
     }
 
-    private fun launchAddEditRecipientsFragment(){
+    fun launchAddEditRecipientsFragment(){
         val fragment = AddRecipientsFragment()
         val bundle = Bundle()
         val mode = Mode.values()[intent.getIntExtra(MODE, 3)]
