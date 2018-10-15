@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import kotlinx.android.synthetic.main.fragment_add_first_recipient_success.*
 import org.jetbrains.anko.intentFor
 import uk.co.transferx.app.R
 import uk.co.transferx.app.ui.base.BaseFragment
@@ -16,14 +17,25 @@ import uk.co.transferx.app.ui.recipients.addrecipients.presenters.AddFirstRecipi
 import uk.co.transferx.app.ui.settings.profile.wallet.AddCardActivity
 import uk.co.transferx.app.ui.settings.profile.wallet.CardMode
 import uk.co.transferx.app.util.Constants
+import javax.inject.Inject
 
 
 class AddFirstRecipientSuccessFragment : BaseFragment(), AddFirstRecipientSuccessPresenter.View {
+    @Inject
+    lateinit var presenter: AddFirstRecipientSuccessPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_first_recipient_success, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        buttonAddRecipient.setOnClickListener{ presenter.goToAddRecipient() }
+        buttonGoToMain.setOnClickListener{ presenter.goToMainScreen() }
+        buttonAddPayment.setOnClickListener{ presenter.goToAddPayment() }
     }
 
     override fun showAddRecipient() {
