@@ -9,5 +9,7 @@ interface SplashContract {
         fun goToTutorialScreen()
 
         fun goToPinScreen()
+
+        fun goToSetPinScreen()
     }
 }

@@ -7,10 +7,10 @@ class LandingPresenter @Inject constructor() :
         BasePresenter<LandingContract.View>(),
         LandingContract.Presenter {
     override fun goToLoginScreen() {
-        this.ui.showLoginScreen()
+        this.ui?.showLoginScreen()
     }
 
     override fun goToSignUpScreen() {
-        this.ui.showSignUpScreen()
+        this.ui?.showSignUpScreen()
     }
 }

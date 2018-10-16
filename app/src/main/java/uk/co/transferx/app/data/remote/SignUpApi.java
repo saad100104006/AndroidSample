@@ -1,11 +1,13 @@
 package uk.co.transferx.app.data.remote;
 
 import io.reactivex.Single;
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import uk.co.transferx.app.data.pojo.CheckEmail;
 import uk.co.transferx.app.data.pojo.TokenEntity;
 import uk.co.transferx.app.data.pojo.UserRequest;
 
@@ -25,5 +27,8 @@ public interface SignUpApi {
 
     @POST("/v1/auth/client/refresh")
     Single<Response<TokenEntity>> refreshToken(@Header("Authorization") String token);
+
+    @POST("/v1/auth/user/exists")
+    Single<Response<ResponseBody>> checkEmail(@Header("Authorization") String token, @Body CheckEmail email);
 
 }

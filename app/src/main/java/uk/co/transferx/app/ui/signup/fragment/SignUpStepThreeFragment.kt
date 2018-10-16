@@ -33,10 +33,6 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity?.application as TransferXApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-
-        // Get credentials from previous steps
-        presenter.setCredential(arguments!!.getString(U_NAME), arguments!!.getString(EMAIL),
-                arguments!!.getString(PASSWORD), arguments!!.getString(PHONE_NUMBER), arguments!!.getString(COUNTRY))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,15 +42,10 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        buttonBack.setOnClickListener {
-            hideKeyboard(buttonBack)
-            activity?.onBackPressed()
-        }
-
         buttonNext = buttonSignUp
         buttonNext.setOnClickListener {
             hideKeyboard(it)
-            presenter.signUpUser()
+            presenter.signUpPin()
         }
 
         firstPinEntry.setAnimationEnable(true)
