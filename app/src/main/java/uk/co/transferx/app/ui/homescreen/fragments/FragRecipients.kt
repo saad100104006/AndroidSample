@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import org.jetbrains.anko.intentFor
 
 import uk.co.transferx.app.R
 import uk.co.transferx.app.ui.base.BaseFragment
+import uk.co.transferx.app.ui.recipients.addrecipients.AddRecipientsActivity
+import uk.co.transferx.app.ui.recipients.addrecipients.Mode
+import uk.co.transferx.app.util.Constants
 
 class FragRecipients : BaseFragment() {
 
@@ -28,7 +32,7 @@ class FragRecipients : BaseFragment() {
     }
 
     internal fun callAddRecipient() {
-
+        context?.startActivity(context?.intentFor<AddRecipientsActivity>(Constants.MODE to Mode.ADD.ordinal))
     }
 
     override fun tagName(): String {
