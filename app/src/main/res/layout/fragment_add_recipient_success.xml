@@ -65,9 +65,9 @@
         style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
-        android:layout_marginTop="40dp"
         android:background="@drawable/btn_style_bright"
         android:gravity="center"
         android:lineSpacingExtra="2sp"
@@ -75,9 +75,9 @@
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/buttonGoToRecipients"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textAddRecipientsPayments" />
+        app:layout_constraintRight_toRightOf="parent" />
 
 
     <Button
@@ -85,6 +85,7 @@
         style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
         android:layout_marginTop="12dp"
@@ -95,9 +96,9 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonMakeTransfer" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
