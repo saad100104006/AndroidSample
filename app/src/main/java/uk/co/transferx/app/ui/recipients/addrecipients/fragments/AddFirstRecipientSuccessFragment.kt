@@ -10,6 +10,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_add_first_recipient_success.*
 import org.jetbrains.anko.intentFor
 import uk.co.transferx.app.R
+import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.landing.LandingActivity
 import uk.co.transferx.app.ui.recipients.addrecipients.AddRecipientsActivity
@@ -24,6 +25,11 @@ class AddFirstRecipientSuccessFragment : BaseFragment(), AddFirstRecipientSucces
     @Inject
     lateinit var presenter: AddFirstRecipientSuccessPresenter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (activity?.application as TransferXApplication).appComponent.inject(this)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -36,6 +42,17 @@ class AddFirstRecipientSuccessFragment : BaseFragment(), AddFirstRecipientSucces
         buttonAddRecipient.setOnClickListener{ presenter.goToAddRecipient() }
         buttonGoToMain.setOnClickListener{ presenter.goToMainScreen() }
         buttonAddPayment.setOnClickListener{ presenter.goToAddPayment() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.attachUI(this)
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.detachUI()
     }
 
     override fun showAddRecipient() {

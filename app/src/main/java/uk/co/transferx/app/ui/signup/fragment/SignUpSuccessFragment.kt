@@ -13,6 +13,7 @@ import org.jetbrains.anko.intentFor
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseFragment
+import uk.co.transferx.app.ui.homescreen.HomeActivity
 import uk.co.transferx.app.ui.mainscreen.MainActivity
 import uk.co.transferx.app.ui.recipients.addrecipients.AddRecipientsActivity
 import uk.co.transferx.app.ui.recipients.addrecipients.Mode
@@ -70,7 +71,7 @@ class SignUpSuccessFragment : BaseFragment(), SignUpSuccessPresenter.SignUpSucce
     }
 
     override fun showMainScreen() {
-        context?.startActivity(context?.intentFor<MainActivity>())
+        context?.startActivity(context?.intentFor<HomeActivity>())
         activity?.finish()
     }
 

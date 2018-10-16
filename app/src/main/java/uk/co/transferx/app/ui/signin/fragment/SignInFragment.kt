@@ -26,6 +26,7 @@ import uk.co.transferx.app.R.string.forgot_password
 import uk.co.transferx.app.R.string.reset_password
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseFragment
+import uk.co.transferx.app.ui.homescreen.HomeActivity
 import uk.co.transferx.app.ui.mainscreen.MainActivity
 import uk.co.transferx.app.ui.recoverpass.RecoverPasswordActivity
 import uk.co.transferx.app.ui.signin.SignInActivity
@@ -133,7 +134,7 @@ class SignInFragment : BaseFragment(), SignInContract.View {
         loadingBar?.visibility = View.GONE
 
         // Launch main activity
-        activity?.startActivity(context?.intentFor<MainActivity>()?.newTask()?.clearTask())
+        activity?.startActivity(context?.intentFor<HomeActivity>()?.newTask()?.clearTask())
         activity?.finish()
     }
 

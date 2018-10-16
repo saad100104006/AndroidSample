@@ -77,7 +77,9 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
             return
         }
         shouldButtonDisabled = false
-        buttonNext.setOnClickListener {  presenter.saveUserToApi() }
+        buttonNext.setOnClickListener {
+            hideKeyboard(getView())
+            presenter.saveUserToApi() }
     }
 
     private fun setUpView() {
@@ -104,10 +106,10 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
     }
 
     private fun setEnabled(enabled: Boolean) {
-        countrySpinner!!.isEnabled = enabled
-        firstName!!.isEnabled = enabled
-        lastName!!.isEnabled = enabled
-        phoneInput!!.isEnabled = enabled
+        countrySpinner.isEnabled = enabled
+        firstName.isEnabled = enabled
+        lastName.isEnabled = enabled
+        phoneInput.isEnabled = enabled
     }
 
     override fun onResume() {
