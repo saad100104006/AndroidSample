@@ -15,7 +15,6 @@ import uk.co.transferx.app.ui.base.BaseActivity;
 import uk.co.transferx.app.ui.base.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.ui.mainscreen.fragments.ActivityFragment;
-import uk.co.transferx.app.ui.mainscreen.fragments.RecipientsFragment;
 import uk.co.transferx.app.ui.mainscreen.fragments.TransferFragment;
 import uk.co.transferx.app.ui.settings.fragment.SettingsFragment;
 
@@ -23,14 +22,14 @@ import uk.co.transferx.app.ui.settings.fragment.SettingsFragment;
  * Created by sergey on 14.12.17.
  */
 
-public class MainActivity extends BaseActivity {
+public class MainActivityOld extends BaseActivity {
 
     private final SparseArray<BaseFragment> fragments = new SparseArray<>(4);
     private static short CURRENT_ITEM = 0;
     private BottomNavigationViewEx bottomNavigationViewEx;
 
     public static void startMainActivity(Activity activity) {
-        Intent intent = new Intent(activity, MainActivity.class);
+        Intent intent = new Intent(activity, MainActivityOld.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
         activity.finish();
@@ -42,8 +41,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.main_activity_layout);
         fragments.put(0, new ActivityFragment());
         fragments.put(1, new TransferFragment());
-        fragments.put(2, new RecipientsFragment());
-        fragments.put(3, new SettingsFragment());
+        //fragments.put(2, new RecipientsFragment());
+        fragments.put(2, new SettingsFragment());
         bottomNavigationViewEx = findViewById(R.id.bottom_navigation);
         bottomNavigationViewEx.setTypeface(ResourcesCompat.getFont(this, R.font.montserrat));
         selectScreen(R.id.activity, null);
@@ -79,7 +78,7 @@ public class MainActivity extends BaseActivity {
                 CURRENT_ITEM = 3;
                 break;
             default:
-                throw new IllegalStateException(MainActivity.class.getSimpleName() + " Error state number " + item);
+                throw new IllegalStateException(MainActivityOld.class.getSimpleName() + " Error state number " + item);
         }
     }
 

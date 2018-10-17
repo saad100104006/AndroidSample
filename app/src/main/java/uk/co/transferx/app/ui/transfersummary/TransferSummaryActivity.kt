@@ -7,7 +7,7 @@ import org.jetbrains.anko.intentFor
 import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
-import uk.co.transferx.app.ui.mainscreen.MainActivity
+import uk.co.transferx.app.ui.mainscreen.MainActivityOld
 import uk.co.transferx.app.data.pojo.TransactionCreate
 import uk.co.transferx.app.ui.transfersummary.presenter.TransferSummaryPresenter
 import uk.co.transferx.app.util.Constants
@@ -43,7 +43,7 @@ class TransferSummaryActivity : BaseActivity(), TransferSummaryPresenter.Transfe
     }
 
     override fun goBack() {
-        startActivity(intentFor<MainActivity>().clearTop())
+        startActivity(intentFor<MainActivityOld>().clearTop())
         finish()
     }
 

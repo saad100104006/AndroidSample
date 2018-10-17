@@ -163,7 +163,8 @@ dependencies {
 
     // Room
     implementation "android.arch.persistence.room:runtime:1.1.1"
-    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+    kapt "android.arch.persistence.room:compiler:1.1.1"
+   // annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
 
     //support java8 for arch
     implementation "android.arch.lifecycle:common-java8:1.1.1"

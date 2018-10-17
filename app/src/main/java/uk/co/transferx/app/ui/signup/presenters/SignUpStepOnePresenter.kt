@@ -16,18 +16,8 @@ class SignUpStepOnePresenter @Inject
 constructor() : BasePresenter<SignUpStepOnePresenter.SignUpStepOneUI>() {
     private var firstName: String? = null
     private var lastName: String? = null
-    private var email: String? = null
-    private var password: String? = null
     private var phoneNumber: String? = null
     private var country: String? = null
-
-    fun setEmail(email: String?) {
-        this.email = email
-    }
-
-    fun setPassword(password: String?) {
-        this.password = password
-    }
 
     fun setCountry(country: String) {
         this.country = country
@@ -49,8 +39,7 @@ constructor() : BasePresenter<SignUpStepOnePresenter.SignUpStepOneUI>() {
     }
 
     fun goToNextStep() {
-            val sb = firstName + UNDERSCORE + lastName
-            ui?.goToNextStep(email, password, sb, phoneNumber, country)
+            ui?.goToNextStep(firstName, lastName, phoneNumber, country)
     }
 
     private fun isInputDataValid() {
@@ -58,7 +47,7 @@ constructor() : BasePresenter<SignUpStepOnePresenter.SignUpStepOneUI>() {
     }
 
     interface SignUpStepOneUI : UI {
-        fun goToNextStep(email: String?, password: String?, uname: String?, phoneNumber: String?, country: String?)
+        fun goToNextStep(firstName: String?, secondName: String?, phoneNumber: String?, country: String?)
 
         fun setButton(isEnabled: Boolean)
 

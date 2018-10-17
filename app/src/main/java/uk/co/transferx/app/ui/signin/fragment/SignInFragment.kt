@@ -27,7 +27,6 @@ import uk.co.transferx.app.R.string.reset_password
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.homescreen.HomeActivity
-import uk.co.transferx.app.ui.mainscreen.MainActivity
 import uk.co.transferx.app.ui.recoverpass.RecoverPasswordActivity
 import uk.co.transferx.app.ui.signin.SignInActivity
 import uk.co.transferx.app.ui.signin.SignInContract
@@ -79,7 +78,6 @@ class SignInFragment : BaseFragment(), SignInContract.View {
             presenter.signIn()
             hideKeyboard(rootLayout)
 
-            val loadingBar = activity?.findViewById<ProgressBar>(R.id.loading_bar)
             loadingBar?.visibility = View.VISIBLE
         }
 

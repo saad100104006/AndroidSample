@@ -21,7 +21,7 @@ import javax.inject.Inject;
 import uk.co.transferx.app.ui.base.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
-import uk.co.transferx.app.ui.mainscreen.MainActivity;
+import uk.co.transferx.app.ui.homescreen.MainActivity;
 import uk.co.transferx.app.ui.signinpin.presenters.SignInEmailPresenter;
 
 /**
@@ -114,7 +114,7 @@ public class SignInEmailFragment extends BaseFragment implements SignInEmailPres
     public void goToMainScreen() {
         Activity activity = getActivity();
         if (activity != null) {
-            MainActivity.startMainActivity(getActivity());
+            MainActivity.Companion.startMainActivity(getActivity());
             activity.finish();
         }
 

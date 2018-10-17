@@ -19,14 +19,8 @@ import javax.inject.Inject
  */
 
 class SignUpStepThreePresenter @Inject
-constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedPreferences,
-            private val signUpApi: SignUpApi, private val tokenManager: TokenManager)
+constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedPreferences)
     : BasePresenter<SignUpStepThreePresenter.SignUpStepThreeUI>(sharedPreferences) {
-    private var uname: String? = null
-    private var email: String? = null
-    private var password: String? = null
-    private var phoneNumber: String? = null
-    private var country: String? = null
 
     private var compositeDisposable: CompositeDisposable? = null
     private var firstPin: String? = null
@@ -41,13 +35,6 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
         compositeDisposable?.dispose()
     }
 
-    fun setCredential(uname: String, email: String, password: String, phoneNumber: String, country: String) {
-        this.uname = uname
-        this.email = email
-        this.password = password
-        this.phoneNumber = phoneNumber
-        this.country = country
-    }
 
     fun setFirstPin(firstPin: String) {
         this.firstPin = firstPin
@@ -59,95 +46,30 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
         validateInputs()
     }
 
-    fun signUpUser() {
+    fun signUpPin() {
         if (firstPin == secondPin) {
-//            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) || !sharedPreferences.getBoolean(LOGGED_IN_STATUS, false)) {
-                saveTokenWithNewPin(firstPin?: return)
-//                return
-//            }
+            // Store encyrpted PIN
+            val firstName = sharedPreferences.getString(FIRST_NAME, FIRST_NAME)
+            val secondName = sharedPreferences.getString(LAST_NAME, LAST_NAME)
+            val encryptedCredential =
+                    cryptoManager.getEncryptedCredential(firstName + UNDERSCORE + secondName, firstPin)
+            sharedPreferences.edit().putString(CREDENTIAL, encryptedCredential).apply()
+
+            sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply()
+
+            if(shouldGoToConfirmation()) ui?.goToConfirmationScreen()
+            else ui?.goToMainScreen()
         } else ui.showErrorPin()
-        /*   UserRequest.Builder request = new UserRequest.Builder();
-        if (firstPin.equals(secondPin)) {
-            if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false) ||
-                    !sharedPreferences.getBoolean(LOGGED_IN_STATUS, false) &&
-                            tokenManager.getToken() != null) {
-                saveTokenWithNewPin(firstPin);
-                return;
-            }
-            String[] firstNameAndLastName = uname.split(UNDERSCORE);
-            Disposable disposable = signUpApi.registerUser(tokenManager.getInitialToken(),
-                    request.firstName(firstNameAndLastName[FIRST_NAME])
-                            .lastName(firstNameAndLastName[LAST_NAME])
-                            .email(email)
-                            .upass(password).build())
-                    .doOnSuccess(resp -> {
-                        if (resp.code() == HttpsURLConnection.HTTP_OK) {
-                            final String encryptedCredential = cryptoManager.getEncryptedCredential(email + UNDERSCORE + password, firstPin);
-                            sharedPreferences.edit().putString(CREDENTIAL, encryptedCredential).apply();
-                        }
-                    })
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(resp -> {
-                        if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
-                            String token = resp.body().getToken();
-                            SharedPreferences.Editor editorShared = sharedPreferences.edit();
-                            editorShared.putBoolean(LOGGED_IN_STATUS, true).apply();
-                            tokenManager.setToken(token);
-                            tokenManager.clearInitToken();
-                            ui.goToMainScreen();
-                            return;
-                        }
-                        if (resp.code() == HttpsURLConnection.HTTP_BAD_REQUEST && ui != null) {
-                            String message = resp.errorBody().string();
-                            if (message != null && message.contains(EMAIL) && ui != null) {
-                                ui.showErrorFromBackend();
-                            }
-                        }
 
-                    }, this::handleErrorFromBackend);
-            if (compositeDisposable == null) {
-                compositeDisposable = new CompositeDisposable();
-            }
-            compositeDisposable.add(disposable);
-            return;
-        }
-        if (ui != null) {
-            ui.showErrorPin();
-        }  */
-    }
-
-    private fun saveTokenWithNewPin(pin: String) {
-        if (compositeDisposable == null) compositeDisposable = CompositeDisposable()
-
-            // TODO Functionality should be rewritten from scratch
-//        compositeDisposable!!.add(tokenManager.token
-//                .map { (accessToken) -> cryptoManager.getEncryptedCredential(accessToken, pin) }
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe { sec ->
-//                    sharedPreferences.edit().putString(CREDENTIAL, sec).apply()
-                    sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply()
-                    // TODO Uncomment line when linking is done
-//                    sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
-                    sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply()
-
-                    sharedPreferences.edit().putBoolean(CARD_REQUIRED, true).apply()
-                    sharedPreferences.edit().putBoolean(RECIPIENT_REQUIRED, true).apply()
-
-                    ui?.goToConfirmationScreen()
-
-//                }
-//        )
     }
 
     private fun validateInputs() {
         ui?.setButtonEnabled(isPinFilled)
     }
 
-    private fun handleErrorFromBackend(throwable: Throwable) {
-        Timber.e(javaClass.name, throwable)
-
+    private fun shouldGoToConfirmation(): Boolean {
+        return sharedPreferences.getBoolean(CARD_REQUIRED, false)
+                || sharedPreferences.getBoolean(RECIPIENT_REQUIRED, false)
     }
 
     interface SignUpStepThreeUI : UI {
@@ -165,8 +87,6 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
     }
 
     companion object {
-        private val FIRST_NAME: Short = 0
-        private val LAST_NAME: Short = 1
         private val PIN_SIZE: Short = 4
     }
 }

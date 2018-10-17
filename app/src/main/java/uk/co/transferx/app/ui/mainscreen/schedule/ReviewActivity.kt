@@ -14,7 +14,7 @@ import org.jetbrains.anko.startActivity
 import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
-import uk.co.transferx.app.ui.mainscreen.MainActivity
+import uk.co.transferx.app.ui.mainscreen.MainActivityOld
 import uk.co.transferx.app.ui.mainscreen.schedule.presenter.ReviewPresenter
 import uk.co.transferx.app.data.pojo.TransactionCreate
 import uk.co.transferx.app.ui.transfersummary.TransferSummaryActivity
@@ -73,7 +73,7 @@ class ReviewActivity : BaseActivity(), ReviewPresenter.ReviewUI {
                     return
                 }
                 if (intent.action == DELETE) {
-                    startActivity(intentFor<MainActivity>().clearTop())
+                    startActivity(intentFor<MainActivityOld>().clearTop())
                 }
             }
         }

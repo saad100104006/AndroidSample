@@ -102,7 +102,7 @@
         android:background="@drawable/btn_style_bright"
         android:enabled="false"
         android:lineSpacingExtra="2sp"
-        android:text="@string/next_register"
+        android:text="@string/lets_start"
         android:textAllCaps="false"
         android:textColor="@color/black" />
 

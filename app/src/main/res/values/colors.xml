@@ -7,7 +7,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="background">#f5f5f5</color>
-    <color name="color_unselected">#3d2f416b</color>
+    <color name="color_unselected">#878787</color>
     <color name="text_not_active">#b3f5f5f5</color>
     <color name="red">#FF0000</color>
     <color name="strong_gray">#808080</color>
@@ -21,15 +21,23 @@
     <color name="red_delete">#da1010</color>
     <color name="transparent">#00000000</color>
     <color name="not_active">#d8d8d8</color>
+
     <color name="light_blue_tutorial">#373d64</color>
     <color name="dark_blue_tutorial">#021486</color>
     <color name="black_tutorial">#121212</color>
     <color name="purple_tutorial">#5a2870</color>
 
+    <color name="color_primary">#f7f7f7</color>
+    <color name="color_accent">#ffb300</color>
+    <color name="color_text_primary">#333333</color>
+    <color name="color_text_disabled">#a7a7a7</color>
+    <color name="color_text_separator">#cccccc</color>
+
     <color name="amber">#ffb300</color>
     <color name="grey">#cccccc</color>
     <color name="grey_bg">#f7f7f7</color>
     <color name="grey_text">#a7a7a7</color>
-
-
+    <color name="color_nav_bottom_bar">#121212</color>
+    <color name="black_text">#333333</color>
+    <color name="grey_77">#777777</color>
 </resources>
