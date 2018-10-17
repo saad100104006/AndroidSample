@@ -70,6 +70,8 @@
     <string name="add_recipients">Add Recipient</string>
     <string name="add_recipientss">Add Recipients</string>
     <string name="recipient_details">Recipient Details</string>
+    <string name="new_recipient">New recipient</string>
+    <string name="new_recipient_details">Write the details of your new recipient and start sending money to them.</string>
     <string name="add_recipients_and_payment">Add recipients and payment methods to make transfers faster.</string>
     <string name="country">Country</string>
     <string name="choose_country">Choose Country</string>
@@ -112,6 +114,7 @@
     <string name="first_name_recipient_hint">Enter a first name</string>
     <string name="last_name_recipient_hint">Enter a last name</string>
     <string name="enter_pin">Enter a PIN</string>
+    <string name="what_would_you_like">What would you like to do now?</string>
     <string name="enter_your_pin">Enter your PIN</string>
     <string name="title_recover_success">Email is on its way!</string>
     <string name="check_mail">Check your email inbox for a link to reset your password.</string>
@@ -131,8 +134,10 @@
     <string name="activity">ACTIVITY</string>
     <string name="transfer">TRANSFER</string>
     <string name="tutorial_recipients">Add Recipients</string>
+    <string name="add_recipient">Add new recipient</string>
     <string name="edit">EDIT</string>
     <string name="recipient">Recipient</string>
+    <string name="recipient_added_successfully">Recipient added successfully!</string>
     <string name="amount_sent">Amount sent</string>
     <string name="send_amount">Send amount</string>
     <string name="receive_amount">Receive amount</string>
@@ -154,6 +159,7 @@
     <string name="delete_user_message">Are you sure you want to delete \n%s as a recipient?</string>
     <string name="card_delete_message">Are you sure you want to delete this payment method?</string>
     <string name="phone">phone</string>
+    <string name="make_transfer">Make new transfer</string>
     <string name="save_changes">Save Changes</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -162,6 +168,7 @@
     <string name="city">city</string>
     <string name="post_code">post code</string>
     <string name="add_payment_method">Add Payment Methods</string>
+    <string name="add_payment">Add Payment Method</string>
     <string name="not_now">Not now</string>
     <string name="payment_methods_desc">Choose from several different payment methods to make transferring funds simple.</string>
     <string name="current_password">current password</string>
@@ -170,6 +177,7 @@
     <string name="enter_a_new_password">Enter a new password</string>
     <string name="confirm_new_password">Confirm your new password</string>
     <string name="new_transfer">New Transfer</string>
+    <string name="see_recipients">See my recipients</string>
     <string name="check">&#x2713;</string>
     <string name="setup">setup</string>
     <string name="schedule">schedule</string>
@@ -288,6 +296,9 @@
     <string name="msg_empty_recurrent">You haven\’t set up any recurrent transfer. Send money now and select the period of time in which you want to repeat the transfer.</string>
     <string name="all">All</string>
     <string name="recurrent">Recurrent</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

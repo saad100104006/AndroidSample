@@ -10,7 +10,7 @@ import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.landing.LandingActivity
-import uk.co.transferx.app.ui.mainscreen.MainActivity
+import uk.co.transferx.app.ui.homescreen.MainActivity
 import uk.co.transferx.app.ui.signin.SignInActivity
 import uk.co.transferx.app.ui.signup.SignUpActivity
 import uk.co.transferx.app.ui.splash.presenter.SplashPresenter
