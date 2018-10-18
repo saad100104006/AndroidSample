@@ -104,6 +104,7 @@
     <string name="enter_your_password">Password</string>
     <string name="email_address">email address</string>
     <string name="connection_error">Something wrong with connection</string>
+    <string name="generic_error">Oops something went wrong!</string>
     <string name="backend_error">Server is unreachable</string>
     <string name="try_again">Try again</string>
     <string name="user_not_found">User not found</string>

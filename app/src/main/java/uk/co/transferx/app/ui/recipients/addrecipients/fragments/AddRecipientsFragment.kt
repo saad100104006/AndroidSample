@@ -2,7 +2,9 @@ package uk.co.transferx.app.ui.recipients.addrecipients.fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.design.widget.TextInputEditText
 import android.view.LayoutInflater
 import android.view.View
@@ -91,7 +93,7 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
         delete_recipient.visibility = View.VISIBLE
         buttonNext.setOnClickListener { setEditMode() }
 
-        delete_recipient.setOnClickListener { showDialogConfirmation(presenter.recipient) }
+        delete_recipient.setOnClickListener { showDialogConfirmation(presenter.recipient!!) }
         transferButton.setOnClickListener { presenter.sendTransfer() }
     }
 
@@ -126,7 +128,7 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
     }
 
     override fun onPause() {
-        if (compositeDisposable != null) compositeDisposable!!.dispose()
+         compositeDisposable?.dispose()
         presenter.detachUI()
         super.onPause()
     }
@@ -155,8 +157,9 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
     }
 
     override fun showError() {
-        // TODO replace with snackbar
-        Toast.makeText(context, "Upss something went wrong", Toast.LENGTH_LONG).show()
+        val snackbar = Snackbar.make(view!!, getString(R.string.generic_error), Snackbar.LENGTH_LONG)
+        snackbar.view.setBackgroundColor(Color.RED)
+        snackbar.show()
     }
 
     override fun setEnabledButton(enabled: Boolean) {
@@ -174,7 +177,7 @@ class AddRecipientsFragment : BaseFragment(), AddRecipientsPresenter.AddRecipien
         countrySpinner.setSelection(position)
     }
 
-    override fun sendTransfer(recipientDto: RecipientDto) {
+    override fun sendTransfer(recipientDto: RecipientDto?) {
         val intent = Intent()
         intent.putExtra(RECIPIENT, recipientDto)
         activity?.setResult(Activity.RESULT_OK, intent)
