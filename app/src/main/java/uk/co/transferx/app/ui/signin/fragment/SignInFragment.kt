@@ -74,12 +74,14 @@ class SignInFragment : BaseFragment(), SignInContract.View {
 
         // enable superclass to handle disabling the button
         this.buttonNext = signInButton
+
         signInButton.setOnClickListener {
             presenter.signIn()
             hideKeyboard(rootLayout)
 
             loadingBar?.visibility = View.VISIBLE
         }
+        setButtonStatus(false)
 
         toggleText.setOnClickListener {
             isPasswordVisible = !isPasswordVisible

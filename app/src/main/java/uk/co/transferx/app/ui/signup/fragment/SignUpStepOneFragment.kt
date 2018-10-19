@@ -54,6 +54,7 @@ class SignUpStepOneFragment : BaseFragment(), SignUpStepOnePresenter.SignUpStepO
         countrySpinner.setData(resources.getStringArray(R.array.countries))
         countrySpinner.setOnItemSelectedListener { _, country -> presenter.setCountry(country.toString()) }
         countrySpinner.setSelection(0, true)
+        countrySpinner.isEnabled = false
 
         // Restore if possible
         firstNameInputText.setText(savedInstanceState?.getString(FIRST_NAME))
