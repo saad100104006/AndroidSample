@@ -84,7 +84,7 @@ public interface AppComponent {
 
     void inject(SignInEmailFragment signInEmailFragment);
 
-    void inject(SettingsFragment settingsFragment);
+   void inject(SettingsFragment settingsFragment);
 
     void inject(AddRecipientsFragment addRecipientsFragment);
 
@@ -148,5 +148,5 @@ public interface AppComponent {
 
     void inject (FragRecipients fragRecipients);
 
-    void inject (FragSettings fragSettings);
+   void inject (FragSettings fragSettings);
 }
