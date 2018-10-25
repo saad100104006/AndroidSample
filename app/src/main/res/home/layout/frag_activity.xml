@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_bg">
+
+    <ImageView
+        android:id="@+id/imgBell"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="26dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_bell"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvAll"
@@ -23,7 +34,7 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/tvRecurrent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvRecurrent"
@@ -40,7 +51,7 @@
         android:textSize="12sp"
         app:layout_constraintLeft_toRightOf="@id/tvAll"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imgSendCash"
@@ -50,7 +61,7 @@
         android:src="@drawable/ic_money_icon_small"
         app:layout_constraintLeft_toRightOf="@id/tvRecurrent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/titleActivity"
@@ -58,7 +69,7 @@
         android:layout_marginTop="44dp"
         android:text="@string/title_activity"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAll"/>
+        app:layout_constraintTop_toBottomOf="@id/tvAll" />
 
     <View
         android:id="@+id/lineActivity"
@@ -66,7 +77,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
         android:background="@color/grey"
-        app:layout_constraintTop_toBottomOf="@id/titleActivity"/>
+        app:layout_constraintTop_toBottomOf="@id/titleActivity" />
 
     <ImageView
         android:id="@+id/imgEmptyItem"
@@ -78,7 +89,7 @@
         android:src="@drawable/cash_send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lineActivity"/>
+        app:layout_constraintTop_toBottomOf="@+id/lineActivity" />
 
     <TextView
         android:id="@+id/tvMsgEmptyData"
@@ -86,7 +97,7 @@
         android:text="@string/msg_send_money"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgEmptyItem"/>
+        app:layout_constraintTop_toBottomOf="@id/imgEmptyItem" />
 
     <Button
         android:id="@+id/tvSendMoney"
@@ -104,7 +115,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMsgEmptyData"/>
+        app:layout_constraintTop_toBottomOf="@id/tvMsgEmptyData" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerviewHistory"
@@ -117,13 +128,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintTop_toBottomOf="@+id/lineActivity"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintVertical_bias="0.0" />
 
     <android.support.constraint.Group
         android:id="@+id/emptyMessageGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="tvMsgEmptyData,tvSendMoney,imgEmptyItem"/>
+        app:constraint_referenced_ids="tvMsgEmptyData,tvSendMoney,imgEmptyItem" />
 
 </android.support.constraint.ConstraintLayout>
