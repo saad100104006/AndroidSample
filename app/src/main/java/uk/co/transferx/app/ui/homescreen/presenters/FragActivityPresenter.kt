@@ -43,18 +43,13 @@ constructor(val recipientRepository: RecipientRepository,
 
     override fun attachUI(ui: ActivityFragmentUI) {
         super.attachUI(ui)
-        if(compositeDisposable==null) {
-            compositeDisposable = CompositeDisposable()
-        }
+        if(compositeDisposable==null) compositeDisposable = CompositeDisposable()
 
         if (transactionDtos.isEmpty()) {
             this.ui.hideAllTransactions()
             loadData(false)
             return
-        } else {
-            this.ui.showAllTransactions(transactionDtos)
-        }
-
+        } else this.ui.showAllTransactions(transactionDtos)
     }
 
     override fun detachUI() {
@@ -63,6 +58,10 @@ constructor(val recipientRepository: RecipientRepository,
             compositeDisposable!!.dispose()
             compositeDisposable = null
         }
+    }
+
+    fun goToSelectRecipient(){
+        this.ui.goToSelectRecipient()
     }
 
     fun loadData(isRecurrent: Boolean) {
@@ -155,6 +154,8 @@ constructor(val recipientRepository: RecipientRepository,
         fun setError()
 
         fun goToRecieptScreen(transaction: TransactionCreate)
+
+        fun goToSelectRecipient()
 
         fun hideAllTransactions()
 
