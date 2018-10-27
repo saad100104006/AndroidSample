@@ -13,7 +13,7 @@ import android.widget.TextView
 import uk.co.transferx.app.R
 import uk.co.transferx.app.ui.homescreen.fragments.FragActivity
 import uk.co.transferx.app.ui.homescreen.fragments.FragRecipients
-import uk.co.transferx.app.ui.homescreen.fragments.FragSettings
+import uk.co.transferx.app.ui.settings.fragment.FragSettings
 
 class TabAdapter(fragmentManager: FragmentManager, val context: Context) :
     FragmentPagerAdapter(fragmentManager) {

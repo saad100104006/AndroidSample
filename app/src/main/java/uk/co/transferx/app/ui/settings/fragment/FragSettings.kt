@@ -1,4 +1,4 @@
-package uk.co.transferx.app.ui.homescreen.fragments
+package uk.co.transferx.app.ui.settings.fragment
 
 import android.content.Intent
 import android.os.Bundle
