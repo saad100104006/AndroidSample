@@ -1,4 +1,4 @@
-package uk.co.transferx.app.ui.customview;
+package uk.co.transferx.app.ui.settings.presenter;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -15,13 +15,12 @@ import android.view.Window;
 import android.widget.TextView;
 
 import uk.co.transferx.app.R;
-import uk.co.transferx.app.ui.settings.presenter.SettingsFragmentPresenter;
 
 import static android.app.Activity.RESULT_OK;
 import static uk.co.transferx.app.util.Constants.DELETE;
 import static uk.co.transferx.app.util.Constants.EMPTY;
 
-public class ConfirmationDialogFragment extends DialogFragment implements SettingsFragmentPresenter.SettingsFragmentUI {
+public class ConfirmationDialogLogoutFragment extends DialogFragment {
 
     public static final String MESSAGE = "message";
     public static final String ADDITIONAL_DATA = "additional_data";
@@ -29,26 +28,6 @@ public class ConfirmationDialogFragment extends DialogFragment implements Settin
     private String message;
     private int position;
     private String id;
-
-    @Override
-    public void goAppSettings() {
-
-    }
-
-    @Override
-    public void goToWelcome() {
-
-    }
-
-    @Override
-    public void goToProfile() {
-
-    }
-
-    @Override
-    public void goToSupport() {
-
-    }
 
     public interface CallBackInterfaceDialog {
         void onSucces();
@@ -69,13 +48,14 @@ public class ConfirmationDialogFragment extends DialogFragment implements Settin
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.confirmation_dialog_fragment, container, false);
+        return inflater.inflate(R.layout.confirmation_logout_dialog_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((TextView) view.findViewById(R.id.message)).setText(message);
+        ((TextView) view.findViewById(R.id.message)).setText(getResources().getString(R.string.confirmation));
+        ((TextView) view.findViewById(R.id.details)).setText(getResources().getString(R.string.logout_text));
         view.findViewById(R.id.button_no).setOnClickListener(v -> dismiss());
         view.findViewById(R.id.button_yes).setOnClickListener(v -> clickOkButton());
     }
