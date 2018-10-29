@@ -138,7 +138,7 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
         //  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun goToRecieptScreen(transaction: TransactionCreate) {
+    override fun goToReceiptScreen(transaction: TransactionCreate) {
         //  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
