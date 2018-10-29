@@ -19,12 +19,14 @@ import uk.co.transferx.app.data.repository.recipientsrepository.RecipientReposit
 import uk.co.transferx.app.data.repository.tokenmanager.TokenManager
 import uk.co.transferx.app.ui.base.BasePresenter
 import uk.co.transferx.app.ui.base.UI
+import uk.co.transferx.app.util.schedulers.BaseSchedulerProvider
 import javax.net.ssl.HttpsURLConnection
 
 class FragActivityPresenter @Inject
 constructor(val recipientRepository: RecipientRepository,
             val transactionApi: TransactionApi,
             val tokenManager: TokenManager,
+            val schedulerProvider: BaseSchedulerProvider,
             sharedPreferences: SharedPreferences) : BasePresenter<FragActivityPresenter.ActivityFragmentUI>(sharedPreferences) {
     private var compositeDisposable: CompositeDisposable? = null
     private var recipientDtos: List<RecipientDto>? = null
@@ -69,9 +71,10 @@ constructor(val recipientRepository: RecipientRepository,
 
         isLoading.value = true
 
-        val dis = recipientRepository.recipients
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        val dis = recipientRepository
+                .recipients
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribe({ recipients ->
                     isLoading.value = false
                     recipientDtos = recipients
@@ -94,8 +97,8 @@ constructor(val recipientRepository: RecipientRepository,
 
         val historyDis = tokenManager.token
                 .flatMap { (accessToken) -> transactionApi.getRecurrentHistory(accessToken) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribe { resp ->
 
                     isLoading.value = false
@@ -123,8 +126,8 @@ constructor(val recipientRepository: RecipientRepository,
 
         val historyDis = tokenManager.token
                 .flatMap { (accessToken) -> transactionApi.getHistory(accessToken) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribe { resp ->
                     isLoading.value = false
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
