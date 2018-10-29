@@ -1,12 +1,10 @@
 package uk.co.transferx.app.ui.homescreen.presenters
 
 import android.content.SharedPreferences
-import com.google.gson.Gson
 import io.reactivex.disposables.CompositeDisposable
 import uk.co.transferx.app.data.dto.RecipientDto
 import uk.co.transferx.app.data.pojo.Transaction
 import uk.co.transferx.app.data.pojo.TransactionCreate
-import uk.co.transferx.app.data.pojo.Transactions
 import uk.co.transferx.app.data.remote.TransactionApi
 import uk.co.transferx.app.data.repository.recipientsrepository.RecipientRepository
 import uk.co.transferx.app.data.repository.tokenmanager.TokenManager
@@ -53,6 +51,8 @@ constructor(val recipientRepository: RecipientRepository,
     fun loadData(isRecurrent: Boolean) {
         compositeDisposable?.clear()
 
+        isLoading.value = true
+
         // TBDD Recipients are loaded background. This feature may be removed
         loadRecipients()
 
@@ -62,18 +62,14 @@ constructor(val recipientRepository: RecipientRepository,
 
     }
 
-    fun loadRecipients() {
-        isLoading.value = true
-
+    private fun loadRecipients() {
         val dis = recipientRepository
                 .recipients
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe({ recipients ->
-                    isLoading.value = false
                     recipientDtos = recipients
                 }, { throwable ->
-                    isLoading.value = false
                     globalErrorHandler(throwable)
                 })
 
@@ -81,13 +77,11 @@ constructor(val recipientRepository: RecipientRepository,
     }
 
     private fun fetchRecurrentHistory() {
-        isLoading.value = true
-
         val historyDis = tokenManager.token
                 .flatMap { (accessToken) -> transactionApi.getRecurrentHistory(accessToken) }
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .subscribe { resp ->
+                .subscribe({ resp ->
                     isLoading.value = false
                     if (resp.code() == HttpsURLConnection.HTTP_OK) {
                         transactionRecurrentDtos.clear()
@@ -99,9 +93,7 @@ constructor(val recipientRepository: RecipientRepository,
                             this.ui.showRecurrentTransactions(transactionRecurrentDtos)
                         }
                     }
-
-                    globalErrorHandler(resp.code())
-                }
+                }, { globalErrorHandler(it) })
         compositeDisposable!!.add(historyDis)
     }
 
@@ -129,6 +121,8 @@ constructor(val recipientRepository: RecipientRepository,
 
     override fun globalErrorHandler(throwable: Throwable) {
         super.globalErrorHandler(throwable)
+        isLoading.value = false
+        this.ui?.showError()
     }
 
     interface ActivityFragmentUI : UI {
@@ -136,7 +130,7 @@ constructor(val recipientRepository: RecipientRepository,
 
         fun showRecurrentTransactions(transactions: List<Transaction>)
 
-        fun setError()
+        fun showError()
 
         fun goToReceiptScreen(transaction: TransactionCreate)
 

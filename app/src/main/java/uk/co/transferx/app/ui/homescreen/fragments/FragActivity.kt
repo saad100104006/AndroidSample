@@ -1,13 +1,16 @@
 package uk.co.transferx.app.ui.homescreen.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.constraint.Group
+import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import kotlinx.android.synthetic.main.frag_activity.*
 import uk.co.transferx.app.R
@@ -22,6 +25,10 @@ import javax.inject.Inject
 
 class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, ActivityAllAdapter.ItemClickListener {
     internal lateinit var adapter: ActivityAllAdapter
+
+    private var loadingBar: ProgressBar? = null
+
+    private var snackbar: Snackbar? = null
 
     @Inject
     lateinit var presenter: FragActivityPresenter
@@ -59,6 +66,8 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
         recyclerviewHistory.setLayoutManager(layoutManager)
         recyclerviewHistory.setItemAnimator(DefaultItemAnimator())
         recyclerviewHistory.setAdapter(adapter)
+
+        loadingBar = activity?.findViewById<ProgressBar>(R.id.pbHeaderProgress)
 
         imgSendCash.setOnClickListener { presenter.goToSelectRecipient() }
         tvSendMoney.setOnClickListener { presenter.goToSelectRecipient() }
@@ -120,10 +129,12 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
         recyclerviewHistory.visibility = View.VISIBLE
     }
 
+    override fun showProgress() {
+       loadingBar?.visibility = View.VISIBLE
+    }
 
-    private fun swapAdapters(recurrent: Boolean, transactions: List<Transaction>) {
-        adapter.setRecurrentType(recurrent)
-        adapter.setAllTransactions(transactions)
+    override fun hideProgress() {
+        loadingBar?.visibility = View.GONE
     }
 
     override fun goToSelectRecipient() {
@@ -134,11 +145,20 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
         // Should redirect to landing screen
     }
 
-    override fun setError() {
-        //  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showError() {
+        snackbar = Snackbar.make(view!!,
+                getString(R.string.generic_error), Snackbar.LENGTH_LONG)
+        snackbar?.view?.setBackgroundColor(Color.RED)
+        snackbar?.show()
     }
 
     override fun goToReceiptScreen(transaction: TransactionCreate) {
         //  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    private fun swapAdapters(recurrent: Boolean, transactions: List<Transaction>) {
+        adapter.setRecurrentType(recurrent)
+        adapter.setAllTransactions(transactions)
+    }
+
 }
