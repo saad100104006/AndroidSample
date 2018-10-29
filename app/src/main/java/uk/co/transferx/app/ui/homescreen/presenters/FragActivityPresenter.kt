@@ -1,6 +1,7 @@
 package uk.co.transferx.app.ui.homescreen.presenters
 
 import android.content.SharedPreferences
+import android.support.annotation.VisibleForTesting
 import io.reactivex.disposables.CompositeDisposable
 import uk.co.transferx.app.data.dto.RecipientDto
 import uk.co.transferx.app.data.pojo.Transaction
@@ -123,6 +124,11 @@ constructor(val recipientRepository: RecipientRepository,
         super.globalErrorHandler(throwable)
         isLoading.value = false
         this.ui?.showError()
+    }
+
+    @VisibleForTesting
+    fun setTransactionsCacheList(list: ArrayList<Transaction>){
+        transactionDtos = list
     }
 
     interface ActivityFragmentUI : UI {
