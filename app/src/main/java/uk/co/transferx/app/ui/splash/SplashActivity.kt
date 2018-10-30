@@ -2,10 +2,7 @@ package uk.co.transferx.app.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
-import org.jetbrains.anko.clearTask
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.newTask
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.*
 
 import javax.inject.Inject
 
@@ -13,9 +10,13 @@ import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.landing.LandingActivity
+import uk.co.transferx.app.ui.homescreen.MainActivity
 import uk.co.transferx.app.ui.signin.SignInActivity
+import uk.co.transferx.app.ui.signup.SignUpActivity
 import uk.co.transferx.app.ui.splash.presenter.SplashPresenter
 import uk.co.transferx.app.ui.tutorial.TutorialActivity
+import uk.co.transferx.app.util.Constants
+import uk.co.transferx.app.util.Constants.SIGNUP_PIN_STEP
 
 /**
  * Created by sergey on 19.11.17.
@@ -44,8 +45,14 @@ class SplashActivity : BaseActivity(), SplashContract.View {
         startActivity(intentFor<LandingActivity>().newTask().clearTask())
     }
 
+    override fun goToSetPinScreen() {
+        startActivity(intentFor<SignUpActivity>(SIGNUP_PIN_STEP to 2).newTask().clearTask())
+    }
+
     override fun goToPinScreen() {
-        // TODO - CREATE LINK TO PIN WHEN LINKING IS PERFORMED
+        // TODO - CREATE LINK TO PIN WHEN PIN SCREEN IS FINISHED AND LINKING IS PERFORMED
+        startActivity(intentFor<MainActivity>().newTask().clearTask())
+
     }
 
     override fun goToTutorialScreen() {

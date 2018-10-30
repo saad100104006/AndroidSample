@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -24,6 +25,7 @@ public abstract class BaseFragment extends Fragment {
 
     public abstract String tagName();
     protected Button buttonNext;
+    private ContentLoadingProgressBar progressDialog;
 
     protected void setStatusOfError(final EditText textInputEditText, final TextView label, @ColorRes int color) {
         Drawable draw = textInputEditText.getBackground();
@@ -51,5 +53,28 @@ public abstract class BaseFragment extends Fragment {
                 ContextCompat.getDrawable(getContext(), R.drawable.btn_style_bright) :
                 ContextCompat.getDrawable(getContext(), R.drawable.btn_disabled));
     }
+
+    protected void showProgress()
+    {
+        hideProgress();
+        progressDialog = getProgressDialog();
+    }
+
+    public ContentLoadingProgressBar getProgressDialog()
+    {
+        ContentLoadingProgressBar progressDialog = new ContentLoadingProgressBar(getActivity());
+        progressDialog.show();
+        return progressDialog;
+    }
+
+    protected void hideProgress()
+    {
+        if (progressDialog != null && progressDialog.isShown())
+        {
+            progressDialog.hide();
+
+        }
+    }
+
 
 }

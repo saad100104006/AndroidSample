@@ -10,6 +10,11 @@ import uk.co.transferx.app.di.module.NetworkModule;
 import uk.co.transferx.app.data.firebase.TransferXFirebaseIDService;
 import uk.co.transferx.app.ui.landing.LandingActivity;
 import uk.co.transferx.app.ui.landing.fragment.LandingFragment;
+
+import uk.co.transferx.app.ui.homescreen.MainActivity;
+import uk.co.transferx.app.ui.homescreen.fragments.FragActivity;
+import uk.co.transferx.app.ui.homescreen.fragments.FragRecipients;
+import uk.co.transferx.app.ui.homescreen.fragments.FragSettings;
 import uk.co.transferx.app.ui.mainscreen.fragments.ActivityFragment;
 import uk.co.transferx.app.ui.mainscreen.fragments.RecipientDialogFragment;
 import uk.co.transferx.app.ui.mainscreen.fragments.RecipientsFragment;
@@ -20,6 +25,8 @@ import uk.co.transferx.app.ui.mainscreen.schedule.RepeatTransferActivity;
 import uk.co.transferx.app.ui.mainscreen.schedule.ReviewActivity;
 import uk.co.transferx.app.ui.mainscreen.schedule.ScheduleActivity;
 import uk.co.transferx.app.ui.mainscreen.schedule.TimeActivity;
+import uk.co.transferx.app.ui.recipients.addrecipients.fragments.AddFirstRecipientSuccessFragment;
+import uk.co.transferx.app.ui.recipients.addrecipients.fragments.AddRecipientSuccessFragment;
 import uk.co.transferx.app.ui.recipients.addrecipients.fragments.AddRecipientsFragment;
 import uk.co.transferx.app.ui.recoverpass.fragment.RecoverPasswordFragment;
 import uk.co.transferx.app.ui.settings.fragment.SettingsFragment;
@@ -38,9 +45,9 @@ import uk.co.transferx.app.ui.signin.fragment.SignInFragment;
 import uk.co.transferx.app.ui.signinpin.fragment.SignInEmailFragment;
 import uk.co.transferx.app.ui.signinpin.fragment.SignInPinFragment;
 import uk.co.transferx.app.ui.signup.SignUpActivity;
-import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment;
-import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment;
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepOneFragment;
+import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment;
+import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment;
 import uk.co.transferx.app.ui.signup.fragment.SignUpSuccessFragment;
 import uk.co.transferx.app.ui.splash.SplashActivity;
 import uk.co.transferx.app.ui.transfersummary.TransferSummaryActivity;
@@ -63,7 +70,7 @@ public interface AppComponent {
 
     void inject(SignUpStepThreeFragment signUpStepThreeFragment);
 
-    void inject(SignUpStepOneFragment signUpStepOneFragment);
+    void inject(SignUpStepTwoFragment signUpStepTwoFragment);
 
     void inject(SignUpSuccessFragment signUpSuccessFragment);
 
@@ -73,13 +80,17 @@ public interface AppComponent {
 
     void inject(ActivityFragment activityFragment);
 
-    void inject(SignUpStepTwoFragment signUpStepTwoFragment);
+    void inject(SignUpStepOneFragment signUpStepOneFragment);
 
     void inject(SignInEmailFragment signInEmailFragment);
 
     void inject(SettingsFragment settingsFragment);
 
     void inject(AddRecipientsFragment addRecipientsFragment);
+
+    void inject(AddRecipientSuccessFragment addRecipientSuccessFragment);
+
+    void inject(AddFirstRecipientSuccessFragment addFirstRecipientSuccessFragment);
 
     void inject(TransferXApplication transferXApplication);
 
@@ -129,4 +140,13 @@ public interface AppComponent {
     void inject(UploadDocumentsActivity uploadDocumentsActivity);
 
     void inject(TransferXFirebaseIDService transferXFirebaseIDService);
+
+
+    void inject(MainActivity mainActivity);
+
+    void inject (FragActivity fragActivity);
+
+    void inject (FragRecipients fragRecipients);
+
+    void inject (FragSettings fragSettings);
 }

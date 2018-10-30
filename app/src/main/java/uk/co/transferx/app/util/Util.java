@@ -19,7 +19,7 @@ public final class Util {
 
     private static final String VALIDATE_PATTERN_PASSWORD = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d+)[0-9a-zA-Z!@#$%]{8,}$";
 
-    private static final String VALIDATE_PATTERN_PHONE = "^\\+(?:[0-9]●?){6,14}[0-9]$";
+    private static final String VALIDATE_PATTERN_PHONE = "^(?:[0-9]●?){6,14}[0-9]$";
 
     private static final String VALIDATE_PATTERN_NAME = "^[a-zA-Z\\s]+$";
 

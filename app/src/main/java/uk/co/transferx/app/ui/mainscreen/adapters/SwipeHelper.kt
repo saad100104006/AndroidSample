@@ -1,6 +1,7 @@
 package uk.co.transferx.app.ui.mainscreen.adapters
 
 import android.graphics.*
+import android.support.annotation.NonNull
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.DisplayMetrics
@@ -108,9 +109,9 @@ abstract class SwipeHelper(private var recyclerView: RecyclerView?) :
         recoverSwipedItem()
     }
 
-    override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder?): Float {
-        return swipeThreshold
-    }
+//      fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder?): Float {
+//        return swipeThreshold
+//    }
 
     override fun getSwipeEscapeVelocity(defaultValue: Float): Float {
         return 0.1f * defaultValue
@@ -171,7 +172,7 @@ abstract class SwipeHelper(private var recyclerView: RecyclerView?) :
         while (!recoverQueue.isEmpty()) {
             val pos = recoverQueue.poll()
             if (pos > -1) {
-                recyclerView!!.adapter.notifyItemChanged(pos)
+                recyclerView!!.adapter?.notifyItemChanged(pos)
             }
         }
     }

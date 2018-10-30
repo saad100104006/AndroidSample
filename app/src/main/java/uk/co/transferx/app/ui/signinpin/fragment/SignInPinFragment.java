@@ -21,7 +21,8 @@ import javax.inject.Inject;
 import uk.co.transferx.app.ui.base.BaseFragment;
 import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
-import uk.co.transferx.app.ui.mainscreen.MainActivity;
+
+import uk.co.transferx.app.ui.homescreen.MainActivity;
 import uk.co.transferx.app.ui.signinpin.presenter.SignInPinPresenter;
 import uk.co.transferx.app.ui.signin.SignInActivity;
 
@@ -99,7 +100,7 @@ public class SignInPinFragment extends BaseFragment implements SignInPinPresente
     public void goToMainScree() {
         Activity activity = getActivity();
         if (activity != null) {
-            MainActivity.startMainActivity(activity);
+            MainActivity.Companion.startMainActivity(activity);
             activity.finish();
         }
     }

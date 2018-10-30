@@ -18,12 +18,17 @@ public final class Constants {
     public static final String COUNTRY = "country";
 
     public static final String CREDENTIAL = "credential";
+    public static final String SIGNUP_PIN_STEP = "sign_up_pin_set";
     public static final String DELETE = "delete";
 
     public static final String FIRST_START_APP = "first_start_app";
     public static final String LOGGED_IN_STATUS = "logged_in_status";
     public static final String CARD_REQUIRED = "card_required";
     public static final String RECIPIENT_REQUIRED = "recipient_required";
+
+    public static final String FIRST_RECIPIENT_ADDED = "first_recipient_added";
+    public static final int FIRST_RECIPIENT_ADDED_MODE = 1;
+    public static final int RECIPIENT_ADDED_MODE = 2;
 
     public static final String BACKGROUND_COLOR = "background_color";
     public static final String TUTORIAL_IMG = "tutorial_img";

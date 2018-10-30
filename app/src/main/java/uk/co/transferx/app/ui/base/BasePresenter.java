@@ -4,7 +4,9 @@ import android.content.SharedPreferences;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import io.reactivex.Observable;
 import timber.log.Timber;
+import uk.co.transferx.app.ui.homescreen.ObservableBoolean;
 import uk.co.transferx.app.util.errors.UnauthorizedException;
 
 import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
@@ -16,6 +18,8 @@ import static uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS;
 public abstract class BasePresenter<T extends UI> {
 
     protected SharedPreferences sharedPreferences;
+
+    public ObservableBoolean isLoading = new ObservableBoolean(false);
 
     public BasePresenter() {
     }
@@ -56,4 +60,11 @@ public abstract class BasePresenter<T extends UI> {
             ui.goToWelcome();
         }
     }
+
+    protected void setIsLoading(boolean isLoading)
+    {
+        this.isLoading.notifyObservers(isLoading);
+    }
+
+
 }

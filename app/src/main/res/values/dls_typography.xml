@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:fontFamily">@string/sans_serif</item>
+    </style>
+
+    <style name="TextStyle.Header">
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineSpacingExtra">@color/color_text_primary</item>
+    </style>
+
+</resources>
