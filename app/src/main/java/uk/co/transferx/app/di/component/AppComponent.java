@@ -14,7 +14,7 @@ import uk.co.transferx.app.ui.landing.fragment.LandingFragment;
 import uk.co.transferx.app.ui.homescreen.MainActivity;
 import uk.co.transferx.app.ui.homescreen.fragments.FragActivity;
 import uk.co.transferx.app.ui.homescreen.fragments.FragRecipients;
-import uk.co.transferx.app.ui.homescreen.fragments.FragSettings;
+import uk.co.transferx.app.ui.settings.fragment.FragSettings;
 import uk.co.transferx.app.ui.mainscreen.fragments.ActivityFragment;
 import uk.co.transferx.app.ui.mainscreen.fragments.RecipientDialogFragment;
 import uk.co.transferx.app.ui.mainscreen.fragments.RecipientsFragment;
@@ -84,7 +84,7 @@ public interface AppComponent {
 
     void inject(SignInEmailFragment signInEmailFragment);
 
-    void inject(SettingsFragment settingsFragment);
+   void inject(SettingsFragment settingsFragment);
 
     void inject(AddRecipientsFragment addRecipientsFragment);
 
@@ -148,5 +148,5 @@ public interface AppComponent {
 
     void inject (FragRecipients fragRecipients);
 
-    void inject (FragSettings fragSettings);
+   void inject (FragSettings fragSettings);
 }
