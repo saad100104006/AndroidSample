@@ -66,7 +66,7 @@
     <TextView
         android:id="@+id/titleActivity"
         style="@style/tvToolbarHeading"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="24dp"
         android:text="@string/title_activity"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvAll" />
@@ -75,7 +75,7 @@
         android:id="@+id/lineActivity"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
         android:background="@color/grey"
         app:layout_constraintTop_toBottomOf="@id/titleActivity" />
 
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="64dp"
         android:src="@drawable/cash_send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,6 +94,7 @@
     <TextView
         android:id="@+id/tvMsgEmptyData"
         style="@style/tv_single_page_info"
+        android:layout_marginTop="24dp"
         android:text="@string/msg_send_money"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

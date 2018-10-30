@@ -1,4 +1,4 @@
-package uk.co.transferx.app
+package uk.co.transferx.app.homescreen.activity
 
 import android.content.SharedPreferences
 import io.reactivex.Single
