@@ -77,7 +77,6 @@ public class SignInPinFragment extends BaseFragment implements SignInPinPresente
         pinView = view.findViewById(R.id.first_pin);
         pinView.setAnimationEnable(true);
         ((TextView) view.findViewById(R.id.title)).setText(R.string.enter_your_pin);
-        label = view.findViewById(R.id.first_label_pin);
         view.findViewById(R.id.signInButton).setOnClickListener(v -> presenter.checkPingAndLogIn(pinView.getText().toString()));
         view.findViewById(R.id.forgot_pin).setOnClickListener(v -> presenter.resetPassword());
     }
@@ -128,8 +127,8 @@ public class SignInPinFragment extends BaseFragment implements SignInPinPresente
 
     @Override
     public void showErrorPin() {
-        setStatusOfError(pinView, label, R.color.red);
-        setLinesColor(R.color.red);
+//        setStatusOfError(pinView, label, R.color.red);
+//        setLinesColor(R.color.red);
     }
 
     @Override

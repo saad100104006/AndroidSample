@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -23,7 +23,7 @@
     </style>
 
 
-    <style name="AppDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="AppDialogTheme" parent="Base.Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:textColorHighlight">@color/colorPrimary</item>
@@ -39,7 +39,7 @@
 
 
     <!-- Define  custom alert theme here extending from base -->
-    <style name="AppAlertTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="AppAlertTheme" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimary</item>
 
         <item name="colorAccent">@color/colorAccent</item>
