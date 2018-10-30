@@ -15,6 +15,8 @@ import android.widget.TextView
 import uk.co.transferx.app.R
 
 import android.app.Activity.RESULT_OK
+import android.widget.Button
+import kotlinx.android.synthetic.main.confirmation_logout_dialog_fragment.*
 import uk.co.transferx.app.util.Constants.DELETE
 import uk.co.transferx.app.util.Constants.EMPTY
 
@@ -22,6 +24,8 @@ class ConfirmationDialogLogoutFragment : DialogFragment() {
     private var message: String? = null
     private var position: Int = 0
     private var id: String? = null
+    private var messageTv:TextView? = null
+    private var detailsTv:TextView? = null
 
     interface CallBackInterfaceDialog {
         fun onSucces()
@@ -40,14 +44,19 @@ class ConfirmationDialogLogoutFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.confirmation_logout_dialog_fragment, container, false)
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (view.findViewById<View>(R.id.message) as TextView).text = resources.getString(R.string.confirmation)
-        (view.findViewById<View>(R.id.details) as TextView).text = resources.getString(R.string.logout_text)
-        view.findViewById<View>(R.id.button_no).setOnClickListener { v -> dismiss() }
-        view.findViewById<View>(R.id.button_yes).setOnClickListener { v -> clickOkButton() }
+
+        messageTv=view.findViewById<TextView>(R.id.message)
+        detailsTv=view.findViewById<TextView>(R.id.details)
+        (messageTv as TextView).text =resources.getString(R.string.confirmation)
+        (detailsTv as TextView).text =resources.getString(R.string.logout_text)
+        button_no.setOnClickListener { v -> dismiss() }
+        button_yes.setOnClickListener { v -> clickOkButton() }
     }
 
     private fun clickOkButton() {

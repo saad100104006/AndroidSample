@@ -21,7 +21,7 @@ import uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS
  */
 
 class SettingsFragmentPresenter @Inject
-constructor(private val signInOutApi: SignInOutApi, private val tokenManager: TokenManager, private val sharedPreferences: SharedPreferences) : BasePresenter<SettingsFragmentPresenter.SettingsFragmentUI>() {
+constructor(private val signInOutApi: SignInOutApi, private val tokenManager: TokenManager, private val sharedPreference: SharedPreferences) : BasePresenter<SettingsFragmentPresenter.SettingsFragmentUI>() {
     private var disposable: Disposable? = null
 
 
@@ -33,7 +33,6 @@ constructor(private val signInOutApi: SignInOutApi, private val tokenManager: To
     }
 
     fun logOut() {
-
         /*   if (ui != null && !tokenManager.isTokenExist()) {
             tokenManager.clearInitToken();
             sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, false).apply();
@@ -54,21 +53,15 @@ constructor(private val signInOutApi: SignInOutApi, private val tokenManager: To
     }
 
     fun clickNotification() {
-        if (ui != null) {
-            ui.goAppSettings()
-        }
+            ui?.goAppSettings()
     }
 
     fun supportClicked() {
-        if (ui != null) {
-            ui.goToSupport()
-        }
+        ui?.goToSupport()
     }
 
     fun clickProfile() {
-        if (ui != null) {
-            ui.goToProfile()
-        }
+            ui?.goToProfile()
     }
 
     interface SettingsFragmentUI : UI {

@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.app.Activity.RESULT_OK
+import kotlinx.android.synthetic.main.frag_settings.*
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseFragment
@@ -46,19 +47,12 @@ class FragSettings : BaseFragment(), SettingsFragmentPresenter.SettingsFragmentU
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<View>(R.id.menuAccount).setOnClickListener { view -> presenter.clickNotification() }
-        view.findViewById<View>(R.id.menuLogout).setOnClickListener {
-            showDialogConfirmation()
-
-            //view -> presenter.logOut()
-            //
-            }
-        view.findViewById<View>(R.id.menuNotification).setOnClickListener { view -> presenter.clickNotification() }
-        view.findViewById<View>(R.id.menuReferrals).setOnClickListener { view -> presenter.clickProfile() }
-        view.findViewById<View>(R.id.menuSupport).setOnClickListener { view -> presenter.supportClicked() }
-        view.findViewById<View>(R.id.menuAboutUs).setOnClickListener { view -> presenter.supportClicked() }
-
-
+        menuAccount.setOnClickListener { presenter.clickNotification() }
+        menuLogout.setOnClickListener { showDialogConfirmation() }
+        menuNotification.setOnClickListener {  presenter.clickNotification() }
+        menuReferrals.setOnClickListener { presenter.clickProfile() }
+        menuSupport.setOnClickListener { presenter.supportClicked() }
+        menuAboutUs.setOnClickListener { presenter.supportClicked() }
 
     }
 
@@ -100,18 +94,16 @@ class FragSettings : BaseFragment(), SettingsFragmentPresenter.SettingsFragmentU
     }
 
     override fun goToProfile() {
-        ProfileActivity.startProfileActivity(context)
-
+        startActivity(Intent(context, ProfileActivity::class.java))
     }
 
     override fun goAppSettings() {
-        NotificationSettingsActivity.startNotificationSettingsActivity(context)
-
+        startActivity(Intent(context, NotificationSettingsActivity::class.java))
 
     }
 
     override fun goToWelcome() {
-        SignInActivity.startSignInActivity(activity!!)
+        startActivity(Intent(context, SignInActivity::class.java))
 
     }
 
