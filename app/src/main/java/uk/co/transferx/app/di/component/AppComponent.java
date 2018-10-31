@@ -29,6 +29,7 @@ import uk.co.transferx.app.ui.recipients.addrecipients.fragments.AddFirstRecipie
 import uk.co.transferx.app.ui.recipients.addrecipients.fragments.AddRecipientSuccessFragment;
 import uk.co.transferx.app.ui.recipients.addrecipients.fragments.AddRecipientsFragment;
 import uk.co.transferx.app.ui.recoverpass.fragment.RecoverPasswordFragment;
+import uk.co.transferx.app.ui.settings.fragment.FragmentAccount;
 import uk.co.transferx.app.ui.settings.fragment.SettingsFragment;
 import uk.co.transferx.app.ui.settings.notification.NotificationSettingsActivity;
 import uk.co.transferx.app.ui.settings.profile.ProfileActivity;
@@ -149,4 +150,6 @@ public interface AppComponent {
     void inject (FragRecipients fragRecipients);
 
    void inject (FragSettings fragSettings);
+
+    void inject (FragmentAccount fragmentAccount);
 }
