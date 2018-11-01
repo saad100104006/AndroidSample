@@ -72,7 +72,7 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
         imgSendCash.setOnClickListener { presenter.goToSelectRecipient() }
         tvSendMoney.setOnClickListener { presenter.goToSelectRecipient() }
 
-        presenter.isLoading.addObserver { o, arg ->
+        presenter.isLoading.addObserver { o, _ ->
             if (o == null || o !is ObservableBoolean) hideProgress()
             else {
                 if (o.value) showProgress()

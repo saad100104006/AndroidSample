@@ -54,7 +54,7 @@ constructor(val recipientRepository: RecipientRepository,
 
         isLoading.value = true
 
-        // TBDD Recipients are loaded background. This feature may be removed
+        // Recipients are loaded background
         loadRecipients()
 
         // Load transactions history
@@ -145,7 +145,5 @@ constructor(val recipientRepository: RecipientRepository,
         fun hideAllTransactions()
 
         fun hideRecurrentTransactions()
-
-
     }
 }
