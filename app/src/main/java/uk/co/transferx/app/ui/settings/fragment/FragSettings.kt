@@ -15,7 +15,7 @@ import uk.co.transferx.app.ui.settings.profile.account.PersonalInformationActivi
 import uk.co.transferx.app.ui.settings.notification.NotificationSettingsActivity
 import uk.co.transferx.app.ui.settings.presenter.ConfirmationDialogLogoutFragment
 import uk.co.transferx.app.ui.settings.presenter.SettingsFragmentPresenter
-import uk.co.transferx.app.ui.settings.profile.ProfileActivity
+import uk.co.transferx.app.ui.settings.profile.AccountActivity
 import uk.co.transferx.app.ui.settings.support.SupportActivity
 import uk.co.transferx.app.ui.signin.SignInActivity
 import javax.inject.Inject
@@ -84,7 +84,7 @@ class FragSettings : BaseFragment(), SettingsFragmentPresenter.SettingsFragmentU
     }
 
     override fun goToAccount() {
-        startActivity(Intent(context, PersonalInformationActivity::class.java))
+        startActivity(Intent(context, AccountActivity::class.java))
     }
 
     override fun goToSupport() {
@@ -92,7 +92,7 @@ class FragSettings : BaseFragment(), SettingsFragmentPresenter.SettingsFragmentU
     }
 
     override fun goToProfile() {
-        startActivity(Intent(context, ProfileActivity::class.java))
+        startActivity(Intent(context, AccountActivity::class.java))
     }
 
     override fun goAppSettings() {

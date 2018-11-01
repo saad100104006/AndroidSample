@@ -7,7 +7,7 @@ import javax.inject.Inject
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseActivity
-import uk.co.transferx.app.ui.settings.profile.account.presenter.SettingsAccountFragmentPresenter
+import uk.co.transferx.app.ui.settings.profile.presenter.SettingsAccountFragmentPresenter
 
 /**
  * Created by Tanvir on 11/1/2018.

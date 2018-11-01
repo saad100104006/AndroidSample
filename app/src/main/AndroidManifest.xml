@@ -97,10 +97,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="uk.co.transferx.app.ui.settings.profile.ProfileActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ui.recoverpass.RecoverPasswordSuccessActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -171,6 +167,13 @@
 
         <activity
             android:name="uk.co.transferx.app.ui.settings.profile.account.PersonalInformationActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="uk.co.transferx.app.ui.settings.profile.AccountActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name="uk.co.transferx.app.ui.settings.profile.changepin.ChangePinActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

@@ -15,7 +15,7 @@ import uk.co.transferx.app.R;
 import uk.co.transferx.app.TransferXApplication;
 import uk.co.transferx.app.ui.settings.notification.NotificationSettingsActivity;
 import uk.co.transferx.app.ui.settings.presenter.SettingsFragmentPresenter;
-import uk.co.transferx.app.ui.settings.profile.ProfileActivity;
+import uk.co.transferx.app.ui.settings.profile.AccountActivity;
 import uk.co.transferx.app.ui.settings.support.SupportActivity;
 import uk.co.transferx.app.ui.signin.SignInActivity;
 
@@ -80,7 +80,7 @@ public class SettingsFragment extends BaseFragment implements SettingsFragmentPr
 
     @Override
     public void goToProfile() {
-        ProfileActivity.startProfileActivity(getContext());
+      //  AccountActivity.startProfileActivity(getContext());
     }
 
     @Override

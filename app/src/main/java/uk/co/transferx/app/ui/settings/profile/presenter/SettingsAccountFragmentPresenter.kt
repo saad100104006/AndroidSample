@@ -1,4 +1,4 @@
-package uk.co.transferx.app.ui.settings.profile.account.presenter
+package uk.co.transferx.app.ui.settings.profile.presenter
 
 import io.reactivex.disposables.Disposable
 import uk.co.transferx.app.ui.base.BasePresenter
@@ -40,6 +40,10 @@ constructor() : BasePresenter<SettingsAccountFragmentPresenter.SettingsAccountFr
         ui?.goToUploadDocumentation()
     }
 
+    fun clickBack() {
+        ui?.goToBack()
+    }
+
 
     interface SettingsAccountFragmentUI : UI {
 
@@ -52,5 +56,6 @@ constructor() : BasePresenter<SettingsAccountFragmentPresenter.SettingsAccountFr
         fun goToChangePin()
 
         fun goToUploadDocumentation()
+        fun goToBack()
     }
 }

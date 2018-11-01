@@ -1,6 +1,8 @@
 package uk.co.transferx.app.ui.settings.profile.changepin
 
 import android.os.Bundle
+import kotlinx.android.synthetic.main.change_pin_layout.*
+import kotlinx.android.synthetic.main.personal_details_activity_layout.*
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseActivity
@@ -20,7 +22,9 @@ class ChangePinActivity : BaseActivity(), ChangePinPresenter.ChangePinUI  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as TransferXApplication).appComponent.inject(this)
-        setContentView(R.layout.change_password_activity_layout)
+        setContentView(R.layout.change_pin_layout)
+
+        button_back.setOnClickListener({ onBackPressed() })
     }
 
     override fun onBackPressed() {
