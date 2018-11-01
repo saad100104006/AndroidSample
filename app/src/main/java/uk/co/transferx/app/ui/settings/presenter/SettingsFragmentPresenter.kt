@@ -60,11 +60,18 @@ constructor(private val signInOutApi: SignInOutApi, private val tokenManager: To
         ui?.goToSupport()
     }
 
+
+    fun accountClicked() {
+        ui?.goToAccount()
+    }
+
     fun clickProfile() {
             ui?.goToProfile()
     }
 
     interface SettingsFragmentUI : UI {
+
+         fun goToAccount()
 
         override fun goToWelcome()
 

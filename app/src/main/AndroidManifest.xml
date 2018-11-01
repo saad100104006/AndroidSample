@@ -169,6 +169,9 @@
             android:name="uk.co.transferx.app.ui.landing.LandingActivity"
             android:theme="@style/AppTheme.Landing" />
 
+        <activity
+            android:name="uk.co.transferx.app.ui.settings.account.AccountActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

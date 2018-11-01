@@ -87,4 +87,9 @@ public class SettingsFragment extends BaseFragment implements SettingsFragmentPr
     public void goToSupport() {
         startActivity(new Intent(getContext(), SupportActivity.class));
     }
+
+    @Override
+    public void goToAccount() {
+
+    }
 }

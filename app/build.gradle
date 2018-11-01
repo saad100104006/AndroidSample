@@ -67,7 +67,8 @@ android {
                        'src/main/res/forgot',
                        'src/main/res/home',
                        'src/main/res/recipients',
-                       'src/main/res/template'
+                       'src/main/res/template',
+                             'src/main/res/account'
         ]
 
     }
