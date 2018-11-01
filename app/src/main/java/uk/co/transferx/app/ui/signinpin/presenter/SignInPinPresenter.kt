@@ -22,13 +22,15 @@ import uk.co.transferx.app.util.Constants.CREDENTIAL
 import uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS
 import uk.co.transferx.app.util.Constants.PIN_REQUIRED
 import uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT
+import uk.co.transferx.app.util.schedulers.BaseSchedulerProvider
 
 /**
  * Created by sergey on 19/03/2018.
  */
 
 class SignInPinPresenter @Inject
-constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedPreferences)
+constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedPreferences,
+            private val schedulerProvider: BaseSchedulerProvider)
     : BasePresenter<SignInPinPresenter.SignInPinUI>(sharedPreferences) {
     private var compositeDisposable: CompositeDisposable? = null
 
@@ -49,8 +51,8 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
             return
         }
         compositeDisposable!!.add(getObservableWithCrypto(credential, pin)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribe { res ->
                     if (!res.isEmpty()) {
                         sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply()
@@ -64,20 +66,19 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
 
     fun resetPassword() {
         // TBDD
-        ui.goToWelcomeScreen()
+        this.ui?.goToWelcomeScreen()
 
         /*
         sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, false).apply();
         sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, true).apply();
         recipientRepository.clearRecipients();
-        if (ui != null) {
             ui.goToWelcomeScreen();
-        }
+
         */
     }
 
     private fun getObservableWithCrypto(credential: String, pin: String): Single<String> {
-        return Single.fromCallable { cryptoManager.getDecryptCredential(credential, pin) }
+        return Single.just ( cryptoManager.getDecryptCredential(credential, pin) )
     }
 
 
@@ -90,7 +91,6 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
     }
 
     interface SignInPinUI : UI {
-
         fun goToPreviousScreen()
 
         fun goToWelcomeScreen()
@@ -98,6 +98,5 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
         fun showError(message: String)
 
         fun showErrorPin()
-
     }
 }
