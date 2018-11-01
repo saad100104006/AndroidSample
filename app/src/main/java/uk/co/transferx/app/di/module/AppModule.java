@@ -12,6 +12,8 @@ import uk.co.transferx.app.data.remote.SignUpApi;
 import uk.co.transferx.app.data.firebase.SubscriptionManager;
 import uk.co.transferx.app.data.repository.tokenmanager.TokenManager;
 import uk.co.transferx.app.data.repository.tokenmanager.TokenRepository;
+import uk.co.transferx.app.util.schedulers.BaseSchedulerProvider;
+import uk.co.transferx.app.util.schedulers.SchedulerProvider;
 
 /**
  * Created by smilevkiy on 13.11.17.
@@ -48,5 +50,11 @@ public class AppModule {
     @Provides
     SubscriptionManager provideSubscribtionManager(SharedPreferences sharedPreferences) {
         return new SubscriptionManager(sharedPreferences);
+    }
+
+    @Singleton
+    @Provides
+    BaseSchedulerProvider provideSchedulerProvider() {
+        return SchedulerProvider.Companion.getInstance();
     }
 }

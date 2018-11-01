@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_bg">
+
+    <ImageView
+        android:id="@+id/imgBell"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="26dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_bell"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAll"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/rounded_corner_left_filled_amber"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_horizontal"
+        android:padding="4dp"
+        android:text="@string/history"
+        android:textColor="@color/black_text"
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/tvRecurrent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvRecurrent"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/rounded_corner_right_amber"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_horizontal"
+        android:padding="4dp"
+        android:text="@string/recurrent"
+        android:textColor="@color/black_text"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@id/tvAll"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgSendCash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/ic_money_icon_small"
+        app:layout_constraintLeft_toRightOf="@id/tvRecurrent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleActivity"
+        style="@style/tvToolbarHeading"
+        android:layout_marginTop="24dp"
+        android:text="@string/title_activity"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAll" />
+
+    <View
+        android:id="@+id/lineActivity"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/titleActivity" />
+
+    <ImageView
+        android:id="@+id/imgEmptyItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/cash_send"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lineActivity" />
+
+    <TextView
+        android:id="@+id/tvMsgEmptyData"
+        style="@style/tv_single_page_info"
+        android:layout_marginTop="24dp"
+        android:text="@string/msg_send_money"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgEmptyItem" />
+
+    <Button
+        android:id="@+id/tvSendMoney"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="@dimen/left_right_main_screen"
+        android:layout_marginStart="@dimen/left_right_main_screen"
+        android:background="@drawable/rounded_corner_filled_amber"
+        android:text="@string/action_send_money"
+        android:textAllCaps="false"
+        android:textColor="@color/color_nav_bottom_bar"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvMsgEmptyData" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerviewHistory"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/lineActivity"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <android.support.constraint.Group
+        android:id="@+id/emptyMessageGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="tvMsgEmptyData,tvSendMoney,imgEmptyItem" />
+
+</android.support.constraint.ConstraintLayout>
