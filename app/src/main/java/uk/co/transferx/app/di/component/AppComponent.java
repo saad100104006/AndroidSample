@@ -14,7 +14,7 @@ import uk.co.transferx.app.ui.landing.fragment.LandingFragment;
 import uk.co.transferx.app.ui.homescreen.MainActivity;
 import uk.co.transferx.app.ui.homescreen.fragments.FragActivity;
 import uk.co.transferx.app.ui.homescreen.fragments.FragRecipients;
-import uk.co.transferx.app.ui.settings.account.AccountActivity;
+import uk.co.transferx.app.ui.settings.profile.account.PersonalInformationActivity;
 import uk.co.transferx.app.ui.settings.fragment.FragSettings;
 import uk.co.transferx.app.ui.mainscreen.fragments.ActivityFragment;
 import uk.co.transferx.app.ui.mainscreen.fragments.RecipientDialogFragment;
@@ -30,7 +30,7 @@ import uk.co.transferx.app.ui.recipients.addrecipients.fragments.AddFirstRecipie
 import uk.co.transferx.app.ui.recipients.addrecipients.fragments.AddRecipientSuccessFragment;
 import uk.co.transferx.app.ui.recipients.addrecipients.fragments.AddRecipientsFragment;
 import uk.co.transferx.app.ui.recoverpass.fragment.RecoverPasswordFragment;
-import uk.co.transferx.app.ui.settings.account.fragment.FragmentAccount;
+import uk.co.transferx.app.ui.settings.profile.account.fragment.FragmentAccount;
 import uk.co.transferx.app.ui.settings.fragment.SettingsFragment;
 import uk.co.transferx.app.ui.settings.notification.NotificationSettingsActivity;
 import uk.co.transferx.app.ui.settings.profile.ProfileActivity;
@@ -152,7 +152,5 @@ public interface AppComponent {
 
    void inject (FragSettings fragSettings);
 
-    void inject (FragmentAccount fragmentAccount);
-
-    void inject (AccountActivity activityAccount);
+    void inject (PersonalInformationActivity activityAccount);
 }

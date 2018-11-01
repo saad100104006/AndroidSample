@@ -1,4 +1,4 @@
-package uk.co.transferx.app.ui.settings.account.presenter
+package uk.co.transferx.app.ui.settings.presenter
 
 import io.reactivex.disposables.Disposable
 import uk.co.transferx.app.ui.base.BasePresenter
@@ -6,12 +6,13 @@ import uk.co.transferx.app.ui.base.UI
 import javax.inject.Inject
 
 /**
- * Created by HP on 10/31/2018.
+ * Created by HP on 11/1/2018.
  */
 
-class SettingsAccountFragmentPresenter @Inject
 
-constructor() : BasePresenter<SettingsAccountFragmentPresenter.SettingsAccountFragmentUI>() {
+class PersonalInformationPresenter @Inject
+
+constructor() : BasePresenter<PersonalInformationPresenter.PersonalInformationUI>() {
 
     private var disposable: Disposable? = null
 
@@ -41,9 +42,9 @@ constructor() : BasePresenter<SettingsAccountFragmentPresenter.SettingsAccountFr
     }
 
 
-    interface SettingsAccountFragmentUI : UI {
+    interface PersonalInformationUI : UI {
 
-         fun goToPersonalInformation()
+        fun goToPersonalInformation()
 
         fun goToWallet()
 

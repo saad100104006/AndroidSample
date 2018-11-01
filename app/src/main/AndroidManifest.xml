@@ -170,7 +170,7 @@
             android:theme="@style/AppTheme.Landing" />
 
         <activity
-            android:name="uk.co.transferx.app.ui.settings.account.AccountActivity"
+            android:name="uk.co.transferx.app.ui.settings.profile.account.PersonalInformationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

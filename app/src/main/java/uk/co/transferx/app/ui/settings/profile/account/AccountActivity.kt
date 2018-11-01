@@ -1,22 +1,14 @@
-package uk.co.transferx.app.ui.settings.account
+package uk.co.transferx.app.ui.settings.profile.account
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.View
-import android.widget.CheckBox
 import kotlinx.android.synthetic.main.account_fragment_layout.*
-import kotlinx.android.synthetic.main.frag_settings.*
 
 import javax.inject.Inject
 
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseActivity
-import uk.co.transferx.app.ui.settings.account.presenter.SettingsAccountFragmentPresenter
-import uk.co.transferx.app.ui.settings.notification.NotificationSettingsPresenter
-import uk.co.transferx.app.ui.signin.SignInActivity
+import uk.co.transferx.app.ui.settings.profile.account.presenter.SettingsAccountFragmentPresenter
 
 /**
  * Created by HP on 11/1/2018.
