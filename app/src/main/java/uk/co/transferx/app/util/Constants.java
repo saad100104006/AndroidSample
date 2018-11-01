@@ -44,6 +44,7 @@ public final class Constants {
     public static final String PIN_REQUIRED = "pin_required";
     public static final String MASTERCARD = "MASTERCARD";
     public static final String VISA = "VISA";
+    public static final String CLEAN_START = "clean_start_pin";
 
     public static final long SPLASH_DELAY = 800;
 }

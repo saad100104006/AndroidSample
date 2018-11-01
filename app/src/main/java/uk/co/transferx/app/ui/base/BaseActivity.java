@@ -1,11 +1,13 @@
 package uk.co.transferx.app.ui.base;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 
 import javax.inject.Inject;
@@ -47,7 +49,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onResume();
 
         if (isShouldStartPinCheck()) {
-            SignInPinActivity.Companion.starSignInActivity(this);
+            Intent intent = new Intent(this, SignInPinActivity.class);
+            startActivity(intent);
+
         }
 
     }

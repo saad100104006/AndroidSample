@@ -39,9 +39,9 @@ public class TransferXApplication extends MultiDexApplication {
         appComponent.inject(this);
 
         //TBDD
-       /* ProcessLifecycleOwner.get()
+       ProcessLifecycleOwner.get()
                 .getLifecycle()
-                .addObserver(applicationObserver);*/
+                .addObserver(applicationObserver);
         Timber.plant();
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
