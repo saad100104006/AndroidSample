@@ -53,20 +53,19 @@ class FragActivityPresenterTest {
 
     @Test
     fun testAttachViewCachedData() {
-        // Verify no API calls are made at this stage
-        Mockito.verify(recipientRepository, never()).recipients
-        Mockito.verify(tokenManager, never()).token
-        Mockito.verify(transactionApi, never()).getHistory(any())
-
         // Set cached transactions
         activityPresenter.setTransactionsCacheList(listTransactions)
 
         // Attach UI
         activityPresenter.attachUI(view)
 
-        // Make sure
-        Mockito.verify(view).showAllTransactions(listTransactions)
+        // Verify no API calls are made at this stage
+        Mockito.verify(recipientRepository, never()).recipients
+        Mockito.verify(tokenManager, never()).token
+        Mockito.verify(transactionApi, never()).getHistory(any())
 
+        // Make sure the view acts accordingly
+        Mockito.verify(view).showAllTransactions(listTransactions)
     }
 
     @Test
