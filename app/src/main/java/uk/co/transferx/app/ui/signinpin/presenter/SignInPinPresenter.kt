@@ -1,31 +1,23 @@
 package uk.co.transferx.app.ui.signinpin.presenter
 
 import android.content.SharedPreferences
-import android.widget.Toast
 
 import javax.inject.Inject
 
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import uk.co.transferx.app.ui.base.BasePresenter
 import uk.co.transferx.app.ui.base.UI
-import uk.co.transferx.app.data.remote.SignInOutApi
 import uk.co.transferx.app.data.crypto.CryptoManager
+import uk.co.transferx.app.util.Constants.*
 import uk.co.transferx.app.util.errors.ErrorPinException
-import uk.co.transferx.app.data.repository.recipientsrepository.RecipientRepository
-import uk.co.transferx.app.data.repository.tokenmanager.TokenManager
 
-import uk.co.transferx.app.util.Constants.CREDENTIAL
-import uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS
-import uk.co.transferx.app.util.Constants.PIN_REQUIRED
-import uk.co.transferx.app.util.Constants.PIN_SHOULD_BE_INPUT
 import uk.co.transferx.app.util.schedulers.BaseSchedulerProvider
 
 /**
  * Created by sergey on 19/03/2018.
+ * Refactored and redesigned by Catalin Ghita on 11/2018
  */
 
 class SignInPinPresenter @Inject
@@ -33,6 +25,12 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
             private val schedulerProvider: BaseSchedulerProvider)
     : BasePresenter<SignInPinPresenter.SignInPinUI>(sharedPreferences) {
     private var compositeDisposable: CompositeDisposable? = null
+
+    private var pinEnteredValue: String? = null
+
+    private val isPinFilled: Boolean
+        get() = pinEnteredValue != null &&
+                pinEnteredValue?.length == PIN_SIZE.toInt()
 
     override fun attachUI(ui: SignInPinUI) {
         super.attachUI(ui)
@@ -63,6 +61,12 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
                     handleError(ErrorPinException())
                 })
     }
+
+    fun setPinValue(pinEnteredValue: String){
+        this.pinEnteredValue = pinEnteredValue
+        this.ui?.setButtonEnabled(isPinFilled)
+    }
+
 
     fun resetPassword() {
         // TBDD
@@ -98,5 +102,7 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
         fun showError(message: String)
 
         fun showErrorPin()
+
+        fun setButtonEnabled(isEnabled: Boolean)
     }
 }

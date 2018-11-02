@@ -47,4 +47,5 @@ public final class Constants {
     public static final String CLEAN_START = "clean_start_pin";
 
     public static final long SPLASH_DELAY = 800;
+    public static final Short PIN_SIZE = 4;
 }
