@@ -29,7 +29,7 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
     private var pinEnteredValue: String? = null
 
     private val isPinFilled: Boolean
-        get() = pinEnteredValue != null &&
+        get() = pinEnteredValue != null && pinEnteredValue!!.matches("^[0-9]*$".toRegex()) &&
                 pinEnteredValue?.length == PIN_SIZE.toInt()
 
     override fun attachUI(ui: SignInPinUI) {

@@ -59,7 +59,7 @@ class SignInPinFragment : BaseFragment(), SignInPinPresenter.SignInPinUI {
 
         // Provide reference to base class action button
         buttonNext = signInPinButton
-        signInPinButton.isEnabled = false
+        setButtonStatus(false)
         signInPinButton.setOnClickListener {
             presenter.checkPinAndLogIn(pinView!!.text?.toString()!!)
             hideKeyboard(pinView)

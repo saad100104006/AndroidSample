@@ -13,6 +13,10 @@ import uk.co.transferx.app.ui.signinpin.presenter.SignInPinPresenter
 import uk.co.transferx.app.util.Constants
 import uk.co.transferx.app.util.schedulers.ImmediateSchedulerProvider
 
+/**
+ * Created by Catalin Ghita on 11/2018
+ */
+
 class SignInPinPresenterTest {
     // SUT
     private lateinit var signInPinPresenter: SignInPinPresenter
@@ -86,6 +90,43 @@ class SignInPinPresenterTest {
 
         // Verify that the view acts accordingly
         Mockito.verify(view).showErrorPin()
+    }
+
+    @Test
+    fun testEnterPinCorrectFormat(){
+        // First bind to view
+        signInPinPresenter.attachUI(view)
+
+        // Passing a valid format PIN
+        signInPinPresenter.setPinValue("1122")
+
+        // Verify that the view acts accordingly
+        Mockito.verify(view).setButtonEnabled(true)
+    }
+
+    @Test
+    fun testEnterPinInvalidFormat(){
+        // First bind to view
+        signInPinPresenter.attachUI(view)
+
+        // Passing a valid format PIN
+        signInPinPresenter.setPinValue("1ff2")
+
+        // Verify that the view acts accordingly
+        Mockito.verify(view).setButtonEnabled(false)
+    }
+
+
+    @Test
+    fun testEnterPinInsufficientInput(){
+        // First bind to view
+        signInPinPresenter.attachUI(view)
+
+        // Passing a valid format PIN
+        signInPinPresenter.setPinValue("12")
+
+        // Verify that the view acts accordingly
+        Mockito.verify(view).setButtonEnabled(false)
     }
 
 
