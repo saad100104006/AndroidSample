@@ -38,12 +38,12 @@ class AccountActivity : BaseActivity(), SettingsAccountFragmentPresenter.Setting
         setContentView(R.layout.account_fragment_layout)
 
 
-        buttons_back.setOnClickListener({ presenter.clickBack() })
-        personal_details.setOnClickListener { presenter.clickPersonalInformation() }
+        buttonsBack.setOnClickListener({ presenter.clickBack() })
+        personalDetails.setOnClickListener { presenter.clickPersonalInformation() }
         wallet.setOnClickListener { presenter.clickWallet() }
-        change_password.setOnClickListener { presenter.clickChangePassword() }
-        change_pin.setOnClickListener { presenter.clickChangePin() }
-        upload_docs.setOnClickListener { presenter.clickUploadDocumentation() }
+        changePassword.setOnClickListener { presenter.clickChangePassword() }
+        changePin.setOnClickListener { presenter.clickChangePin() }
+        uploadDocs.setOnClickListener { presenter.clickUploadDocumentation() }
 
 
     }

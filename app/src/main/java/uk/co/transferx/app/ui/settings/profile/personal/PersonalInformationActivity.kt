@@ -65,5 +65,9 @@ class PersonalInformationActivity : BaseActivity(), SettingsAccountFragmentPrese
     override fun goToUploadDocumentation() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+    override fun goToBack() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 
 }
