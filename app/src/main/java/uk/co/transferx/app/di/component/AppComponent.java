@@ -14,6 +14,8 @@ import uk.co.transferx.app.ui.landing.fragment.LandingFragment;
 import uk.co.transferx.app.ui.homescreen.MainActivity;
 import uk.co.transferx.app.ui.homescreen.fragments.FragActivity;
 import uk.co.transferx.app.ui.homescreen.fragments.FragRecipients;
+import uk.co.transferx.app.ui.settings.profile.AccountActivity;
+import uk.co.transferx.app.ui.settings.profile.account.PersonalInformationActivity;
 import uk.co.transferx.app.ui.settings.fragment.FragSettings;
 import uk.co.transferx.app.ui.mainscreen.fragments.ActivityFragment;
 import uk.co.transferx.app.ui.mainscreen.fragments.RecipientDialogFragment;
@@ -31,9 +33,9 @@ import uk.co.transferx.app.ui.recipients.addrecipients.fragments.AddRecipientsFr
 import uk.co.transferx.app.ui.recoverpass.fragment.RecoverPasswordFragment;
 import uk.co.transferx.app.ui.settings.fragment.SettingsFragment;
 import uk.co.transferx.app.ui.settings.notification.NotificationSettingsActivity;
-import uk.co.transferx.app.ui.settings.profile.ProfileActivity;
 import uk.co.transferx.app.ui.settings.profile.UploadDocumentsActivity;
 import uk.co.transferx.app.ui.settings.profile.changepassword.ChangePasswordActivity;
+import uk.co.transferx.app.ui.settings.profile.changepin.ChangePinActivity;
 import uk.co.transferx.app.ui.settings.profile.personaldetails.PersonalDetailsActivity;
 import uk.co.transferx.app.ui.settings.profile.personaldetails.fragments.PersonalDetailsFragmentOne;
 import uk.co.transferx.app.ui.settings.profile.personaldetails.fragments.PersonalDetailsFragmentTwo;
@@ -98,7 +100,7 @@ public interface AppComponent {
 
     void inject(NotificationSettingsActivity notificationSettingsActivity);
 
-    void inject(ProfileActivity profileActivity);
+    void inject(AccountActivity accountActivity);
 
     void inject(RecoverPasswordFragment recoverPasswordFragment);
 
@@ -149,4 +151,7 @@ public interface AppComponent {
     void inject (FragRecipients fragRecipients);
 
    void inject (FragSettings fragSettings);
+
+    void inject (PersonalInformationActivity activityAccount);
+    void inject (ChangePinActivity changePin);
 }

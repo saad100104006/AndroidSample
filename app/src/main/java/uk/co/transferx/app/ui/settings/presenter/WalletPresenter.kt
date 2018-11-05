@@ -1,26 +1,24 @@
 package uk.co.transferx.app.ui.settings.presenter
 
 import android.content.SharedPreferences
-
-import javax.inject.Inject
-
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
 import retrofit2.Response
-import uk.co.transferx.app.ui.base.BasePresenter
-import uk.co.transferx.app.ui.base.UI
 import uk.co.transferx.app.data.remote.SignInOutApi
 import uk.co.transferx.app.data.repository.tokenmanager.TokenManager
-
+import uk.co.transferx.app.ui.base.BasePresenter
+import uk.co.transferx.app.ui.base.UI
 import uk.co.transferx.app.util.Constants.LOGGED_IN_STATUS
+import javax.inject.Inject
 
 /**
- * Created by sergey on 29/12/2017.
+ * Created by HP on 11/1/2018.
  */
 
-class SettingsFragmentPresenter @Inject
+
+class WalletPresenter @Inject
 constructor(private val signInOutApi: SignInOutApi, private val tokenManager: TokenManager, private val sharedPreference: SharedPreferences) : BasePresenter<SettingsFragmentPresenter.SettingsFragmentUI>(sharedPreference) {
     private var disposable: Disposable? = null
 
@@ -46,14 +44,14 @@ constructor(private val signInOutApi: SignInOutApi, private val tokenManager: To
                 .subscribe { res ->
                     if (ui != null) {
                         tokenManager.clearToken()
-                        sharedPreference.edit().putBoolean(LOGGED_IN_STATUS, false).apply()
+                           sharedPreference.edit().putBoolean(LOGGED_IN_STATUS, false).apply()
                         ui.goToWelcome()
                     }
                 }
     }
 
     fun clickNotification() {
-            ui?.goAppSettings()
+        ui?.goAppSettings()
     }
 
     fun supportClicked() {
@@ -66,12 +64,12 @@ constructor(private val signInOutApi: SignInOutApi, private val tokenManager: To
     }
 
     fun clickProfile() {
-            ui?.goToProfile()
+        ui?.goToProfile()
     }
 
-    interface SettingsFragmentUI : UI {
+    interface WalletUI : UI {
 
-         fun goToAccount()
+        fun goToAccount()
 
         override fun goToWelcome()
 

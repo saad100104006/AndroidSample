@@ -50,6 +50,11 @@ public class ConfirmationDialogFragment extends DialogFragment implements Settin
 
     }
 
+    @Override
+    public void goToAccount() {
+
+    }
+
     public interface CallBackInterfaceDialog {
         void onSucces();
 

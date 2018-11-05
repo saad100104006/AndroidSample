@@ -1,12 +1,7 @@
 package uk.co.transferx.app.ui.settings.fragment
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
-import android.support.v4.content.LocalBroadcastManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,15 +10,14 @@ import kotlinx.android.synthetic.main.frag_settings.*
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseFragment
-import uk.co.transferx.app.ui.customview.ConfirmationDialogFragment
 import uk.co.transferx.app.ui.mainscreen.fragments.RecipientsFragment.DELETE_USER
+import uk.co.transferx.app.ui.settings.profile.account.PersonalInformationActivity
 import uk.co.transferx.app.ui.settings.notification.NotificationSettingsActivity
 import uk.co.transferx.app.ui.settings.presenter.ConfirmationDialogLogoutFragment
 import uk.co.transferx.app.ui.settings.presenter.SettingsFragmentPresenter
-import uk.co.transferx.app.ui.settings.profile.ProfileActivity
+import uk.co.transferx.app.ui.settings.profile.AccountActivity
 import uk.co.transferx.app.ui.settings.support.SupportActivity
 import uk.co.transferx.app.ui.signin.SignInActivity
-import uk.co.transferx.app.util.Constants
 import javax.inject.Inject
 
 class FragSettings : BaseFragment(), SettingsFragmentPresenter.SettingsFragmentUI  {
@@ -47,7 +41,7 @@ class FragSettings : BaseFragment(), SettingsFragmentPresenter.SettingsFragmentU
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        menuAccount.setOnClickListener { presenter.clickNotification() }
+        menuAccount.setOnClickListener { presenter.accountClicked() }
         menuLogout.setOnClickListener { showDialogConfirmation() }
         menuNotification.setOnClickListener {  presenter.clickNotification() }
         menuReferrals.setOnClickListener { presenter.clickProfile() }
@@ -89,12 +83,16 @@ class FragSettings : BaseFragment(), SettingsFragmentPresenter.SettingsFragmentU
 
     }
 
+    override fun goToAccount() {
+        startActivity(Intent(context, AccountActivity::class.java))
+    }
+
     override fun goToSupport() {
         startActivity(Intent(context, SupportActivity::class.java))
     }
 
     override fun goToProfile() {
-        startActivity(Intent(context, ProfileActivity::class.java))
+        startActivity(Intent(context, AccountActivity::class.java))
     }
 
     override fun goAppSettings() {
