@@ -64,7 +64,7 @@ class FragActivityPresenterTest {
         Mockito.verify(tokenManager, never()).token
         Mockito.verify(transactionApi, never()).getHistory(any())
 
-        // Make sure
+        // Make sure the view acts accordingly
         Mockito.verify(view).showAllTransactions(listTransactions)
     }
 

@@ -103,9 +103,24 @@
     <style name="CommonStyle">
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
+    <style name="semiBold">
+        <item name="android:fontFamily">@font/montserratsemibold</item>
+    </style>
+
+    <style name="LogoutDialogStyle">
+        <item name="android:fontFamily">@font/lato_bold</item>
+    </style>
+
+    <style name="LogoutDialogStyle2">
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
 
     <style name="CommonButtonStyle" parent="Widget.AppCompat.Button.Colored">
         <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="LogoutButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:fontFamily">@font/montserrat_medium</item>
     </style>
 
     <style name="indicator_style">

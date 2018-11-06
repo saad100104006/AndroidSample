@@ -15,12 +15,13 @@ import android.view.Window;
 import android.widget.TextView;
 
 import uk.co.transferx.app.R;
+import uk.co.transferx.app.ui.settings.presenter.SettingsFragmentPresenter;
 
 import static android.app.Activity.RESULT_OK;
 import static uk.co.transferx.app.util.Constants.DELETE;
 import static uk.co.transferx.app.util.Constants.EMPTY;
 
-public class ConfirmationDialogFragment extends DialogFragment {
+public class ConfirmationDialogFragment extends DialogFragment implements SettingsFragmentPresenter.SettingsFragmentUI {
 
     public static final String MESSAGE = "message";
     public static final String ADDITIONAL_DATA = "additional_data";
@@ -28,6 +29,31 @@ public class ConfirmationDialogFragment extends DialogFragment {
     private String message;
     private int position;
     private String id;
+
+    @Override
+    public void goAppSettings() {
+
+    }
+
+    @Override
+    public void goToWelcome() {
+
+    }
+
+    @Override
+    public void goToProfile() {
+
+    }
+
+    @Override
+    public void goToSupport() {
+
+    }
+
+    @Override
+    public void goToAccount() {
+
+    }
 
     public interface CallBackInterfaceDialog {
         void onSucces();
