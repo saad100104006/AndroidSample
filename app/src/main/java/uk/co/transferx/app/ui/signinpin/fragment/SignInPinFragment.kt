@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.chaos.view.PinView
-import kotlinx.android.synthetic.main.pin_content.*
 import kotlinx.android.synthetic.main.signin_fragment_layout.*
 import kotlinx.android.synthetic.main.signin_pin_fragment.*
 import org.jetbrains.anko.clearTask

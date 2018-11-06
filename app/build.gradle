@@ -68,6 +68,7 @@ android {
                        'src/main/res/onboarding',
                        'src/main/res/signup',
                        'src/main/res/signin',
+                       'src/main/res/signinpin',
                        'src/main/res/forgot',
                        'src/main/res/home',
                        'src/main/res/recipients',

@@ -2,11 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="64dp"
     android:orientation="vertical">
 
-    <include layout="@layout/pin_content" />
+    <TextView
+        android:id="@+id/title"
+        style="@style/CommonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:layout_marginTop="32dp"
+        android:lineSpacingExtra="12sp"
+        android:text="@string/enter_your_pin"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
+    <com.chaos.view.PinView
+        android:id="@+id/loginPinView"
+        style="@style/PinWidget.PinView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_right_main_screen"
+        android:layout_marginRight="@dimen/left_right_main_screen"
+        android:inputType="number|numberPassword"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:itemCount="4"
+        app:itemSpacing="16dp"
+        app:itemWidth="74dp"
+        app:lineWidth="2dp"
+        app:viewType="line" />
 
     <Button
         android:id="@+id/signInPinButton"
