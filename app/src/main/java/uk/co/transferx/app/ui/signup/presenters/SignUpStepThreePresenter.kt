@@ -16,6 +16,7 @@ import javax.inject.Inject
 
 /**
  * Created by sergey on 06.12.17.
+ * Refactored and redesigned by Catalin Ghita on 10/2018
  */
 
 class SignUpStepThreePresenter @Inject
@@ -48,7 +49,7 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
 
     fun signUpPin() {
         if (firstPin == secondPin) {
-            // Store encyrpted PIN
+            // Store encrypted PIN
             val firstName = sharedPreferences.getString(FIRST_NAME, FIRST_NAME)
             val secondName = sharedPreferences.getString(LAST_NAME, LAST_NAME)
             val encryptedCredential =
@@ -83,10 +84,6 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
         fun setButtonEnabled(isEnabled: Boolean)
 
         fun goToConfirmationScreen()
-
     }
 
-    companion object {
-        private val PIN_SIZE: Short = 4
-    }
 }

@@ -42,6 +42,10 @@ android {
         multiDexEnabled true
     }
     buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -64,6 +68,7 @@ android {
                              'src/main/res/onboarding',
                              'src/main/res/signup',
                              'src/main/res/signin',
+                             'src/main/res/signinpin',
                              'src/main/res/forgot',
                              'src/main/res/home',
                              'src/main/res/recipients',

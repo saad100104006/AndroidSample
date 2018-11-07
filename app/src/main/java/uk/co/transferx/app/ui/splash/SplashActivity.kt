@@ -12,6 +12,7 @@ import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.landing.LandingActivity
 import uk.co.transferx.app.ui.homescreen.MainActivity
 import uk.co.transferx.app.ui.signin.SignInActivity
+import uk.co.transferx.app.ui.signinpin.SignInPinActivity
 import uk.co.transferx.app.ui.signup.SignUpActivity
 import uk.co.transferx.app.ui.splash.presenter.SplashPresenter
 import uk.co.transferx.app.ui.tutorial.TutorialActivity
@@ -51,7 +52,8 @@ class SplashActivity : BaseActivity(), SplashContract.View {
 
     override fun goToPinScreen() {
         // TODO - CREATE LINK TO PIN WHEN PIN SCREEN IS FINISHED AND LINKING IS PERFORMED
-        startActivity(intentFor<MainActivity>().newTask().clearTask())
+//        startActivity(intentFor<MainActivity>().newTask().clearTask())
+        startActivity(intentFor<SignInPinActivity>(Constants.CLEAN_START to 1))
 
     }
 

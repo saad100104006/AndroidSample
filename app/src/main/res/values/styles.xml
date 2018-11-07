@@ -10,6 +10,7 @@
         <item name="android:alertDialogTheme">@style/AppAlertTheme</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="android:textColorHint">@color/hint</item>
+
         <!--SwitchCompat Style -->
         <!-- Active thumb color & Active track color(30% transparency) -->
         <item name="colorControlActivated">@color/colorAccent</item>
