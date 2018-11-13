@@ -52,7 +52,7 @@ class SignUpActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)) return
+        if (sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, true)) return
 
         when (currentFragment) {
             0 -> {
