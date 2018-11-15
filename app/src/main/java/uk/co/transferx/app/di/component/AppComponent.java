@@ -52,6 +52,8 @@ import uk.co.transferx.app.ui.signup.fragment.SignUpStepThreeFragment;
 import uk.co.transferx.app.ui.signup.fragment.SignUpStepTwoFragment;
 import uk.co.transferx.app.ui.signup.fragment.SignUpSuccessFragment;
 import uk.co.transferx.app.ui.splash.SplashActivity;
+import uk.co.transferx.app.ui.transfer.TransferActivity;
+import uk.co.transferx.app.ui.transfer.fragment.SelectRecipientFragment;
 import uk.co.transferx.app.ui.transfersummary.TransferSummaryActivity;
 
 /**
@@ -122,6 +124,10 @@ public interface AppComponent {
     void inject(ScheduleActivity scheduleActivity);
 
     void inject(AddCardActivity addCardActivity);
+
+    void inject (TransferActivity transferActivity);
+
+    void inject (SelectRecipientFragment selectRecipientFragment);
 
     void inject(TransferSummaryActivity transferSummaryActivity);
 
