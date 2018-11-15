@@ -44,6 +44,7 @@
         android:layout_marginTop="24dp"
         android:adjustViewBounds="true"
         android:src="@drawable/flag_bgn"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="parent" />
 
