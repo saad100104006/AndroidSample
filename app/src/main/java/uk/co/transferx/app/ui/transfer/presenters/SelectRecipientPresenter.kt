@@ -27,6 +27,14 @@ constructor(private val recipientRepository: RecipientRepository) :
                 .country("XX")
                 .phone("39348")
                 .build()
+
+        val recipient33 =   Recipient.Builder()
+                .firstname("Johny")
+                .lastname("WNend")
+                .country("XX")
+                .phone("39348")
+                .build()
+
         val recipient3 =   Recipient.Builder()
                 .firstname("John")
                 .lastname("Wick")
@@ -40,12 +48,35 @@ constructor(private val recipientRepository: RecipientRepository) :
                 .phone("39348")
                 .build()
 
+        val recipient44 =   Recipient.Builder()
+                .firstname("Wxn")
+                .lastname("Pardy")
+                .country("XX")
+                .phone("39348")
+                .build()
+
+        val recipient5 =   Recipient.Builder()
+                .firstname("Xanxar")
+                .lastname("Lod")
+                .country("XX")
+                .phone("39348")
+                .build()
+
         list.add(recipient1)
         list.add(recipient2)
         list.add(recipient3)
+        list.add(recipient33)
         list.add(recipient4)
+        list.add(recipient44)
+        list.add(recipient5)
+
+
+
+
+        val sortedList = list.sortedWith(compareBy { it.firstname[0] })
 
         this.ui.showRecipientList(list)
+//        this.ui.showRecipientList(list.sortedBy { it.firstname })
     }
 
     interface SelectRecipientView: UI {

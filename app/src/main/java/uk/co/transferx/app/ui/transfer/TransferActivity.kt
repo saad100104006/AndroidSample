@@ -8,6 +8,7 @@ import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.signup.SignUpActivity
+import uk.co.transferx.app.ui.transfer.fragment.SelectRecipientFragment
 
 class TransferActivity : BaseActivity() {
     private val fragmentArray = SparseArray<BaseFragment>(4)
@@ -53,6 +54,6 @@ class TransferActivity : BaseActivity() {
     }
 
     private fun setupFragments(){
-        // fragmentArray.put(0, SelectRecipientFragment())
+         fragmentArray.put(0, SelectRecipientFragment())
     }
 }
