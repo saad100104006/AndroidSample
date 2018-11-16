@@ -4,14 +4,17 @@ import android.content.SharedPreferences
 import android.util.Log
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.disposables.Disposables
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import uk.co.transferx.app.data.pojo.TokenEntity
 import uk.co.transferx.app.data.pojo.UserSignIn
 import uk.co.transferx.app.data.remote.SignInOutApi
 import uk.co.transferx.app.data.remote.SignUpApi
+import uk.co.transferx.app.data.repository.ProfileRepository
 import uk.co.transferx.app.data.repository.tokenmanager.TokenManager
 import uk.co.transferx.app.data.repository.tokenmanager.TokenRepository
 import uk.co.transferx.app.ui.base.BasePresenter
@@ -28,10 +31,11 @@ import javax.net.ssl.HttpsURLConnection
 class SignInPresenter @Inject constructor
 (private val signInOutApi: SignInOutApi, private val signUpApi: SignUpApi,
  private val tokenManager: TokenManager, sharedPreferences: SharedPreferences,
+ private val profileRepository: ProfileRepository,
  private val tokenRepository: TokenRepository)
     : BasePresenter<SignInContract.View>(sharedPreferences), SignInContract.Presenter {
 
-    private var disposable: Disposable? = Disposables.disposed()
+    private var compositeDisposable: CompositeDisposable? = null
 
     private var email: String? = null
 
@@ -40,9 +44,14 @@ class SignInPresenter @Inject constructor
     private val isInputDataValid: Boolean
         get() = Util.validateEmail(email) && Util.validatePassword(password)
 
+    override fun attachUI(ui: SignInContract.View?) {
+        super.attachUI(ui)
+        compositeDisposable = CompositeDisposable()
+    }
+
     override fun detachUI() {
         super.detachUI()
-        disposable?.dispose()
+        compositeDisposable?.dispose()
     }
 
     override fun signIn() {
@@ -68,7 +77,7 @@ class SignInPresenter @Inject constructor
     }
 
     override fun refreshGenesisToken() {
-        disposable = signUpApi.initialToken
+        val disposable = signUpApi.initialToken
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -77,11 +86,12 @@ class SignInPresenter @Inject constructor
                         else -> this.ui?.showConnectionError()
                     }
                 }, { throwable -> this.handleError(throwable) })
+        compositeDisposable?.add(disposable)
     }
 
     private fun signIn(email: String?, password: String?) {
         val request = UserSignIn.Builder()
-        disposable = signUpApi.initialToken
+        val disposable = signUpApi.initialToken
                 .flatMap<Response<TokenEntity>> {
                     if (it.code() == HttpsURLConnection.HTTP_OK) {
                         return@flatMap signInOutApi.signIn(it.body()?.accessToken, request.uname(email).upass(password).build())
@@ -95,8 +105,26 @@ class SignInPresenter @Inject constructor
                         HttpsURLConnection.HTTP_OK -> {
                             tokenManager.saveToken(it.body())
                             sharedPreferences.edit().putBoolean(LOGGED_IN_STATUS, true).apply()
+                            sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply()
 
-                            if (shouldGoToConfirmation()) {
+                            // If user has no stored credentials, it means the cache/data of the app
+                            // has been deleted. In this case, we need to retrieve credentials
+                            // and setup PIN again
+                            if(sharedPreferences.getString(CREDENTIAL, null) == null){
+                                val disposable: Disposable = profileRepository.getUserProfile()
+                                        .subscribeBy(
+                                                onSuccess = {
+                                                    // Set credentials
+                                                    sharedPreferences.edit().putString(FIRST_NAME, it.firstName).apply()
+                                                    sharedPreferences.edit().putString(LAST_NAME, it.lastName).apply()
+
+                                                    // Send user to set PIN screen
+                                                    this.ui?.goToSetPinScreen()
+                                                     },
+                                                onError = { globalErrorHandler(it) }
+                                        )
+                                compositeDisposable?.add(disposable)
+                            } else if (shouldGoToConfirmation()) {
                                 this.ui?.goToConfirmation()
                             } else this.ui?.goToMainScreen()
                         }
@@ -105,6 +133,7 @@ class SignInPresenter @Inject constructor
                         else -> this.ui?.showConnectionError()
                     }
                 }, { throwable -> this.handleError(throwable) })
+        compositeDisposable?.add(disposable)
 
     }
 
