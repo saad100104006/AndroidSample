@@ -1,13 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/recyclerviewHistory"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="0dp"
-    android:background="@color/white"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintTop_toBottomOf="@+id/lineActivity"
-    app:layout_constraintVertical_bias="0.0" />
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/grey_bg">
+
+    <ImageView
+        android:id="@+id/ivCancel"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_cancel"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/left_right_main_screen" />
+
+    <TextView
+        android:id="@+id/tvSelectRecipient"
+        android:layout_width="match_parent"
+        android:textSize="18sp"
+        android:lineSpacingExtra="16sp"
+        tools:text="Select your recipient"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/ivCancel"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="@dimen/left_right_main_screen"
+        android:textStyle="bold"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@color/green_blue"
+        app:layout_constraintTop_toBottomOf="@id/tvSelectRecipient"
+        android:backgroundTint="@color/black"
+        android:searchIcon="@drawable/ic_search"
+        android:closeIcon="@drawable/ic_close">
+    </android.support.v7.widget.SearchView>
+
+    <ImageView
+        android:id="@+id/ivCAddRecipient"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_cancel"
+        android:layout_marginTop="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="@dimen/left_right_main_screen"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/left_right_main_screen" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerviewHistory"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="@color/white"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchView"
+        app:layout_constraintVertical_bias="0.0" />
+</android.support.constraint.ConstraintLayout>
