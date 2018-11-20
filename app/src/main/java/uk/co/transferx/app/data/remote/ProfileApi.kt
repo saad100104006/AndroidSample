@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PUT
 import uk.co.transferx.app.data.pojo.ChangePassword
+import uk.co.transferx.app.data.pojo.ChangePin
 import uk.co.transferx.app.data.pojo.Message
 import uk.co.transferx.app.data.pojo.Profile
 
@@ -17,4 +18,8 @@ interface ProfileApi {
 
     @PUT("/v1/auth/user/password")
     fun changePassword(@Header("Authorization") token: String, @Body changePassword: ChangePassword) : Single<Message>
+
+    @PUT("/v1/auth/user/pin")
+    fun changePin(@Header("Authorization") token: String, @Body changePin: ChangePin) : Single<Message>
+
 }
