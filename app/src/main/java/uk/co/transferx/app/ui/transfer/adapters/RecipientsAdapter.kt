@@ -10,10 +10,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import uk.co.transferx.app.R
+import uk.co.transferx.app.data.dto.RecipientDto
 import uk.co.transferx.app.data.pojo.Recipient
 
 class RecipientsAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var recipients: List<Recipient>? = null
+    private var recipients: List<RecipientDto>? = null
     private var clickListener: ItemClickListener? = null
     private var headerLetter: String? = ""
     private var sparseArrayInteger: SparseIntArray? = null
@@ -38,9 +39,9 @@ class RecipientsAdapter(private val context: Context) : RecyclerView.Adapter<Rec
             return VIEW_ROW
 
         // If current header letter is different from required header letter
-        if (!recipients?.get(position)?.firstname?.take(1).equals(headerLetter, true)) {
+        if (!recipients?.get(position)?.firstName?.take(1).equals(headerLetter, true)) {
             // Update header letter
-            headerLetter = recipients?.get(position)?.firstname?.take(1)
+            headerLetter = recipients?.get(position)?.firstName?.take(1)
             sparseArrayInteger!!.put(position, VIEW_WITH_HEADER)
             return VIEW_WITH_HEADER
         } else {
@@ -51,7 +52,7 @@ class RecipientsAdapter(private val context: Context) : RecyclerView.Adapter<Rec
     }
 
     override fun onBindViewHolder(vholder: RecyclerView.ViewHolder, position: Int) {
-        val name = recipients?.get(position)?.firstname + recipients?.get(position)?.lastname
+        val name = recipients?.get(position)?.firstName + " " +  recipients?.get(position)?.lastName
         when (vholder.itemViewType) {
             VIEW_WITH_HEADER -> {
                 val holder: ItemWithHeaderViewHolder = vholder as ItemWithHeaderViewHolder
@@ -69,7 +70,7 @@ class RecipientsAdapter(private val context: Context) : RecyclerView.Adapter<Rec
         return recipients?.size ?: 0
     }
 
-    fun setRecipients(recipients: List<Recipient>) {
+    fun setRecipients(recipients: List<RecipientDto>) {
         sparseArrayInteger = SparseIntArray(recipients.size)
 
         this.recipients = recipients
@@ -123,7 +124,7 @@ class RecipientsAdapter(private val context: Context) : RecyclerView.Adapter<Rec
     }
 
     interface ItemClickListener {
-        fun onItemClick(view: View, data: Recipient)
+        fun onItemClick(view: View, data: RecipientDto)
     }
 
 }

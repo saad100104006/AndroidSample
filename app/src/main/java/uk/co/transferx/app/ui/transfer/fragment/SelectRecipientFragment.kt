@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.fragment_select_recipient.*
 
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.data.dto.RecipientDto
 import uk.co.transferx.app.data.pojo.Recipient
 import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.transfer.adapters.RecipientsAdapter
@@ -26,7 +27,7 @@ class SelectRecipientFragment : BaseFragment(), SelectRecipientPresenter.SelectR
     @Inject
     lateinit var presenter: SelectRecipientPresenter
 
-    override fun onItemClick(view: View, data: Recipient) {
+    override fun onItemClick(view: View, data: RecipientDto) {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +48,7 @@ class SelectRecipientFragment : BaseFragment(), SelectRecipientPresenter.SelectR
         adapter = RecipientsAdapter(context!!)
         adapter.setClickListener(this)
 
+        // TODO edit those
         val layoutManager = LinearLayoutManager(activity)
         recyclerviewHistory.setLayoutManager(layoutManager)
         recyclerviewHistory.setItemAnimator(DefaultItemAnimator())
@@ -67,7 +69,7 @@ class SelectRecipientFragment : BaseFragment(), SelectRecipientPresenter.SelectR
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showRecipientList(recipients: List<Recipient>) {
+    override fun showRecipientList(recipients: List<RecipientDto>) {
         adapter.setRecipients(recipients)
     }
 

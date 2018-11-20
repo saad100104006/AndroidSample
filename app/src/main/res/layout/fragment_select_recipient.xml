@@ -22,6 +22,7 @@
         android:textSize="18sp"
         android:lineSpacingExtra="16sp"
         tools:text="Select your recipient"
+        android:text="Select your recipient"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/ivCancel"
         android:layout_marginTop="32dp"
