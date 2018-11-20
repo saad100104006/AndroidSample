@@ -57,6 +57,7 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
             sharedPreferences.edit().putString(CREDENTIAL, encryptedCredential).apply()
 
             sharedPreferences.edit().putBoolean(PIN_SHOULD_BE_INPUT, false).apply()
+            sharedPreferences.edit().putBoolean(PIN_REQUIRED, false).apply()
 
             if(shouldGoToConfirmation()) ui?.goToConfirmationScreen()
             else ui?.goToMainScreen()
@@ -69,6 +70,7 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
     }
 
     private fun shouldGoToConfirmation(): Boolean {
+        // TODO - THIS SHOULD BE FIXED
         return sharedPreferences.getBoolean(CARD_REQUIRED, false)
                 || sharedPreferences.getBoolean(RECIPIENT_REQUIRED, false)
     }

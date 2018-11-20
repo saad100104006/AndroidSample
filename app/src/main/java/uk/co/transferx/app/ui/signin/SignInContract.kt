@@ -12,6 +12,8 @@ interface SignInContract {
 
         fun goToConfirmation()
 
+        fun goToSetPinScreen()
+
         fun showConnectionError()
 
         fun showEmailError()

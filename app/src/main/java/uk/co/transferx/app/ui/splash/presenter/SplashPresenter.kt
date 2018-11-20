@@ -42,7 +42,7 @@ constructor(private val signUpApi: SignUpApi, private val tokenManager: TokenMan
                 .subscribe({
                     val loggedInStatus = sharedPreferences.getBoolean(LOGGED_IN_STATUS, false)
                     val firstStart = sharedPreferences.getBoolean(FIRST_START_APP, true)
-                    val pinShouldBeSet = sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, false)
+                    val pinShouldBeSet = sharedPreferences.getBoolean(PIN_SHOULD_BE_INPUT, true)
 
                     if (firstStart) {
                         this.ui?.goToTutorialScreen()

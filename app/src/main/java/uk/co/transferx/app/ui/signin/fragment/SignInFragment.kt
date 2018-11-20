@@ -33,6 +33,7 @@ import uk.co.transferx.app.ui.signin.SignInContract
 import uk.co.transferx.app.ui.signin.presenter.SignInPresenter
 import uk.co.transferx.app.ui.signup.SignUpActivity
 import uk.co.transferx.app.ui.signup.fragment.SignUpSuccessFragment
+import uk.co.transferx.app.util.Constants
 import javax.inject.Inject
 
 
@@ -135,6 +136,14 @@ class SignInFragment : BaseFragment(), SignInContract.View {
 
         // Launch main activity
         activity?.startActivity(context?.intentFor<MainActivity>()?.newTask()?.clearTask())
+        activity?.finish()
+    }
+
+    override fun goToSetPinScreen() {
+        activity?.startActivity(context?.intentFor<SignUpActivity>(Constants.SIGNUP_PIN_STEP to 2)
+                ?.newTask()?.clearTask())
+
+        loadingBar?.visibility = View.GONE
         activity?.finish()
     }
 
