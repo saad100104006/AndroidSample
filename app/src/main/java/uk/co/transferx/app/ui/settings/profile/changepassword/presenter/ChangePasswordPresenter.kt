@@ -1,4 +1,4 @@
-package uk.co.transferx.app.ui.settings.profile.changepassword
+package uk.co.transferx.app.ui.settings.profile.changepassword.presenter
 
 import android.content.SharedPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,6 +11,7 @@ import uk.co.transferx.app.data.pojo.ChangePassword
 import uk.co.transferx.app.data.repository.tokenmanager.TokenManager
 import uk.co.transferx.app.util.Constants.EMPTY
 import uk.co.transferx.app.util.Util
+import uk.co.transferx.app.util.errors.UnauthorizedException
 import javax.inject.Inject
 
 class ChangePasswordPresenter
@@ -46,7 +47,7 @@ class ChangePasswordPresenter
         ui?.setButtonEnabled(validateInput())
     }
 
-    private fun validateInput(): Boolean {
+     fun validateInput(): Boolean {
         return Util.validatePassword(currentPass) && Util.validatePassword(newPass) &&
                 Util.validatePassword(confirmPass) &&
                 currentPass != newPass && newPass == confirmPass
@@ -69,5 +70,7 @@ class ChangePasswordPresenter
     interface ChangePasswordUI : UI {
         fun setButtonEnabled(enabled: Boolean)
         fun goBackToSettings()
+
+
     }
 }

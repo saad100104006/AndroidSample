@@ -7,6 +7,7 @@ import kotlinx.android.synthetic.main.change_password_activity_layout.*
 import uk.co.transferx.app.ui.base.BaseActivity
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
+import uk.co.transferx.app.ui.settings.profile.changepassword.presenter.ChangePasswordPresenter
 import uk.co.transferx.app.ui.signin.SignInActivity
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ class ChangePasswordActivity : BaseActivity(), ChangePasswordPresenter.ChangePas
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as TransferXApplication).appComponent.inject(this)
-        setContentView(R.layout.change_password_activity_layout)
+        setContentView(R.layout.change_password_layout)
         changeButtonBack.setOnClickListener({ onBackPressed() })
         savePassword.setOnClickListener({ presenter.saveNewPassword() })
     }
@@ -62,4 +63,6 @@ class ChangePasswordActivity : BaseActivity(), ChangePasswordPresenter.ChangePas
     override fun goToWelcome() {
         SignInActivity.startSignInActivity(this@ChangePasswordActivity)
     }
+
+
 }
