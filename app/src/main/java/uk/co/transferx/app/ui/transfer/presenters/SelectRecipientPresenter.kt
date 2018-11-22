@@ -25,8 +25,8 @@ constructor(private val recipientRepository: RecipientRepository, private val sc
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe({ recipients ->
-                    recipientDtos = recipients
-                    this.ui.showRecipientList(recipientDtos.sortedBy { it.firstName })
+                    recipientDtos = recipients.sortedBy { it.firstName }
+                    this.ui.showRecipientList(recipientDtos)
                 }, { throwable ->
                     globalErrorHandler(throwable)
                 })
@@ -43,8 +43,37 @@ constructor(private val recipientRepository: RecipientRepository, private val sc
         }
     }
 
+    fun goToNextTransferStep(data: RecipientDto){
+        this.ui.goToNextStep()
+    }
+
+    fun goToAddRecipient(){
+        this.ui.goToAddRecipient()
+    }
+
+    fun cancelTransfer(){
+        this.ui.goBack()
+    }
+
+    fun displayFilterRecipientDtos(query: String){
+        this.ui.showRecipientList(filter(recipientDtos, query))
+    }
+
+    private fun filter(list: List<RecipientDto>, query: String): List<RecipientDto> {
+        val filteredRecipientDtos = ArrayList<RecipientDto>()
+        for(recipient in list){
+            val testedString = recipient.firstName.toLowerCase() + recipient.lastName.toLowerCase()
+            if(testedString.contains(query.toLowerCase())) filteredRecipientDtos.add(recipient)
+        }
+        return filteredRecipientDtos.sortedBy { it.firstName }
+    }
+
     interface SelectRecipientView: UI {
         fun goToNextStep()
+
+        fun goBack()
+
+        fun goToAddRecipient()
 
         fun showRecipientList(recipients: List<RecipientDto>)
     }
