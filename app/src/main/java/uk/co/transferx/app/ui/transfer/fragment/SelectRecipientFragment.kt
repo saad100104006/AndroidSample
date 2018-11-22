@@ -53,7 +53,6 @@ class SelectRecipientFragment : BaseFragment(), SelectRecipientPresenter.SelectR
         adapter = RecipientsAdapter(context!!)
         adapter.setClickListener(this)
 
-        // TODO edit those
         val layoutManager = LinearLayoutManager(activity)
         recyclerviewHistory.layoutManager = layoutManager
         recyclerviewHistory.itemAnimator = DefaultItemAnimator()
