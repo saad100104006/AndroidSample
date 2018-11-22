@@ -10,7 +10,7 @@ import uk.co.transferx.app.util.schedulers.BaseSchedulerProvider
 import javax.inject.Inject
 
 class SelectRecipientPresenter @Inject
-constructor(private val recipientRepository: RecipientRepository, val schedulerProvider: BaseSchedulerProvider) :
+constructor(private val recipientRepository: RecipientRepository, private val schedulerProvider: BaseSchedulerProvider) :
         BasePresenter<SelectRecipientPresenter.SelectRecipientView>() {
     private var compositeDisposable: CompositeDisposable? = null
     private var recipientDtos: List<RecipientDto> = ArrayList<RecipientDto>()
@@ -26,76 +26,13 @@ constructor(private val recipientRepository: RecipientRepository, val schedulerP
                 .observeOn(schedulerProvider.ui())
                 .subscribe({ recipients ->
                     recipientDtos = recipients
+                    this.ui.showRecipientList(recipientDtos.sortedBy { it.firstName })
                 }, { throwable ->
                     globalErrorHandler(throwable)
                 })
 
         compositeDisposable!!.add(dis)
 
-//        // Get recipients
-//        val list = ArrayList<Recipient>()
-//        val recipient1 =   Recipient.Builder()
-//                .firstname("Anna")
-//                .lastname("Frank")
-//                .country("XX")
-//                .phone("39348")
-//                .build()
-//        val recipient2 =   Recipient.Builder()
-//                .firstname("Britney")
-//                .lastname("Nest")
-//                .country("XX")
-//                .phone("39348")
-//                .build()
-//
-//        val recipient33 =   Recipient.Builder()
-//                .firstname("Johny")
-//                .lastname("WNend")
-//                .country("XX")
-//                .phone("39348")
-//                .build()
-//
-//        val recipient3 =   Recipient.Builder()
-//                .firstname("John")
-//                .lastname("Wick")
-//                .country("XX")
-//                .phone("39348")
-//                .build()
-//        val recipient4 =   Recipient.Builder()
-//                .firstname("Welney")
-//                .lastname("Pardy")
-//                .country("XX")
-//                .phone("39348")
-//                .build()
-//
-//        val recipient44 =   Recipient.Builder()
-//                .firstname("Wxn")
-//                .lastname("Pardy")
-//                .country("XX")
-//                .phone("39348")
-//                .build()
-//
-//        val recipient5 =   Recipient.Builder()
-//                .firstname("Xanxar")
-//                .lastname("Lod")
-//                .country("XX")
-//                .phone("39348")
-//                .build()
-//
-//        list.add(recipient1)
-//        list.add(recipient2)
-//        list.add(recipient3)
-//        list.add(recipient33)
-//        list.add(recipient4)
-//        list.add(recipient44)
-//        list.add(recipient5)
-
-
-
-//
-//        val sortedList = list.sortedWith(compareBy { it.firstname[0] })
-//
-//        this.ui.showRecipientList(list)
-        this.ui.showRecipientList(recipientDtos.sortedBy { it.firstName })
     }
 
     override fun detachUI() {

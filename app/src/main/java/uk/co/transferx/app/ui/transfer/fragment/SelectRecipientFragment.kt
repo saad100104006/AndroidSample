@@ -1,12 +1,14 @@
 package uk.co.transferx.app.ui.transfer.fragment
 
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import kotlinx.android.synthetic.main.fragment_select_recipient.*
 
 import uk.co.transferx.app.R
@@ -17,6 +19,9 @@ import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.transfer.adapters.RecipientsAdapter
 import uk.co.transferx.app.ui.transfer.presenters.SelectRecipientPresenter
 import javax.inject.Inject
+import uk.co.transferx.app.R.id.searchView
+
+
 
 /**
  * Created by Catalin Ghita on 15.11.2018.
@@ -50,9 +55,13 @@ class SelectRecipientFragment : BaseFragment(), SelectRecipientPresenter.SelectR
 
         // TODO edit those
         val layoutManager = LinearLayoutManager(activity)
-        recyclerviewHistory.setLayoutManager(layoutManager)
-        recyclerviewHistory.setItemAnimator(DefaultItemAnimator())
-        recyclerviewHistory.setAdapter(adapter)
+        recyclerviewHistory.layoutManager = layoutManager
+        recyclerviewHistory.itemAnimator = DefaultItemAnimator()
+        recyclerviewHistory.adapter = adapter
+
+        searchView.setOnClickListener { searchView.onActionViewExpanded() }
+        val icon = searchView.findViewById(android.support.v7.appcompat.R.id.search_button) as ImageView
+        icon.setColorFilter(Color.BLACK)
     }
 
     override fun onResume() {
