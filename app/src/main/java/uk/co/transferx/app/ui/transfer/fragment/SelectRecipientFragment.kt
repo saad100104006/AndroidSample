@@ -60,10 +60,7 @@ class SelectRecipientFragment : BaseFragment(), SelectRecipientPresenter.SelectR
         adapter = RecipientsAdapter(context!!)
         adapter.setClickListener(this)
 
-        val layoutManager = LinearLayoutManager(activity)
-        recyclerviewHistory.layoutManager = layoutManager
-        recyclerviewHistory.itemAnimator = DefaultItemAnimator()
-        recyclerviewHistory.adapter = adapter
+        setupRecyclerView()
 
         searchView.setOnClickListener { searchView.onActionViewExpanded() }
         searchView.setOnQueryTextListener(this)
@@ -85,7 +82,7 @@ class SelectRecipientFragment : BaseFragment(), SelectRecipientPresenter.SelectR
     }
 
     override fun goToNextStep() {
-        // TODO
+        // TODO later implementation
         Toast.makeText(activity, "This action should redirect you the the second transfer screen", Toast.LENGTH_LONG).show()
     }
 
@@ -119,5 +116,12 @@ class SelectRecipientFragment : BaseFragment(), SelectRecipientPresenter.SelectR
         p0?.let {  presenter.displayFilterRecipientDtos(p0) }
         recyclerviewHistory.scrollToPosition(0)
         return true
+    }
+
+    private fun setupRecyclerView(){
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerviewHistory.layoutManager = layoutManager
+        recyclerviewHistory.itemAnimator = DefaultItemAnimator()
+        recyclerviewHistory.adapter = adapter
     }
 }
