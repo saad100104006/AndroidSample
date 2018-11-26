@@ -9,6 +9,9 @@ import uk.co.transferx.app.ui.base.UI
 import uk.co.transferx.app.util.schedulers.BaseSchedulerProvider
 import javax.inject.Inject
 
+/**
+ * Created by Catalin Ghita on 15.11.2018.
+ */
 class SelectRecipientPresenter @Inject
 constructor(private val recipientRepository: RecipientRepository, private val schedulerProvider: BaseSchedulerProvider) :
         BasePresenter<SelectRecipientPresenter.SelectRecipientView>() {
@@ -27,8 +30,7 @@ constructor(private val recipientRepository: RecipientRepository, private val sc
                 .subscribe({ recipients ->
                     recipientDtos = recipients.sortedBy { it.firstName }
                     this.ui.showRecipientList(recipientDtos)
-                }, { throwable ->
-                    globalErrorHandler(throwable)
+                }, { this.ui.showError()
                 })
 
         compositeDisposable!!.add(dis)
@@ -44,7 +46,7 @@ constructor(private val recipientRepository: RecipientRepository, private val sc
     }
 
     fun goToNextTransferStep(data: RecipientDto){
-        this.ui.goToNextStep()
+        this.ui.goToNextStep(data)
     }
 
     fun goToAddRecipient(){
@@ -69,12 +71,14 @@ constructor(private val recipientRepository: RecipientRepository, private val sc
     }
 
     interface SelectRecipientView: UI {
-        fun goToNextStep()
+        fun goToNextStep(data: RecipientDto)
 
         fun goBack()
 
         fun goToAddRecipient()
 
         fun showRecipientList(recipients: List<RecipientDto>)
+
+        fun showError()
     }
 }

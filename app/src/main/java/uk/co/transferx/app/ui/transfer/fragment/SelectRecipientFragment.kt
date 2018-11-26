@@ -81,7 +81,7 @@ class SelectRecipientFragment : BaseFragment(), SelectRecipientPresenter.SelectR
         super.onPause()
     }
 
-    override fun goToNextStep() {
+    override fun goToNextStep(data: RecipientDto) {
         // TODO later implementation
         Toast.makeText(activity, "This action should redirect you the the second transfer screen", Toast.LENGTH_LONG).show()
     }
@@ -101,6 +101,10 @@ class SelectRecipientFragment : BaseFragment(), SelectRecipientPresenter.SelectR
     override fun goToWelcome() {
         context?.startActivity(context?.intentFor<LandingActivity>())
         activity?.finish()
+    }
+
+    override fun showError() {
+        // TODO Implement snackbar error
     }
 
     override fun tagName(): String {
