@@ -3,6 +3,7 @@ package uk.co.transferx.app.ui.transfer.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
@@ -104,7 +105,9 @@ class SelectRecipientFragment : BaseFragment(), SelectRecipientPresenter.SelectR
     }
 
     override fun showError() {
-        // TODO Implement snackbar error
+        val snackbar = Snackbar.make(view!!, getString(R.string.generic_error), Snackbar.LENGTH_LONG)
+        snackbar.view.setBackgroundColor(Color.RED)
+        snackbar.show()
     }
 
     override fun tagName(): String {
