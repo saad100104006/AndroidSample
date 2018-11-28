@@ -34,6 +34,7 @@ import uk.co.transferx.app.ui.signin.presenter.SignInPresenter
 import uk.co.transferx.app.ui.signup.SignUpActivity
 import uk.co.transferx.app.ui.signup.fragment.SignUpSuccessFragment
 import uk.co.transferx.app.util.Constants
+import uk.co.transferx.app.util.Constants.SET_PIN_AFTER_DELETE
 import javax.inject.Inject
 
 
@@ -140,7 +141,8 @@ class SignInFragment : BaseFragment(), SignInContract.View {
     }
 
     override fun goToSetPinScreen() {
-        activity?.startActivity(context?.intentFor<SignUpActivity>(Constants.SIGNUP_PIN_STEP to 2)
+        activity?.startActivity(context?.intentFor<SignUpActivity>(Constants.SIGNUP_PIN_STEP to 2,
+                SET_PIN_AFTER_DELETE to true)
                 ?.newTask()?.clearTask())
 
         loadingBar?.visibility = View.GONE

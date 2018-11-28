@@ -30,9 +30,13 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
     @Inject
     lateinit var presenter: SignUpStepThreePresenter
 
+    private var isSetPinAfterDelete = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity?.application as TransferXApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
+
+         arguments?.let {  isSetPinAfterDelete = arguments!!.getBoolean(SET_PIN_AFTER_DELETE, false) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,6 +54,11 @@ class SignUpStepThreeFragment : BaseFragment(), SignUpStepThreePresenter.SignUpS
 
         firstPinEntry.setAnimationEnable(true)
         secondPinEntry.setAnimationEnable(true)
+
+        // Enable custom view for when PIN is set after cache/data deletion
+        if(isSetPinAfterDelete) {
+            resetPinText.visibility = View.VISIBLE
+        }
     }
 
     override fun onResume() {

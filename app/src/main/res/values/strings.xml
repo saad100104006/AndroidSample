@@ -26,6 +26,7 @@
     <string name="pin">Security PIN</string>
     <string name="confirm_pin">Confirm PIN</string>
     <string name="no_match_pin">Entered PIN does not match</string>
+    <string name="deleted_pin">Looks like you haven\'t set a PIN yet!</string>
     <string name="landing_send_money">Send money to your loved ones easier and faster.</string>
     <string name="landing_login">Login</string>
     <string name="landing_register">Create an account</string>

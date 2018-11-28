@@ -47,14 +47,12 @@ class SplashActivity : BaseActivity(), SplashContract.View {
     }
 
     override fun goToSetPinScreen() {
-        startActivity(intentFor<SignUpActivity>(SIGNUP_PIN_STEP to 2).newTask().clearTask())
+        startActivity(intentFor<SignUpActivity>(SIGNUP_PIN_STEP to 2,
+                Constants.SET_PIN_AFTER_DELETE to true).newTask().clearTask())
     }
 
     override fun goToPinScreen() {
-        // TODO - CREATE LINK TO PIN WHEN PIN SCREEN IS FINISHED AND LINKING IS PERFORMED
-//        startActivity(intentFor<MainActivity>().newTask().clearTask())
         startActivity(intentFor<SignInPinActivity>(Constants.CLEAN_START to 1))
-
     }
 
     override fun goToTutorialScreen() {
