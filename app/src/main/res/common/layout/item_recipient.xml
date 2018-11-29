@@ -3,8 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="12dp">
+
+    <View
+        android:id="@+id/viewDivider"
+        style="@style/common_divider"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgUser"
@@ -17,23 +26,25 @@
         app:civ_border_color="@color/white"
         app:civ_border_width="1dp"
         app:civ_fill_color="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/viewDivider"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewDivider"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.8" />
 
     <TextView
         android:id="@+id/tvName"
-        style="@style/text_grey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="20dp"
-        android:text="Naomi Campbell"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/imgCountryFlag"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imgUser"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Naomi Campbell" />
 
 
     <ImageView
@@ -44,6 +55,7 @@
         android:layout_marginTop="24dp"
         android:adjustViewBounds="true"
         android:src="@drawable/flag_bgn"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,14 +69,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/viewDivider"
-        style="@style/common_divider"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgUser" />
 
 </android.support.constraint.ConstraintLayout>

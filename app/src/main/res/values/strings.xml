@@ -47,6 +47,7 @@
     <string name="amount">Amount</string>
     <string name="send_money">Send Money</string>
     <string name="today_rate_label">Today Rate:</string>
+    <string name="select_recipient">Select your recipient</string>
     <string name="select_currency_title">Select Currency</string>
     <string name="favourite_recipients">Favourite Recipients</string>
     <string name="add_new">Add New</string>

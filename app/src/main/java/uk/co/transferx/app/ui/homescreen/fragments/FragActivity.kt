@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import kotlinx.android.synthetic.main.frag_activity.*
+import org.jetbrains.anko.intentFor
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.data.pojo.Transaction
@@ -21,6 +22,7 @@ import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.homescreen.ObservableBoolean
 import uk.co.transferx.app.ui.homescreen.adapters.ActivityAllAdapter
 import uk.co.transferx.app.ui.homescreen.presenters.FragActivityPresenter
+import uk.co.transferx.app.ui.transfer.TransferActivity
 import javax.inject.Inject
 
 class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, ActivityAllAdapter.ItemClickListener {
@@ -138,7 +140,8 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
     }
 
     override fun goToSelectRecipient() {
-        Toast.makeText(activity, "This button should redirect to SelectRecipientsScreen", Toast.LENGTH_LONG).show()
+//        Toast.makeText(activity, "This button should redirect to SelectRecipientsScreen", Toast.LENGTH_LONG).show()
+        context?.startActivity(context?.intentFor<TransferActivity>())
     }
 
     override fun goToWelcome() {

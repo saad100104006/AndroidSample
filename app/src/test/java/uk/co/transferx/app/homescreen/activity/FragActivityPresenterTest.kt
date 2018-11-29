@@ -18,7 +18,9 @@ import uk.co.transferx.app.ui.homescreen.presenters.FragActivityPresenter
 import uk.co.transferx.app.util.schedulers.ImmediateSchedulerProvider
 import uk.co.transferx.app.data.pojo.*
 
-
+/**
+ * Created by Catalin Ghita on 15.11.2018.
+ */
 class FragActivityPresenterTest {
     // SUT
     lateinit var activityPresenter: FragActivityPresenter
