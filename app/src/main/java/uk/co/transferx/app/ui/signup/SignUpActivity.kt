@@ -47,6 +47,12 @@ class SignUpActivity : BaseActivity() {
         val fragment = sparseArray.get(nextView)
         if (bundle != null) fragment.arguments = bundle
 
+        // Check if Redirecting to SET PIN screen is done after a cache/data deletion
+        val isSetPinAfterDelete = intent.getBooleanExtra(SET_PIN_AFTER_DELETE, false)
+        val bundle = Bundle()
+        bundle.putBoolean(SET_PIN_AFTER_DELETE, isSetPinAfterDelete)
+        fragment.arguments = bundle
+
         replaceFragment(fragment, currentFragment - nextView, R.id.container)
         currentFragment = nextView
     }

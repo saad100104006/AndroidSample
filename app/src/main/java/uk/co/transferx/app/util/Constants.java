@@ -19,6 +19,7 @@ public final class Constants {
 
     public static final String CREDENTIAL = "credential";
     public static final String SIGNUP_PIN_STEP = "sign_up_pin_set";
+    public static final String SET_PIN_AFTER_DELETE = "pin_set_delete";
     public static final String DELETE = "delete";
 
     public static final String FIRST_START_APP = "first_start_app";
