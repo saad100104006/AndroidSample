@@ -65,7 +65,7 @@
                 android:textSize="18sp" />
 
             <com.chaos.view.PinView
-                android:id="@+id/currentPinView"
+                android:id="@+id/firstPinsEntry"
                 style="@style/PinWidget.PinView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                 android:textSize="18sp" />
 
             <com.chaos.view.PinView
-                android:id="@+id/newPinView"
+                android:id="@+id/secondPinsEntry"
                 style="@style/PinWidget.PinView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                 android:textSize="18sp" />
 
             <com.chaos.view.PinView
-                android:id="@+id/confirmPinView"
+                android:id="@+id/confirmPinsEntry"
                 style="@style/PinWidget.PinView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
