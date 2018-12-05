@@ -308,6 +308,15 @@
 
     <string name="edit_password">  Edit password</string>
 
+    <string name="save_new_pin">Save new pin</string>
+
+    <string name="confirm_new_pin">Confirm new PIN</string>
+
+    <string name="new_pin"> New PIN</string>
+    <string name="current_pin">Current PIN</string>
+
+    <string name="edit_pin">Edit PIN</string>
+
 
 
 </resources>

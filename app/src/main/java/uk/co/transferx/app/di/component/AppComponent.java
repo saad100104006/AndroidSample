@@ -36,6 +36,7 @@ import uk.co.transferx.app.ui.settings.notification.NotificationSettingsActivity
 import uk.co.transferx.app.ui.settings.profile.UploadDocumentsActivity;
 import uk.co.transferx.app.ui.settings.profile.changepassword.ChangePasswordActivity;
 import uk.co.transferx.app.ui.settings.profile.changepin.ChangePinActivity;
+import uk.co.transferx.app.ui.settings.profile.changepin.fragment.ChangePinFragment;
 import uk.co.transferx.app.ui.settings.profile.personaldetails.PersonalDetailsActivity;
 import uk.co.transferx.app.ui.settings.profile.personaldetails.fragments.PersonalDetailsFragmentOne;
 import uk.co.transferx.app.ui.settings.profile.personaldetails.fragments.PersonalDetailsFragmentTwo;
@@ -74,6 +75,8 @@ public interface AppComponent {
 
     void inject(SignUpStepThreeFragment signUpStepThreeFragment);
 
+    void inject(ChangePinFragment changePinFragment);
+
     void inject(SignUpStepTwoFragment signUpStepTwoFragment);
 
     void inject(SignUpSuccessFragment signUpSuccessFragment);
@@ -88,7 +91,7 @@ public interface AppComponent {
 
     void inject(SignInEmailFragment signInEmailFragment);
 
-   void inject(SettingsFragment settingsFragment);
+    void inject(SettingsFragment settingsFragment);
 
     void inject(AddRecipientsFragment addRecipientsFragment);
 
@@ -120,7 +123,6 @@ public interface AppComponent {
 
     void inject(ChangePasswordActivity changePasswordActivity);
 
-
     void inject(ScheduleActivity scheduleActivity);
 
     void inject(AddCardActivity addCardActivity);
@@ -149,15 +151,15 @@ public interface AppComponent {
 
     void inject(TransferXFirebaseIDService transferXFirebaseIDService);
 
-
     void inject(MainActivity mainActivity);
 
-    void inject (FragActivity fragActivity);
+    void inject(FragActivity fragActivity);
 
-    void inject (FragRecipients fragRecipients);
+    void inject(FragRecipients fragRecipients);
 
-   void inject (FragSettings fragSettings);
+    void inject(FragSettings fragSettings);
 
-    void inject (PersonalInformationActivity activityAccount);
-    void inject (ChangePinActivity changePin);
+    void inject(PersonalInformationActivity activityAccount);
+
+    void inject(ChangePinActivity changePin);
 }

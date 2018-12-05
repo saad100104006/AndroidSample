@@ -1,69 +1,53 @@
 package uk.co.transferx.app.ui.settings.profile.changepin
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import kotlinx.android.synthetic.main.change_pin_layout.*
-import kotlinx.android.synthetic.main.personal_details_activity_layout.*
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseActivity
-import javax.inject.Inject
+import uk.co.transferx.app.ui.base.BaseFragment
+import uk.co.transferx.app.ui.settings.profile.changepin.fragment.ChangePinFragment
 
 /**
- * Created by HP on 11/1/2018.
+ * Created by Tanvir on 12/1/2018.
  */
 
-class ChangePinActivity : BaseActivity(), ChangePinPresenter.ChangePinUI  {
+class ChangePinActivity : BaseActivity() {
 
-
-    @Inject
-    lateinit var presenter: ChangePinPresenter
+    private var isConfirmationDisplayed: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         (application as TransferXApplication).appComponent.inject(this)
-        setContentView(R.layout.change_pin_layout)
 
-        button_back.setOnClickListener({ onBackPressed() })
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_change_pin)
+        launchFragment(ChangePinFragment())
     }
 
     override fun onBackPressed() {
-        finish()
-        super.onBackPressed()
+        if(!isConfirmationDisplayed) {
+            super.onBackPressed()
+            finish()
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter!!.attachUI(this)
+    fun launchFragment(fragment: BaseFragment) {
+        if(fragment is ChangePinFragment) isConfirmationDisplayed = true
+        supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.tag)
+                .commit()
     }
 
-    override fun onPause() {
-        presenter!!.detachUI()
-        super.onPause()
-    }
+    companion object {
 
-    override fun goToWelcome() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun goToPersonalInformation() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun goToWallet() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun goToChangePassword() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun goToChangePin() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun goToUploadDocumentation() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        fun startSignInActivity(activity: Activity) {
+            val intent = Intent(activity, ChangePinActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            activity.startActivity(intent)
+            activity.finish()
+        }
     }
 
 }
+

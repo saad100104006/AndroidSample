@@ -3,10 +3,8 @@ package uk.co.transferx.app.ui.settings.profile
 import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.account_fragment_layout.*
-import kotlinx.android.synthetic.main.change_pin_layout.*
 
 import javax.inject.Inject
-
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseActivity
