@@ -19,7 +19,7 @@
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_marginBottom="16dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="96dp"
         android:src="@drawable/ic_complete_actions"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -30,7 +30,7 @@
         style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
         android:gravity="center_horizontal"
@@ -48,7 +48,7 @@
         style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
         android:gravity="center_horizontal"
@@ -65,8 +65,7 @@
         style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="@dimen/landing_bottom_login"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
         android:background="@drawable/btn_style_bright"
@@ -76,7 +75,7 @@
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/textAddRecipientsPayments"
+        app:layout_constraintBottom_toTopOf="@id/buttonAddPayment"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -85,7 +84,7 @@
         style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
         android:background="@drawable/btn_style_bright"
@@ -95,7 +94,7 @@
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/buttonAddRecipient"
+        app:layout_constraintBottom_toTopOf="@id/buttonGoToMain"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -104,7 +103,7 @@
         style="@style/CommonStyle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
         android:background="@drawable/btn_style_dark"
@@ -114,9 +113,9 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/buttonAddPayment"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
