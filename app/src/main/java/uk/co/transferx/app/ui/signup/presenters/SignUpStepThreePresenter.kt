@@ -70,9 +70,8 @@ constructor(private val cryptoManager: CryptoManager, sharedPreferences: SharedP
     }
 
     private fun shouldGoToConfirmation(): Boolean {
-        // TODO - THIS SHOULD BE FIXED
-        return sharedPreferences.getBoolean(CARD_REQUIRED, false)
-                || sharedPreferences.getBoolean(RECIPIENT_REQUIRED, false)
+        return sharedPreferences.getBoolean(CARD_REQUIRED, true)
+                || sharedPreferences.getBoolean(RECIPIENT_REQUIRED, true)
     }
 
     interface SignUpStepThreeUI : UI {
