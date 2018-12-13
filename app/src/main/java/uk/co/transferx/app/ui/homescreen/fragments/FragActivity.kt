@@ -80,6 +80,7 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
         imgSendCash.setOnClickListener { presenter.goToSelectRecipient() }
         tvSendMoney.setOnClickListener { presenter.goToSelectRecipient() }
 
+        // Progress observer
         presenter.isLoading.addObserver { o, _ ->
             if (o == null || o !is ObservableBoolean) hideProgress()
             else {
@@ -102,10 +103,6 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
     override fun onDestroyView() {
         presenter.isLoading.deleteObservers()
         super.onDestroyView()
-    }
-
-    override fun tagName(): String {
-        return FragActivity::class.java.simpleName
     }
 
     override fun showAllTransactions(transactions: List<Transaction>) {
@@ -163,6 +160,10 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
 
     override fun goToReceiptScreen(transaction: TransactionCreate) {
         //  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun tagName(): String {
+        return FragActivity::class.java.simpleName
     }
 
     private fun swapAdapters(recurrent: Boolean, transactions: List<Transaction>) {
