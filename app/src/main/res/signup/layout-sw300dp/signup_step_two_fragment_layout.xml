@@ -68,7 +68,7 @@
         android:layout_marginLeft="@dimen/left_right_main_screen"
         android:layout_marginRight="@dimen/left_right_main_screen"
         android:background="@drawable/input_field"
-        android:inputType="textNoSuggestions|textEmailAddress|textEmailAddress"
+        android:inputType="textNoSuggestions|phone"
         android:hint="@string/phone_number"
         android:lineSpacingExtra="2sp"
         android:maxLines="1"
