@@ -22,9 +22,13 @@ import uk.co.transferx.app.ui.base.BaseFragment
 import uk.co.transferx.app.ui.homescreen.ObservableBoolean
 import uk.co.transferx.app.ui.homescreen.adapters.ActivityAllAdapter
 import uk.co.transferx.app.ui.homescreen.presenters.FragActivityPresenter
+import uk.co.transferx.app.ui.landing.LandingActivity
 import uk.co.transferx.app.ui.transfer.TransferActivity
 import javax.inject.Inject
 
+/**
+ * Created by Catalin Ghita on 10.12.2018.
+ */
 class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, ActivityAllAdapter.ItemClickListener {
     internal lateinit var adapter: ActivityAllAdapter
 
@@ -36,6 +40,8 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
     lateinit var presenter: FragActivityPresenter
 
     override fun onItemClick(view: View, data: Transaction) {
+        // TODO Later implementation
+        // goToReceiptScreen(data)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,12 +55,15 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Normal transactions
         tvAll.setOnClickListener {
             tvAll.setBackgroundResource(R.drawable.rounded_corner_left_filled_amber)
             tvRecurrent.setBackgroundResource(R.drawable.rounded_corner_right_amber)
             presenter.loadData(false)
         }
 
+        // Recurrent transactions
         tvRecurrent.setOnClickListener {
             tvAll.setBackgroundResource(R.drawable.rounded_corner_left_amber)
             tvRecurrent.setBackgroundResource(R.drawable.rounded_corner_right_filled_amber)
@@ -64,16 +73,14 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
         adapter = ActivityAllAdapter(context!!)
         adapter.setClickListener(this)
 
-        val layoutManager = LinearLayoutManager(activity)
-        recyclerviewHistory.setLayoutManager(layoutManager)
-        recyclerviewHistory.setItemAnimator(DefaultItemAnimator())
-        recyclerviewHistory.setAdapter(adapter)
+        setupRecyclerView()
 
         loadingBar = activity?.findViewById<ProgressBar>(R.id.pbHeaderProgress)
 
         imgSendCash.setOnClickListener { presenter.goToSelectRecipient() }
         tvSendMoney.setOnClickListener { presenter.goToSelectRecipient() }
 
+        // Progress observer
         presenter.isLoading.addObserver { o, _ ->
             if (o == null || o !is ObservableBoolean) hideProgress()
             else {
@@ -96,10 +103,6 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
     override fun onDestroyView() {
         presenter.isLoading.deleteObservers()
         super.onDestroyView()
-    }
-
-    override fun tagName(): String {
-        return FragActivity::class.java.simpleName
     }
 
     override fun showAllTransactions(transactions: List<Transaction>) {
@@ -140,12 +143,12 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
     }
 
     override fun goToSelectRecipient() {
-//        Toast.makeText(activity, "This button should redirect to SelectRecipientsScreen", Toast.LENGTH_LONG).show()
         context?.startActivity(context?.intentFor<TransferActivity>())
     }
 
     override fun goToWelcome() {
-        // Should redirect to landing screen
+        context?.startActivity(context?.intentFor<LandingActivity>())
+        activity?.finish()
     }
 
     override fun showError() {
@@ -159,9 +162,20 @@ class FragActivity : BaseFragment(), FragActivityPresenter.ActivityFragmentUI, A
         //  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun tagName(): String {
+        return FragActivity::class.java.simpleName
+    }
+
     private fun swapAdapters(recurrent: Boolean, transactions: List<Transaction>) {
         adapter.setRecurrentType(recurrent)
         adapter.setAllTransactions(transactions)
+    }
+
+    private fun setupRecyclerView(){
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerviewHistory.layoutManager = layoutManager
+        recyclerviewHistory.itemAnimator = DefaultItemAnimator()
+        recyclerviewHistory.adapter = adapter
     }
 
 }
