@@ -111,8 +111,7 @@ class SignInPresenter @Inject constructor
                             // has been deleted. In this case, we need to retrieve credentials
                             // and setup PIN again
                             if(sharedPreferences.getString(CREDENTIAL, null) == null){
-                                val disposable: Disposable = profileRepository.getUserProfile()
-                                        .subscribeBy(
+                                val disposable: Disposable = profileRepository.getUserProfile().subscribeBy(
                                                 onSuccess = {
                                                     // Set credentials
                                                     sharedPreferences.edit().putString(FIRST_NAME, it.firstName).apply()
@@ -142,8 +141,8 @@ class SignInPresenter @Inject constructor
     }
 
     private fun shouldGoToConfirmation(): Boolean {
-        return sharedPreferences.getBoolean(CARD_REQUIRED, false)
-                || sharedPreferences.getBoolean(RECIPIENT_REQUIRED, false)
+        return sharedPreferences.getBoolean(CARD_REQUIRED, true)
+                || sharedPreferences.getBoolean(RECIPIENT_REQUIRED, true)
     }
 
 }

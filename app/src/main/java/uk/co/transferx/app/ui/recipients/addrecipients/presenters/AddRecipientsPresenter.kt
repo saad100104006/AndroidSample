@@ -54,10 +54,11 @@ constructor(private val recipientsApi: RecipientsApi,
                 .subscribe({ resp ->
                     if (resp.code() == HttpsURLConnection.HTTP_OK && ui != null) {
                         recipientRepository.addUser(RecipientDto(resp.body()?.id, firstName, lastName, null, country, phone))
-                        val firstRecipientAdded = sharedPreferences.getBoolean(FIRST_RECIPIENT_ADDED, true)
-                        if (firstRecipientAdded) {
+                        val firstRecipientAdded = sharedPreferences.getBoolean(FIRST_RECIPIENT_ADDED, false)
+                        if (!firstRecipientAdded) {
                             this.ui.goToConfirmationScreen(FIRST_RECIPIENT_ADDED_MODE)
-                            sharedPreferences.edit().putBoolean(FIRST_RECIPIENT_ADDED, false).apply()
+                            sharedPreferences.edit().putBoolean(FIRST_RECIPIENT_ADDED, true).apply()
+                            sharedPreferences.edit().putBoolean(RECIPIENT_REQUIRED, false).apply()
                         } else this.ui.goToConfirmationScreen(RECIPIENT_ADDED_MODE)
                     }
                 }, { this.handleError(it) })
