@@ -127,10 +127,9 @@ public class CustomSpinnerArrayAdapter extends ArrayAdapter {
         if (position == currentSelection) {
             imageView.setVisibility(View.VISIBLE);
         } else {
-            textView.setTypeface(ResourcesCompat.getFont(convertView.getContext(), R.font.montserrat));
+            textView.setTypeface(ResourcesCompat.getFont(convertView.getContext(), R.font.montserratmedium));
             imageView.setVisibility(View.INVISIBLE);
         }
-
         if (position != hintItemIndex) {
             bindLabels(convertView, position);
         }

@@ -100,11 +100,11 @@
     </style>
 
     <style name="CommonStyle">
-        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserratmedium</item>
     </style>
 
     <style name="CommonButtonStyle" parent="Widget.AppCompat.Button.Colored">
-        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserratmedium</item>
     </style>
 
     <style name="indicator_style">
@@ -122,13 +122,13 @@
         <!-- active thumb & track color (30% transparency) -->
         <item name="colorControlActivated">@color/black</item>
         <item name="colorSwitchThumbNormal">@color/hint</item>
-        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserratmedium</item>
     </style>
 
     <style name="BlackFontSmall" parent="TextAppearance.AppCompat.Small">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserratmedium</item>
     </style>
 
     <style name="RadioButtonStyle" parent="AppTheme">
@@ -218,6 +218,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">@style/Body.Bold</item>
         <item name="android:layout_marginLeft">28dp</item>
+        <item name="android:textColor">@color/black_text</item>
+        <item name="android:textSize">16sp</item>
+        
     </style>
 
     <style name="AppTheme.Progress">

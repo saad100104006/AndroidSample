@@ -44,7 +44,7 @@ public class MainActivityOld extends BaseActivity {
         //fragments.put(2, new RecipientsFragment());
         fragments.put(2, new SettingsFragment());
         bottomNavigationViewEx = findViewById(R.id.bottom_navigation);
-        bottomNavigationViewEx.setTypeface(ResourcesCompat.getFont(this, R.font.montserrat));
+        bottomNavigationViewEx.setTypeface(ResourcesCompat.getFont(this, R.font.montserratmedium));
         selectScreen(R.id.activity, null);
         bottomNavigationViewEx.enableShiftingMode(false);
         bottomNavigationViewEx.enableItemShiftingMode(false);
