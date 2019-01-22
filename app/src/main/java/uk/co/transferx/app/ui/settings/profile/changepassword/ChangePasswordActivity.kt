@@ -50,7 +50,7 @@ class ChangePasswordActivity : BaseActivity(), ChangePasswordPresenter.ChangePas
     override fun setButtonEnabled(enabled: Boolean) {
         savePassword.isEnabled = enabled
         savePassword.setBackgroundResource(if (enabled) {
-            R.drawable.oval_button_black
+            R.drawable.oval_button_yellow
         } else {
             R.drawable.oval_button_gray
         })
