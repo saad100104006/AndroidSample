@@ -49,6 +49,7 @@ class ChangePinFragment : BaseFragment(), ChangePinPresenter.ChangePinUI {
         firstPinsEntry?.setAnimationEnable(true)
         secondPinsEntry?.setAnimationEnable(true)
         confirmPinsEntry?.setAnimationEnable(true)
+
     }
 
     override fun onResume() {

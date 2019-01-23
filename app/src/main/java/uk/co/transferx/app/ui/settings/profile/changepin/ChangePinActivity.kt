@@ -3,6 +3,7 @@ package uk.co.transferx.app.ui.settings.profile.changepin
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import kotlinx.android.synthetic.main.activity_change_pin.*
 import uk.co.transferx.app.R
 import uk.co.transferx.app.TransferXApplication
 import uk.co.transferx.app.ui.base.BaseActivity
@@ -24,6 +25,7 @@ class ChangePinActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_pin)
         launchFragment(ChangePinFragment())
+        button_back_pin.setOnClickListener {  finish() }
     }
 
     override fun onBackPressed() {
