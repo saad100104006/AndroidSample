@@ -67,6 +67,7 @@ class ConfirmationDialogLogoutFragment : DialogFragment() {
             intent.putExtra(ADDITIONAL_DATA, id)
             intent.putExtra(POSITION, position)
             fragment.onActivityResult(targetRequestCode, RESULT_OK, intent)
+            activity!!.finish()
         } else {
             intent = Intent(DELETE)
             intent.putExtra(POSITION, position)
