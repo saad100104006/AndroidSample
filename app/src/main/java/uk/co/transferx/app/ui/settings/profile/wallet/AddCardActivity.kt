@@ -33,7 +33,7 @@ class AddCardActivity : BaseActivity(), AddCardPresenter.AddCardUI {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as TransferXApplication).appComponent.inject(this)
-        setContentView(R.layout.add_card_activity)
+        setContentView(R.layout.activity_new_card)
         val intent = intent
         val cardMode = CardMode.values()[intent.getIntExtra(MODE, 0)]
         presenter.setMode(cardMode)
